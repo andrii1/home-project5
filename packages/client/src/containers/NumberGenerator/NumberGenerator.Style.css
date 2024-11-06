@@ -1,0 +1,15 @@
+.container-tool {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form-result {
+  max-width: 12rem;
+  border-radius: 0.313rem;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: 5rem;
+  min-width: 42rem;
+  padding: 2rem 2.5rem;
+}

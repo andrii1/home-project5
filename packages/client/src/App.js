@@ -21,6 +21,7 @@ import { PageNotFound } from './containers/PageNotFound/PageNotFound.Container';
 import { Navigation } from './components/Navigation/Navigation.component';
 import { Footer } from './components/Footer/Footer.component';
 import { UserProvider } from './userContext';
+import { NumberGenerator } from './containers/NumberGenerator/NumberGenerator.Container';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Navigation />
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/numbergenerator" element={<NumberGenerator />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

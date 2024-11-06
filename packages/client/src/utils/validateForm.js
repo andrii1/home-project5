@@ -28,5 +28,11 @@ export const validateForm = (value, type) => {
     error = 'Text must be more than five characters!';
   }
 
+  if (!value && type === 'number') {
+    error = 'Number is required!';
+  } else if (value && type === 'number' && isNaN(value)) {
+    error = 'Invalid number format!';
+  }
+
   return error;
 };

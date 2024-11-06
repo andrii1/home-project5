@@ -7,9 +7,13 @@ import { Button } from '../../components/Button/Button.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Home = () => {
-  const tools = [{ id: 1, title: 'Number Generator' }];
+  const tools = [{ id: 1, title: 'Number Generator', url: 'numbergenerator' }];
   const cardItems = tools.map((tool) => {
-    return <Button label={tool.title} secondary />;
+    return (
+      <Link to={tool.url}>
+        <Button label={tool.title} secondary />
+      </Link>
+    );
   });
   return (
     <main>
