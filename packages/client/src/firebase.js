@@ -19,7 +19,7 @@ import {
 } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCxoiComDc-Z0AopTa4bP6fhWF9Z1jQr7w',
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: 'apps-with-ai.firebaseapp.com',
   projectId: 'apps-with-ai',
   storageBucket: 'apps-with-ai.appspot.com',
