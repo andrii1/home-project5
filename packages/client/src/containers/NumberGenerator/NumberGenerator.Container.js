@@ -8,6 +8,7 @@ import iconCopy from '../../assets/images/icons8-copy-24.png';
 import useInputValidation from '../../utils/hooks/useInputValidation';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import Toast from '../../components/Toast/Toast.Component';
+import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
 import { useUserContext } from '../../userContext';
 
@@ -22,6 +23,10 @@ export const NumberGenerator = () => {
     useInputValidation('number');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
+  const [selectedOptionOddEven, setSelectedOptionOddEven] =
+    useState('Odd/Even');
+  const [selectedOptionInclusive, setSelectedOptionInclusive] =
+    useState('Inclusive');
 
   const generateRandomNumber = (min, max) => {
     const minCeiled = Math.ceil(min);
@@ -31,6 +36,7 @@ export const NumberGenerator = () => {
     );
     setNumberRandom(finalValue);
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (numberMinError || numberMaxError) {
@@ -55,6 +61,11 @@ export const NumberGenerator = () => {
       setOpenToast(false);
     }, 2500);
   };
+
+  const optionsOddEven = ['Odd/even', 'Odd', 'Even'];
+  const optionsInclusive = ['Inclusive', 'Exclusive'];
+
+  console.log(numberRandom);
 
   return (
     <main>
@@ -87,19 +98,30 @@ export const NumberGenerator = () => {
         )}
         <div className="form-box submit-box">
           <form>
+            <Dropdown
+              options={optionsOddEven}
+              onSelect={(option) => setSelectedOptionOddEven(option)}
+              showFilterIcon={false}
+              showLabel={false}
+            />
+            <Dropdown
+              options={optionsInclusive}
+              onSelect={(option) => setSelectedOptionInclusive(option)}
+              showFilterIcon={false}
+              showLabel={false}
+            />
             <TextFormInput
               value={numberMin}
-              placeholder="Number 1"
+              placeholder="Number min"
               onChange={validateNumberMin}
               error={numberMinError}
             />
             <TextFormInput
               value={numberMax}
-              placeholder="Number 2"
+              placeholder="Number max"
               onChange={validateNumberMax}
               error={numberMaxError}
             />
-
             <Button
               primary
               className="btn-add-prompt"
