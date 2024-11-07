@@ -13,3 +13,9 @@
   min-width: 42rem;
   padding: 2rem 2.5rem;
 }
+
+.form-result-options {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+}

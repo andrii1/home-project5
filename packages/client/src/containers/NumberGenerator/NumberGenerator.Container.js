@@ -4,9 +4,10 @@ import { Helmet } from 'react-helmet';
 import './NumberGenerator.Style.css';
 import { apiURL } from '../../apiURL';
 import { Button } from '../../components/Button/Button.component';
-
+import iconCopy from '../../assets/images/icons8-copy-24.png';
 import useInputValidation from '../../utils/hooks/useInputValidation';
 import TextFormInput from '../../components/Input/TextFormInput.component';
+import Toast from '../../components/Toast/Toast.Component';
 
 import { useUserContext } from '../../userContext';
 
@@ -19,6 +20,8 @@ export const NumberGenerator = () => {
     useInputValidation('number');
   const [numberMax, numberMaxError, validateNumberMax] =
     useInputValidation('number');
+  const [openToast, setOpenToast] = useState(false);
+  const [animation, setAnimation] = useState('');
 
   const generateRandomNumber = (min, max) => {
     const minCeiled = Math.ceil(min);
@@ -40,6 +43,19 @@ export const NumberGenerator = () => {
     }
   };
 
+  const copyToClipboard = (item) => {
+    navigator.clipboard.writeText(item);
+    setOpenToast(true);
+    setAnimation('open-animation');
+
+    setTimeout(() => {
+      setAnimation('close-animation');
+    }, 2000);
+    setTimeout(() => {
+      setOpenToast(false);
+    }, 2500);
+  };
+
   return (
     <main>
       <Helmet>
@@ -52,7 +68,23 @@ export const NumberGenerator = () => {
         <p className="subheading">Generate random number from 1 to 100</p>
       </div>
       <section className="container-tool">
-        {numberRandom && <div className="form-result">{numberRandom}</div>}
+        {numberRandom && (
+          <div className="form-result">
+            {numberRandom}
+            <div className="form-result-options">
+              <button
+                type="button"
+                className="button-copy"
+                onClick={() => copyToClipboard(numberRandom)}
+              >
+                <img src={iconCopy} alt="copy" className="icon-copy" />
+              </button>
+              <Toast open={openToast} overlayClass={`toast ${animation}`}>
+                <span>Copied to clipboard!</span>
+              </Toast>
+            </div>
+          </div>
+        )}
         <div className="form-box submit-box">
           <form>
             <TextFormInput
