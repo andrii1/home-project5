@@ -31,7 +31,7 @@
     margin-top: 2rem;
   }
   .form-box.submit-box {
-    padding: none;
+    padding: 0rem;
     width: 90%;
   }
   .form-result {
