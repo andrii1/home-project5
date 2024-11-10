@@ -1,6 +1,6 @@
 .form-input {
   border-style: hidden;
-  border-bottom: 1px solid rgba(33, 33, 33, 0.4);
+  /* border-bottom: 1px solid rgba(33, 33, 33, 0.4); */
   margin-top: 1rem;
   margin-bottom: 1rem;
   width: 100%;
