@@ -28,12 +28,40 @@ export const NumberGenerator = () => {
   const [selectedOptionInclusive, setSelectedOptionInclusive] =
     useState('Inclusive');
 
-  const generateRandomNumber = (min, max) => {
+  const generateRandomNumber = (min, max, optionOdd, optionInclusive) => {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
-    const finalValue = Math.floor(
-      Math.random() * (maxFloored - minCeiled + 1) + minCeiled,
-    );
+    let finalValue;
+
+    if (optionInclusive === 'Inclusive') {
+      finalValue = Math.floor(
+        Math.random() * (maxFloored - minCeiled + 1) + minCeiled,
+      );
+    } else if (optionInclusive === 'Exclusive') {
+      finalValue = Math.floor(
+        Math.random() * (maxFloored - minCeiled) + minCeiled,
+      );
+    }
+
+    if (optionOdd === 'Odd') {
+      if (finalValue % 2 === 0) {
+        // generated number is even
+        if (finalValue === max) {
+          finalValue -= 1;
+        } else {
+          finalValue += 1;
+        }
+      }
+    } else if (optionOdd === 'Even') {
+      if (finalValue % 2 !== 0) {
+        // generated number is odd
+        if (finalValue === max) {
+          finalValue -= 1;
+        } else {
+          finalValue += 1;
+        }
+      }
+    }
     setNumberRandom(finalValue);
   };
 
@@ -43,7 +71,12 @@ export const NumberGenerator = () => {
       setInvalidForm(true);
       setValidForm(false);
     } else {
-      generateRandomNumber(numberMin, numberMax);
+      generateRandomNumber(
+        numberMin,
+        numberMax,
+        selectedOptionOddEven,
+        selectedOptionInclusive,
+      );
       setInvalidForm(false);
       setValidForm(true);
     }
@@ -64,8 +97,6 @@ export const NumberGenerator = () => {
 
   const optionsOddEven = ['Odd/even', 'Odd', 'Even'];
   const optionsInclusive = ['Inclusive', 'Exclusive'];
-
-  console.log(numberRandom);
 
   return (
     <main>
