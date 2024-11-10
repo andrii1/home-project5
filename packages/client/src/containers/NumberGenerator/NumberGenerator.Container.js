@@ -98,18 +98,20 @@ export const NumberGenerator = () => {
         )}
         <div className="form-box submit-box">
           <form>
-            <Dropdown
-              options={optionsOddEven}
-              onSelect={(option) => setSelectedOptionOddEven(option)}
-              showFilterIcon={false}
-              showLabel={false}
-            />
-            <Dropdown
-              options={optionsInclusive}
-              onSelect={(option) => setSelectedOptionInclusive(option)}
-              showFilterIcon={false}
-              showLabel={false}
-            />
+            <div className="container-form-dropdown">
+              <Dropdown
+                options={optionsOddEven}
+                onSelect={(option) => setSelectedOptionOddEven(option)}
+                showFilterIcon={false}
+                showLabel={false}
+              />
+              <Dropdown
+                options={optionsInclusive}
+                onSelect={(option) => setSelectedOptionInclusive(option)}
+                showFilterIcon={false}
+                showLabel={false}
+              />
+            </div>
             <TextFormInput
               value={numberMin}
               placeholder="Number min"

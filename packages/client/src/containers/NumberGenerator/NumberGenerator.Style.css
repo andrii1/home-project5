@@ -19,3 +19,8 @@
   justify-content: right;
   width: 100%;
 }
+
+.container-form-dropdown {
+  display: flex;
+  gap: 2rem;
+}
