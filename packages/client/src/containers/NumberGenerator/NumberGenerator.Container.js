@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './NumberGenerator.Style.css';
 import { apiURL } from '../../apiURL';
@@ -13,6 +13,7 @@ import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import { useUserContext } from '../../userContext';
 
 export const NumberGenerator = () => {
+  const { numberMinParam, numberMaxParam } = useParams();
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
@@ -27,6 +28,17 @@ export const NumberGenerator = () => {
     useState('Odd/Even');
   const [selectedOptionInclusive, setSelectedOptionInclusive] =
     useState('Inclusive');
+
+  useEffect(() => {
+    if (numberMinParam && numberMaxParam) {
+      generateRandomNumber(
+        numberMinParam,
+        numberMaxParam,
+        'Odd/Even',
+        'Inclusive',
+      );
+    }
+  }, [numberMinParam, numberMaxParam]);
 
   const generateRandomNumber = (min, max, optionOdd, optionInclusive) => {
     const minCeiled = Math.ceil(min);
@@ -101,13 +113,25 @@ export const NumberGenerator = () => {
   return (
     <main>
       <Helmet>
-        <title>Number Generator</title>
+        <title>
+          {numberMinParam && numberMaxParam
+            ? `${numberMinParam} - ${numberMaxParam} generator`
+            : 'Number generator'}
+        </title>
         <meta name="description" content="Random number generator" />
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Number generator</h1>
-        <p className="subheading">Generate random number from 1 to 100</p>
+        <h1 className="hero-header">
+          {numberMinParam && numberMaxParam
+            ? `${numberMinParam} - ${numberMaxParam} generator`
+            : 'Number generator'}
+        </h1>
+        <p className="subheading">
+          {numberMinParam && numberMaxParam
+            ? `Generate random number from ${numberMinParam} to ${numberMaxParam}`
+            : 'Generate random number'}
+        </p>
       </div>
       <section className="container-tool">
         {numberRandom && (
@@ -145,13 +169,13 @@ export const NumberGenerator = () => {
             </div>
             <TextFormInput
               value={numberMin}
-              placeholder="Number min"
+              placeholder={numberMinParam || 'Number min'}
               onChange={validateNumberMin}
               error={numberMinError}
             />
             <TextFormInput
               value={numberMax}
-              placeholder="Number max"
+              placeholder={numberMaxParam || 'Number max'}
               onChange={validateNumberMax}
               error={numberMaxError}
             />

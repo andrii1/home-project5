@@ -32,6 +32,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/numbergenerator" element={<NumberGenerator />} />
+            <Route
+              exact
+              path="/numbergenerator/:numberMinParam/:numberMaxParam"
+              element={<NumberGenerator />}
+            />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
