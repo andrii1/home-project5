@@ -129,8 +129,8 @@ export const NumberGenerator = () => {
         </h1>
         <p className="subheading">
           {numberMinParam && numberMaxParam
-            ? `Generate random number from ${numberMinParam} to ${numberMaxParam}`
-            : 'Generate random number'}
+            ? `Generate a random number from ${numberMinParam} to ${numberMaxParam}`
+            : 'Generate a random number'}
         </p>
       </div>
       <section className="container-tool">
