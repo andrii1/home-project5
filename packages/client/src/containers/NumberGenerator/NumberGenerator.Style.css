@@ -24,3 +24,19 @@
   display: flex;
   gap: 2rem;
 }
+
+@media only screen and (max-width: 992px) {
+  .submit-box {
+    width: 100%;
+    margin-top: 2rem;
+  }
+  .form-box.submit-box {
+    padding: none;
+    width: 90%;
+  }
+  .form-result {
+    width: 90%;
+    min-width: auto;
+    max-width: none;
+  }
+}
