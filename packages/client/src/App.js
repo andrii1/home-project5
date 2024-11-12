@@ -22,6 +22,7 @@ import { Navigation } from './components/Navigation/Navigation.component';
 import { Footer } from './components/Footer/Footer.component';
 import { UserProvider } from './userContext';
 import { NumberGenerator } from './containers/NumberGenerator/NumberGenerator.Container';
+import { RandomNumberWheel } from './containers/RandomNumberWheel/RandomNumberWheel.Container';
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/numbergenerator" element={<NumberGenerator />} />
+            <Route
+              path="/random-number-wheel"
+              element={<RandomNumberWheel />}
+            />
             <Route
               exact
               path="/numbergenerator/:numberMinParam/:numberMaxParam"
