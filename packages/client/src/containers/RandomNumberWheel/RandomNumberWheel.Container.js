@@ -221,7 +221,6 @@ export const RandomNumberWheel = () => {
           rotation={rotation}
           numSectors={numSectors}
         />
-
         <div className="form-box submit-box">
           <form>
             <div className="container-form-dropdown">
@@ -282,6 +281,20 @@ export const RandomNumberWheel = () => {
 
             {invalidForm && <p className="error-message">Form is not valid</p>}
           </form>
+        </div>
+        <div className="container-sources">
+          Sources:
+          <ul>
+            <li>
+              <Link
+                className="simple-link"
+                target="_blank"
+                to="https://github.com/mihailgaberov/Wheel-of-Names/tree/main"
+              >
+                Wheel of names
+              </Link>
+            </li>
+          </ul>
         </div>
         <Modal open={showPopup} toggle={toggleModal}>
           <h2>Congratulations!</h2>

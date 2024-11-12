@@ -3,3 +3,11 @@
   gap: 2rem;
   justify-content: center;
 }
+
+.container-sources {
+  margin-top: 5rem;
+}
+
+.container-sources ul li {
+  list-style-type: initial;
+}
