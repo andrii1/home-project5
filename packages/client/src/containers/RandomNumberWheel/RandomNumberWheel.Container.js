@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useRef } from 'react';
+/* eslint-disable no-nested-ternary */
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './RandomNumberWheel.Style.css';
@@ -11,13 +12,17 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import Toast from '../../components/Toast/Toast.Component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import { useUserContext } from '../../userContext';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import confetti from 'canvas-confetti';
+import Modal from '../../components/Modal/Modal.Component';
+import { capitalize } from '../../utils/capitalize';
 
 export const RandomNumberWheel = () => {
   const { numberMinParam, numberMaxParam } = useParams();
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
-
+  const [spinDirection, setSpinDirection] = useState('clockwise');
   const [numberMin, numberMinError, validateNumberMin] =
     useInputValidation('number');
   const [numberMax, numberMaxError, validateNumberMax] =
@@ -29,7 +34,12 @@ export const RandomNumberWheel = () => {
   const [selectedOptionInclusive, setSelectedOptionInclusive] =
     useState('Inclusive');
 
-  const [items, setItems] = useState(['one', 'two']);
+  const [items, setItems] = useState([]);
+  const [spinning, setSpinning] = useState(false);
+  const [rotation, setRotation] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupWinner, setPopupWinner] = useState(null);
+  const numSectors = items.length;
 
   // useEffect(() => {
   //   if (numberMinParam && numberMaxParam) {
@@ -65,7 +75,12 @@ export const RandomNumberWheel = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (numberMinError || numberMaxError) {
+    if (
+      numberMinError ||
+      numberMaxError ||
+      numberMin === '' ||
+      numberMax === ''
+    ) {
       setInvalidForm(true);
       setValidForm(false);
     } else {
@@ -95,6 +110,87 @@ export const RandomNumberWheel = () => {
 
   const optionsOddEven = ['Odd/even', 'Odd', 'Even'];
   const optionsInclusive = ['Inclusive', 'Exclusive'];
+  const changeSpinDirection = () => {
+    setSpinDirection(
+      spinDirection === 'clockwise' ? 'counterclockwise' : 'clockwise',
+    );
+  };
+
+  const startSpin = () => {
+    if (spinning) return;
+    setSpinning(true);
+
+    // Set the number of full rotations and calculate final rotation
+    const numFullRotations = Math.random() * 5 + 5; // Between 5 and 10 full rotations
+    const totalRotation = numFullRotations * 360;
+    const finalRotation =
+      (rotation +
+        (spinDirection === 'clockwise' ? -totalRotation : totalRotation)) %
+      360;
+
+    const spinDuration = 6000;
+    const easing = (t) => {
+      // Ease-out cubic
+      // eslint-disable-next-line prefer-exponentiation-operator
+      return 1 - Math.pow(1 - t, 3);
+    };
+
+    let startTime;
+
+    const animate = (time) => {
+      if (!startTime) startTime = time;
+      const elapsed = time - startTime;
+      const t = Math.min(elapsed / spinDuration, 1);
+      const easeT = easing(t);
+      const currentRotation =
+        rotation +
+        (spinDirection === 'clockwise' ? -totalRotation : totalRotation) *
+          easeT;
+
+      setRotation(currentRotation);
+
+      if (elapsed < spinDuration) {
+        requestAnimationFrame(animate);
+      } else {
+        setSpinning(false);
+        determineWinner(finalRotation);
+      }
+    };
+
+    requestAnimationFrame(animate);
+  };
+
+  const determineWinner = (finalRotation) => {
+    const sliceAngle = 360 / numSectors;
+    const normalizedRotation = ((finalRotation % 360) + 360) % 360;
+    const winningSector = Math.floor(normalizedRotation / sliceAngle);
+
+    setPopupWinner(items[winningSector]);
+    setShowPopup(true);
+  };
+
+  useEffect(() => {
+    if (showPopup) {
+      startConfetti();
+      const timer = setTimeout(() => setShowPopup(false), 5000); // Hide popup after 5 seconds
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup]);
+
+  const startConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };
+
+  const toggleModal = () => {
+    setShowPopup(false);
+    document.body.style.overflow = 'visible';
+  };
+
+  console.log('n', numberMin === '', numberMax);
 
   return (
     <main>
@@ -120,25 +216,12 @@ export const RandomNumberWheel = () => {
         </p>
       </div>
       <section className="container-tool">
-        <Wheel participants={items} />
+        <Wheel
+          participants={items}
+          rotation={rotation}
+          numSectors={numSectors}
+        />
 
-        {/* {numberRandom !== undefined && (
-          <div className="form-result">
-            {numberRandom}
-            <div className="form-result-options">
-              <button
-                type="button"
-                className="button-copy"
-                onClick={() => copyToClipboard(numberRandom)}
-              >
-                <img src={iconCopy} alt="copy" className="icon-copy" />
-              </button>
-              <Toast open={openToast} overlayClass={`toast ${animation}`}>
-                <span>Copied to clipboard!</span>
-              </Toast>
-            </div>
-          </div>
-        )} */}
         <div className="form-box submit-box">
           <form>
             <div className="container-form-dropdown">
@@ -167,17 +250,43 @@ export const RandomNumberWheel = () => {
               onChange={validateNumberMax}
               error={numberMaxError}
             />
-            <Button
-              primary
-              type="submit"
-              className="btn-add-prompt"
-              onClick={handleSubmit}
-              label="Spin"
-            />
+            <div className="container-buttons-form">
+              {items.length !== 0 && (
+                <Button
+                  secondary
+                  onClick={changeSpinDirection}
+                  disabled={items.length === 0 || spinning}
+                >
+                  {capitalize(spinDirection)}
+                </Button>
+              )}
+              {items.length === 0 ? (
+                <Button
+                  primary
+                  type="submit"
+                  onClick={handleSubmit}
+                  label="Start"
+                />
+              ) : items.length !== 0 ? (
+                <Button
+                  primary
+                  onClick={startSpin}
+                  disabled={items.length === 0 || spinning}
+                >
+                  Spin
+                </Button>
+              ) : (
+                ''
+              )}
+            </div>
 
             {invalidForm && <p className="error-message">Form is not valid</p>}
           </form>
         </div>
+        <Modal open={showPopup} toggle={toggleModal}>
+          <h2>Congratulations!</h2>
+          <h3>{popupWinner}</h3>
+        </Modal>
       </section>
     </main>
   );

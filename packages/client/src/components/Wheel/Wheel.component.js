@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button.component';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import confetti from 'canvas-confetti';
-import Modal from '../Modal/Modal.Component';
 
 import './Wheel.styles.css';
 
@@ -34,23 +32,8 @@ const colors = [
   '#CC294F', // Darker hot pink
 ];
 
-export const Wheel = ({ participants }) => {
-  // const [participants, setParticipants] = useState(['one', 'two']);
-
-  const [spinning, setSpinning] = useState(false);
-  const [rotation, setRotation] = useState(0);
-  const [spinDirection, setSpinDirection] = useState('clockwise');
-
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupWinner, setPopupWinner] = useState(null);
-
+export const Wheel = ({ participants, rotation, numSectors }) => {
   const canvasRef = useRef(null);
-  const numSectors = participants.length;
-
-  const toggleModal = () => {
-    setShowPopup(false);
-    document.body.style.overflow = 'visible';
-  };
 
   const darkenColor = (color, amount) => {
     let r = parseInt(color.slice(1, 3), 16);
@@ -128,114 +111,24 @@ export const Wheel = ({ participants }) => {
     }
   }, [participants, rotation, drawWheel]);
 
-  const startSpin = () => {
-    if (spinning) return;
-    setSpinning(true);
-
-    // Set the number of full rotations and calculate final rotation
-    const numFullRotations = Math.random() * 5 + 5; // Between 5 and 10 full rotations
-    const totalRotation = numFullRotations * 360;
-    const finalRotation =
-      (rotation +
-        (spinDirection === 'clockwise' ? -totalRotation : totalRotation)) %
-      360;
-
-    const spinDuration = 6000;
-    const easing = (t) => {
-      // Ease-out cubic
-      // eslint-disable-next-line prefer-exponentiation-operator
-      return 1 - Math.pow(1 - t, 3);
-    };
-
-    let startTime;
-
-    const animate = (time) => {
-      if (!startTime) startTime = time;
-      const elapsed = time - startTime;
-      const t = Math.min(elapsed / spinDuration, 1);
-      const easeT = easing(t);
-      const currentRotation =
-        rotation +
-        (spinDirection === 'clockwise' ? -totalRotation : totalRotation) *
-          easeT;
-
-      setRotation(currentRotation);
-
-      if (elapsed < spinDuration) {
-        requestAnimationFrame(animate);
-      } else {
-        setSpinning(false);
-        determineWinner(finalRotation);
-      }
-    };
-
-    requestAnimationFrame(animate);
-  };
-
-  const determineWinner = (finalRotation) => {
-    const sliceAngle = 360 / numSectors;
-    const normalizedRotation = ((finalRotation % 360) + 360) % 360;
-    const winningSector = Math.floor(normalizedRotation / sliceAngle);
-
-    setPopupWinner(participants[winningSector]);
-    setShowPopup(true);
-  };
-
-  const changeSpinDirection = () => {
-    setSpinDirection(
-      spinDirection === 'clockwise' ? 'counterclockwise' : 'clockwise',
-    );
-  };
-
-  useEffect(() => {
-    if (showPopup) {
-      startConfetti();
-      const timer = setTimeout(() => setShowPopup(false), 5000); // Hide popup after 5 seconds
-      return () => clearTimeout(timer);
-    }
-  }, [showPopup]);
-
-  const startConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-    });
-  };
   return (
-    <>
-      <canvas
-        ref={canvasRef}
-        width={400}
-        height={400}
-        style={{ borderRadius: '50%', border: '2px solid black' }}
-      />
-      <Button
-        primary
-        onClick={changeSpinDirection}
-        disabled={participants.length === 0 || spinning}
-      >
-        {spinDirection}
-      </Button>
-      <Button
-        primary
-        onClick={startSpin}
-        disabled={participants.length === 0 || spinning}
-      >
-        Spin1
-      </Button>
-      <Modal open={showPopup} toggle={toggleModal}>
-        <h2>Congratulations!</h2>
-        <h3>{popupWinner}</h3>
-      </Modal>
-    </>
+    <canvas
+      ref={canvasRef}
+      width={400}
+      height={400}
+      style={{ borderRadius: '50%', border: '2px solid black' }}
+    />
   );
 };
 
 Wheel.propTypes = {
   participants: PropTypes.shape,
+  numSectors: PropTypes.string,
+  rotation: PropTypes.string,
 };
 
 Wheel.defaultProps = {
   participants: null,
+  numSectors: null,
+  rotation: null,
 };
