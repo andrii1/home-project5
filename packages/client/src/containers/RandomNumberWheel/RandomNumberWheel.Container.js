@@ -17,7 +17,7 @@ export const RandomNumberWheel = () => {
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
-  const [numberRandom, setNumberRandom] = useState();
+
   const [numberMin, numberMinError, validateNumberMin] =
     useInputValidation('number');
   const [numberMax, numberMaxError, validateNumberMax] =
@@ -29,7 +29,7 @@ export const RandomNumberWheel = () => {
   const [selectedOptionInclusive, setSelectedOptionInclusive] =
     useState('Inclusive');
 
-  const [names, setNames] = useState(['one', 'two']);
+  const [items, setItems] = useState(['one', 'two']);
 
   // useEffect(() => {
   //   if (numberMinParam && numberMaxParam) {
@@ -42,38 +42,39 @@ export const RandomNumberWheel = () => {
   //   }
   // }, [numberMinParam, numberMaxParam]);
 
-  const generateRandomNumber = (min, max) => {
+  const generateRandomNumber = (min, max, optionOdd, optionInclusive) => {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
-    const list = [];
+    let list = [];
     for (let i = minCeiled; i <= maxFloored; i += 1) {
       list.push(i);
     }
-    const listArrayOfObjects = list.map((item) => {
-      return {
-        option: `${item}`,
-      };
-    });
 
-    const newPrizeNumber = Math.floor(
-      Math.random() * listArrayOfObjects.length,
-    );
+    if (optionInclusive === 'Exclusive') {
+      list.pop();
+    }
 
-    // const newPrizeNumber = Math.floor(
-    //   Math.random() * listArrayOfObjects.length,
-    // );
-    // setPrizeNumber(newPrizeNumber);
-    // setSpinnerData(listArrayOfObjects);
-    // setMustSpin(true);
+    if (optionOdd === 'Odd') {
+      list = list.filter((n) => n % 2 !== 0);
+    } else if (optionOdd === 'Even') {
+      list = list.filter((n) => n % 2 === 0);
+    }
+
+    setItems(list);
   };
 
   const handleSubmit = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
     if (numberMinError || numberMaxError) {
       setInvalidForm(true);
       setValidForm(false);
     } else {
-      generateRandomNumber(numberMin, numberMax);
+      generateRandomNumber(
+        numberMin,
+        numberMax,
+        selectedOptionOddEven,
+        selectedOptionInclusive,
+      );
       setInvalidForm(false);
       setValidForm(true);
     }
@@ -119,9 +120,9 @@ export const RandomNumberWheel = () => {
         </p>
       </div>
       <section className="container-tool">
-        <Wheel participants={names} />
+        <Wheel participants={items} />
 
-        {numberRandom !== undefined && (
+        {/* {numberRandom !== undefined && (
           <div className="form-result">
             {numberRandom}
             <div className="form-result-options">
@@ -137,7 +138,7 @@ export const RandomNumberWheel = () => {
               </Toast>
             </div>
           </div>
-        )}
+        )} */}
         <div className="form-box submit-box">
           <form>
             <div className="container-form-dropdown">
@@ -168,8 +169,9 @@ export const RandomNumberWheel = () => {
             />
             <Button
               primary
+              type="submit"
               className="btn-add-prompt"
-              onClick={() => generateRandomNumber(numberMin, numberMax)}
+              onClick={handleSubmit}
               label="Spin"
             />
 
