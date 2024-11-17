@@ -34,9 +34,14 @@ async function generateSitemap() {
       { numberMinParam: 0, numberMaxParam: 9 },
     ];
     const idMapNumbers = [];
+    const idMapWheel = [];
 
     numbers.forEach((number) => {
       idMapNumbers.push({
+        numberMinParam: number.numberMinParam,
+        numberMaxParam: number.numberMaxParam,
+      });
+      idMapWheel.push({
         numberMinParam: number.numberMinParam,
         numberMaxParam: number.numberMaxParam,
       });
@@ -56,6 +61,7 @@ async function generateSitemap() {
 
     const paramsConfig = {
       '/numbergenerator/:numberMinParam/:numberMaxParam': idMapNumbers,
+      '/random-number-wheel/:numberMinParam/:numberMaxParam': idMapWheel,
       // '/apps/:id': idMap,
       // '/apps/topic/:topicIdParam': idMapTopics,
       // '/apps/category/:categoryIdParam': idMapCategories,

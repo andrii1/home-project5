@@ -42,6 +42,11 @@ function App() {
               path="/numbergenerator/:numberMinParam/:numberMaxParam"
               element={<NumberGenerator />}
             />
+            <Route
+              exact
+              path="/random-number-wheel/:numberMinParam/:numberMaxParam"
+              element={<RandomNumberWheel />}
+            />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

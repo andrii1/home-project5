@@ -41,16 +41,16 @@ export const RandomNumberWheel = () => {
   const [popupWinner, setPopupWinner] = useState(null);
   const numSectors = items.length;
 
-  // useEffect(() => {
-  //   if (numberMinParam && numberMaxParam) {
-  //     generateRandomNumber(
-  //       numberMinParam,
-  //       numberMaxParam,
-  //       'Odd/Even',
-  //       'Inclusive',
-  //     );
-  //   }
-  // }, [numberMinParam, numberMaxParam]);
+  useEffect(() => {
+    if (numberMinParam && numberMaxParam) {
+      generateRandomNumber(
+        numberMinParam,
+        numberMaxParam,
+        'Odd/Even',
+        'Inclusive',
+      );
+    }
+  }, [numberMinParam, numberMaxParam]);
 
   const generateRandomNumber = (min, max, optionOdd, optionInclusive) => {
     const minCeiled = Math.ceil(min);
@@ -190,14 +190,12 @@ export const RandomNumberWheel = () => {
     document.body.style.overflow = 'visible';
   };
 
-  console.log('n', numberMin === '', numberMax);
-
   return (
     <main>
       <Helmet>
         <title>
           {numberMinParam && numberMaxParam
-            ? `${numberMinParam} - ${numberMaxParam} generator`
+            ? `${numberMinParam} - ${numberMaxParam} wheel generator`
             : 'Random number wheel'}
         </title>
         <meta name="description" content="Random number wheel" />
@@ -206,7 +204,7 @@ export const RandomNumberWheel = () => {
       <div className="hero">
         <h1 className="hero-header">
           {numberMinParam && numberMaxParam
-            ? `${numberMinParam} - ${numberMaxParam} generator`
+            ? `${numberMinParam} - ${numberMaxParam} wheel generator`
             : 'Random number wheel'}
         </h1>
         <p className="subheading">
