@@ -7,13 +7,14 @@ const TextFormInput = ({
   type,
   placeholder,
   error,
+  label,
   onChange,
   className,
+  classNameWrapper,
 }) => {
   return (
-    <div className="input-wrapper">
-      {/* {label && <label>{label}</label>} */}
-
+    <div className={['input-wrapper', classNameWrapper].join(' ')}>
+      {label && <label>{label}</label>}
       <input
         className={['form-input', className].join(' ')}
         placeholder={placeholder}
@@ -30,15 +31,19 @@ const TextFormInput = ({
 
 TextFormInput.propTypes = {
   value: PropTypes.string.isRequired,
+  label: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   error: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   className: PropTypes.string,
+  classNameWrapper: PropTypes.string,
 };
 
 TextFormInput.defaultProps = {
   className: null,
+  classNameWrapper: null,
+  label: null,
 };
 
 export default TextFormInput;

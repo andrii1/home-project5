@@ -237,18 +237,24 @@ export const RandomNumberWheel = () => {
                 showLabel={false}
               />
             </div>
-            <TextFormInput
-              value={numberMin}
-              placeholder={numberMinParam || 'Number min'}
-              onChange={validateNumberMin}
-              error={numberMinError}
-            />
-            <TextFormInput
-              value={numberMax}
-              placeholder={numberMaxParam || 'Number max'}
-              onChange={validateNumberMax}
-              error={numberMaxError}
-            />
+            <div className="container-form-inputs">
+              <TextFormInput
+                label="From"
+                value={numberMin}
+                placeholder={numberMinParam || 'Number min'}
+                onChange={validateNumberMin}
+                error={numberMinError}
+                classNameWrapper="row-input"
+              />
+              <TextFormInput
+                label="To"
+                value={numberMax}
+                placeholder={numberMaxParam || 'Number max'}
+                onChange={validateNumberMax}
+                error={numberMaxError}
+                classNameWrapper="row-input"
+              />
+            </div>
             <div className="container-buttons-form">
               {items.length !== 0 && (
                 <Button

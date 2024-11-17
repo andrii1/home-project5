@@ -2,6 +2,7 @@
   display: flex;
   gap: 2rem;
   justify-content: center;
+  margin-top: 1rem;
 }
 
 .container-sources {
@@ -10,4 +11,11 @@
 
 .container-sources ul li {
   list-style-type: initial;
+}
+
+@media only screen and (min-width: 992px) {
+  .container-form-inputs {
+    display: flex;
+    gap: 2rem;
+  }
 }
