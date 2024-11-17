@@ -23,6 +23,7 @@ import { Footer } from './components/Footer/Footer.component';
 import { UserProvider } from './userContext';
 import { NumberGenerator } from './containers/NumberGenerator/NumberGenerator.Container';
 import { RandomNumberWheel } from './containers/RandomNumberWheel/RandomNumberWheel.Container';
+import { ListRandomizerWheel } from './containers/ListRandomizerWheel/ListRandomizerWheel.Container';
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
               exact
               path="/random-number-wheel/:numberMinParam/:numberMaxParam"
               element={<RandomNumberWheel />}
+            />
+            <Route
+              path="/list-randomizer-wheel"
+              element={<ListRandomizerWheel />}
             />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />

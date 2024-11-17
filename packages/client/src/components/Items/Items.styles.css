@@ -1,0 +1,23 @@
+.container-input-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.container-input-button .input-wrapper {
+  flex: 1;
+}
+
+.list-items-wheel {
+  text-align: left;
+}
+
+.container-item-button-wheel {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.container-item-button-wheel li {
+  flex: 1;
+}
