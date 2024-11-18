@@ -9,6 +9,8 @@ export default (
     <Route exact path="/numbergenerator/:numberMinParam/:numberMaxParam" />
     <Route path="/random-number-wheel" />
     <Route exact path="/random-number-wheel/:numberMinParam/:numberMaxParam" />
+    <Route path="/list-randomizer-wheel" />
+    <Route path="/random-color-generator-react" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

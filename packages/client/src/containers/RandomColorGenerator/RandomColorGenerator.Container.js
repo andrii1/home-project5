@@ -56,47 +56,56 @@ export const RandomColorGenerator = () => {
   };
 
   return (
-    <div className="random-color-generator-container">
-      <div className="button-group">
-        <Button
-          onClick={() => setTypeOfColor('hex')}
-          tertiary={typeOfColor === 'hex'}
-          secondary={typeOfColor !== 'hex'}
-          label="Create HEX Color"
-        />
-        <Button
-          onClick={() => setTypeOfColor('rgb')}
-          tertiary={typeOfColor === 'rgb'}
-          secondary={typeOfColor !== 'rgb'}
-          label="Create RGB Color"
-        />
-        <Button
-          onClick={
-            typeOfColor === 'hex'
-              ? handleCreateRandomHexColor
-              : handleCreateRandomRgbColor
-          }
-          primary
-          label="Generate Random Color"
-        />
+    <main>
+      <Helmet>
+        <title>Random color generator React</title>
+        <meta name="description" content="Random color generator React" />
+      </Helmet>
+      <div className="hero">
+        <h1 className="hero-header">Random color generator</h1>
       </div>
-      <div
-        className="random-color-result-container"
-        style={{ backgroundColor: color }}
-      >
-        <h1>{typeOfColor === 'hex' ? 'HEX Color' : 'RGB Color'}</h1>
-        <h3>{color}</h3>
-        <button
-          type="button"
-          className="button-copy"
-          onClick={() => copyToClipboard(color)}
+      <div className="random-color-generator-container">
+        <div className="button-group">
+          <Button
+            onClick={() => setTypeOfColor('hex')}
+            tertiary={typeOfColor === 'hex'}
+            secondary={typeOfColor !== 'hex'}
+            label="Create HEX Color"
+          />
+          <Button
+            onClick={() => setTypeOfColor('rgb')}
+            tertiary={typeOfColor === 'rgb'}
+            secondary={typeOfColor !== 'rgb'}
+            label="Create RGB Color"
+          />
+          <Button
+            onClick={
+              typeOfColor === 'hex'
+                ? handleCreateRandomHexColor
+                : handleCreateRandomRgbColor
+            }
+            primary
+            label="Generate Random Color"
+          />
+        </div>
+        <div
+          className="random-color-result-container"
+          style={{ backgroundColor: color }}
         >
-          <FontAwesomeIcon icon={faCopy} size="lg" color="white" />
-        </button>
-        <Toast open={openToast} overlayClass={`toast ${animation}`}>
-          <span>Copied to clipboard!</span>
-        </Toast>
+          <h1>{typeOfColor === 'hex' ? 'HEX Color' : 'RGB Color'}</h1>
+          <h3>{color}</h3>
+          <button
+            type="button"
+            className="button-copy"
+            onClick={() => copyToClipboard(color)}
+          >
+            <FontAwesomeIcon icon={faCopy} size="lg" color="white" />
+          </button>
+          <Toast open={openToast} overlayClass={`toast ${animation}`}>
+            <span>Copied to clipboard!</span>
+          </Toast>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
