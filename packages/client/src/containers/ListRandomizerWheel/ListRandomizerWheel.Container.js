@@ -1,16 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './ListRandomizerWheel.Style.css';
-import { apiURL } from '../../apiURL';
 import { Button } from '../../components/Button/Button.component';
 import { Wheel } from '../../components/Wheel/Wheel.component';
 import iconCopy from '../../assets/images/icons8-copy-24.png';
-import useInputValidation from '../../utils/hooks/useInputValidation';
-import TextFormInput from '../../components/Input/TextFormInput.component';
 import Toast from '../../components/Toast/Toast.Component';
-import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import { useUserContext } from '../../userContext';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import confetti from 'canvas-confetti';
@@ -22,19 +18,9 @@ import { Items } from '../../components/Items/Items.component';
 export const ListRandomizerWheel = () => {
   const { numberMinParam, numberMaxParam } = useParams();
   const { user } = useUserContext();
-  const [validForm, setValidForm] = useState(false);
-  const [invalidForm, setInvalidForm] = useState(false);
   const [spinDirection, setSpinDirection] = useState('clockwise');
-  const [numberMin, numberMinError, validateNumberMin] =
-    useInputValidation('number');
-  const [numberMax, numberMaxError, validateNumberMax] =
-    useInputValidation('number');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
-  const [selectedOptionOddEven, setSelectedOptionOddEven] =
-    useState('Odd/Even');
-  const [selectedOptionInclusive, setSelectedOptionInclusive] =
-    useState('Inclusive');
 
   const [items, setItems] = useState([]);
   const [spinning, setSpinning] = useState(false);
@@ -75,28 +61,6 @@ export const ListRandomizerWheel = () => {
     setItems(list);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (
-      numberMinError ||
-      numberMaxError ||
-      numberMin === '' ||
-      numberMax === ''
-    ) {
-      setInvalidForm(true);
-      setValidForm(false);
-    } else {
-      generateRandomNumber(
-        numberMin,
-        numberMax,
-        selectedOptionOddEven,
-        selectedOptionInclusive,
-      );
-      setInvalidForm(false);
-      setValidForm(true);
-    }
-  };
-
   const copyToClipboard = (item) => {
     navigator.clipboard.writeText(item);
     setOpenToast(true);
@@ -110,8 +74,6 @@ export const ListRandomizerWheel = () => {
     }, 2500);
   };
 
-  const optionsOddEven = ['Odd/even', 'Odd', 'Even'];
-  const optionsInclusive = ['Inclusive', 'Exclusive'];
   const changeSpinDirection = () => {
     setSpinDirection(
       spinDirection === 'clockwise' ? 'counterclockwise' : 'clockwise',
@@ -205,25 +167,13 @@ export const ListRandomizerWheel = () => {
   return (
     <main>
       <Helmet>
-        <title>
-          {numberMinParam && numberMaxParam
-            ? `${numberMinParam} - ${numberMaxParam} wheel generator`
-            : 'List randomizer wheel'}
-        </title>
+        <title>List randomizer wheel</title>
         <meta name="description" content="List randomizer wheel" />
       </Helmet>
-      {/* <div className="hero"></div> */}
+
       <div className="hero">
-        <h1 className="hero-header">
-          {numberMinParam && numberMaxParam
-            ? `${numberMinParam} - ${numberMaxParam} wheel generator`
-            : 'List randomizer wheel'}
-        </h1>
-        <p className="subheading">
-          {numberMinParam && numberMaxParam
-            ? `Generate a random number from ${numberMinParam} to ${numberMaxParam}`
-            : 'Choose a random item from list'}
-        </p>
+        <h1 className="hero-header">List randomizer wheel</h1>
+        <p className="subheading">Choose a random item from list</p>
       </div>
       <section className="container-tool">
         <Wheel
@@ -239,73 +189,15 @@ export const ListRandomizerWheel = () => {
             // sortNames={sortNames}
             items={items}
           />
-          {/* <form>
-            <div className="container-form-dropdown">
-              <Dropdown
-                options={optionsOddEven}
-                onSelect={(option) => setSelectedOptionOddEven(option)}
-                showFilterIcon={false}
-                showLabel={false}
-              />
-              <Dropdown
-                options={optionsInclusive}
-                onSelect={(option) => setSelectedOptionInclusive(option)}
-                showFilterIcon={false}
-                showLabel={false}
-              />
-            </div>
-            <div className="container-form-inputs">
-              <TextFormInput
-                label="From"
-                value={numberMin}
-                placeholder={numberMinParam || 'Number min'}
-                onChange={validateNumberMin}
-                error={numberMinError}
-                classNameWrapper="row-input"
-              />
-              <TextFormInput
-                label="To"
-                value={numberMax}
-                placeholder={numberMaxParam || 'Number max'}
-                onChange={validateNumberMax}
-                error={numberMaxError}
-                classNameWrapper="row-input"
-              />
-            </div>
-            <div className="container-buttons-form">
-              {items.length !== 0 && (
-                <Button
-                  secondary
-                  onClick={changeSpinDirection}
-                  disabled={items.length === 0 || spinning}
-                >
-                  {capitalize(spinDirection)}
-                </Button>
-              )}
-              {items.length === 0 ? (
-                <Button
-                  primary
-                  type="submit"
-                  onClick={handleSubmit}
-                  label="Start"
-                />
-              ) : items.length !== 0 ? (
-                <Button
-                  primary
-                  onClick={startSpin}
-                  disabled={items.length === 0 || spinning}
-                >
-                  Spin
-                </Button>
-              ) : (
-                ''
-              )}
-            </div>
-
-            {invalidForm && <p className="error-message">Form is not valid</p>}
-          </form> */}
           {items.length > 1 ? (
-            <div>
+            <div className="container-buttons-form">
+              <Button
+                secondary
+                onClick={changeSpinDirection}
+                disabled={items.length === 0 || spinning}
+              >
+                {capitalize(spinDirection)}
+              </Button>
               <Button
                 primary
                 onClick={startSpin}

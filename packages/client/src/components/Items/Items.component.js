@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Items.styles.css';
 import TextFormInput from '../Input/TextFormInput.component';
@@ -10,8 +10,6 @@ export const Items = ({ handleAddItem, handleRemoveItem, items }) => {
   const [invalidForm, setInvalidForm] = useState(false);
 
   const isMaxItemsReached = items.length > MAX_ITEMS_WHEEL;
-
-  console.log(listItem);
 
   const handleSubmit = (event) => {
     if (listItem === '' || isMaxItemsReached) {
