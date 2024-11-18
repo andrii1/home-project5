@@ -25,6 +25,7 @@ import { NumberGenerator } from './containers/NumberGenerator/NumberGenerator.Co
 import { RandomNumberWheel } from './containers/RandomNumberWheel/RandomNumberWheel.Container';
 import { ListRandomizerWheel } from './containers/ListRandomizerWheel/ListRandomizerWheel.Container';
 import { RandomColorGenerator } from './containers/RandomColorGenerator/RandomColorGenerator.Container';
+import { RandomQrCode } from './containers/RandomQrCode/RandomQrCode.Container';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
               path="/random-color-generator-react"
               element={<RandomColorGenerator />}
             />
+            <Route path="/random-qr-code" element={<RandomQrCode />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
