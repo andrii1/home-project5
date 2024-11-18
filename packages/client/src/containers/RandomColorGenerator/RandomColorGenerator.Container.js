@@ -1,12 +1,19 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Button } from '../../components/Button/Button.component';
 import './RandomColorGenerator.Style.css';
+import iconCopy from '../../assets/images/icons8-copy-24.png';
+import Toast from '../../components/Toast/Toast.Component';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
 
 export const RandomColorGenerator = () => {
   const [typeOfColor, setTypeOfColor] = useState('hex');
   const [color, setColor] = useState();
+  const [openToast, setOpenToast] = useState(false);
+  const [animation, setAnimation] = useState('');
 
   const handleCreateRandomHexColor = useCallback(() => {
     const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
@@ -33,6 +40,19 @@ export const RandomColorGenerator = () => {
 
   const createRandomNumber = (length) => {
     return Math.floor(Math.random() * length);
+  };
+
+  const copyToClipboard = (item) => {
+    navigator.clipboard.writeText(item);
+    setOpenToast(true);
+    setAnimation('open-animation');
+
+    setTimeout(() => {
+      setAnimation('close-animation');
+    }, 2000);
+    setTimeout(() => {
+      setOpenToast(false);
+    }, 2500);
   };
 
   return (
@@ -66,6 +86,16 @@ export const RandomColorGenerator = () => {
       >
         <h1>{typeOfColor === 'hex' ? 'HEX Color' : 'RGB Color'}</h1>
         <h3>{color}</h3>
+        <button
+          type="button"
+          className="button-copy"
+          onClick={() => copyToClipboard(color)}
+        >
+          <FontAwesomeIcon icon={faCopy} size="lg" color="white" />
+        </button>
+        <Toast open={openToast} overlayClass={`toast ${animation}`}>
+          <span>Copied to clipboard!</span>
+        </Toast>
       </div>
     </div>
   );
