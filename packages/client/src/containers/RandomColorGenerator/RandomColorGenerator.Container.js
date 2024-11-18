@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Button } from '../../components/Button/Button.component';
@@ -8,27 +8,33 @@ export const RandomColorGenerator = () => {
   const [typeOfColor, setTypeOfColor] = useState('hex');
   const [color, setColor] = useState();
 
-  const createRandomNumber = (length) => {
-    return Math.floor(Math.random() * length);
-  };
-
-  const handleCreateRandomHexColor = () => {
+  const handleCreateRandomHexColor = useCallback(() => {
     const hex = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F'];
     let hexColor = '#';
     for (let i = 0; i < 6; i += 1) {
       hexColor += hex[createRandomNumber(hex.length)];
     }
     setColor(hexColor);
-  };
-  const handleCreateRandomRgbColor = () => {
+  }, []);
+
+  const handleCreateRandomRgbColor = useCallback(() => {
     const r = createRandomNumber(256);
     const g = createRandomNumber(256);
     const b = createRandomNumber(256);
 
     setColor(`rgb(${r},${g},${b})`);
+  }, []);
+
+  useEffect(() => {
+    if (typeOfColor === 'hex') {
+      handleCreateRandomHexColor();
+    } else handleCreateRandomRgbColor();
+  }, [typeOfColor, handleCreateRandomHexColor, handleCreateRandomRgbColor]);
+
+  const createRandomNumber = (length) => {
+    return Math.floor(Math.random() * length);
   };
-  console.log(typeOfColor);
-  console.log(color);
+
   return (
     <div className="random-color-generator-container">
       <div className="button-group">
@@ -36,13 +42,13 @@ export const RandomColorGenerator = () => {
           onClick={() => setTypeOfColor('hex')}
           tertiary={typeOfColor === 'hex'}
           secondary={typeOfColor !== 'hex'}
-          label="HEX Color"
+          label="Create HEX Color"
         />
         <Button
           onClick={() => setTypeOfColor('rgb')}
           tertiary={typeOfColor === 'rgb'}
           secondary={typeOfColor !== 'rgb'}
-          label="RGB Color"
+          label="Create RGB Color"
         />
         <Button
           onClick={
@@ -57,7 +63,10 @@ export const RandomColorGenerator = () => {
       <div
         className="random-color-result-container"
         style={{ backgroundColor: color }}
-      ></div>
+      >
+        <h1>{typeOfColor === 'hex' ? 'HEX Color' : 'RGB Color'}</h1>
+        <h3>{color}</h3>
+      </div>
     </div>
   );
 };
