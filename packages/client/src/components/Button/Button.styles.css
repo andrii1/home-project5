@@ -22,9 +22,8 @@
 }
 
 .storybook-button--tertiary {
-  color: #e5989b;
-  background-color: #000;
-  box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset;
+  color: white;
+  background-color: #6d6875;
 }
 
 .storybook-button--lighterBg {
