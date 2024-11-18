@@ -1,0 +1,9 @@
+.random-color-generator-container {
+  display: flex;
+  justify-content: center;
+}
+
+.random-color-generator-container .button-group {
+  display: flex;
+  gap: 1rem;
+}

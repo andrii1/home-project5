@@ -24,6 +24,7 @@ import { UserProvider } from './userContext';
 import { NumberGenerator } from './containers/NumberGenerator/NumberGenerator.Container';
 import { RandomNumberWheel } from './containers/RandomNumberWheel/RandomNumberWheel.Container';
 import { ListRandomizerWheel } from './containers/ListRandomizerWheel/ListRandomizerWheel.Container';
+import { RandomColorGenerator } from './containers/RandomColorGenerator/RandomColorGenerator.Container';
 
 function App() {
   return (
@@ -51,6 +52,10 @@ function App() {
             <Route
               path="/list-randomizer-wheel"
               element={<ListRandomizerWheel />}
+            />
+            <Route
+              path="/random-color-generator-react"
+              element={<RandomColorGenerator />}
             />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
