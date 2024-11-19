@@ -7,7 +7,16 @@ import { Button } from '../../components/Button/Button.component';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Home = () => {
-  const tools = [{ id: 1, title: 'Number Generator', url: 'numbergenerator' }];
+  const tools = [
+    { id: 1, title: 'Number Generator', url: 'numbergenerator' },
+    { id: 2, title: 'Random number wheel', url: 'random-number-wheel' },
+    { id: 3, title: 'List randomizer wheel', url: 'list-randomizer-wheel' },
+    {
+      id: 4,
+      title: 'Random color generator React',
+      url: 'random-color-generator-react',
+    },
+  ];
   const cardItems = tools.map((tool) => {
     return (
       <Link to={tool.url}>
