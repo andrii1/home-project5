@@ -11,6 +11,8 @@ export default (
     <Route exact path="/random-number-wheel/:numberMinParam/:numberMaxParam" />
     <Route path="/list-randomizer-wheel" />
     <Route path="/random-color-generator-react" />
+    <Route path="/random-qr-code" />
+    <Route path="/star-rating" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

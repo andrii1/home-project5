@@ -1,0 +1,16 @@
+.qr-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.qr-code-input-container {
+  width: 40rem;
+}
+
+@media only screen and (max-width: 991px) {
+  .qr-code-input-container {
+    width: 90%;
+  }
+}

@@ -26,6 +26,7 @@ import { RandomNumberWheel } from './containers/RandomNumberWheel/RandomNumberWh
 import { ListRandomizerWheel } from './containers/ListRandomizerWheel/ListRandomizerWheel.Container';
 import { RandomColorGenerator } from './containers/RandomColorGenerator/RandomColorGenerator.Container';
 import { RandomQrCode } from './containers/RandomQrCode/RandomQrCode.Container';
+import { StarRatingContainer } from './containers/StarRating/StarRating.Container';
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
               element={<RandomColorGenerator />}
             />
             <Route path="/random-qr-code" element={<RandomQrCode />} />
+            <Route path="/star-rating" element={<StarRatingContainer />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
