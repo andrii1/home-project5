@@ -8,6 +8,7 @@ import './Badge.styles.css';
 export const Badge = ({
   primary,
   secondary,
+  tertiary,
   className,
   backgroundColor,
   color,
@@ -20,6 +21,8 @@ export const Badge = ({
     mode = 'storybook-badge--primary';
   } else if (secondary) {
     mode = 'storybook-badge--secondary';
+  } else if (tertiary) {
+    mode = 'storybook-badge--tertiary';
   } else {
     mode = 'storybook-badge--tertiary';
   }
@@ -45,6 +48,7 @@ Badge.propTypes = {
    */
   primary: PropTypes.bool,
   secondary: PropTypes.bool,
+  tertiary: PropTypes.bool,
 
   /**
    * What background color to use
@@ -75,6 +79,7 @@ Badge.defaultProps = {
   color: null,
   primary: false,
   secondary: false,
+  tertiary: false,
   size: 'medium',
   onClick: undefined,
 };
