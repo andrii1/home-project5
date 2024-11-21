@@ -152,7 +152,7 @@ export const NumberGenerator = () => {
           </div>
         )}
         <div className="form-box submit-box">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="container-form-dropdown">
               <Dropdown
                 options={optionsOddEven}
@@ -180,12 +180,11 @@ export const NumberGenerator = () => {
               error={numberMaxError}
             />
             <Button
+              type="submit"
               primary
               className="btn-add-prompt"
-              onClick={handleSubmit}
               label="Go"
             />
-
             {invalidForm && <p className="error-message">Form is not valid</p>}
           </form>
         </div>
