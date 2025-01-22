@@ -28,6 +28,7 @@ import { RandomColorGenerator } from './containers/RandomColorGenerator/RandomCo
 import { RandomQrCode } from './containers/RandomQrCode/RandomQrCode.Container';
 import { StarRatingContainer } from './containers/StarRating/StarRating.Container';
 import { GithubProfileSearch } from './containers/GithubProfileSearch/GithubProfileSearch.Container';
+import { WeatherApp } from './containers/WeatherApp/WeatherApp.Container';
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               path="/github-profile-search"
               element={<GithubProfileSearch />}
             />
+            <Route path="/weather-app" element={<WeatherApp />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
