@@ -25,14 +25,18 @@ export const GithubProfileSearch = () => {
   const [loading, setLoading] = useState(false);
 
   const handleGithubSearch = async () => {
+    setLoading(true);
     const response = await fetch(`https://api.github.com/users/${search}`);
     const data = await response.json();
     if (data.status === '404') {
       setError(data.message);
+      setUserData(null);
     } else {
       setUserData(data);
+      setError(null);
     }
     setSearch('');
+    setLoading(false);
   };
 
   const keywordBadges = keywords.map((keyword) => {
