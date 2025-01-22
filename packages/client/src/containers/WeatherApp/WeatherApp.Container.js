@@ -18,25 +18,35 @@ const keywords = [
   'profile lookup github',
   'github user finder',
 ];
+
 export const WeatherApp = () => {
   const [search, setSearch] = useState();
   const [userData, setUserData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
-  const handleGithubSearch = async () => {
+  const fetchWeather = async (param) => {
     setLoading(true);
-    const response = await fetch(`https://api.github.com/users/${search}`);
-    const data = await response.json();
-    if (data.status === '404') {
-      setError(data.message);
-      setUserData(null);
-    } else {
-      setUserData(data);
-      setError(null);
+    try {
+      const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${param}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API}`,
+      );
+      const data = await response.json();
+      console.log(data);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch');
+      }
+      // setUserData(data);
+
+      setSearch('');
+    } catch (e) {
+      setError({ message: e.message || 'An error occured' });
     }
-    setSearch('');
     setLoading(false);
+  };
+
+  const handleSearch = () => {
+    fetchWeather(search);
   };
 
   const keywordBadges = keywords.map((keyword) => {
@@ -58,12 +68,12 @@ export const WeatherApp = () => {
         <div className="github-profile-search-input-container">
           <TextFormInput
             value={search}
-            placeholder="Enter GitHub username"
+            placeholder="Enter city"
             onChange={setSearch}
           />
-          <Button onClick={handleGithubSearch} primary label="Search Github" />
+          <Button onClick={handleSearch} primary label="Search Github" />
         </div>
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{error.message}</p>}
         {userData && <UserCard user={userData} />}
       </div>
       <div className="keywords-container">{keywordBadges}</div>
