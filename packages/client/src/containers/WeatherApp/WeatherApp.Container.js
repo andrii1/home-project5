@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './WeatherApp.Style.css';
@@ -21,7 +21,7 @@ const keywords = [
 
 export const WeatherApp = () => {
   const [search, setSearch] = useState();
-  const [userData, setUserData] = useState();
+  const [weatherData, setWeatherData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -36,25 +36,36 @@ export const WeatherApp = () => {
       if (!response.ok) {
         throw new Error(data.message || 'Failed to fetch');
       }
-      // setUserData(data);
+      setWeatherData(data);
+      setError(null);
 
-      setSearch('');
+      // setSearch('');
     } catch (e) {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
   };
 
+  useEffect(() => {
+    fetchWeather('London');
+  }, []);
+
   const handleSearch = () => {
     fetchWeather(search);
+    setSearch('');
   };
 
   const keywordBadges = keywords.map((keyword) => {
     return <Badge tertiary label={keyword} />;
   });
-
-  if (loading) return <p>Loading...</p>;
-
+  const getCurrentDate = () => {
+    return new Date().toLocaleDateString('en-us', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
   return (
     <main>
       <Helmet>
@@ -71,10 +82,33 @@ export const WeatherApp = () => {
             placeholder="Enter city"
             onChange={setSearch}
           />
-          <Button onClick={handleSearch} primary label="Search Github" />
+          <Button onClick={handleSearch} primary label="Search" />
         </div>
-        {error && <p className="error-message">{error.message}</p>}
-        {userData && <UserCard user={userData} />}
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            {error && <p className="error-message">{error.message}</p>}
+            {weatherData && !error && (
+              <div className="weather-app-container">
+                <h2>
+                  {weatherData?.name}, {weatherData?.sys?.country}
+                </h2>
+                <div>{getCurrentDate()}</div>
+                <div>{weatherData?.main?.temp}</div>
+                <div>{weatherData?.weather?.[0].main}</div>
+                <div>
+                  <p>{weatherData?.wind?.speed}</p>
+                  <p>Wind speed</p>
+                </div>
+                <div>
+                  <span>{weatherData?.main?.humidity}</span>
+                  <p>Humidity</p>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
       <div className="keywords-container">{keywordBadges}</div>
     </main>

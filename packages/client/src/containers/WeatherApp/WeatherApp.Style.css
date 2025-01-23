@@ -1,8 +1,12 @@
-.github-profile-search-container {
+.weather-app-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+}
+
+.weather-app-container p {
+  margin: 0rem;
 }
 
 .github-profile-search-input-container {
