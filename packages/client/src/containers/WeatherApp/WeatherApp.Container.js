@@ -9,15 +9,7 @@ import { Badge } from '../../components/Badge/Badge.component';
 import { UserCard } from '../../components/UserCard/UserCard.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 
-const keywords = [
-  'What is my github profile url',
-  'find github email',
-  'how to find github profile link',
-  'github profile search',
-  'github link profile',
-  'profile lookup github',
-  'github user finder',
-];
+const keywords = [];
 
 export const WeatherApp = () => {
   const [search, setSearch] = useState();
@@ -75,8 +67,8 @@ export const WeatherApp = () => {
       <div className="hero">
         <h1 className="hero-header">Weather App</h1>
       </div>
-      <div className="github-profile-search-container">
-        <div className="github-profile-search-input-container">
+      <div className="search-container">
+        <div className="search-input-container">
           <TextFormInput
             value={search}
             placeholder="Enter city"
@@ -110,7 +102,9 @@ export const WeatherApp = () => {
           </>
         )}
       </div>
-      <div className="keywords-container">{keywordBadges}</div>
+      {keywords.length > 0 && (
+        <div className="keywords-container">{keywordBadges}</div>
+      )}
     </main>
   );
 };

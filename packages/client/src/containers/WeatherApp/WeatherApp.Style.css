@@ -5,11 +5,18 @@
   gap: 1rem;
 }
 
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
 .weather-app-container p {
   margin: 0rem;
 }
 
-.github-profile-search-input-container {
+.search-input-container {
   width: 40rem;
 }
 
@@ -22,7 +29,7 @@
 }
 
 @media only screen and (max-width: 991px) {
-  .github-profile-search-input-container,
+  .search-input-container,
   .keywords-container {
     width: 90%;
   }
