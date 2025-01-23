@@ -67,7 +67,7 @@ export const WeatherApp = () => {
       <div className="hero">
         <h1 className="hero-header">Weather App</h1>
       </div>
-      <div className="search-container">
+      <div className="search-container weather">
         <div className="search-input-container">
           <TextFormInput
             value={search}
@@ -76,32 +76,34 @@ export const WeatherApp = () => {
           />
           <Button onClick={handleSearch} primary label="Search" />
         </div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            {error && <p className="error-message">{error.message}</p>}
-            {weatherData && !error && (
-              <div className="weather-app-container">
-                <h2>
-                  {weatherData?.name}, {weatherData?.sys?.country}
-                </h2>
-                <div>{getCurrentDate()}</div>
-                <div>{weatherData?.main?.temp}°C</div>
-                <div>{weatherData?.weather?.[0].main}</div>
-                <div>
-                  <p>{weatherData?.wind?.speed}</p>
-                  <p>Wind speed</p>
-                </div>
-                <div>
-                  <span>{weatherData?.main?.humidity}%</span>
-                  <p>Humidity</p>
-                </div>
-              </div>
-            )}
-          </>
-        )}
       </div>
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          {error && <p className="error-message">{error.message}</p>}
+          {weatherData && !error && (
+            <div className="weather-app-container">
+              <h2>
+                {weatherData?.name}, {weatherData?.sys?.country}
+              </h2>
+              <div>{getCurrentDate()}</div>
+              <div className="temperature">{weatherData?.main?.temp}°C</div>
+              <div className="description">
+                {weatherData?.weather?.[0].main}
+              </div>
+              <div>
+                <p>{weatherData?.wind?.speed}</p>
+                <p>Wind speed</p>
+              </div>
+              <div>
+                <span>{weatherData?.main?.humidity}%</span>
+                <p>Humidity</p>
+              </div>
+            </div>
+          )}
+        </>
+      )}
       {keywords.length > 0 && (
         <div className="keywords-container">{keywordBadges}</div>
       )}

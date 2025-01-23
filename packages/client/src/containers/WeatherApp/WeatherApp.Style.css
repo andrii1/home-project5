@@ -9,11 +9,32 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+}
+
+.search-container.weather .form-input {
+  margin-top: 0rem;
+}
+
+.weather-app-container {
+  width: 40rem;
+  border: 1px solid #efefef;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin: 2rem auto 0 auto;
+  padding: 1rem;
+  background: #edede9;
 }
 
 .weather-app-container p {
   margin: 0rem;
+}
+
+.weather-app-container .temperature {
+  font-size: 3rem;
+}
+
+.weather-app-container .description {
+  font-size: 1.5rem;
 }
 
 .search-input-container {
@@ -31,6 +52,9 @@
 @media only screen and (max-width: 991px) {
   .search-input-container,
   .keywords-container {
+    width: 90%;
+  }
+  .weather-app-container {
     width: 90%;
   }
 }
