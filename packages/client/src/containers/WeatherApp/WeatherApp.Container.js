@@ -21,7 +21,7 @@ export const WeatherApp = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${param}&appid=${process.env.REACT_APP_OPENWEATHERMAP_API}`,
+        `https://api.openweathermap.org/data/2.5/weather?q=${param}&units=metric&appid=${process.env.REACT_APP_OPENWEATHERMAP_API}`,
       );
       const data = await response.json();
       console.log(data);
@@ -87,14 +87,14 @@ export const WeatherApp = () => {
                   {weatherData?.name}, {weatherData?.sys?.country}
                 </h2>
                 <div>{getCurrentDate()}</div>
-                <div>{weatherData?.main?.temp}</div>
+                <div>{weatherData?.main?.temp}°C</div>
                 <div>{weatherData?.weather?.[0].main}</div>
                 <div>
                   <p>{weatherData?.wind?.speed}</p>
                   <p>Wind speed</p>
                 </div>
                 <div>
-                  <span>{weatherData?.main?.humidity}</span>
+                  <span>{weatherData?.main?.humidity}%</span>
                   <p>Humidity</p>
                 </div>
               </div>
