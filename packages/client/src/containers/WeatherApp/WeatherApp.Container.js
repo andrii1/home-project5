@@ -9,6 +9,7 @@ import { Button } from '../../components/Button/Button.component';
 import { Badge } from '../../components/Badge/Badge.component';
 import { UserCard } from '../../components/UserCard/UserCard.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
+import { capitalize } from '../../utils/capitalize';
 
 const keywords = [];
 
@@ -93,11 +94,24 @@ export const WeatherApp = () => {
   return (
     <main>
       <Helmet>
-        <title>Weather App</title>
-        <meta name="description" content="Weather app" />
+        <title>
+          {cityParam ? `${capitalize(cityParam)} weather` : 'Weather App'}
+        </title>
+        <meta
+          name="description"
+          content={
+            cityParam
+              ? `${capitalize(cityParam)} weather, ${capitalize(
+                  cityParam,
+                )} feels like, ground level, pressure, sea level, max temperature, sunrise, sunset, timezone, visibility, wind speed, wind degree, humidity...`
+              : 'Detailed weather forecast'
+          }
+        />
       </Helmet>
       <div className="hero">
-        <h1 className="hero-header">Weather App</h1>
+        <h1 className="hero-header">
+          {cityParam ? `${capitalize(cityParam)} weather` : 'Weather App'}
+        </h1>
       </div>
       <div className="search-container weather">
         <div className="search-input-container">
