@@ -41,6 +41,27 @@ export const WeatherApp = () => {
     setLoading(false);
   };
 
+  // const fetchWeatherAirPollution = async (param) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await fetch(
+  //       `http://api.openweathermap.org/data/2.5/air_pollution?lat=50&lon=50&units=metric&appid=${process.env.REACT_APP_OPENWEATHERMAP_API}`,
+  //     );
+  //     const data = await response.json();
+  //     console.log(data);
+  //     if (!response.ok) {
+  //       throw new Error(data.message || 'Failed to fetch');
+  //     }
+  //     setWeatherData(data);
+  //     setError(null);
+
+  //     // setSearch('');
+  //   } catch (e) {
+  //     setError({ message: e.message || 'An error occured' });
+  //   }
+  //   setLoading(false);
+  // };
+
   useEffect(() => {
     if (cityParam) {
       fetchWeather(cityParam);
@@ -103,7 +124,7 @@ export const WeatherApp = () => {
             cityParam
               ? `${capitalize(cityParam)} weather, ${capitalize(
                   cityParam,
-                )} feels like, ground level, pressure, sea level, max temperature, sunrise, sunset, timezone, visibility, wind speed, wind degree, humidity...`
+                )} feels like, ground level, pressure, sea level, max temperature, sunrise, sunset, timezone, visibility, wind speed, wind degree, humidity, air pollution, fire weather`
               : 'Detailed weather forecast'
           }
         />
