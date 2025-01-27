@@ -84,6 +84,12 @@ export const WeatherApp = () => {
       year: 'numeric',
     });
   };
+
+  const getDateFromTimestamp = (timestamp) => {
+    const date = new Date(timestamp * 1000);
+    return `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  };
+
   return (
     <main>
       <Helmet>
@@ -137,11 +143,18 @@ export const WeatherApp = () => {
                   <p>Max temperature</p>
                 </div>
                 <div>
-                  <p>{weatherData?.sys?.sunrise}</p>
+                  <p>
+                    {weatherData?.sys?.sunrise &&
+                      getDateFromTimestamp(weatherData.sys.sunrise)}
+                  </p>
                   <p>Sunrise</p>
                 </div>
                 <div>
-                  <p>{weatherData?.sys?.sunset}</p> <p>Sunset</p>
+                  <p>
+                    {weatherData?.sys?.sunset &&
+                      getDateFromTimestamp(weatherData.sys.sunset)}
+                  </p>{' '}
+                  <p>Sunset</p>
                 </div>
                 <div>
                   <p>{weatherData?.timezone}</p>
