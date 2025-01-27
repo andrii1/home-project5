@@ -14,6 +14,8 @@ export default (
     <Route path="/random-qr-code" />
     <Route path="/star-rating" />
     <Route path="/github-profile-search" />
+    <Route path="/weather-app" />
+    <Route path="/weather-app/:cityParam" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

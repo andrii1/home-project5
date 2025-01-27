@@ -151,7 +151,6 @@ export const WeatherApp = () => {
                   <p>{weatherData?.visibility}</p>
                   <p>Visibility</p>
                 </div>
-
                 <div>
                   <p>{weatherData?.wind?.speed}</p>
                   <p>Wind speed</p>

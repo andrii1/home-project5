@@ -1,0 +1,18 @@
+export const WEATHER_CITIES = [
+  'Miami',
+  'Toronto',
+  'Bangkok',
+  'Antalya',
+  'London',
+  'New York',
+  'Kyiv',
+  'Warsaw',
+  'Berlin',
+  'Amsterdam',
+  'Phuket',
+  'Lviv',
+  'Ternopil',
+  'Copenhagen',
+  'Oslo',
+  'Palma',
+];

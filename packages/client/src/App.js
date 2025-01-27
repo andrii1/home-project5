@@ -68,6 +68,11 @@ function App() {
               element={<GithubProfileSearch />}
             />
             <Route path="/weather-app" element={<WeatherApp />} />
+            <Route
+              exact
+              path="/weather-app/:cityParam"
+              element={<WeatherApp />}
+            />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
