@@ -29,6 +29,7 @@ import { RandomQrCode } from './containers/RandomQrCode/RandomQrCode.Container';
 import { StarRatingContainer } from './containers/StarRating/StarRating.Container';
 import { GithubProfileSearch } from './containers/GithubProfileSearch/GithubProfileSearch.Container';
 import { WeatherApp } from './containers/WeatherApp/WeatherApp.Container';
+import { EyeGymnastics } from './containers/EyeGymnastics/EyeGymnastics.Container';
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
               path="/weather-app/:cityParam"
               element={<WeatherApp />}
             />
+            <Route path="/eye-gymnastics" element={<EyeGymnastics />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
