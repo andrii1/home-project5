@@ -100,7 +100,7 @@ export const EyeGymnastics = () => {
           ref={canvasRef}
           className="canvas-eye-gymnastics"
           width={window.innerWidth - 50}
-          height={window.innerHeight - 300}
+          height={window.innerHeight - 200}
         >
           1
         </canvas>

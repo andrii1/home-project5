@@ -42,8 +42,13 @@ export const TOOLS = [
     url: 'github-profile-search',
   },
   {
-    id: 7,
+    id: 8,
     title: 'Weather app',
     url: 'weather-app',
+  },
+  {
+    id: 9,
+    title: 'Eye gymnastics',
+    url: 'eye-gymnastics',
   },
 ];
