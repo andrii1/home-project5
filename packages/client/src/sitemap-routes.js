@@ -16,6 +16,7 @@ export default (
     <Route path="/github-profile-search" />
     <Route path="/weather-app" />
     <Route path="/weather-app/:cityParam" />
+    <Route path="/eye-gymnastics" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}
