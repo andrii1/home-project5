@@ -146,7 +146,7 @@ export const BreathingApp = () => {
         <meta name="description" content="Breathing app, meditation" />
       </Helmet>
       {/* <div className="hero"></div> */}
-      <div className="hero">
+      <div className="hero max-width">
         <h1 className="hero-header">Breathing app</h1>
         <p className="subheading">
           Breathe in for a count of 7, then breathe out for a count of 11
