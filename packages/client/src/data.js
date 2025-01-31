@@ -51,4 +51,9 @@ export const TOOLS = [
     title: 'Eye gymnastics',
     url: 'eye-gymnastics',
   },
+  {
+    id: 9,
+    title: '7-11 breathing app',
+    url: '7-11-breathing-app',
+  },
 ];

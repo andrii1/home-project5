@@ -76,7 +76,7 @@ function App() {
               element={<WeatherApp />}
             />
             <Route path="/eye-gymnastics" element={<EyeGymnastics />} />
-            <Route path="/breathing-app" element={<BreathingApp />} />
+            <Route path="/7-11-breathing-app" element={<BreathingApp />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

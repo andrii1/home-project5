@@ -101,11 +101,11 @@ export const BreathingApp = () => {
   return (
     <main>
       <Helmet>
-        <title>Breathing App</title>
-        <meta name="description" content="Breathing app, meditation" />
+        <title>7-11 Breathing App</title>
+        <meta name="description" content="7-11 breathing app, meditation" />
       </Helmet>
       <div className="hero max-width less-margin">
-        <h1 className="hero-header">Breathing app</h1>
+        <h1 className="hero-header">7-11 breathing app</h1>
         <p className="subheading">
           Breathe in for a count of 7, then breathe out for a count of 11
         </p>
