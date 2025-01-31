@@ -11,7 +11,9 @@ let vy = 5;
 let move;
 
 export const BreathingApp = () => {
+  const [count, setCount] = useState(0);
   const [directionHorizontal, setDirectionHorizontal] = useState(false);
+  const [exercisePart, setExercisePart] = useState(undefined);
 
   // const canvasRef = useRef(null);
   // useEffect(() => {
@@ -51,15 +53,15 @@ export const BreathingApp = () => {
   //   };
   // }, [directionHorizontal]);
 
-  useEffect(() => {
-    // Implementing the setInterval method
-    const interval = setInterval(() => {
-      setDirectionHorizontal(!directionHorizontal);
-    }, 9000);
+  // useEffect(() => {
+  //   // Implementing the setInterval method
+  //   const interval = setInterval(() => {
+  //     setDirectionHorizontal(!directionHorizontal);
+  //   }, 9000);
 
-    // Clearing the interval
-    return () => clearInterval(interval);
-  }, [directionHorizontal]);
+  //   // Clearing the interval
+  //   return () => clearInterval(interval);
+  // }, [directionHorizontal]);
 
   // timeOut functionality
   // useEffect(() => {
@@ -72,11 +74,37 @@ export const BreathingApp = () => {
   //   return () => clearTimeout(timeoutId);
   // }, []);
 
-  // const handleClick = () => {
-  //   setTimeout(() => {
+  const handleStart = () => {
+    setTimeout(() => {
+      setExercisePart('breathe-in');
+      setCount(1);
+    }, 0);
+    setTimeout(() => {
+      setExercisePart('breathe-out');
+      setCount(1);
+    }, 7000);
+    setTimeout(() => {
+      setExercisePart('end');
+      setCount(0);
+    }, 18000);
+  };
 
-  //   }, 3000);
-  // };
+  const handleStop = () => {
+    setExercisePart('end');
+    setCount(0);
+  };
+
+  useEffect(() => {
+    let interval;
+    if (exercisePart !== undefined && exercisePart !== 'end') {
+      interval = setInterval(() => {
+        setCount((prevCount) => prevCount + 1);
+      }, 1000);
+    }
+
+    // Clearing the interval
+    return () => clearInterval(interval);
+  }, [exercisePart]);
 
   return (
     <main>
@@ -88,14 +116,22 @@ export const BreathingApp = () => {
       <div className="hero">
         <h1 className="hero-header">Breathing app</h1>
         <p className="subheading">
-          Follow the ball with your eyes (
-          {directionHorizontal ? 'left to right' : 'up-down'})
+          Breathe in for a count of 7, then breathe out for a count of 11
         </p>
-        {/* <Button primary onClick={handleClick}>
-          Start
-        </Button> */}
+        {exercisePart !== undefined && exercisePart !== 'end' ? (
+          <Button primary onClick={handleStop}>
+            Stop
+          </Button>
+        ) : (
+          <Button primary onClick={handleStart}>
+            Start
+          </Button>
+        )}
       </div>
       <section className="container-tool">
+        {count}
+        {exercisePart === 'breathe-in' && <h2>Breathe in</h2>}
+        {exercisePart === 'breathe-out' && <h2>Breathe out</h2>}
         {/* <canvas
           ref={canvasRef}
           className="canvas-eye-gymnastics"
