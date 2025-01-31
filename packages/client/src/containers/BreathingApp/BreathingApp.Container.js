@@ -15,6 +15,7 @@ export const BreathingApp = () => {
   const [count, setCount] = useState(0);
   const [exerciseDuration, setExerciseDuration] = useState(60000);
   const [exercisePart, setExercisePart] = useState(undefined);
+  const [zoom, setZoom] = useState(1);
 
   // const canvasRef = useRef(null);
   // useEffect(() => {
@@ -75,26 +76,28 @@ export const BreathingApp = () => {
   //   return () => clearTimeout(timeoutId);
   // }, []);
 
+  // Start exercise
   const handleStart = () => {
     setTimeout(() => {
       setExercisePart('breathe-in');
       setCount(1);
     }, 0);
-    // setTimeout(() => {
-    //   setExercisePart('breathe-out');
-    //   setCount(1);
-    // }, 7000);
+
     setTimeout(() => {
       setExercisePart('end');
       setCount(0);
+      setZoom(1);
     }, exerciseDuration);
   };
 
+  // End exercise
   const handleStop = () => {
     setExercisePart('end');
     setCount(0);
+    setZoom(1);
   };
 
+  // Counter
   useEffect(() => {
     let interval;
     if (exercisePart !== undefined && exercisePart !== 'end') {
@@ -106,6 +109,23 @@ export const BreathingApp = () => {
     return () => clearInterval(interval);
   }, [exercisePart]);
 
+  // Circle
+  useEffect(() => {
+    let interval;
+    if (exercisePart !== undefined && exercisePart !== 'end') {
+      interval = setInterval(() => {
+        if (exercisePart === 'breathe-in') {
+          setZoom((prevZoom) => prevZoom + 0.01);
+        } else if (exercisePart === 'breathe-out') {
+          setZoom((prevZoom) => prevZoom - 0.01);
+        }
+      }, 100);
+    }
+
+    return () => clearInterval(interval);
+  }, [exercisePart]);
+
+  // Exercise parts
   useEffect(() => {
     let timeoutId;
     if (exercisePart === 'breathe-in') {
@@ -117,6 +137,7 @@ export const BreathingApp = () => {
       timeoutId = setTimeout(() => {
         setExercisePart('breathe-in');
         setCount(1);
+        setZoom(1);
       }, 11000);
     }
 
@@ -137,7 +158,12 @@ export const BreathingApp = () => {
     }
   };
 
+  const styles = {
+    transform: `scale(${zoom})`,
+  };
+
   console.log(exerciseDuration);
+  console.log(zoom);
 
   return (
     <main>
@@ -151,32 +177,29 @@ export const BreathingApp = () => {
         <p className="subheading">
           Breathe in for a count of 7, then breathe out for a count of 11
         </p>
-        <Dropdown
-          options={['1min', '2min', '3min', '5min', '10min']}
-          onSelect={handleSelect}
-        />
-        {exercisePart !== undefined && exercisePart !== 'end' ? (
-          <Button primary onClick={handleStop}>
-            Stop
-          </Button>
-        ) : (
-          <Button primary onClick={handleStart}>
-            Start
-          </Button>
-        )}
       </div>
-      <section className="container-tool">
-        {count}
-        {exercisePart === 'breathe-in' && <h2>Breathe in</h2>}
-        {exercisePart === 'breathe-out' && <h2>Breathe out</h2>}
-        {/* <canvas
-          ref={canvasRef}
-          className="canvas-eye-gymnastics"
-          width={window.innerWidth - 50}
-          height={window.innerHeight - 200}
-        >
-          1
-        </canvas> */}
+      <section className="tool-container">
+        <div className="tool-input">
+          <Dropdown
+            options={['1min', '2min', '3min', '5min', '10min']}
+            onSelect={handleSelect}
+          />
+          {exercisePart !== undefined && exercisePart !== 'end' ? (
+            <Button primary onClick={handleStop}>
+              Stop
+            </Button>
+          ) : (
+            <Button primary onClick={handleStart}>
+              Start
+            </Button>
+          )}
+        </div>
+        <div className="tool-result">
+          <p>{count}</p>
+          {exercisePart === 'breathe-in' && <p>Breathe in</p>}
+          {exercisePart === 'breathe-out' && <p>Breathe out</p>}
+          <span style={styles} className="circle" />
+        </div>
       </section>
     </main>
   );
