@@ -79,14 +79,14 @@ export const BreathingApp = () => {
       setExercisePart('breathe-in');
       setCount(1);
     }, 0);
-    setTimeout(() => {
-      setExercisePart('breathe-out');
-      setCount(1);
-    }, 7000);
+    // setTimeout(() => {
+    //   setExercisePart('breathe-out');
+    //   setCount(1);
+    // }, 7000);
     setTimeout(() => {
       setExercisePart('end');
       setCount(0);
-    }, 18000);
+    }, 30000);
   };
 
   const handleStop = () => {
@@ -102,8 +102,24 @@ export const BreathingApp = () => {
       }, 1000);
     }
 
-    // Clearing the interval
     return () => clearInterval(interval);
+  }, [exercisePart]);
+
+  useEffect(() => {
+    let timeoutId;
+    if (exercisePart === 'breathe-in') {
+      timeoutId = setTimeout(() => {
+        setExercisePart('breathe-out');
+        setCount(1);
+      }, 7000);
+    } else if (exercisePart === 'breathe-out') {
+      timeoutId = setTimeout(() => {
+        setExercisePart('breathe-in');
+        setCount(1);
+      }, 11000);
+    }
+
+    return () => clearTimeout(timeoutId);
   }, [exercisePart]);
 
   return (
