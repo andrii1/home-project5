@@ -30,6 +30,7 @@ import { StarRatingContainer } from './containers/StarRating/StarRating.Containe
 import { GithubProfileSearch } from './containers/GithubProfileSearch/GithubProfileSearch.Container';
 import { WeatherApp } from './containers/WeatherApp/WeatherApp.Container';
 import { EyeGymnastics } from './containers/EyeGymnastics/EyeGymnastics.Container';
+import { BreathingApp } from './containers/BreathingApp/BreathingApp.Container';
 
 function App() {
   return (
@@ -75,6 +76,7 @@ function App() {
               element={<WeatherApp />}
             />
             <Route path="/eye-gymnastics" element={<EyeGymnastics />} />
+            <Route path="/breathing-app" element={<BreathingApp />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
