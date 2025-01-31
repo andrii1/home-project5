@@ -5,6 +5,17 @@
   flex-direction: column;
   gap: 2rem;
 }
+.hero.less-margin {
+  margin: 0rem auto 2rem auto !important;
+}
+
+.hero.less-margin .hero-header {
+  margin-bottom: 0rem;
+}
+
+.hero.less-margin .subheading {
+  margin-bottom: 0rem;
+}
 
 .tool-container .tool-input {
   display: flex;
@@ -13,6 +24,12 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+.tool-container .tool-result {
+  margin-top: 7rem;
+  position: relative;
+  min-width: 15rem;
+}
 .tool-container p {
   margin: 0;
 }
@@ -20,15 +37,24 @@
   margin: 0;
 }
 
+.text-breathing-count {
+  font-size: 3rem;
+}
+
 .circle {
-  height: 6.25rem;
-  width: 6.25rem;
+  height: 12rem;
+  width: 12rem;
   background-color: #f2ebe7;
   border-radius: 50%;
   display: inline-block;
   transform: scale(1);
   transition: scale ease 0.5s;
-  margin-top: 4rem;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  margin-inline: auto;
+  z-index: -1;
+  top: -4rem;
 }
 
 @media only screen and (max-width: 992px) {
