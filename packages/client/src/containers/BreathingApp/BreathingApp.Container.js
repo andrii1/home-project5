@@ -4,15 +4,16 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import './BreathingApp.Style.css';
 import { Button } from '../../components/Button/Button.component';
+import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
-const radius = 50;
-let vx = 5;
-let vy = 5;
-let move;
+// const radius = 50;
+// let vx = 5;
+// let vy = 5;
+// let move;
 
 export const BreathingApp = () => {
   const [count, setCount] = useState(0);
-  const [directionHorizontal, setDirectionHorizontal] = useState(false);
+  const [exerciseDuration, setExerciseDuration] = useState(60000);
   const [exercisePart, setExercisePart] = useState(undefined);
 
   // const canvasRef = useRef(null);
@@ -86,7 +87,7 @@ export const BreathingApp = () => {
     setTimeout(() => {
       setExercisePart('end');
       setCount(0);
-    }, 30000);
+    }, exerciseDuration);
   };
 
   const handleStop = () => {
@@ -122,6 +123,22 @@ export const BreathingApp = () => {
     return () => clearTimeout(timeoutId);
   }, [exercisePart]);
 
+  const handleSelect = (value) => {
+    if (value === '1min') {
+      setExerciseDuration(60000);
+    } else if (value === '2min') {
+      setExerciseDuration(120000);
+    } else if (value === '3min') {
+      setExerciseDuration(180000);
+    } else if (value === '5min') {
+      setExerciseDuration(300000);
+    } else if (value === '10min') {
+      setExerciseDuration(600000);
+    }
+  };
+
+  console.log(exerciseDuration);
+
   return (
     <main>
       <Helmet>
@@ -134,6 +151,10 @@ export const BreathingApp = () => {
         <p className="subheading">
           Breathe in for a count of 7, then breathe out for a count of 11
         </p>
+        <Dropdown
+          options={['1min', '2min', '3min', '5min', '10min']}
+          onSelect={handleSelect}
+        />
         {exercisePart !== undefined && exercisePart !== 'end' ? (
           <Button primary onClick={handleStop}>
             Stop
