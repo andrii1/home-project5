@@ -65,6 +65,6 @@ Dropdown.defaultProps = {
   onSelect: undefined,
   disabled: undefined,
   selectedOptionValue: undefined,
-  showLabel: true,
+  showLabel: false,
   required: false,
 };
