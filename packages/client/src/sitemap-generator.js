@@ -5,7 +5,9 @@ require('babel-register')({
 const fetch = require('node-fetch');
 const router = require('./sitemap-routes').default;
 const Sitemap = require('react-router-sitemap').default;
-// const WEATHER_CITIES = require('./data').default;
+const { WEATHER_CITIES } = require('./data');
+const { NUMBERS } = require('./data');
+const { BREATHING_EXERCISE_DATA } = require('./data');
 
 async function generateSitemap() {
   try {
@@ -29,33 +31,10 @@ async function generateSitemap() {
     // const categories = categoriesResult.sort((a, b) => a.id - b.id);
     // const idMapCategories = [];
 
-    const NUMBERS = [
-      { numberMinParam: 0, numberMaxParam: 100 },
-      { numberMinParam: 0, numberMaxParam: 10 },
-      { numberMinParam: 0, numberMaxParam: 9 },
-    ];
-
-    const WEATHER_CITIES = [
-      'Miami',
-      'Toronto',
-      'Bangkok',
-      'Antalya',
-      'London',
-      'New York',
-      'Kyiv',
-      'Warsaw',
-      'Berlin',
-      'Amsterdam',
-      'Phuket',
-      'Lviv',
-      'Ternopil',
-      'Copenhagen',
-      'Oslo',
-      'Palma',
-    ];
     const idMapNumbers = [];
     const idMapWheel = [];
     const idMapWeather = [];
+    const idMapBreathing = [];
 
     NUMBERS.forEach((number) => {
       idMapNumbers.push({
@@ -71,6 +50,12 @@ async function generateSitemap() {
     WEATHER_CITIES.forEach((city) => {
       idMapWeather.push({
         cityParam: city,
+      });
+    });
+
+    Object.keys(BREATHING_EXERCISE_DATA).forEach((key) => {
+      idMapBreathing.push({
+        typeOfExerciseParam: key,
       });
     });
 
@@ -90,6 +75,7 @@ async function generateSitemap() {
       '/numbergenerator/:numberMinParam/:numberMaxParam': idMapNumbers,
       '/random-number-wheel/:numberMinParam/:numberMaxParam': idMapWheel,
       '/weather-app/:cityParam': idMapWeather,
+      '/breathing-app/:typeOfExerciseParam': idMapBreathing,
       // '/apps/:id': idMap,
       // '/apps/topic/:topicIdParam': idMapTopics,
       // '/apps/category/:categoryIdParam': idMapCategories,
@@ -97,7 +83,7 @@ async function generateSitemap() {
 
     return new Sitemap(router)
       .applyParams(paramsConfig)
-      .build('https://www.appswithai.xyz')
+      .build('https://www.miniappshub.com')
       .save('./public/sitemap.xml');
   } catch (e) {
     console.log(e);

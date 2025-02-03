@@ -17,6 +17,9 @@ export default (
     <Route path="/weather-app" />
     <Route path="/weather-app/:cityParam" />
     <Route path="/eye-gymnastics" />
+    <Route path="/7-11-breathing-app" />
+    <Route path="/breathing-app" />
+    <Route path="/breathing-app/:typeOfExerciseParam" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}
