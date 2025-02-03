@@ -122,10 +122,12 @@ export const BreathingTechniquesApp = () => {
         </h1>
         <p className="subheading">
           Inhale through your nose for{' '}
-          {exerciseData[typeOfExerciseParam].labelWords[0]} counts. Hold your
-          breath for {exerciseData[typeOfExerciseParam].labelWords[1]} counts.
-          Exhale through your mouth for{' '}
-          {exerciseData[typeOfExerciseParam].labelWords[2]} counts.
+          <strong>{exerciseData[typeOfExerciseParam].labelWords[0]}</strong>{' '}
+          counts. Hold your breath for{' '}
+          <strong>{exerciseData[typeOfExerciseParam].labelWords[1]}</strong>{' '}
+          counts. Exhale through your mouth for{' '}
+          <strong>{exerciseData[typeOfExerciseParam].labelWords[2]}</strong>{' '}
+          counts.
         </p>
       </div>
       <section className="tool-container">
