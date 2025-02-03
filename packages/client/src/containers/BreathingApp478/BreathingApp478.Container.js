@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet';
-import './BreathingApp.Style.css';
+import './BreathingApp478.Style.css';
 import { Button } from '../../components/Button/Button.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
-export const BreathingApp = () => {
+export const BreathingApp478 = () => {
   const [count, setCount] = useState(0);
   const [exerciseDuration, setExerciseDuration] = useState(60000);
   const [exercisePart, setExercisePart] = useState(undefined);
@@ -45,7 +45,7 @@ export const BreathingApp = () => {
     return () => clearInterval(interval);
   }, [exercisePart]);
 
-  // Circle
+  // Circle's zoom
   useEffect(() => {
     let interval;
     if (exercisePart !== undefined && exercisePart !== 'end') {
@@ -66,15 +66,21 @@ export const BreathingApp = () => {
     let timeoutId;
     if (exercisePart === 'breathe-in') {
       timeoutId = setTimeout(() => {
+        setExercisePart('hold');
+        setCount(1);
+      }, 4000);
+    } else if (exercisePart === 'hold') {
+      timeoutId = setTimeout(() => {
         setExercisePart('breathe-out');
         setCount(1);
+        // setZoom(1);
       }, 7000);
     } else if (exercisePart === 'breathe-out') {
       timeoutId = setTimeout(() => {
         setExercisePart('breathe-in');
         setCount(1);
         setZoom(1);
-      }, 11000);
+      }, 8000);
     }
 
     return () => clearTimeout(timeoutId);
@@ -101,16 +107,17 @@ export const BreathingApp = () => {
   return (
     <main>
       <Helmet>
-        <title>7-11 Breathing App</title>
+        <title>4-7-8 Breathing App</title>
         <meta
           name="description"
-          content="7 11 breathing, 7-11 breathing technique, 7 11 breathing exercise, 7 11 breathing nhs, 7 11 breathing method, 7 11 breathing technique anxiety, benefits of 7 11 breathing, breathing techniques 7 11"
+          content="4 7 8 breathing technique, 4 7 8 breathing dr weil"
         />
       </Helmet>
       <div className="hero max-width less-margin">
-        <h1 className="hero-header">7-11 breathing app</h1>
+        <h1 className="hero-header">4-7-8 breathing app</h1>
         <p className="subheading">
-          Breathe in for a count of 7, then breathe out for a count of 11
+          Inhale through your nose for four counts. Hold your breath for seven
+          counts. Exhale through your mouth for eight counts.
         </p>
       </div>
       <section className="tool-container">
@@ -132,6 +139,7 @@ export const BreathingApp = () => {
         <div className="tool-result">
           <p className="text-breathing-count">{count}</p>
           {exercisePart === 'breathe-in' && <p>Breathe in</p>}
+          {exercisePart === 'hold' && <p>Hold</p>}
           {exercisePart === 'breathe-out' && <p>Breathe out</p>}
           <div style={styles} className="circle" />
         </div>
