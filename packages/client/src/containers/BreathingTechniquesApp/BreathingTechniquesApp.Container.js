@@ -1,8 +1,9 @@
 /* eslint-disable no-nested-ternary */
 import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 
 import { Helmet } from 'react-helmet';
-import './BreathingApp478.Style.css';
+import './BreathingTechniquesApp.Style.css';
 import { Button } from '../../components/Button/Button.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
@@ -17,12 +18,13 @@ const exerciseData = {
   '4-4-4': { breatheIn: 4000, hold: 4000, breatheOut: 4000 },
 };
 
-export const BreathingApp478 = () => {
+export const BreathingTechniquesApp = () => {
   const [count, setCount] = useState(0);
   const [exerciseDuration, setExerciseDuration] = useState(60000);
   const [exercisePart, setExercisePart] = useState(undefined);
   const [zoom, setZoom] = useState(1);
   const [typeOfExercise, setTypeOfExercise] = useState('4-7-8');
+  const { typeOfExerciseParam = '4-7-8' } = useParams();
 
   // Start exercise
   const handleStart = () => {
@@ -80,23 +82,23 @@ export const BreathingApp478 = () => {
       timeoutId = setTimeout(() => {
         setExercisePart('hold');
         setCount(1);
-      }, exerciseData[typeOfExercise].breatheIn);
+      }, exerciseData[typeOfExerciseParam].breatheIn);
     } else if (exercisePart === 'hold') {
       timeoutId = setTimeout(() => {
         setExercisePart('breathe-out');
         setCount(1);
         // setZoom(1);
-      }, exerciseData[typeOfExercise].hold);
+      }, exerciseData[typeOfExerciseParam].hold);
     } else if (exercisePart === 'breathe-out') {
       timeoutId = setTimeout(() => {
         setExercisePart('breathe-in');
         setCount(1);
         setZoom(1);
-      }, exerciseData[typeOfExercise].breatheOut);
+      }, exerciseData[typeOfExerciseParam].breatheOut);
     }
 
     return () => clearTimeout(timeoutId);
-  }, [exercisePart, typeOfExercise]);
+  }, [exercisePart, typeOfExerciseParam]);
 
   const handleSelect = (value) => {
     if (value === '1min') {
@@ -119,14 +121,18 @@ export const BreathingApp478 = () => {
   return (
     <main>
       <Helmet>
-        <title>4-7-8 Breathing App</title>
+        <title>
+          {typeOfExerciseParam
+            ? `${typeOfExerciseParam} Breathing App`
+            : `Breathing App`}
+        </title>
         <meta
           name="description"
           content="4 7 8 breathing technique, 4 7 8 breathing dr weil, dr weil 4 7 8, 4 7 8 technique, 4 7 8 andrew weil, 4 7 8 breathing method benefits, breathe in for 4 seconds hold for 7, 4 7 8 yoga breathing technique"
         />
       </Helmet>
       <div className="hero max-width less-margin">
-        <h1 className="hero-header">4-7-8 breathing app</h1>
+        <h1 className="hero-header">{typeOfExerciseParam} breathing app</h1>
         <p className="subheading">
           Inhale through your nose for four counts. Hold your breath for seven
           counts. Exhale through your mouth for eight counts.
@@ -135,54 +141,64 @@ export const BreathingApp478 = () => {
       <section className="tool-container">
         <div className="tool-input">
           <div className="button-group breathing">
-            <Button
-              onClick={() => setTypeOfExercise('4-7-8')}
-              tertiary={typeOfExercise === '4-7-8'}
-              secondary={typeOfExercise !== '4-7-8'}
-              label="4-7-8"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('4-5-8')}
-              tertiary={typeOfExercise === '4-5-8'}
-              secondary={typeOfExercise !== '4-5-8'}
-              label="4-5-8"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('4-5-6')}
-              tertiary={typeOfExercise === '4-5-6'}
-              secondary={typeOfExercise !== '4-5-6'}
-              label="4-5-6"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('4-6-8')}
-              tertiary={typeOfExercise === '4-6-8'}
-              secondary={typeOfExercise !== '4-6-8'}
-              label="4-6-8"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('3-7-8')}
-              tertiary={typeOfExercise === '3-7-8'}
-              secondary={typeOfExercise !== '3-7-8'}
-              label="3-7-8"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('2-7-8')}
-              tertiary={typeOfExercise === '2-7-8'}
-              secondary={typeOfExercise !== '2-7-8'}
-              label="2-7-8"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('3-4-5')}
-              tertiary={typeOfExercise === '3-4-5'}
-              secondary={typeOfExercise !== '3-4-5'}
-              label="3-4-5"
-            />
-            <Button
-              onClick={() => setTypeOfExercise('4-4-4')}
-              tertiary={typeOfExercise === '4-4-4'}
-              secondary={typeOfExercise !== '4-4-4'}
-              label="4-4-4"
-            />
+            <Link to="/breathing-app">
+              <Button
+                // onClick={() => setTypeOfExercise('4-7-8')}
+                tertiary={typeOfExerciseParam === '4-7-8'}
+                secondary={typeOfExerciseParam !== '4-7-8'}
+                label="4-7-8"
+              />
+            </Link>
+            <Link to="/breathing-app/4-5-8">
+              <Button
+                tertiary={typeOfExerciseParam === '4-5-8'}
+                secondary={typeOfExerciseParam !== '4-5-8'}
+                label="4-5-8"
+              />
+            </Link>
+            <Link to="/breathing-app/4-5-6">
+              <Button
+                tertiary={typeOfExerciseParam === '4-5-6'}
+                secondary={typeOfExerciseParam !== '4-5-6'}
+                label="4-5-6"
+              />
+            </Link>
+            <Link to="/breathing-app/4-6-8">
+              <Button
+                tertiary={typeOfExerciseParam === '4-6-8'}
+                secondary={typeOfExerciseParam !== '4-6-8'}
+                label="4-6-8"
+              />
+            </Link>
+            <Link to="/breathing-app/3-7-8">
+              <Button
+                onClick={() => setTypeOfExercise('3-7-8')}
+                tertiary={typeOfExerciseParam === '3-7-8'}
+                secondary={typeOfExerciseParam !== '3-7-8'}
+                label="3-7-8"
+              />
+            </Link>
+            <Link to="/breathing-app/2-7-8">
+              <Button
+                tertiary={typeOfExerciseParam === '2-7-8'}
+                secondary={typeOfExerciseParam !== '2-7-8'}
+                label="2-7-8"
+              />
+            </Link>
+            <Link to="/breathing-app/3-4-5">
+              <Button
+                tertiary={typeOfExerciseParam === '3-4-5'}
+                secondary={typeOfExerciseParam !== '3-4-5'}
+                label="3-4-5"
+              />
+            </Link>
+            <Link to="/breathing-app/4-4-4">
+              <Button
+                tertiary={typeOfExerciseParam === '4-4-4'}
+                secondary={typeOfExerciseParam !== '4-4-4'}
+                label="4-4-4"
+              />
+            </Link>
           </div>
           <Dropdown
             options={['1min', '2min', '3min', '5min', '10min']}
