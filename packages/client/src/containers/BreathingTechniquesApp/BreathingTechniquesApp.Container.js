@@ -13,6 +13,7 @@ const exerciseData = {
     hold: 7000,
     breatheOut: 8000,
     label: '4 7 8',
+    labelWords: ['four', 'seven', 'eight'],
     keywords:
       '4 7 8 breathing technique, 478 deep breathing, 4 7 8 breathing dr weil, dr weil 4 7 8, 4 7 8 technique, 4 7 8 andrew weil, 4 7 8 breathing method benefits, breathe in for 4 seconds hold for 7, 4 7 8 yoga breathing technique',
   },
@@ -21,6 +22,7 @@ const exerciseData = {
     hold: 5000,
     breatheOut: 8000,
     label: '4 5 8',
+    labelWords: ['four', 'five', 'eight'],
     keywords:
       '4 5 8 breathing technique, 4 5 8 technique, 4 5 8 breathing method benefits, 4 5 8 yoga breathing technique',
   },
@@ -28,15 +30,17 @@ const exerciseData = {
     breatheIn: 4000,
     hold: 5000,
     breatheOut: 6000,
-    label: '4 7 6',
+    label: '4 5 6',
+    labelWords: ['four', 'five', 'six'],
     keywords:
-      '4 7 6 breathing technique, 4 7 6 technique, 4 7 6 breathing method benefits, 4 7 6 yoga breathing technique',
+      '4 5 6 breathing technique, 4 5 6 technique, 4 5 6 breathing method benefits, 4 5 6 yoga breathing technique',
   },
   '4-6-8': {
     breatheIn: 4000,
     hold: 6000,
     breatheOut: 8000,
     label: '4 6 8',
+    labelWords: ['four', 'six', 'eight'],
     keywords:
       '4 6 8 breathing technique, 4 6 8 technique, 4 6 8 breathing method benefits, 4 6 8 yoga breathing technique',
   },
@@ -45,6 +49,7 @@ const exerciseData = {
     hold: 7000,
     breatheOut: 8000,
     label: '3 7 8',
+    labelWords: ['three', 'seven', 'eight'],
     keywords:
       '3 7 8 breathing technique, 3 7 8 technique, 3 7 8 breathing method benefits, 3 7 8 yoga breathing technique',
   },
@@ -53,6 +58,7 @@ const exerciseData = {
     hold: 7000,
     breatheOut: 8000,
     label: '2 7 8',
+    labelWords: ['two', 'seven', 'eight'],
     keywords:
       '2 7 8 breathing technique, 2 7 8 technique, 2 7 8 breathing method benefits, 2 7 8 yoga breathing technique',
   },
@@ -61,6 +67,7 @@ const exerciseData = {
     hold: 4000,
     breatheOut: 5000,
     label: '3 4 5',
+    labelWords: ['three', 'four', 'five'],
     keywords:
       '3 4 5 breathing technique, 3 4 5 technique, 3 4 5 breathing method benefits, 3 4 5 yoga breathing technique',
   },
@@ -69,6 +76,7 @@ const exerciseData = {
     hold: 4000,
     breatheOut: 4000,
     label: '4 4 4',
+    labelWords: ['four', 'four', 'four'],
     keywords:
       '4 4 4 breathing technique, 444 breathing technique, 4 4 4 technique, 4 4 4 breathing method benefits, 4 4 4 yoga breathing technique',
   },
@@ -187,8 +195,11 @@ export const BreathingTechniquesApp = () => {
           {exerciseData[typeOfExerciseParam].label} breathing app
         </h1>
         <p className="subheading">
-          Inhale through your nose for four counts. Hold your breath for seven
-          counts. Exhale through your mouth for eight counts.
+          Inhale through your nose for{' '}
+          {exerciseData[typeOfExerciseParam].labelWords[0]} counts. Hold your
+          breath for {exerciseData[typeOfExerciseParam].labelWords[1]} counts.
+          Exhale through your mouth for{' '}
+          {exerciseData[typeOfExerciseParam].labelWords[2]} counts.
         </p>
       </div>
       <section className="tool-container">
