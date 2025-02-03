@@ -8,14 +8,70 @@ import { Button } from '../../components/Button/Button.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
 const exerciseData = {
-  '4-7-8': { breatheIn: 4000, hold: 7000, breatheOut: 8000 },
-  '4-5-8': { breatheIn: 4000, hold: 5000, breatheOut: 8000 },
-  '4-5-6': { breatheIn: 4000, hold: 5000, breatheOut: 6000 },
-  '4-6-8': { breatheIn: 4000, hold: 6000, breatheOut: 8000 },
-  '3-7-8': { breatheIn: 3000, hold: 7000, breatheOut: 8000 },
-  '2-7-8': { breatheIn: 2000, hold: 7000, breatheOut: 8000 },
-  '3-4-5': { breatheIn: 3000, hold: 4000, breatheOut: 5000 },
-  '4-4-4': { breatheIn: 4000, hold: 4000, breatheOut: 4000 },
+  '4-7-8': {
+    breatheIn: 4000,
+    hold: 7000,
+    breatheOut: 8000,
+    label: '4 7 8',
+    keywords:
+      '4 7 8 breathing technique, 478 deep breathing, 4 7 8 breathing dr weil, dr weil 4 7 8, 4 7 8 technique, 4 7 8 andrew weil, 4 7 8 breathing method benefits, breathe in for 4 seconds hold for 7, 4 7 8 yoga breathing technique',
+  },
+  '4-5-8': {
+    breatheIn: 4000,
+    hold: 5000,
+    breatheOut: 8000,
+    label: '4 5 8',
+    keywords:
+      '4 5 8 breathing technique, 4 5 8 technique, 4 5 8 breathing method benefits, 4 5 8 yoga breathing technique',
+  },
+  '4-5-6': {
+    breatheIn: 4000,
+    hold: 5000,
+    breatheOut: 6000,
+    label: '4 7 6',
+    keywords:
+      '4 7 6 breathing technique, 4 7 6 technique, 4 7 6 breathing method benefits, 4 7 6 yoga breathing technique',
+  },
+  '4-6-8': {
+    breatheIn: 4000,
+    hold: 6000,
+    breatheOut: 8000,
+    label: '4 6 8',
+    keywords:
+      '4 6 8 breathing technique, 4 6 8 technique, 4 6 8 breathing method benefits, 4 6 8 yoga breathing technique',
+  },
+  '3-7-8': {
+    breatheIn: 3000,
+    hold: 7000,
+    breatheOut: 8000,
+    label: '3 7 8',
+    keywords:
+      '3 7 8 breathing technique, 3 7 8 technique, 3 7 8 breathing method benefits, 3 7 8 yoga breathing technique',
+  },
+  '2-7-8': {
+    breatheIn: 2000,
+    hold: 7000,
+    breatheOut: 8000,
+    label: '2 7 8',
+    keywords:
+      '2 7 8 breathing technique, 2 7 8 technique, 2 7 8 breathing method benefits, 2 7 8 yoga breathing technique',
+  },
+  '3-4-5': {
+    breatheIn: 3000,
+    hold: 4000,
+    breatheOut: 5000,
+    label: '3 4 5',
+    keywords:
+      '3 4 5 breathing technique, 3 4 5 technique, 3 4 5 breathing method benefits, 3 4 5 yoga breathing technique',
+  },
+  '4-4-4': {
+    breatheIn: 4000,
+    hold: 4000,
+    breatheOut: 4000,
+    label: '4 4 4',
+    keywords:
+      '4 4 4 breathing technique, 444 breathing technique, 4 4 4 technique, 4 4 4 breathing method benefits, 4 4 4 yoga breathing technique',
+  },
 };
 
 export const BreathingTechniquesApp = () => {
@@ -23,7 +79,6 @@ export const BreathingTechniquesApp = () => {
   const [exerciseDuration, setExerciseDuration] = useState(60000);
   const [exercisePart, setExercisePart] = useState(undefined);
   const [zoom, setZoom] = useState(1);
-  const [typeOfExercise, setTypeOfExercise] = useState('4-7-8');
   const { typeOfExerciseParam = '4-7-8' } = useParams();
 
   // Start exercise
@@ -121,18 +176,16 @@ export const BreathingTechniquesApp = () => {
   return (
     <main>
       <Helmet>
-        <title>
-          {typeOfExerciseParam
-            ? `${typeOfExerciseParam} Breathing App`
-            : `Breathing App`}
-        </title>
+        <title>{exerciseData[typeOfExerciseParam].label} Breathing App</title>
         <meta
           name="description"
-          content="4 7 8 breathing technique, 4 7 8 breathing dr weil, dr weil 4 7 8, 4 7 8 technique, 4 7 8 andrew weil, 4 7 8 breathing method benefits, breathe in for 4 seconds hold for 7, 4 7 8 yoga breathing technique"
+          content={exerciseData[typeOfExerciseParam].keywords}
         />
       </Helmet>
       <div className="hero max-width less-margin">
-        <h1 className="hero-header">{typeOfExerciseParam} breathing app</h1>
+        <h1 className="hero-header">
+          {exerciseData[typeOfExerciseParam].label} breathing app
+        </h1>
         <p className="subheading">
           Inhale through your nose for four counts. Hold your breath for seven
           counts. Exhale through your mouth for eight counts.
@@ -143,7 +196,6 @@ export const BreathingTechniquesApp = () => {
           <div className="button-group breathing">
             <Link to="/breathing-app">
               <Button
-                // onClick={() => setTypeOfExercise('4-7-8')}
                 tertiary={typeOfExerciseParam === '4-7-8'}
                 secondary={typeOfExerciseParam !== '4-7-8'}
                 label="4-7-8"
@@ -172,7 +224,6 @@ export const BreathingTechniquesApp = () => {
             </Link>
             <Link to="/breathing-app/3-7-8">
               <Button
-                onClick={() => setTypeOfExercise('3-7-8')}
                 tertiary={typeOfExerciseParam === '3-7-8'}
                 secondary={typeOfExerciseParam !== '3-7-8'}
                 label="3-7-8"
