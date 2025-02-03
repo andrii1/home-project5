@@ -1,13 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import './WeatherApp.Style.css';
 import { Button } from '../../components/Button/Button.component';
 import { Badge } from '../../components/Badge/Badge.component';
-import { UserCard } from '../../components/UserCard/UserCard.component';
+
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 
