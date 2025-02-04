@@ -32,6 +32,7 @@ import { WeatherApp } from './containers/WeatherApp/WeatherApp.Container';
 import { EyeGymnastics } from './containers/EyeGymnastics/EyeGymnastics.Container';
 import { BreathingApp } from './containers/BreathingApp/BreathingApp.Container';
 import { BreathingTechniquesApp } from './containers/BreathingTechniquesApp/BreathingTechniquesApp.Container';
+import { Recipes } from './containers/Recipes/Recipes.Container';
 
 function App() {
   return (
@@ -84,6 +85,7 @@ function App() {
               path="/breathing-app/:typeOfExerciseParam"
               element={<BreathingTechniquesApp />}
             />
+            <Route path="/recipes" element={<Recipes />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

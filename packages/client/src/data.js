@@ -133,8 +133,13 @@ export const TOOLS = [
     url: 'eye-gymnastics',
   },
   {
-    id: 9,
+    id: 10,
     title: '7-11 breathing app',
     url: '7-11-breathing-app',
+  },
+  {
+    id: 11,
+    title: 'Breathing app',
+    url: 'breathing-app',
   },
 ];
