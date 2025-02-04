@@ -80,6 +80,7 @@ export const Recipes = () => {
         title={recipe.title}
         label={recipe.publisher}
         urlImage={recipe.image_url}
+        urlLabel={recipe.source_url}
       />
     );
   });

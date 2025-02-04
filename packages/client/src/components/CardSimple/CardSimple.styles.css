@@ -1,0 +1,7 @@
+.card-simple .card-image {
+  flex: 0 0 60% !important;
+}
+
+.card-simple .card-body {
+  flex: 0 0 40% !important;
+}

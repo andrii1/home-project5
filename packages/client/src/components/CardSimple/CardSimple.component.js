@@ -24,6 +24,7 @@ export const CardSimple = ({
   label,
   url,
   urlImage,
+  urlLabel,
   id,
   className,
   smallCard = true,
@@ -34,7 +35,7 @@ export const CardSimple = ({
   bookmarkOnClick,
 }) => {
   return (
-    <div className={listCard ? 'card-list' : 'card-category'}>
+    <div className={`${listCard ? 'card-list' : 'card-category'} card-simple`}>
       <Link
         to={`/apps/${id}`}
         target="_blank"
@@ -66,7 +67,20 @@ export const CardSimple = ({
         </div>
         {label && (
           <div className="topics-bookmark">
-            <Badge label={label} size="small" />
+            <Link to={urlLabel} target="_blank">
+              <Button
+                label={label}
+                size="small"
+                icon={
+                  <FontAwesomeIcon
+                    className="icon-card"
+                    icon={faArrowUpRightFromSquare}
+                    style={{ color: '#fff' }}
+                    size="sm"
+                  />
+                }
+              />
+            </Link>
           </div>
         )}
       </div>
@@ -83,6 +97,7 @@ CardSimple.propTypes = {
   id: PropTypes.string,
   url: PropTypes.shape,
   urlImage: PropTypes.string,
+  urlLabel: PropTypes.string,
   smallCard: PropTypes.bool,
   listCard: PropTypes.bool,
   className: PropTypes.string,
@@ -100,6 +115,7 @@ CardSimple.defaultProps = {
   topic: null,
   url: null,
   urlImage: null,
+  urlLabel: null,
   id: null,
   smallCard: false,
   listCard: false,
