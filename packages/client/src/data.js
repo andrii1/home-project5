@@ -142,4 +142,9 @@ export const TOOLS = [
     title: 'Breathing app',
     url: 'breathing-app',
   },
+  {
+    id: 12,
+    title: 'Recipes',
+    url: 'recipes',
+  },
 ];

@@ -20,6 +20,7 @@ export default (
     <Route path="/7-11-breathing-app" />
     <Route path="/breathing-app" />
     <Route path="/breathing-app/:typeOfExerciseParam" />
+    <Route path="/recipes" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

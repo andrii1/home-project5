@@ -113,7 +113,12 @@ export const ItemView = () => {
               type="button"
               className="button-copy"
               onClick={() => {
-                navigator.clipboard.writeText(item.title, item.ingredients);
+                if (item?.title && item?.ingredients) {
+                  const textToCopy = `${
+                    item.title
+                  }\n\nIngredients:\n${item.ingredients.join('\n')}`;
+                  navigator.clipboard.writeText(textToCopy);
+                }
               }}
             >
               <img src={iconCopy} alt="copy" className="icon-copy" />
@@ -131,7 +136,7 @@ export const ItemView = () => {
             <TwitterShareButton
               url={`/recipes/${id}`}
               title={`Check out this: '${item.title}'`}
-              hashtags={['Apps']}
+              hashtags={['']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
@@ -140,7 +145,7 @@ export const ItemView = () => {
             </LinkedinShareButton>
             <EmailShareButton
               subject="Check this out!"
-              body={`This is great: '${item.title}'`}
+              body={`This is great: '${item.title}' ${item.ingredients}`}
               url={`/recipes/${id}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
