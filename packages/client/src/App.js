@@ -33,6 +33,7 @@ import { EyeGymnastics } from './containers/EyeGymnastics/EyeGymnastics.Containe
 import { BreathingApp } from './containers/BreathingApp/BreathingApp.Container';
 import { BreathingTechniquesApp } from './containers/BreathingTechniquesApp/BreathingTechniquesApp.Container';
 import { Recipes } from './containers/Recipes/Recipes.Container';
+import { ItemView } from './containers/ItemView/ItemView.container';
 
 function App() {
   return (
@@ -86,6 +87,7 @@ function App() {
               element={<BreathingTechniquesApp />}
             />
             <Route path="/recipes" element={<Recipes />} />
+            <Route exact path="/recipes/:id" element={<ItemView />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

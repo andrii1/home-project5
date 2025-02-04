@@ -37,7 +37,7 @@ export const CardSimple = ({
   return (
     <div className={`${listCard ? 'card-list' : 'card-category'} card-simple`}>
       <Link
-        to={`/apps/${id}`}
+        to={`/recipes/${id}`}
         target="_blank"
         className={`card-image ${listCard ? 'list' : ''}`}
         style={{
@@ -49,10 +49,10 @@ export const CardSimple = ({
       <div className={`card-body ${listCard ? 'list' : ''}`}>
         <div className="card-header">
           <div className="card-title">
-            <Link to={`/apps/${id}`} target="_blank">
+            <Link to={`/recipes/${id}`} target="_blank">
               <h2>{title}</h2>
             </Link>
-            <Link to={`/apps/${id}`} target="_blank">
+            <Link to={`/recipes/${id}`} target="_blank">
               <FontAwesomeIcon
                 className="icon-card"
                 icon={faArrowUpRightFromSquare}
