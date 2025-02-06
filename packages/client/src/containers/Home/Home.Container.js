@@ -23,8 +23,8 @@ export const Home = () => {
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Apps</h1>
-        <p className="subheading">Helpful apps</p>
+        <h1 className="hero-header">Mini Apps Hub</h1>
+        <p className="subheading">Find helpful apps</p>
       </div>
       <section className="container-tools">{cardItems}</section>
     </main>
