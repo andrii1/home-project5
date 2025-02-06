@@ -18,16 +18,13 @@ export const Home = () => {
   return (
     <main>
       <Helmet>
-        <title>Tools - discover best tools</title>
-        <meta
-          name="description"
-          content="Find best Chat GPT prompts for free"
-        />
+        <title>MiniAppsHub - discover helpful apps</title>
+        <meta name="description" content="Find best minin apps" />
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
-        <h1 className="hero-header">Tools</h1>
-        <p className="subheading">Discover great tools</p>
+        <h1 className="hero-header">Apps</h1>
+        <p className="subheading">Helpful apps</p>
       </div>
       <section className="container-tools">{cardItems}</section>
     </main>
