@@ -34,6 +34,8 @@ import { BreathingApp } from './containers/BreathingApp/BreathingApp.Container';
 import { BreathingTechniquesApp } from './containers/BreathingTechniquesApp/BreathingTechniquesApp.Container';
 import { Recipes } from './containers/Recipes/Recipes.Container';
 import { ItemView } from './containers/ItemView/ItemView.container';
+import { GitHubStats } from './containers/GitHubStats/GitHubStats.Container';
+import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/NinetyDayRuleCalculator.Container';
 
 function App() {
   return (
@@ -88,6 +90,11 @@ function App() {
             />
             <Route path="/recipes" element={<Recipes />} />
             <Route exact path="/recipes/:id" element={<ItemView />} />
+            <Route path="/github-stats" element={<GitHubStats />} />
+            <Route
+              path="/90-day-rule-calculator"
+              element={<NinetyDayRuleCalculator />}
+            />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
