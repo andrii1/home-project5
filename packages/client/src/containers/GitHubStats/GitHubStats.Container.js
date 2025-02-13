@@ -10,16 +10,19 @@ import { Badge } from '../../components/Badge/Badge.component';
 import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
-import { Octokit } from '@octokit/rest';
 
-const keywords = [];
-const octokit = new Octokit({
-  auth: process.env.REACT_APP_GITHUB_API,
-});
+const keywords = [
+  'github contribution chart',
+  'github contribution graph generator',
+  'github contributions not showing',
+  'github contribution graph art',
+  'github contributions 3d',
+  'github contribution graph 3d',
+];
 
 export const GitHubStats = () => {
   const [search, setSearch] = useState();
-  const [recipesData, setRecipesData] = useState();
+  const [githubData, setGithubData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -27,7 +30,7 @@ export const GitHubStats = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://github-contributions-api.deno.dev/andrii1.svg?from=2023-11-11`,
+        `https://github-contributions-api.deno.dev/andrii1.json?from=2023-11-11`,
       );
       const data = await response.json();
       // const { data } = await octokit.request('/user');
@@ -46,10 +49,10 @@ export const GitHubStats = () => {
       // const { data } = await octokit.request('/events');
       console.log(data);
 
-      // if (!response.ok) {
-      //   throw new Error(data.message || 'Failed to fetch');
-      // }
-      // setRecipesData(data);
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch');
+      }
+      setGithubData(data);
       setError(null);
 
       // setSearch('');
@@ -64,26 +67,26 @@ export const GitHubStats = () => {
     setSearch('');
   };
 
-  const recipes = recipesData?.recipes.map((recipe) => {
-    return (
-      <CardSimple
-        title={recipe.title}
-        label={recipe.publisher}
-        urlImage={recipe.image_url}
-        urlLabel={recipe.source_url}
-        id={recipe.recipe_id}
-      />
-    );
-  });
+  // const recipes = githubData?.recipes.map((recipe) => {
+  //   return (
+  //     <CardSimple
+  //       title={recipe.title}
+  //       label={recipe.publisher}
+  //       urlImage={recipe.image_url}
+  //       urlLabel={recipe.source_url}
+  //       id={recipe.recipe_id}
+  //     />
+  //   );
+  // });
 
   return (
     <main>
       <Helmet>
-        <title>GitHub stats</title>
-        <meta name="description" content="GitHub stats generator" />
+        <title>GitHub contribution chart</title>
+        <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
       <div className="hero">
-        <h1 className="hero-header">GitHub stats</h1>
+        <h1 className="hero-header">GitHub contribution chart</h1>
       </div>
       <div className="search-container weather">
         <div className="search-input-container">
@@ -100,8 +103,8 @@ export const GitHubStats = () => {
       ) : (
         <>
           {error && <p className="error-message">{error.message}</p>}
-          {recipesData && !error && (
-            <div className="container-cards">{recipes}</div>
+          {githubData && !error && (
+            <div className="container-cards">{githubData}</div>
           )}
         </>
       )}
