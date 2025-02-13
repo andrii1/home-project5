@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect } from 'react';
@@ -29,12 +30,22 @@ export const GitHubStats = () => {
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState('2d');
   const [imgUrl, setImgUrl] = useState(undefined);
+  const [fromDate, setFromDate] = useState(undefined);
+  const [toDate, setToDate] = useState(undefined);
 
-  const fetchData = async (param) => {
+  const fetchData = async (param, from, to) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://github-contributions-api.deno.dev/${param}.json`,
+        `https://github-contributions-api.deno.dev/${param}.json${
+          from && to
+            ? `?from=${from}&to=${to}`
+            : from
+            ? `?from=${from}`
+            : to
+            ? `?to=${to}`
+            : ''
+        }`,
       );
       const data = await response.json();
 
@@ -62,7 +73,17 @@ export const GitHubStats = () => {
         throw new Error(data.message || 'Failed to fetch');
       }
       if (mode === '2d') {
-        setImgUrl(`https://github-contributions-api.deno.dev/${param}.svg`);
+        setImgUrl(
+          `https://github-contributions-api.deno.dev/${param}.svg${
+            from && to
+              ? `?from=${from}&to=${to}`
+              : from
+              ? `?from=${from}`
+              : to
+              ? `?to=${to}`
+              : ''
+          }`,
+        );
       } else {
         setGithubData(data);
       }
@@ -76,7 +97,7 @@ export const GitHubStats = () => {
   const handleSearch = () => {
     setImgUrl(null);
     setGithubData(null);
-    fetchData(search);
+    fetchData(search, fromDate, toDate);
     setSearch('');
   };
 
@@ -118,8 +139,14 @@ export const GitHubStats = () => {
             />
           </div>
           <div className="input-group">
-            <DatePicker label="from" />
-            <DatePicker label="to" />
+            <DatePicker
+              label="from"
+              onChange={(event) => setFromDate(event.target.value)}
+            />
+            <DatePicker
+              label="to"
+              onChange={(event) => setToDate(event.target.value)}
+            />
           </div>
           <TextFormInput
             value={search}

@@ -26,18 +26,16 @@ export const Radio = ({
 
   return (
     <div className="category-input radio">
-      <label>
-        <input
-          type="radio"
-          name={name}
-          value={value}
-          checked={checked}
-          onChange={onChange}
-          ref={cRef}
-          className={className}
-        />
-        {label}
-      </label>
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        checked={checked}
+        onChange={onChange}
+        ref={cRef}
+        className={className}
+      />
+      <label>{label}</label>
     </div>
   );
 };

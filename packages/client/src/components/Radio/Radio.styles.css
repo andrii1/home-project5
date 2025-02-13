@@ -1,3 +1,5 @@
 .category-input.radio {
   justify-content: center;
+  gap: 0.5rem;
+  align-items: flex-start;
 }
