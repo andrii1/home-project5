@@ -6,3 +6,14 @@
   gap: 1rem;
   justify-content: center;
 }
+
+.single-app-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.single-app-container .hero,
+.single-app-container .hero-header {
+  margin: 0rem !important;
+}
