@@ -17,3 +17,13 @@
 .single-app-container .hero-header {
   margin: 0rem !important;
 }
+
+.img-github-rectangle {
+  width: 43.75rem;
+}
+
+@media only screen and (max-width: 991px) {
+  .img-github-rectangle {
+    width: 25rem;
+  }
+}

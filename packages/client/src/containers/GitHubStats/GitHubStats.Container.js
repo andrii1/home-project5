@@ -139,7 +139,11 @@ export const GitHubStats = () => {
               // <div className="container-cards">{githubData}</div>
             )}
             {imgUrl && !error && (
-              <img src={imgUrl} alt="GitHub contribution chart" width="700" />
+              <img
+                src={imgUrl}
+                alt="GitHub contribution chart"
+                className="img-github-rectangle"
+              />
             )}
           </>
         )}
