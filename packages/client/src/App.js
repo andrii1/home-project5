@@ -90,7 +90,10 @@ function App() {
             />
             <Route path="/recipes" element={<Recipes />} />
             <Route exact path="/recipes/:id" element={<ItemView />} />
-            <Route path="/github-stats" element={<GitHubStats />} />
+            <Route
+              path="/github-contribution-chart"
+              element={<GitHubStats />}
+            />
             <Route
               path="/90-day-rule-calculator"
               element={<NinetyDayRuleCalculator />}

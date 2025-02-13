@@ -11,6 +11,7 @@ import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 import { Radio } from '../../components/Radio/Radio.component';
+import { DatePicker } from '../../components/DatePicker/DatePicker.component';
 
 const keywords = [
   'github contribution chart',
@@ -55,9 +56,7 @@ export const GitHubStats = () => {
 
       // OCTOKIT END
 
-      //https://github-contributions-api.deno.dev/${param}.json?from=2023-11-11
-
-      console.log(data);
+      // https://github-contributions-api.deno.dev/${param}.json?from=2023-11-11
 
       if (!response.ok) {
         throw new Error(data.message || 'Failed to fetch');
@@ -93,8 +92,6 @@ export const GitHubStats = () => {
   //   );
   // });
 
-  console.log(mode);
-
   return (
     <main className="single-app-container">
       <Helmet>
@@ -106,7 +103,7 @@ export const GitHubStats = () => {
       </div>
       <section className="search-container github">
         <div className="search-input-container">
-          <div className="radio-group">
+          <div className="input-group">
             <Radio
               value="2d"
               label="2d"
@@ -119,6 +116,10 @@ export const GitHubStats = () => {
               onChange={(event) => setMode(event.target.value)}
               checked={mode === '3d'}
             />
+          </div>
+          <div className="input-group">
+            <DatePicker label="from" />
+            <DatePicker label="to" />
           </div>
           <TextFormInput
             value={search}
