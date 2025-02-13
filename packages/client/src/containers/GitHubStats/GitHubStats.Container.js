@@ -10,6 +10,7 @@ import { Badge } from '../../components/Badge/Badge.component';
 import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
+import { Radio } from '../../components/Radio/Radio.component';
 
 const keywords = [
   'github contribution chart',
@@ -30,9 +31,11 @@ export const GitHubStats = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://github-contributions-api.deno.dev/andrii1.json?from=2023-11-11`,
+        `https://github-contributions-api.deno.dev/andrii1.svg?from=2023-11-11`,
       );
       const data = await response.json();
+
+      // OCTOKIT
       // const { data } = await octokit.request('/user');
 
       // const { data } = octokit.request(
@@ -47,15 +50,16 @@ export const GitHubStats = () => {
       // );
 
       // const { data } = await octokit.request('/events');
+
+      // OCTOKIT END
+
       console.log(data);
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch');
-      }
+      // if (!response.ok) {
+      //   throw new Error(data.message || 'Failed to fetch');
+      // }
       setGithubData(data);
       setError(null);
-
-      // setSearch('');
     } catch (e) {
       setError({ message: e.message || 'An error occured' });
     }
@@ -88,8 +92,12 @@ export const GitHubStats = () => {
       <div className="hero">
         <h1 className="hero-header">GitHub contribution chart</h1>
       </div>
-      <div className="search-container weather">
+      <div className="search-container github">
         <div className="search-input-container">
+          <div className="radio-group">
+            <Radio label="2d" />
+            <Radio label="3d graph" />
+          </div>
           <TextFormInput
             value={search}
             placeholder="Find recipes"
@@ -104,7 +112,12 @@ export const GitHubStats = () => {
         <>
           {error && <p className="error-message">{error.message}</p>}
           {githubData && !error && (
-            <div className="container-cards">{githubData}</div>
+            <img
+              src="https://github-contributions-api.deno.dev/andrii1.svg?from=2023-11-11"
+              alt="GitHub contribution chart"
+              width="80"
+            />
+            // <div className="container-cards">{githubData}</div>
           )}
         </>
       )}

@@ -1,0 +1,8 @@
+.search-container.github {
+  gap: 1rem;
+}
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
