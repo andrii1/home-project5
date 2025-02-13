@@ -131,7 +131,7 @@ export const BreathingTechniquesApp = () => {
         </p>
       </div>
       <section className="tool-container">
-        <div className="tool-input">
+        <div className="tool-input breathing">
           <div className="button-group breathing">
             <Link to="/breathing-app">
               <Button

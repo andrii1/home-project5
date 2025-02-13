@@ -79,11 +79,11 @@ export const GitHubStats = () => {
   return (
     <main>
       <Helmet>
-        <title>Recipes App</title>
-        <meta name="description" content="Find amazing recipes" />
+        <title>GitHub stats</title>
+        <meta name="description" content="GitHub stats generator" />
       </Helmet>
       <div className="hero">
-        <h1 className="hero-header">Recipes app</h1>
+        <h1 className="hero-header">GitHub stats</h1>
       </div>
       <div className="search-container weather">
         <div className="search-input-container">

@@ -4,3 +4,7 @@
   justify-content: center;
   gap: 1rem;
 }
+
+.tool-input.breathing .dropdown select {
+  padding: 7px 10px !important;
+}
