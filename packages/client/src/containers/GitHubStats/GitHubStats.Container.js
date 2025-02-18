@@ -102,20 +102,6 @@ export const GitHubStats = () => {
     setSearch('');
   };
 
-  // console.log(githubData);
-
-  // const recipes = githubData?.recipes.map((recipe) => {
-  //   return (
-  //     <CardSimple
-  //       title={recipe.title}
-  //       label={recipe.publisher}
-  //       urlImage={recipe.image_url}
-  //       urlLabel={recipe.source_url}
-  //       id={recipe.recipe_id}
-  //     />
-  //   );
-  // });
-
   return (
     <main className="single-app-container">
       <Helmet>

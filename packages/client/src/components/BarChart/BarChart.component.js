@@ -5,6 +5,7 @@ import './BarChart.styles.css';
 import HighchartsReact from 'highcharts-react-official';
 import Highcharts from 'highcharts';
 import highcharts3d from 'highcharts/highcharts-3d';
+import exporting from 'highcharts/modules/exporting';
 
 export const BarChart = ({ dataSeries }) => {
   const chartOptions = {
@@ -77,45 +78,19 @@ export const BarChart = ({ dataSeries }) => {
       },
     },
     series: dataSeries,
-    //   {
-    //     stack: 0,
-    //     data: [
-    //       { color: '#ebedf0', y: 3, x: 1 },
-    //       { color: '#216e39', y: 7, x: 2 },
-    //       { color: '#30a14e', y: 4, x: 3 },
-    //     ],
-    //   },
-    //   {
-    //     stack: 1,
-    //     data: [
-    //       { color: '#ebedf0', y: 5, x: 1 },
-    //       { color: '#216e39', y: 2, x: 2 },
-    //       { color: '#30a14e', y: 1, x: 3 },
-    //     ],
-    //   },
-    // ],
-
-    // [
-    //   {
-    //     stack: 0,
-    //     data: [
-    //       { x: 2, y: 1 },
-    //       { x: 3, y: 5 },
-    //     ],
-    //   },
-    //   {
-    //     stack: 1,
-    //     data: [
-    //       { x: 3, y: 2 },
-    //       { x: 4, y: 4 },
-    //     ],
-    //   },
-    //   {
-    //     stack: 2,
-    //     data: [{ x: 1, y: 8 }],
-    //   },
-    // ],
+    exporting: {
+      enabled: true, // Enable exporting feature
+      buttons: {
+        contextButton: {
+          menuItems: [
+            'viewFullscreen', // Fullscreen option
+            'printChart', // Print option
+          ],
+        },
+      },
+    },
   };
+
   return (
     <div>
       <HighchartsReact highcharts={Highcharts} options={chartOptions} />
