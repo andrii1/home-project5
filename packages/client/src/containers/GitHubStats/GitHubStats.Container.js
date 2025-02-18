@@ -102,7 +102,7 @@ export const GitHubStats = () => {
     setSearch('');
   };
 
-  console.log(githubData);
+  // console.log(githubData);
 
   // const recipes = githubData?.recipes.map((recipe) => {
   //   return (
@@ -160,13 +160,29 @@ export const GitHubStats = () => {
         </div>
       </section>
       <section className="app-result-container">
-        <BarChart />
+        {/* <BarChart /> */}
         {loading ? (
           <p>Loading...</p>
         ) : (
           <>
             {error && <p className="error-message">{error.message}</p>}
-            {githubData && !error && <div>3d</div>}
+            {githubData && !error && (
+              <div>
+                <BarChart
+                  dataSeries={githubData.contributions.map(
+                    (contribution, contributionId) => ({
+                      name: `week ${contributionId + 1}`,
+                      data: contribution.map((item, id) => ({
+                        x: id,
+                        y: item.contributionCount,
+                        color: item.color,
+                        date: item.date,
+                      })),
+                    }),
+                  )}
+                />
+              </div>
+            )}
             {imgUrl && !error && (
               <img
                 src={imgUrl}
