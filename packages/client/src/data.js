@@ -147,4 +147,9 @@ export const TOOLS = [
     title: 'Recipes',
     url: 'recipes',
   },
+  {
+    id: 13,
+    title: 'GitHub contribution chart',
+    url: 'github-contribution-chart',
+  },
 ];

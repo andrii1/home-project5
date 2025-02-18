@@ -13,6 +13,7 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 import { Radio } from '../../components/Radio/Radio.component';
 import { DatePicker } from '../../components/DatePicker/DatePicker.component';
+import { BarChart } from '../../components/BarChart/BarChart.component';
 
 const keywords = [
   'github contribution chart',
@@ -101,6 +102,8 @@ export const GitHubStats = () => {
     setSearch('');
   };
 
+  console.log(githubData);
+
   // const recipes = githubData?.recipes.map((recipe) => {
   //   return (
   //     <CardSimple
@@ -157,15 +160,13 @@ export const GitHubStats = () => {
         </div>
       </section>
       <section className="app-result-container">
+        <BarChart />
         {loading ? (
           <p>Loading...</p>
         ) : (
           <>
             {error && <p className="error-message">{error.message}</p>}
-            {githubData && !error && (
-              <div>3d</div>
-              // <div className="container-cards">{githubData}</div>
-            )}
+            {githubData && !error && <div>3d</div>}
             {imgUrl && !error && (
               <img
                 src={imgUrl}

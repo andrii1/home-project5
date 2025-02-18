@@ -9764,6 +9764,8 @@ __metadata:
     canvas-confetti: ^1.9.3
     file-saver: ^2.0.5
     firebase: ^9.21.0
+    highcharts: ^12.1.2
+    highcharts-react-official: ^3.2.1
     prop-types: ^15.8.1
     react: ^18.0.0
     react-bootstrap: ^2.7.2
@@ -13973,6 +13975,23 @@ __metadata:
   bin:
     he: bin/he
   checksum: 3d4d6babccccd79c5c5a3f929a68af33360d6445587d628087f39a965079d84f18ce9c3d3f917ee1e3978916fc833bb8b29377c3b403f919426f91bc6965e7a7
+  languageName: node
+  linkType: hard
+
+"highcharts-react-official@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "highcharts-react-official@npm:3.2.1"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: 615f1a352eb95f0e78189506e7d551071438fc11eabff78c55aeb6cc63658f4c284f4920f9e9c85113b319661bf5745c668ef22b71920c1a9f24749e49584aaf
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:^12.1.2":
+  version: 12.1.2
+  resolution: "highcharts@npm:12.1.2"
+  checksum: 63cdd28577755745ce94cd104bd292c47cd089727cf89ccc14746d74aaf0bb567fa5ecf6a642609efb4187e7f583bb020942130310fffdcfc357535dcbfbd2dd
   languageName: node
   linkType: hard
 
