@@ -21,6 +21,7 @@ export default (
     <Route path="/breathing-app" />
     <Route path="/breathing-app/:typeOfExerciseParam" />
     <Route path="/recipes" />
+    <Route path="/github-contribution-chart" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}
