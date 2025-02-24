@@ -12,3 +12,39 @@
   display: flex;
   justify-content: center;
 }
+
+.calendar-container {
+  max-width: 25rem;
+  margin: 0 auto;
+  border: 1px solid grey;
+}
+.weekdays-group {
+  /* display: flex;
+  justify-content: space-between; */
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.1rem;
+}
+.weekdays-boxes-group {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.1rem;
+}
+.day-box {
+  background-color: #eee;
+  height: 3rem;
+  /* width: 3rem; */
+  position: relative;
+}
+.day-number {
+  position: absolute;
+  top: 0.1rem;
+  left: 0.3rem;
+}
+
+.day-quantity {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

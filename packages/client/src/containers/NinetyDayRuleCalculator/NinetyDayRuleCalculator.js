@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import moment from 'moment';
 
 import './NinetyDayRuleCalculator.Style.css';
 import { Button } from '../../components/Button/Button.component';
@@ -18,6 +19,14 @@ export const NinetyDayRuleCalculator = () => {
   const [recipesData, setRecipesData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [monthRange, setMonthRange] = useState([]);
+  const [startMonth, setStartMonth] = useState(-6);
+  const [endMonth, setEndMonth] = useState(5);
+
+  useEffect(() => {
+    setMonthRange(getMonthRange(startMonth, endMonth));
+  }, [startMonth, endMonth]);
+  console.log(monthRange);
 
   const fetchData = async (param) => {
     setLoading(true);
@@ -44,6 +53,46 @@ export const NinetyDayRuleCalculator = () => {
     fetchData(search);
     setSearch('');
   };
+
+  const getDaysInMonth = (month, year) => {
+    return moment(`${month}-${year}`, 'MM-YYYY').daysInMonth();
+  };
+
+  const getCurrentDate = () => {
+    return new Date().toLocaleDateString('en-us', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
+
+  const getMonthRange = (startMonthParam, endMonthParam) => {
+    const currentDate = new Date();
+    const monthsArray = [];
+
+    for (let i = startMonthParam; i <= endMonthParam; i += 1) {
+      const tempDate = new Date(currentDate);
+      tempDate.setMonth(tempDate.getMonth() + i);
+
+      const month = tempDate.getMonth() + 1; // Months are 0-based
+      const year = tempDate.getFullYear();
+
+      monthsArray.push([month, year]);
+    }
+
+    return monthsArray;
+  };
+
+  const getCurrentMonth = () => {
+    return new Date().getMonth() + 1;
+  };
+
+  const getCurrentYear = () => {
+    return new Date().getFullYear();
+  };
+
+  console.log(getDaysInMonth(getCurrentMonth(), getCurrentYear()));
 
   const recipes = recipesData?.recipes.map((recipe) => {
     return (
@@ -77,16 +126,48 @@ export const NinetyDayRuleCalculator = () => {
         </div>
       </section>
       <section className="app-result-container">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            {error && <p className="error-message">{error.message}</p>}
-            {recipesData && !error && (
-              <div className="container-cards">{recipes}</div>
-            )}
-          </>
-        )}
+        <div className="calendar-container">
+          <div>February 2025</div>
+          <div className="weekdays-group">
+            <span>SUN</span>
+            <span>MON</span>
+            <span>TUE</span>
+            <span>WED</span>
+            <span>THU</span>
+            <span>FRI</span>
+            <span>SAT</span>
+          </div>
+          <div className="weekdays-boxes-group">
+            <div className="day-box" style={{ gridColumnStart: 1 }}>
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+            <div className="day-box">
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+            <div className="day-box">
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+            <div className="day-box">
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+            <div className="day-box">
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+            <div className="day-box">
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+            <div className="day-box">
+              <span className="day-number">1</span>
+              <span className="day-quantity">-</span>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );
