@@ -118,12 +118,9 @@ export const NinetyDayRuleCalculator = () => {
     );
   });
 
-  const showMonthRange = monthRange.map((monthItem, id) => {
+  const showMonthRange = monthRange.map((monthItem) => {
     return (
-      <div
-        key={monthItem.month - monthItem.year}
-        className="calendar-container"
-      >
+      <div key={monthItem.month - monthItem.year} className="calendar-box">
         <div>{`${getMonthName(monthItem.month)} ${monthItem.year}`}</div>
         <div className="weekdays-group">
           <span>SUN</span>
@@ -135,34 +132,21 @@ export const NinetyDayRuleCalculator = () => {
           <span>SAT</span>
         </div>
         <div className="weekdays-boxes-group">
-          <div className="day-box" style={{ gridColumnStart: 1 }}>
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
-          <div className="day-box">
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
-          <div className="day-box">
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
-          <div className="day-box">
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
-          <div className="day-box">
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
-          <div className="day-box">
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
-          <div className="day-box">
-            <span className="day-number">1</span>
-            <span className="day-quantity">-</span>
-          </div>
+          {Array.from(Array(monthItem.daysInMonth), (day, id) => {
+            return (
+              <div
+                className="day-box"
+                style={
+                  id === 0
+                    ? { gridColumnStart: monthItem.firstWeekdayOfMonth }
+                    : {}
+                }
+              >
+                <span className="day-number">{id + 1}</span>
+                <span className="day-quantity">-</span>
+              </div>
+            );
+          })}
         </div>
       </div>
     );
@@ -188,48 +172,7 @@ export const NinetyDayRuleCalculator = () => {
         </div>
       </section>
       <section className="app-result-container">
-        <div className="calendar-container">
-          <div>February 2025</div>
-          <div className="weekdays-group">
-            <span>SUN</span>
-            <span>MON</span>
-            <span>TUE</span>
-            <span>WED</span>
-            <span>THU</span>
-            <span>FRI</span>
-            <span>SAT</span>
-          </div>
-          <div className="weekdays-boxes-group">
-            <div className="day-box" style={{ gridColumnStart: 1 }}>
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-            <div className="day-box">
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-            <div className="day-box">
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-            <div className="day-box">
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-            <div className="day-box">
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-            <div className="day-box">
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-            <div className="day-box">
-              <span className="day-number">1</span>
-              <span className="day-quantity">-</span>
-            </div>
-          </div>
-        </div>
+        <div className="calendar-container">{showMonthRange}</div>
       </section>
     </main>
   );

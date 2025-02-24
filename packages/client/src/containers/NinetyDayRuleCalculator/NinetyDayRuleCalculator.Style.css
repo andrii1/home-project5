@@ -14,8 +14,12 @@
 }
 
 .calendar-container {
-  max-width: 25rem;
-  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.calendar-box {
   border: 1px solid grey;
 }
 .weekdays-group {
