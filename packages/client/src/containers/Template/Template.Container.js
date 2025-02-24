@@ -60,13 +60,13 @@ export const Template = () => {
   return (
     <main className="single-app-container">
       <Helmet>
-        <title>Recipes App</title>
-        <meta name="description" content="Find amazing recipes" />
+        <title>Title</title>
+        <meta name="description" content="decsription" />
       </Helmet>
       <header className="hero">
         <h1 className="hero-header">Recipes app</h1>
       </header>
-      <section className="app-input-container weather">
+      <section className="app-input-container">
         <div className="search-input-container">
           <TextFormInput
             value={search}

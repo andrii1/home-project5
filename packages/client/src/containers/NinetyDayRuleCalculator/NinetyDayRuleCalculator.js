@@ -58,15 +58,15 @@ export const NinetyDayRuleCalculator = () => {
   });
 
   return (
-    <main>
+    <main className="single-app-container">
       <Helmet>
-        <title>Recipes App</title>
-        <meta name="description" content="Find amazing recipes" />
+        <title>90 day rule calculator</title>
+        <meta name="description" content="Calculator 90 days from now" />
       </Helmet>
-      <div className="hero">
-        <h1 className="hero-header">Recipes app</h1>
-      </div>
-      <div className="search-container weather">
+      <header className="hero">
+        <h1 className="hero-header">90 day rule calculator</h1>
+      </header>
+      <section className="app-input-container">
         <div className="search-input-container">
           <TextFormInput
             value={search}
@@ -75,17 +75,19 @@ export const NinetyDayRuleCalculator = () => {
           />
           <Button onClick={handleSearch} primary label="Search" />
         </div>
-      </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          {error && <p className="error-message">{error.message}</p>}
-          {recipesData && !error && (
-            <div className="container-cards">{recipes}</div>
-          )}
-        </>
-      )}
+      </section>
+      <section className="app-result-container">
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          <>
+            {error && <p className="error-message">{error.message}</p>}
+            {recipesData && !error && (
+              <div className="container-cards">{recipes}</div>
+            )}
+          </>
+        )}
+      </section>
     </main>
   );
 };

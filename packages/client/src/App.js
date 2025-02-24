@@ -35,7 +35,7 @@ import { BreathingTechniquesApp } from './containers/BreathingTechniquesApp/Brea
 import { Recipes } from './containers/Recipes/Recipes.Container';
 import { ItemView } from './containers/ItemView/ItemView.container';
 import { GitHubStats } from './containers/GitHubStats/GitHubStats.Container';
-import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/NinetyDayRuleCalculator.Container';
+import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/NinetyDayRuleCalculator';
 
 function App() {
   return (

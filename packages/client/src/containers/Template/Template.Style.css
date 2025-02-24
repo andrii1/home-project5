@@ -8,3 +8,7 @@
 .single-app-container .hero-header {
   margin: 0rem !important;
 }
+.single-app-container .app-input-container {
+  display: flex;
+  justify-content: center;
+}
