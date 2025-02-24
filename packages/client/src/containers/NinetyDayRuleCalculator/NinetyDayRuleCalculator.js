@@ -90,6 +90,10 @@ export const NinetyDayRuleCalculator = () => {
     });
   };
 
+  const getCurrentDayNumber = () => {
+    return new Date().getDate();
+  };
+
   const getCurrentMonth = () => {
     return new Date().getMonth() + 1;
   };
@@ -104,7 +108,7 @@ export const NinetyDayRuleCalculator = () => {
     return date.toLocaleString('en-us', { month: 'long' });
   };
 
-  console.log(getDaysInMonth(getCurrentMonth(), getCurrentYear()));
+  console.log(getCurrentDayNumber());
 
   const recipes = recipesData?.recipes.map((recipe) => {
     return (
@@ -135,7 +139,13 @@ export const NinetyDayRuleCalculator = () => {
           {Array.from(Array(monthItem.daysInMonth), (day, id) => {
             return (
               <div
-                className="day-box"
+                className={`day-box ${
+                  getCurrentDayNumber() === id + 1 &&
+                  getCurrentMonth() === monthItem.month &&
+                  getCurrentYear() === monthItem.year
+                    ? 'today-date'
+                    : ''
+                }`}
                 style={
                   id === 0
                     ? { gridColumnStart: monthItem.firstWeekdayOfMonth }
@@ -162,14 +172,14 @@ export const NinetyDayRuleCalculator = () => {
         <h1 className="hero-header">90 day rule calculator</h1>
       </header>
       <section className="app-input-container">
-        <div className="search-input-container">
+        {/* <div className="search-input-container">
           <TextFormInput
             value={search}
             placeholder="Find recipes"
             onChange={setSearch}
           />
           <Button onClick={handleSearch} primary label="Search" />
-        </div>
+        </div> */}
       </section>
       <section className="app-result-container">
         <div className="calendar-container">{showMonthRange}</div>
