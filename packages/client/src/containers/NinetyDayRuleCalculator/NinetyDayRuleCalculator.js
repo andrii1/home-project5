@@ -34,8 +34,9 @@ export const NinetyDayRuleCalculator = () => {
       const month = tempDate.getMonth() + 1; // Months are 0-based
       const year = tempDate.getFullYear();
       const daysInMonth = getDaysInMonth(month, year);
+      const firstWeekdayOfMonth = getFirstWeekdayOfMonth(month, year);
 
-      monthsArray.push({ month, year, daysInMonth });
+      monthsArray.push({ month, year, daysInMonth, firstWeekdayOfMonth });
     }
 
     return monthsArray;
@@ -76,6 +77,10 @@ export const NinetyDayRuleCalculator = () => {
     return moment(`${month}-${year}`, 'MM-YYYY').daysInMonth();
   };
 
+  const getFirstWeekdayOfMonth = (month, year) => {
+    return moment(`${month}-${year}`, 'MM-YYYY').startOf('month').weekday();
+  };
+
   const getCurrentDate = () => {
     return new Date().toLocaleDateString('en-us', {
       weekday: 'long',
@@ -93,6 +98,12 @@ export const NinetyDayRuleCalculator = () => {
     return new Date().getFullYear();
   };
 
+  const getMonthName = (monthNumber) => {
+    const date = new Date();
+    date.setMonth(monthNumber - 1); // Month numbers are 0-based
+    return date.toLocaleString('en-us', { month: 'long' });
+  };
+
   console.log(getDaysInMonth(getCurrentMonth(), getCurrentYear()));
 
   const recipes = recipesData?.recipes.map((recipe) => {
@@ -104,6 +115,56 @@ export const NinetyDayRuleCalculator = () => {
         urlLabel={recipe.source_url}
         id={recipe.recipe_id}
       />
+    );
+  });
+
+  const showMonthRange = monthRange.map((monthItem, id) => {
+    return (
+      <div
+        key={monthItem.month - monthItem.year}
+        className="calendar-container"
+      >
+        <div>{`${getMonthName(monthItem.month)} ${monthItem.year}`}</div>
+        <div className="weekdays-group">
+          <span>SUN</span>
+          <span>MON</span>
+          <span>TUE</span>
+          <span>WED</span>
+          <span>THU</span>
+          <span>FRI</span>
+          <span>SAT</span>
+        </div>
+        <div className="weekdays-boxes-group">
+          <div className="day-box" style={{ gridColumnStart: 1 }}>
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+          <div className="day-box">
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+          <div className="day-box">
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+          <div className="day-box">
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+          <div className="day-box">
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+          <div className="day-box">
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+          <div className="day-box">
+            <span className="day-number">1</span>
+            <span className="day-quantity">-</span>
+          </div>
+        </div>
+      </div>
     );
   });
 
