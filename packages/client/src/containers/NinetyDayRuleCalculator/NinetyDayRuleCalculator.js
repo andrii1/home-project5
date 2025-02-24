@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import moment from 'moment';
@@ -23,9 +23,27 @@ export const NinetyDayRuleCalculator = () => {
   const [startMonth, setStartMonth] = useState(-6);
   const [endMonth, setEndMonth] = useState(5);
 
+  const getMonthRange = useCallback((startMonthParam, endMonthParam) => {
+    const currentDate = new Date();
+    const monthsArray = [];
+
+    for (let i = startMonthParam; i <= endMonthParam; i += 1) {
+      const tempDate = new Date(currentDate);
+      tempDate.setMonth(tempDate.getMonth() + i);
+
+      const month = tempDate.getMonth() + 1; // Months are 0-based
+      const year = tempDate.getFullYear();
+      const daysInMonth = getDaysInMonth(month, year);
+
+      monthsArray.push({ month, year, daysInMonth });
+    }
+
+    return monthsArray;
+  }, []);
+
   useEffect(() => {
     setMonthRange(getMonthRange(startMonth, endMonth));
-  }, [startMonth, endMonth]);
+  }, [startMonth, endMonth, getMonthRange]);
   console.log(monthRange);
 
   const fetchData = async (param) => {
@@ -65,23 +83,6 @@ export const NinetyDayRuleCalculator = () => {
       day: 'numeric',
       year: 'numeric',
     });
-  };
-
-  const getMonthRange = (startMonthParam, endMonthParam) => {
-    const currentDate = new Date();
-    const monthsArray = [];
-
-    for (let i = startMonthParam; i <= endMonthParam; i += 1) {
-      const tempDate = new Date(currentDate);
-      tempDate.setMonth(tempDate.getMonth() + i);
-
-      const month = tempDate.getMonth() + 1; // Months are 0-based
-      const year = tempDate.getFullYear();
-
-      monthsArray.push([month, year]);
-    }
-
-    return monthsArray;
   };
 
   const getCurrentMonth = () => {
