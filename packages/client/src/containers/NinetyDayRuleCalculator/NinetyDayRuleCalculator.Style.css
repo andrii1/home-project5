@@ -43,6 +43,11 @@
   /* width: 3rem; */
   position: relative;
 }
+
+.day-box.cutoff-date {
+  background-color: #bbb !important;
+}
+
 .day-number {
   position: absolute;
   top: 0.1rem;
