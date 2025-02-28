@@ -42,13 +42,18 @@
   height: 3rem;
   /* width: 3rem; */
   position: relative;
+  cursor: pointer;
+}
+
+.day-box:hover {
+  background-color: #fbfbfb;
 }
 
 .day-box.cutoff-date {
   background-color: #bbb !important;
 }
 
-.day-number {
+.days-number {
   position: absolute;
   top: 0.1rem;
   left: 0.3rem;
@@ -58,7 +63,7 @@
   border: 3px solid rgb(77, 195, 77);
 }
 
-.day-quantity {
+.days-used {
   position: absolute;
   top: 50%;
   left: 50%;

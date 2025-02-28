@@ -35,12 +35,17 @@ export const NinetyDayRuleCalculator = () => {
       const year = tempDate.getFullYear();
       const daysInMonth = getDaysInMonth(month, year);
       const firstWeekdayOfMonth = getFirstWeekdayOfMonth(month, year);
+      const days = Array.from({ length: daysInMonth }, (_, index) => ({
+        day: index + 1,
+        daysUsed: 0,
+      }));
 
       monthsArray.push({
         month,
         year,
         daysInMonth,
         firstWeekdayOfMonth,
+        days,
       });
     }
 
@@ -173,8 +178,8 @@ export const NinetyDayRuleCalculator = () => {
                     : {}
                 }
               >
-                <span className="day-number">{id + 1}</span>
-                <span className="day-quantity">-</span>
+                <span className="days-number">{id + 1}</span>
+                <span className="days-used">-</span>
               </div>
             );
           })}
