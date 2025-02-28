@@ -36,8 +36,9 @@ export const NinetyDayRuleCalculator = () => {
       const daysInMonth = getDaysInMonth(month, year);
       const firstWeekdayOfMonth = getFirstWeekdayOfMonth(month, year);
       const days = Array.from({ length: daysInMonth }, (_, index) => ({
-        day: index + 1,
+        id: index + 1,
         daysUsed: 0,
+        is180DaysFromToday: get180DaysFromToday(index + 1, month, year),
       }));
 
       monthsArray.push({
@@ -126,7 +127,7 @@ export const NinetyDayRuleCalculator = () => {
     );
   });
 
-  const is180DaysFromToday = (day, month, year) => {
+  const get180DaysFromToday = (day, month, year) => {
     const currentDate = new Date(); // Get current time
     const targetDate = new Date(
       year,
@@ -159,26 +160,23 @@ export const NinetyDayRuleCalculator = () => {
           <span>SAT</span>
         </div>
         <div className="weekdays-boxes-group">
-          {Array.from(Array(monthItem.daysInMonth), (day, id) => {
+          {monthItem.days.map((day) => {
             return (
               <div
                 className={`day-box ${
-                  getCurrentDayNumber() === id + 1 &&
+                  getCurrentDayNumber() === day.id &&
                   getCurrentMonth() === monthItem.month &&
                   getCurrentYear() === monthItem.year
                     ? 'today-date'
                     : ''
-                } ${
-                  is180DaysFromToday(id + 1, monthItem.month, monthItem.year) &&
-                  'cutoff-date'
-                }`}
+                } ${day.is180DaysFromToday && 'cutoff-date'}`}
                 style={
-                  id === 0
+                  day.id === 0
                     ? { gridColumnStart: monthItem.firstWeekdayOfMonth }
                     : {}
                 }
               >
-                <span className="days-number">{id + 1}</span>
+                <span className="days-number">{day.id}</span>
                 <span className="days-used">-</span>
               </div>
             );
