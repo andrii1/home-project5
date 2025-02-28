@@ -43,7 +43,8 @@ export const NinetyDayRuleCalculator = () => {
   }, []);
 
   useEffect(() => {
-    setMonthRange(getMonthRange(startMonth, endMonth));
+    const updatedMonthRange = getMonthRange(startMonth, endMonth);
+    setMonthRange(updatedMonthRange);
   }, [startMonth, endMonth, getMonthRange]);
   console.log(monthRange);
 
@@ -108,7 +109,7 @@ export const NinetyDayRuleCalculator = () => {
     return date.toLocaleString('en-us', { month: 'long' });
   };
 
-  console.log(getCurrentDayNumber());
+  console.log(startMonth, endMonth);
 
   const recipes = recipesData?.recipes.map((recipe) => {
     return (
@@ -124,7 +125,10 @@ export const NinetyDayRuleCalculator = () => {
 
   const showMonthRange = monthRange.map((monthItem) => {
     return (
-      <div key={monthItem.month - monthItem.year} className="calendar-box">
+      <div
+        key={`${monthItem.month}-${monthItem.year}`}
+        className="calendar-box"
+      >
         <div>{`${getMonthName(monthItem.month)} ${monthItem.year}`}</div>
         <div className="weekdays-group">
           <span>SUN</span>
@@ -182,9 +186,17 @@ export const NinetyDayRuleCalculator = () => {
         </div> */}
       </section>
       <section className="app-result-container">
-        <Button label="Look behind more" />
+        <Button
+          onClick={() => setStartMonth((prevCount) => prevCount - 3)}
+          secondary
+          label="Look behind more"
+        />
         <div className="calendar-container">{showMonthRange}</div>
-        <Button label="Look ahead more" />
+        <Button
+          onClick={() => setEndMonth((prevCount) => prevCount + 3)}
+          secondary
+          label="Look ahead more"
+        />
       </section>
     </main>
   );
