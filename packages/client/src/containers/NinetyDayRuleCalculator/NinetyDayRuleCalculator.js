@@ -30,22 +30,17 @@ export const NinetyDayRuleCalculator = () => {
     for (let i = startMonthParam; i <= endMonthParam; i += 1) {
       const tempDate = new Date(currentDate);
       tempDate.setMonth(tempDate.getMonth() + i);
-      const tempDateFor180DaysCheck = new Date(tempDate);
-      console.log(tempDateFor180DaysCheck);
 
       const month = tempDate.getMonth() + 1; // Months are 0-based
       const year = tempDate.getFullYear();
       const daysInMonth = getDaysInMonth(month, year);
       const firstWeekdayOfMonth = getFirstWeekdayOfMonth(month, year);
-      const is180DaysFromToday = get180DaysFromToday(tempDateFor180DaysCheck);
-      console.log(is180DaysFromToday);
 
       monthsArray.push({
         month,
         year,
         daysInMonth,
         firstWeekdayOfMonth,
-        is180DaysFromToday,
       });
     }
 
@@ -87,14 +82,6 @@ export const NinetyDayRuleCalculator = () => {
     return moment(`${month}-${year}`, 'MM-YYYY').startOf('month').weekday();
   };
 
-  const get180DaysFromToday = (targetDate) => {
-    const currentDate = new Date();
-    const differenceInTime = currentDate.getTime() - targetDate.getTime();
-    const differenceInDays = differenceInTime / (1000 * 60 * 60 * 24); // Convert milliseconds to days
-
-    return differenceInDays >= 180;
-  };
-
   const getCurrentDate = () => {
     return new Date().toLocaleDateString('en-us', {
       weekday: 'long',
@@ -134,6 +121,22 @@ export const NinetyDayRuleCalculator = () => {
     );
   });
 
+  const is180DaysFromToday = (day, month, year) => {
+    const currentDate = new Date(); // Get current time
+    const targetDate = new Date(
+      year,
+      month - 1,
+      day,
+      currentDate.getHours(),
+      currentDate.getMinutes(),
+      currentDate.getSeconds(),
+    );
+    const differenceInTime = currentDate.getTime() - targetDate.getTime();
+    const differenceInDays = differenceInTime / (1000 * 60 * 60 * 24); // Convert milliseconds to days
+
+    return differenceInDays >= 180;
+  };
+
   const showMonthRange = monthRange.map((monthItem) => {
     return (
       <div
@@ -160,7 +163,10 @@ export const NinetyDayRuleCalculator = () => {
                   getCurrentYear() === monthItem.year
                     ? 'today-date'
                     : ''
-                } ${monthItem.is180DaysFromToday && 'cutoff-date'}`}
+                } ${
+                  is180DaysFromToday(id + 1, monthItem.month, monthItem.year) &&
+                  'cutoff-date'
+                }`}
                 style={
                   id === 0
                     ? { gridColumnStart: monthItem.firstWeekdayOfMonth }
