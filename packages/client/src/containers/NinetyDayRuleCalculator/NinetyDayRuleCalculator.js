@@ -43,7 +43,7 @@ export const NinetyDayRuleCalculator = () => {
 
         const days = Array.from({ length: daysInMonth }, (_, index) => {
           const daysUsed = calculateDaysUsedInWindow(
-            new Date(year, month, index + 1),
+            new Date(year, month - 1, index + 1),
             staysParam,
           );
           console.log(daysUsed);
@@ -52,6 +52,10 @@ export const NinetyDayRuleCalculator = () => {
             id: index + 1,
             daysUsed,
             is180DaysFromToday: get180DaysFromToday(index + 1, month, year),
+            isDateInStays: checkIfDateIsInStays(
+              new Date(year, month - 1, index + 1),
+              staysParam,
+            ),
           };
         });
 
@@ -134,17 +138,17 @@ export const NinetyDayRuleCalculator = () => {
     return date.toLocaleString('en-us', { month: 'long' });
   };
 
-  const recipes = recipesData?.recipes.map((recipe) => {
-    return (
-      <CardSimple
-        title={recipe.title}
-        label={recipe.publisher}
-        urlImage={recipe.image_url}
-        urlLabel={recipe.source_url}
-        id={recipe.recipe_id}
-      />
-    );
-  });
+  // const recipes = recipesData?.recipes.map((recipe) => {
+  //   return (
+  //     <CardSimple
+  //       title={recipe.title}
+  //       label={recipe.publisher}
+  //       urlImage={recipe.image_url}
+  //       urlLabel={recipe.source_url}
+  //       id={recipe.recipe_id}
+  //     />
+  //   );
+  // });
 
   const get180DaysFromToday = (day, month, year) => {
     const currentDate = new Date(); // Get current time
@@ -164,7 +168,7 @@ export const NinetyDayRuleCalculator = () => {
 
   const calculateDaysUsedInWindow = (date, stays) => {
     const startWindow = new Date(date);
-    startWindow.setDate(startWindow.getDate() - 180); // Start of the 180-day window
+    startWindow.setDate(startWindow.getDate() - 179); // Start of the 180-day window
 
     let daysUsed = 0;
 
@@ -190,6 +194,8 @@ export const NinetyDayRuleCalculator = () => {
   };
 
   const handleSetStays = (date) => {
+    console.log('date', date);
+
     if (!isSettingDate) {
       setStartDate(date);
       setIsSettingDate(true);
@@ -210,10 +216,17 @@ export const NinetyDayRuleCalculator = () => {
     //   { entry: '2025-03-15', exit: '2025-03-25' },
     // ]);
   };
+  const checkIfDateIsInStays = (date, staysParam) => {
+    return staysParam.some((stay) => {
+      const entryDate = new Date(stay.entry);
+      const exitDate = new Date(stay.exit);
+      const checkDate = new Date(date);
 
-  console.log(staysInSchengen);
+      return checkDate >= entryDate && checkDate <= exitDate;
+    });
+  };
+  console.log('stays', staysInSchengen);
 
-  console.log(staysInSchengen);
   console.log(
     calculateDaysUsedInWindow(new Date('2025 02 25'), staysInSchengen),
   );
@@ -238,8 +251,11 @@ export const NinetyDayRuleCalculator = () => {
         </div>
         <div className="weekdays-boxes-group">
           {monthItem.days.map((day) => {
+            console.log(monthItem.month);
             return (
               <button
+                key={`${day.id}-${monthItem.month}-${monthItem.year}`}
+                id={`${day.id}-${monthItem.month}-${monthItem.year}`}
                 type="button"
                 className={`day-box ${
                   getCurrentDayNumber() === day.id &&
@@ -247,7 +263,9 @@ export const NinetyDayRuleCalculator = () => {
                   getCurrentYear() === monthItem.year
                     ? 'today-date'
                     : ''
-                } ${day.is180DaysFromToday && 'cutoff-date'}`}
+                } ${day.is180DaysFromToday && 'cutoff-date'} ${
+                  day.isDateInStays && 'date-selected'
+                }`}
                 style={
                   day.id === 1
                     ? { gridColumnStart: monthItem.firstWeekdayOfMonth + 1 }
@@ -255,7 +273,7 @@ export const NinetyDayRuleCalculator = () => {
                 }
                 onClick={() =>
                   handleSetStays(
-                    new Date(monthItem.year, monthItem.month, day.id),
+                    new Date(monthItem.year, monthItem.month - 1, day.id),
                   )
                 }
               >
