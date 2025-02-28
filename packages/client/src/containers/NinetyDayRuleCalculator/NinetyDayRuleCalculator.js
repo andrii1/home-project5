@@ -182,7 +182,9 @@ export const NinetyDayRuleCalculator = () => {
         </div> */}
       </section>
       <section className="app-result-container">
+        <Button label="Look behind more" />
         <div className="calendar-container">{showMonthRange}</div>
+        <Button label="Look ahead more" />
       </section>
     </main>
   );
