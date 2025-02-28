@@ -43,6 +43,7 @@
   /* width: 3rem; */
   position: relative;
   cursor: pointer;
+  border: none;
 }
 
 .day-box:hover {

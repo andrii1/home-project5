@@ -22,42 +22,61 @@ export const NinetyDayRuleCalculator = () => {
   const [monthRange, setMonthRange] = useState([]);
   const [startMonth, setStartMonth] = useState(-6);
   const [endMonth, setEndMonth] = useState(5);
+  const [staysInSchengen, setStaysInSchengen] = useState([]);
+  const [isSettingDate, setIsSettingDate] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
 
-  const getMonthRange = useCallback((startMonthParam, endMonthParam) => {
-    const currentDate = new Date();
-    const monthsArray = [];
+  const getMonthRange = useCallback(
+    (startMonthParam, endMonthParam, staysParam) => {
+      const currentDate = new Date();
+      const monthsArray = [];
 
-    for (let i = startMonthParam; i <= endMonthParam; i += 1) {
-      const tempDate = new Date(currentDate);
-      tempDate.setMonth(tempDate.getMonth() + i);
+      for (let i = startMonthParam; i <= endMonthParam; i += 1) {
+        const tempDate = new Date(currentDate);
+        tempDate.setMonth(tempDate.getMonth() + i);
 
-      const month = tempDate.getMonth() + 1; // Months are 0-based
-      const year = tempDate.getFullYear();
-      const daysInMonth = getDaysInMonth(month, year);
-      const firstWeekdayOfMonth = getFirstWeekdayOfMonth(month, year);
-      const days = Array.from({ length: daysInMonth }, (_, index) => ({
-        id: index + 1,
-        daysUsed: 0,
-        is180DaysFromToday: get180DaysFromToday(index + 1, month, year),
-      }));
+        const month = tempDate.getMonth() + 1; // Months are 0-based
+        const year = tempDate.getFullYear();
+        const daysInMonth = getDaysInMonth(month, year);
+        const firstWeekdayOfMonth = getFirstWeekdayOfMonth(month, year);
 
-      monthsArray.push({
-        month,
-        year,
-        daysInMonth,
-        firstWeekdayOfMonth,
-        days,
-      });
-    }
+        const days = Array.from({ length: daysInMonth }, (_, index) => {
+          const daysUsed = calculateDaysUsedInWindow(
+            new Date(year, month, index + 1),
+            staysParam,
+          );
+          console.log(daysUsed);
 
-    return monthsArray;
-  }, []);
+          return {
+            id: index + 1,
+            daysUsed,
+            is180DaysFromToday: get180DaysFromToday(index + 1, month, year),
+          };
+        });
+
+        monthsArray.push({
+          month,
+          year,
+          daysInMonth,
+          firstWeekdayOfMonth,
+          days,
+        });
+      }
+
+      return monthsArray;
+    },
+    [],
+  );
 
   useEffect(() => {
-    const updatedMonthRange = getMonthRange(startMonth, endMonth);
+    const updatedMonthRange = getMonthRange(
+      startMonth,
+      endMonth,
+      staysInSchengen,
+    );
     setMonthRange(updatedMonthRange);
-  }, [startMonth, endMonth, getMonthRange]);
-  console.log(monthRange);
+  }, [startMonth, endMonth, getMonthRange, staysInSchengen]);
 
   const fetchData = async (param) => {
     setLoading(true);
@@ -143,6 +162,64 @@ export const NinetyDayRuleCalculator = () => {
     return differenceInDays >= 180;
   };
 
+  const calculateDaysUsedInWindow = (date, stays) => {
+    const startWindow = new Date(date);
+    startWindow.setDate(startWindow.getDate() - 180); // Start of the 180-day window
+
+    let daysUsed = 0;
+
+    stays.forEach(({ entry, exit }) => {
+      const currentEntry = new Date(entry);
+      const currentExit = new Date(exit);
+
+      // If the stay is within the 180-day window, calculate the days used
+      if (currentExit >= startWindow && currentEntry <= date) {
+        // Adjust entry and exit if they are outside the window
+        const adjustedEntry =
+          currentEntry < startWindow ? startWindow : currentEntry;
+        const adjustedExit = currentExit > date ? date : currentExit;
+
+        // Count the days within the 180-day window
+        daysUsed +=
+          Math.floor((adjustedExit - adjustedEntry) / (1000 * 60 * 60 * 24)) +
+          1;
+      }
+    });
+
+    return daysUsed;
+  };
+
+  const handleSetStays = (date) => {
+    if (!isSettingDate) {
+      setStartDate(date);
+      setIsSettingDate(true);
+    } else if (isSettingDate) {
+      setEndDate(date);
+      setStaysInSchengen((prevItems) => [
+        ...prevItems,
+        { entry: startDate, exit: date },
+      ]);
+      setIsSettingDate(false);
+    }
+
+    // setStaysInSchengen([...staysInSchengen]);
+    // const [staysInSchengen, setStaysInSchengen] = useState([
+    //   { entry: '2024-09-01', exit: '2024-09-15' },
+    //   { entry: '2024-10-05', exit: '2024-10-29' },
+    //   { entry: '2025-01-10', exit: '2025-01-30' },
+    //   { entry: '2025-03-15', exit: '2025-03-25' },
+    // ]);
+  };
+
+  console.log(staysInSchengen);
+
+  console.log(staysInSchengen);
+  console.log(
+    calculateDaysUsedInWindow(new Date('2025 02 25'), staysInSchengen),
+  );
+  console.log(new Date('2025 02 25'));
+  console.log(monthRange);
+
   const showMonthRange = monthRange.map((monthItem) => {
     return (
       <div
@@ -162,7 +239,8 @@ export const NinetyDayRuleCalculator = () => {
         <div className="weekdays-boxes-group">
           {monthItem.days.map((day) => {
             return (
-              <div
+              <button
+                type="button"
                 className={`day-box ${
                   getCurrentDayNumber() === day.id &&
                   getCurrentMonth() === monthItem.month &&
@@ -171,14 +249,21 @@ export const NinetyDayRuleCalculator = () => {
                     : ''
                 } ${day.is180DaysFromToday && 'cutoff-date'}`}
                 style={
-                  day.id === 0
-                    ? { gridColumnStart: monthItem.firstWeekdayOfMonth }
+                  day.id === 1
+                    ? { gridColumnStart: monthItem.firstWeekdayOfMonth + 1 }
                     : {}
+                }
+                onClick={() =>
+                  handleSetStays(
+                    new Date(monthItem.year, monthItem.month, day.id),
+                  )
                 }
               >
                 <span className="days-number">{day.id}</span>
-                <span className="days-used">-</span>
-              </div>
+                <span className="days-used">
+                  {day.daysUsed ? day.daysUsed : '-'}
+                </span>
+              </button>
             );
           })}
         </div>
