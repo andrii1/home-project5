@@ -194,7 +194,18 @@ export const NinetyDayRuleCalculator = () => {
 
   const handleSetStays = (date) => {
     console.log('date', date);
+    if (checkIfDateIsInStays(date, staysInSchengen)) {
+      setStaysInSchengen((prevStays) =>
+        prevStays.filter(({ entry, exit }) => {
+          const entryDate = new Date(entry);
+          const exitDate = new Date(exit);
+          const checkDate = new Date(date);
 
+          return checkDate < entryDate || checkDate > exitDate;
+        }),
+      );
+      return;
+    }
     if (!isSettingDate) {
       setStartDate(date);
       setIsSettingDate(true);
@@ -347,6 +358,7 @@ export const NinetyDayRuleCalculator = () => {
           secondary
           label="Look ahead more"
         />
+        <Button onClick={() => console.log('hi')} secondary label="Reset" />
       </section>
     </main>
   );
