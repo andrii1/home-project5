@@ -193,7 +193,6 @@ export const NinetyDayRuleCalculator = () => {
   };
 
   const handleSetStays = (date) => {
-    console.log('date', date);
     if (checkIfDateIsInStays(date, staysInSchengen)) {
       setStaysInSchengen((prevStays) =>
         prevStays.filter(({ entry, exit }) => {
@@ -251,15 +250,6 @@ export const NinetyDayRuleCalculator = () => {
     return date.getFullYear();
   };
 
-  console.log('stays', staysInSchengen);
-
-  console.log(
-    calculateDaysUsedInWindow(new Date('2025 02 25'), staysInSchengen),
-  );
-  console.log(new Date('2025 02 25'));
-  console.log(monthRange);
-  console.log('startdate', startDate);
-
   const showMonthRange = monthRange.map((monthItem) => {
     return (
       <div
@@ -278,11 +268,6 @@ export const NinetyDayRuleCalculator = () => {
         </div>
         <div className="weekdays-boxes-group">
           {monthItem.days.map((day) => {
-            console.log(getDateNumber(startDate));
-
-            console.log(getMonthNumber(startDate));
-            console.log(getYear(startDate));
-
             return (
               <button
                 key={`${day.id}-${monthItem.month}-${monthItem.year}`}
@@ -358,7 +343,12 @@ export const NinetyDayRuleCalculator = () => {
           secondary
           label="Look ahead more"
         />
-        <Button onClick={() => console.log('hi')} secondary label="Reset" />
+        <Button
+          backgroundColor="#FF7F7F"
+          onClick={() => setStaysInSchengen([])}
+          secondary
+          label="Reset"
+        />
       </section>
     </main>
   );
