@@ -294,11 +294,12 @@ export const NinetyDayRuleCalculator = () => {
                     ? { gridColumnStart: monthItem.firstWeekdayOfMonth + 1 }
                     : {}
                 }
-                onClick={() =>
+                onClick={() => {
+                  if (day.is180DaysFromToday) return;
                   handleSetStays(
                     new Date(monthItem.year, monthItem.month - 1, day.id),
-                  )
-                }
+                  );
+                }}
               >
                 <span className="days-number">{day.id}</span>
                 <span className="days-used">
@@ -321,16 +322,7 @@ export const NinetyDayRuleCalculator = () => {
       <header className="hero">
         <h1 className="hero-header">90 day rule calculator</h1>
       </header>
-      <section className="app-input-container">
-        {/* <div className="search-input-container">
-          <TextFormInput
-            value={search}
-            placeholder="Find recipes"
-            onChange={setSearch}
-          />
-          <Button onClick={handleSearch} primary label="Search" />
-        </div> */}
-      </section>
+      {/* <section className="app-input-container"></section> */}
       <section className="app-result-container">
         <Button
           onClick={() => setStartMonth((prevStartMonth) => prevStartMonth - 3)}

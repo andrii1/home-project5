@@ -52,6 +52,7 @@
 
 .day-box.cutoff-date {
   background-color: #bbb !important;
+  cursor: auto;
 }
 
 .day-box.date-selected {
