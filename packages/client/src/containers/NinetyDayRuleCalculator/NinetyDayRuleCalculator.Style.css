@@ -58,6 +58,10 @@
   background-color: blue !important;
 }
 
+.day-box.date-selected-first {
+  background-color: yellow !important;
+}
+
 .days-number {
   position: absolute;
   top: 0.1rem;

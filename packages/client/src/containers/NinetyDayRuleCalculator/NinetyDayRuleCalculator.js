@@ -46,7 +46,6 @@ export const NinetyDayRuleCalculator = () => {
             new Date(year, month - 1, index + 1),
             staysParam,
           );
-          console.log(daysUsed);
 
           return {
             id: index + 1,
@@ -225,6 +224,22 @@ export const NinetyDayRuleCalculator = () => {
       return checkDate >= entryDate && checkDate <= exitDate;
     });
   };
+
+  const getDateNumber = (dateString) => {
+    const date = new Date(dateString);
+    return date.getDate();
+  };
+
+  const getMonthNumber = (dateString) => {
+    const date = new Date(dateString);
+    return date.getMonth() + 1; // getMonth() returns 0-based index, so add 1
+  };
+
+  const getYear = (dateString) => {
+    const date = new Date(dateString);
+    return date.getFullYear();
+  };
+
   console.log('stays', staysInSchengen);
 
   console.log(
@@ -232,6 +247,7 @@ export const NinetyDayRuleCalculator = () => {
   );
   console.log(new Date('2025 02 25'));
   console.log(monthRange);
+  console.log('startdate', startDate);
 
   const showMonthRange = monthRange.map((monthItem) => {
     return (
@@ -251,7 +267,11 @@ export const NinetyDayRuleCalculator = () => {
         </div>
         <div className="weekdays-boxes-group">
           {monthItem.days.map((day) => {
-            console.log(monthItem.month);
+            console.log(getDateNumber(startDate));
+
+            console.log(getMonthNumber(startDate));
+            console.log(getYear(startDate));
+
             return (
               <button
                 key={`${day.id}-${monthItem.month}-${monthItem.year}`}
@@ -265,6 +285,13 @@ export const NinetyDayRuleCalculator = () => {
                     : ''
                 } ${day.is180DaysFromToday && 'cutoff-date'} ${
                   day.isDateInStays && 'date-selected'
+                } ${
+                  day.id === getDateNumber(startDate) &&
+                  monthItem.month === getMonthNumber(startDate) &&
+                  monthItem.year === getYear(startDate) &&
+                  isSettingDate
+                    ? 'date-selected-first'
+                    : ''
                 }`}
                 style={
                   day.id === 1
