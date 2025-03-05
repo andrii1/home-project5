@@ -24,7 +24,7 @@ export const DatePicker = ({
   }, [cRef, indeterminate]);
 
   return (
-    <div className="category-input datepicker">
+    <div className={className || 'category-input datepicker'}>
       <label>{label}</label>
       <input
         type="date"

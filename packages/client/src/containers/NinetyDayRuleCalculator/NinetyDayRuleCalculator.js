@@ -12,6 +12,7 @@ import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 import { Radio } from '../../components/Radio/Radio.component';
+import { DatePicker } from '../../components/DatePicker/DatePicker.component';
 
 const keywords = [];
 
@@ -27,7 +28,9 @@ export const NinetyDayRuleCalculator = () => {
   const [isSettingDate, setIsSettingDate] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [mode, setMode] = useState('calendar');
+  const [mode, setMode] = useState('fields');
+  const [validForm, setValidForm] = useState(false);
+  const [invalidForm, setInvalidForm] = useState(false);
 
   const getMonthRange = useCallback(
     (startMonthParam, endMonthParam, staysParam) => {
@@ -227,6 +230,7 @@ export const NinetyDayRuleCalculator = () => {
     //   { entry: '2025-03-15', exit: '2025-03-25' },
     // ]);
   };
+
   const checkIfDateIsInStays = (date, staysParam) => {
     return staysParam.some((stay) => {
       const entryDate = new Date(stay.entry);
@@ -251,6 +255,30 @@ export const NinetyDayRuleCalculator = () => {
     const date = new Date(dateString);
     return date.getFullYear();
   };
+
+  /// FIELDS PART
+
+  const handleSetStaysFields = (startDateParam, endDateParam) => {
+    setStaysInSchengen((prevItems) => [
+      ...prevItems,
+      { entry: startDateParam, exit: endDateParam },
+    ]);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (startDate && endDate) {
+      handleSetStaysFields(startDate, endDate);
+      setInvalidForm(false);
+      setValidForm(true);
+    } else {
+      setInvalidForm(true);
+      setValidForm(false);
+    }
+  };
+
+  console.log(startDate);
+  console.log(staysInSchengen);
 
   const showMonthRange = monthRange.map((monthItem) => {
     return (
@@ -365,7 +393,41 @@ export const NinetyDayRuleCalculator = () => {
             />
           </>
         )}
-        {mode === 'fields' && <>test</>}
+        {mode === 'fields' && (
+          <div className="form-box submit-box-90day">
+            <form onSubmit={handleSubmit}>
+              <div className="form-ninety-day-rule-header-container">
+                <div>Entry date</div>
+                <div>Exit date</div>
+                <div>Duration</div>
+                <div>Days of Stay in the Last 180 Day</div>
+                <div>Last Day to Stay</div>
+              </div>
+              <div className="form-ninety-day-rule-row-container">
+                <DatePicker
+                  className="empty"
+                  onChange={(event) => setStartDate(event.target.value)}
+                />
+                <DatePicker
+                  className="empty"
+                  onChange={(event) => setEndDate(event.target.value)}
+                />
+                <div>-</div>
+                <div>-</div>
+                <div>-</div>
+              </div>
+              <Button
+                type="submit"
+                primary
+                className="btn-add-prompt"
+                label="Go"
+              />
+              {invalidForm && (
+                <p className="error-message">Form is not valid</p>
+              )}
+            </form>
+          </div>
+        )}
       </section>
     </main>
   );
