@@ -31,6 +31,7 @@ export const NinetyDayRuleCalculator = () => {
   const [mode, setMode] = useState('fields');
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
+  const [numberOfFields, setNumberOfFields] = useState(1);
 
   const getMonthRange = useCallback(
     (startMonthParam, endMonthParam, staysParam) => {
@@ -258,6 +259,44 @@ export const NinetyDayRuleCalculator = () => {
 
   /// FIELDS PART
 
+  const getDaysBetweenDates = (date1, date2) => {
+    const firstDate = new Date(date1);
+    const secondDate = new Date(date2);
+
+    const timeDifference = Math.abs(secondDate - firstDate); // Difference in milliseconds
+    return Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // Convert to days
+  };
+
+  const getDaysInLast180 = (stays) => {
+    const today = new Date();
+    const past180Days = new Date();
+    past180Days.setDate(today.getDate() - 180);
+
+    return stays.reduce((totalDays, stay) => {
+      let entryDate = new Date(stay.entry);
+      let exitDate = new Date(stay.exit);
+
+      if (exitDate >= past180Days) {
+        let validEntry = entryDate >= past180Days ? entryDate : past180Days;
+        totalDays += getDaysBetweenDates(validEntry, exitDate);
+      }
+      return totalDays;
+    }, 0);
+  };
+
+  const getLastPossibleStayDate = (stays) => {
+    const today = new Date();
+    let totalDays = getDaysInLast180(stays);
+    let remainingDays = 90 - totalDays;
+
+    if (remainingDays <= 0) return 'No more days left in the period';
+
+    let lastStayDate = new Date(today);
+    lastStayDate.setDate(today.getDate() + remainingDays);
+
+    return lastStayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
+  };
+
   const handleSetStaysFields = (startDateParam, endDateParam) => {
     setStaysInSchengen((prevItems) => [
       ...prevItems,
@@ -268,7 +307,6 @@ export const NinetyDayRuleCalculator = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (startDate && endDate) {
-      handleSetStaysFields(startDate, endDate);
       setInvalidForm(false);
       setValidForm(true);
     } else {
@@ -399,29 +437,64 @@ export const NinetyDayRuleCalculator = () => {
               <div className="form-ninety-day-rule-header-container">
                 <div>Entry date</div>
                 <div>Exit date</div>
-                <div>Duration</div>
-                <div>Days of Stay in the Last 180 Day</div>
-                <div>Last Day to Stay</div>
+                <div>Duration (days)</div>
               </div>
-              <div className="form-ninety-day-rule-row-container">
-                <DatePicker
-                  className="empty"
-                  onChange={(event) => setStartDate(event.target.value)}
-                />
-                <DatePicker
-                  className="empty"
-                  onChange={(event) => setEndDate(event.target.value)}
-                />
-                <div>-</div>
-                <div>-</div>
-                <div>-</div>
+              {Array.from({ length: numberOfFields }).map((item, id) => {
+                return (
+                  <div className="form-ninety-day-rule-row-container">
+                    <DatePicker
+                      className="empty"
+                      onChange={(event) => handleSetStays(event.target.value)}
+                    />
+                    <DatePicker
+                      className="empty"
+                      onChange={(event) => handleSetStays(event.target.value)}
+                    />
+                    <div>
+                      {validForm && staysInSchengen[id]
+                        ? getDaysBetweenDates(
+                            staysInSchengen[id].entry,
+                            staysInSchengen[id].exit,
+                          )
+                        : '-'}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div className="result-container">
+                <div>
+                  Days of Stay in the Last 180 Day{' '}
+                  {validForm &&
+                    staysInSchengen.length > 0 &&
+                    getDaysInLast180(staysInSchengen)}
+                </div>
+                <div>
+                  Last Day to Stay{' '}
+                  {validForm &&
+                    staysInSchengen.length > 0 &&
+                    getLastPossibleStayDate(staysInSchengen)}
+                </div>
               </div>
-              <Button
-                type="submit"
-                primary
-                className="btn-add-prompt"
-                label="Go"
-              />
+              <div className="button-90days-group">
+                <Button
+                  type="button"
+                  secondary
+                  className="btn-add-prompt"
+                  label="Add dates"
+                  onClick={() => {
+                    setNumberOfFields(
+                      (prevNumberOfFields) => prevNumberOfFields + 1,
+                    );
+                  }}
+                />
+                <Button
+                  type="submit"
+                  primary
+                  className="btn-add-prompt"
+                  label="Calculate"
+                />
+              </div>
               {invalidForm && (
                 <p className="error-message">Form is not valid</p>
               )}

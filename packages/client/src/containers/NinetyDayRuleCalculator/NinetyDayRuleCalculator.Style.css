@@ -82,17 +82,26 @@
 
 .form-ninety-day-rule-header-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.1rem;
 }
 
 .form-ninety-day-rule-row-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.1rem;
   margin-top: 1rem;
 }
 
 .submit-box-90day {
   max-width: 100%;
+  width: 100%;
+}
+.result-container {
+  margin-top: 1rem;
+}
+.button-90days-group {
+  justify-content: center;
+  display: flex;
+  gap: 1rem;
 }
