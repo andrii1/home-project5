@@ -342,23 +342,30 @@ export const NinetyDayRuleCalculator = () => {
         </div>
       </section>
       <section className="app-result-container">
-        <Button
-          onClick={() => setStartMonth((prevStartMonth) => prevStartMonth - 3)}
-          secondary
-          label="Look behind more"
-        />
-        <div className="calendar-container">{showMonthRange}</div>
-        <Button
-          onClick={() => setEndMonth((prevEndMonth) => prevEndMonth + 3)}
-          secondary
-          label="Look ahead more"
-        />
-        <Button
-          backgroundColor="#FF7F7F"
-          onClick={() => setStaysInSchengen([])}
-          secondary
-          label="Reset"
-        />
+        {mode === 'calendar' && (
+          <>
+            <Button
+              onClick={() =>
+                setStartMonth((prevStartMonth) => prevStartMonth - 3)
+              }
+              secondary
+              label="Look behind more"
+            />
+            <div className="calendar-container">{showMonthRange}</div>
+            <Button
+              onClick={() => setEndMonth((prevEndMonth) => prevEndMonth + 3)}
+              secondary
+              label="Look ahead more"
+            />
+            <Button
+              backgroundColor="#FF7F7F"
+              onClick={() => setStaysInSchengen([])}
+              secondary
+              label="Reset"
+            />
+          </>
+        )}
+        {mode === 'fields' && <>test</>}
       </section>
     </main>
   );
