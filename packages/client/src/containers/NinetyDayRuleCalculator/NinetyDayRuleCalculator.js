@@ -307,6 +307,7 @@ export const NinetyDayRuleCalculator = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (startDate && endDate) {
+      handleSetStaysFields(startDate, endDate);
       setInvalidForm(false);
       setValidForm(true);
     } else {
@@ -381,6 +382,8 @@ export const NinetyDayRuleCalculator = () => {
     );
   });
 
+  console.log(startDate, 'startDate');
+
   return (
     <main className="single-app-container">
       <Helmet>
@@ -444,11 +447,15 @@ export const NinetyDayRuleCalculator = () => {
                   <div className="form-ninety-day-rule-row-container">
                     <DatePicker
                       className="empty"
-                      onChange={(event) => handleSetStays(event.target.value)}
+                      onChange={(event) => {
+                        setStartDate(event.target.value);
+                      }}
                     />
                     <DatePicker
                       className="empty"
-                      onChange={(event) => handleSetStays(event.target.value)}
+                      onChange={(event) => {
+                        setEndDate(event.target.value);
+                      }}
                     />
                     <div>
                       {validForm && staysInSchengen[id]
@@ -464,16 +471,16 @@ export const NinetyDayRuleCalculator = () => {
 
               <div className="result-container">
                 <div>
-                  Days of Stay in the Last 180 Day{' '}
-                  {validForm &&
-                    staysInSchengen.length > 0 &&
-                    getDaysInLast180(staysInSchengen)}
+                  Days of Stay in the Last 180 Days{' '}
+                  {validForm && staysInSchengen.length > 0 && (
+                    <strong>getDaysInLast180(staysInSchengen)</strong>
+                  )}
                 </div>
                 <div>
                   Last Day to Stay{' '}
-                  {validForm &&
-                    staysInSchengen.length > 0 &&
-                    getLastPossibleStayDate(staysInSchengen)}
+                  {validForm && staysInSchengen.length > 0 && (
+                    <strong>getLastPossibleStayDate(staysInSchengen)</strong>
+                  )}
                 </div>
               </div>
               <div className="button-90days-group">
