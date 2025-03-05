@@ -11,6 +11,7 @@ import { Badge } from '../../components/Badge/Badge.component';
 import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
+import { Radio } from '../../components/Radio/Radio.component';
 
 const keywords = [];
 
@@ -26,6 +27,7 @@ export const NinetyDayRuleCalculator = () => {
   const [isSettingDate, setIsSettingDate] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
+  const [mode, setMode] = useState('calendar');
 
   const getMonthRange = useCallback(
     (startMonthParam, endMonthParam, staysParam) => {
@@ -322,7 +324,23 @@ export const NinetyDayRuleCalculator = () => {
       <header className="hero">
         <h1 className="hero-header">90 day rule calculator</h1>
       </header>
-      {/* <section className="app-input-container"></section> */}
+      <section className="app-input-container">
+        {' '}
+        <div className="input-group">
+          <Radio
+            value="calendar"
+            label="Calendar"
+            onChange={(event) => setMode(event.target.value)}
+            checked={mode === 'calendar'}
+          />
+          <Radio
+            value="fields"
+            label="Fields"
+            onChange={(event) => setMode(event.target.value)}
+            checked={mode === 'fields'}
+          />
+        </div>
+      </section>
       <section className="app-result-container">
         <Button
           onClick={() => setStartMonth((prevStartMonth) => prevStartMonth - 3)}
