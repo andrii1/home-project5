@@ -83,14 +83,26 @@
 .form-ninety-day-rule-header-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: 1fr 1fr 1fr 0.5fr; */
   gap: 0.1rem;
+  align-items: center;
 }
 
 .form-ninety-day-rule-row-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns: 1fr 1fr 1fr 0.5fr; */
   gap: 0.1rem;
   margin-top: 1rem;
+  align-items: center;
+}
+
+.form-ninety-day-rule-header-container.add-cell {
+  grid-template-columns: repeat(3, 1fr) 0.2fr;
+}
+
+.form-ninety-day-rule-row-container.add-cell {
+  grid-template-columns: repeat(3, 1fr) 0.2fr;
 }
 
 .submit-box-90day {
@@ -104,4 +116,13 @@
   justify-content: center;
   display: flex;
   gap: 1rem;
+}
+
+.btn-reset-group {
+  margin-top: 1rem;
+}
+
+.storybook-button.danger {
+  background-color: rgb(255, 127, 127);
+  color: white;
 }

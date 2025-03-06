@@ -442,24 +442,33 @@ export const NinetyDayRuleCalculator = () => {
               label="Look ahead more"
             />
             <Button
-              backgroundColor="#FF7F7F"
               onClick={() => setStaysInSchengen([])}
               secondary
               label="Reset"
+              className="danger"
             />
           </>
         )}
         {mode === 'fields' && (
           <div className="form-box submit-box-90day">
             <form onSubmit={handleSubmit}>
-              <div className="form-ninety-day-rule-header-container">
+              <div
+                className={`form-ninety-day-rule-header-container ${
+                  numberOfFields > 1 && 'add-cell'
+                }`}
+              >
                 <div>Entry date</div>
                 <div>Exit date</div>
                 <div>Duration (days)</div>
+                {numberOfFields > 1 && <div />}
               </div>
               {Array.from({ length: numberOfFields }).map((item, id) => {
                 return (
-                  <div className="form-ninety-day-rule-row-container">
+                  <div
+                    className={`form-ninety-day-rule-row-container ${
+                      numberOfFields > 1 && 'add-cell'
+                    }`}
+                  >
                     <DatePicker
                       className="empty"
                       onChange={(event) => {
@@ -480,6 +489,16 @@ export const NinetyDayRuleCalculator = () => {
                           )
                         : '-'}
                     </div>
+                    {numberOfFields > 1 && (
+                      <div>
+                        <Button
+                          onClick={() => setStaysInSchengen([])}
+                          secondary
+                          label="X"
+                          className="danger"
+                        />
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -515,6 +534,14 @@ export const NinetyDayRuleCalculator = () => {
                   primary
                   className="btn-add-prompt"
                   label="Calculate"
+                />
+              </div>
+              <div className="btn-reset-group">
+                <Button
+                  onClick={() => setStaysInSchengen([])}
+                  secondary
+                  label="Reset"
+                  className="danger"
                 />
               </div>
               {invalidForm && (
