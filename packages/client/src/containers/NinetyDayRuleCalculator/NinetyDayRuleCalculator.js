@@ -32,6 +32,10 @@ export const NinetyDayRuleCalculator = () => {
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
   const [numberOfFields, setNumberOfFields] = useState(1);
+  const [staysInSchengenFields, setStaysInSchengenFields] = useState([
+    { entry: undefined, exit: undefined },
+  ]);
+  const [startEndDates, setStartEndDates] = useState({});
 
   const getMonthRange = useCallback(
     (startMonthParam, endMonthParam, staysParam) => {
@@ -299,8 +303,8 @@ export const NinetyDayRuleCalculator = () => {
 
   const handleSetStaysFields = (startDateParam, endDateParam) => {
     if (
-      checkIfDateIsInStays(startDateParam, staysInSchengen) ||
-      checkIfDateIsInStays(endDateParam, staysInSchengen)
+      checkIfDateIsInStays(startDateParam, staysInSchengenFields) ||
+      checkIfDateIsInStays(endDateParam, staysInSchengenFields)
     ) {
       // setStaysInSchengen((prevStays) =>
       //   prevStays.filter(({ entry, exit }) => {
@@ -313,15 +317,17 @@ export const NinetyDayRuleCalculator = () => {
       // );
       return;
     }
-    setStaysInSchengen((prevItems) => [
+    setStaysInSchengenFields((prevItems) => [
       ...prevItems,
       { entry: startDateParam, exit: endDateParam },
     ]);
+    // setStartDate(undefined);
+    // setEndDate(undefined);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (startDate && endDate) {
+    if (typeof startDate !== 'undefined' && typeof endDate !== 'undefined') {
       handleSetStaysFields(startDate, endDate);
       setInvalidForm(false);
       setValidForm(true);
@@ -331,8 +337,22 @@ export const NinetyDayRuleCalculator = () => {
     }
   };
 
+  const handleInputChange = (id, identifier, value) => {
+    setStaysInSchengenFields((prevItems) =>
+      prevItems.map((item, index) =>
+        index === id ? { ...item, [identifier]: value } : item,
+      ),
+    );
+  };
+
+  const handleRemove = (id) => {
+    setStaysInSchengenFields((prevItems) =>
+      prevItems.filter((_, index) => index !== id),
+    );
+  };
+
   console.log(startDate);
-  console.log(staysInSchengen);
+  console.log(staysInSchengenFields);
 
   const showMonthRange = monthRange.map((monthItem) => {
     return (
@@ -454,45 +474,42 @@ export const NinetyDayRuleCalculator = () => {
             <form onSubmit={handleSubmit}>
               <div
                 className={`form-ninety-day-rule-header-container ${
-                  numberOfFields > 1 && 'add-cell'
+                  staysInSchengenFields.length > 1 && 'add-cell'
                 }`}
               >
                 <div>Entry date</div>
                 <div>Exit date</div>
                 <div>Duration (days)</div>
-                {numberOfFields > 1 && <div />}
+                {staysInSchengenFields.length > 1 && <div />}
               </div>
-              {Array.from({ length: numberOfFields }).map((item, id) => {
+              {staysInSchengenFields.map((stay, id) => {
                 return (
                   <div
                     className={`form-ninety-day-rule-row-container ${
-                      numberOfFields > 1 && 'add-cell'
+                      staysInSchengenFields.length > 1 && 'add-cell'
                     }`}
                   >
                     <DatePicker
                       className="empty"
                       onChange={(event) => {
-                        setStartDate(event.target.value);
+                        handleInputChange(id, 'entry', event.target.value);
                       }}
                     />
                     <DatePicker
                       className="empty"
                       onChange={(event) => {
-                        setEndDate(event.target.value);
+                        handleInputChange(id, 'exit', event.target.value);
                       }}
                     />
                     <div>
-                      {validForm && staysInSchengen[id]
-                        ? getDaysBetweenDates(
-                            staysInSchengen[id].entry,
-                            staysInSchengen[id].exit,
-                          )
+                      {stay.entry && stay.exit
+                        ? getDaysBetweenDates(stay.entry, stay.exit)
                         : '-'}
                     </div>
-                    {numberOfFields > 1 && (
+                    {staysInSchengenFields.length > 1 && (
                       <div>
                         <Button
-                          onClick={() => setStaysInSchengen([])}
+                          onClick={() => handleRemove(id)}
                           secondary
                           label="X"
                           className="danger"
@@ -506,14 +523,16 @@ export const NinetyDayRuleCalculator = () => {
               <div className="result-container">
                 <div>
                   Days of Stay in the Last 180 Days{' '}
-                  {validForm && staysInSchengen.length > 0 && (
-                    <strong>{getDaysInLast180(staysInSchengen)}</strong>
+                  {validForm && (
+                    <strong>{getDaysInLast180(staysInSchengenFields)}</strong>
                   )}
                 </div>
                 <div>
                   Last Day to Stay{' '}
-                  {validForm && staysInSchengen.length > 0 && (
-                    <strong>{getLastPossibleStayDate(staysInSchengen)}</strong>
+                  {validForm && (
+                    <strong>
+                      {getLastPossibleStayDate(staysInSchengenFields)}
+                    </strong>
                   )}
                 </div>
               </div>
@@ -524,9 +543,10 @@ export const NinetyDayRuleCalculator = () => {
                   className="btn-add-prompt"
                   label="Add dates"
                   onClick={() => {
-                    setNumberOfFields(
-                      (prevNumberOfFields) => prevNumberOfFields + 1,
-                    );
+                    setStaysInSchengenFields((prevItems) => [
+                      ...prevItems,
+                      { entry: undefined, exit: undefined },
+                    ]);
                   }}
                 />
                 <Button
@@ -538,7 +558,11 @@ export const NinetyDayRuleCalculator = () => {
               </div>
               <div className="btn-reset-group">
                 <Button
-                  onClick={() => setStaysInSchengen([])}
+                  onClick={() =>
+                    setStaysInSchengenFields([
+                      { entry: undefined, exit: undefined },
+                    ])
+                  }
                   secondary
                   label="Reset"
                   className="danger"
