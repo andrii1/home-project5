@@ -31,11 +31,9 @@ export const NinetyDayRuleCalculator = () => {
   const [mode, setMode] = useState('fields');
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
-  const [numberOfFields, setNumberOfFields] = useState(1);
   const [staysInSchengenFields, setStaysInSchengenFields] = useState([
     { entry: undefined, exit: undefined },
   ]);
-  const [startEndDates, setStartEndDates] = useState({});
 
   const getMonthRange = useCallback(
     (startMonthParam, endMonthParam, staysParam) => {
@@ -325,10 +323,13 @@ export const NinetyDayRuleCalculator = () => {
     // setEndDate(undefined);
   };
 
+  const hasUndefinedEntryOrExit = staysInSchengenFields.some(
+    (item) => item.entry === undefined || item.exit === undefined,
+  );
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (typeof startDate !== 'undefined' && typeof endDate !== 'undefined') {
-      handleSetStaysFields(startDate, endDate);
+    if (!hasUndefinedEntryOrExit) {
       setInvalidForm(false);
       setValidForm(true);
     } else {
@@ -338,6 +339,7 @@ export const NinetyDayRuleCalculator = () => {
   };
 
   const handleInputChange = (id, identifier, value) => {
+    setValidForm(false);
     setStaysInSchengenFields((prevItems) =>
       prevItems.map((item, index) =>
         index === id ? { ...item, [identifier]: value } : item,
