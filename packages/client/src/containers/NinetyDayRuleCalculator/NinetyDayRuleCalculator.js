@@ -298,6 +298,21 @@ export const NinetyDayRuleCalculator = () => {
   };
 
   const handleSetStaysFields = (startDateParam, endDateParam) => {
+    if (
+      checkIfDateIsInStays(startDateParam, staysInSchengen) ||
+      checkIfDateIsInStays(endDateParam, staysInSchengen)
+    ) {
+      // setStaysInSchengen((prevStays) =>
+      //   prevStays.filter(({ entry, exit }) => {
+      //     const entryDate = new Date(entry);
+      //     const exitDate = new Date(exit);
+      //     const checkDate = new Date(startDateParam);
+
+      //     return checkDate < entryDate || checkDate > exitDate;
+      //   }),
+      // );
+      return;
+    }
     setStaysInSchengen((prevItems) => [
       ...prevItems,
       { entry: startDateParam, exit: endDateParam },
@@ -473,13 +488,13 @@ export const NinetyDayRuleCalculator = () => {
                 <div>
                   Days of Stay in the Last 180 Days{' '}
                   {validForm && staysInSchengen.length > 0 && (
-                    <strong>getDaysInLast180(staysInSchengen)</strong>
+                    <strong>{getDaysInLast180(staysInSchengen)}</strong>
                   )}
                 </div>
                 <div>
                   Last Day to Stay{' '}
                   {validForm && staysInSchengen.length > 0 && (
-                    <strong>getLastPossibleStayDate(staysInSchengen)</strong>
+                    <strong>{getLastPossibleStayDate(staysInSchengen)}</strong>
                   )}
                 </div>
               </div>
