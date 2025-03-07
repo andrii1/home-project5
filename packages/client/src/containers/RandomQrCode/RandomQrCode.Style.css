@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
-  width: 40rem;
+
   margin: 0 auto;
 }
 
@@ -38,6 +38,15 @@
 
 .app-input-container .form-input {
   margin: 0rem;
+  width: 40rem;
+}
+
+.tab-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }
 
 @media only screen and (max-width: 991px) {

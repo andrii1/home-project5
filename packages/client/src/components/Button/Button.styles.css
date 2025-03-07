@@ -50,3 +50,7 @@
   background-color: #cccccc;
   color: #666666;
 }
+
+.storybook-button.tab {
+  border-radius: 0.313rem;
+}

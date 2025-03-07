@@ -23,6 +23,7 @@ const keywords = [
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
+  const [tab, setTab] = useState('Random code');
 
   const handleGenerateQrCode = () => {
     setQrCode(input);
@@ -39,6 +40,32 @@ export const RandomQrCode = () => {
         <h1 className="hero-header">Random QR code</h1>
       </header>
       <section className="app-input-container">
+        <div className="tab-group">
+          <Button
+            tertiary={tab === 'Random code'}
+            secondary={tab !== 'Random code'}
+            label="Random code"
+            className="tab"
+          />
+          <Button
+            tertiary={tab === 'Random string'}
+            secondary={tab !== 'Random string'}
+            label="Random string"
+            className="tab"
+          />
+          <Button
+            tertiary={tab === 'Random number'}
+            secondary={tab !== 'Random number'}
+            label="Random number"
+            className="tab"
+          />
+          <Button
+            tertiary={tab === 'Random text'}
+            secondary={tab !== 'Random text'}
+            label="Random text"
+            className="tab"
+          />
+        </div>
         <TextFormInput
           value={input}
           placeholder="Enter your value"
