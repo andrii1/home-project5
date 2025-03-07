@@ -11,6 +11,9 @@
 .single-app-container .app-input-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
 }
 
 .single-app-container .app-result-container {

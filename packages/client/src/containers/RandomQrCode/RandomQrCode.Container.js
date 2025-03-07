@@ -30,30 +30,30 @@ export const RandomQrCode = () => {
   };
 
   return (
-    <main>
+    <main className="single-app-container">
       <Helmet>
         <title>Random QR Code</title>
         <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
-      <div className="hero">
+      <header className="hero">
         <h1 className="hero-header">Random QR code</h1>
-      </div>
-      <div className="qr-code-container">
-        <div className="qr-code-input-container">
-          <TextFormInput
-            value={input}
-            placeholder="Enter your value"
-            onChange={setInput}
-          />
-          <Button
-            onClick={handleGenerateQrCode}
-            primary
-            label="Generate QR Code"
-            disabled={!(input && input.trim !== '')}
-          />
-        </div>
+      </header>
+      <section className="app-input-container">
+        <TextFormInput
+          value={input}
+          placeholder="Enter your value"
+          onChange={setInput}
+        />
+        <Button
+          onClick={handleGenerateQrCode}
+          primary
+          label="Generate QR Code"
+          disabled={!(input && input.trim !== '')}
+        />
+      </section>
+      <section className="app-result-container">
         <QRCode id="qr-code-value" value={qrCode} />
-      </div>
+      </section>
     </main>
   );
 };
