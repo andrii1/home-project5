@@ -275,11 +275,12 @@ export const NinetyDayRuleCalculator = () => {
     past180Days.setDate(today.getDate() - 180);
 
     return stays.reduce((totalDays, stay) => {
-      let entryDate = new Date(stay.entry);
-      let exitDate = new Date(stay.exit);
+      const entryDate = new Date(stay.entry);
+      const exitDate = new Date(stay.exit);
 
       if (exitDate >= past180Days) {
-        let validEntry = entryDate >= past180Days ? entryDate : past180Days;
+        const validEntry = entryDate >= past180Days ? entryDate : past180Days;
+        // eslint-disable-next-line no-param-reassign
         totalDays += getDaysBetweenDates(validEntry, exitDate);
       }
       return totalDays;
@@ -288,12 +289,12 @@ export const NinetyDayRuleCalculator = () => {
 
   const getLastPossibleStayDate = (stays) => {
     const today = new Date();
-    let totalDays = getDaysInLast180(stays);
-    let remainingDays = 90 - totalDays;
+    const totalDays = getDaysInLast180(stays);
+    const remainingDays = 90 - totalDays;
 
     if (remainingDays <= 0) return 'No more days left in the period';
 
-    let lastStayDate = new Date(today);
+    const lastStayDate = new Date(today);
     lastStayDate.setDate(today.getDate() + remainingDays);
 
     return lastStayDate.toISOString().split('T')[0]; // Format YYYY-MM-DD
@@ -352,9 +353,6 @@ export const NinetyDayRuleCalculator = () => {
       prevItems.filter((_, index) => index !== id),
     );
   };
-
-  console.log(startDate);
-  console.log(staysInSchengenFields);
 
   const showMonthRange = monthRange.map((monthItem) => {
     return (
@@ -419,10 +417,8 @@ export const NinetyDayRuleCalculator = () => {
     );
   });
 
-  console.log(startDate, 'startDate');
-
   return (
-    <main className="single-app-container">
+    <main className="single-app-container ninety-day-rule">
       <Helmet>
         <title>90 day rule calculator</title>
         <meta name="description" content="Calculator 90 days from now" />

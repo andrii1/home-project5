@@ -126,3 +126,13 @@
   background-color: rgb(255, 127, 127);
   color: white;
 }
+
+@media only screen and (max-width: 768px) {
+  .calendar-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .ninety-day-rule .app-result-container {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
