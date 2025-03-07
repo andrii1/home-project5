@@ -18,10 +18,10 @@
   margin: 0 auto;
 }
 
-.single-app-container .app-result-container {
+.single-app-container.random-qr-code .app-result-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem !important;
   align-items: center;
 }
 

@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Button } from '../../components/Button/Button.component';
 import './RandomQrCode.Style.css';
@@ -25,13 +25,31 @@ export const RandomQrCode = () => {
   const [qrCode, setQrCode] = useState('');
   const [tab, setTab] = useState('Random code');
 
+  useEffect(() => {
+    setQrCode(getRandomString(10));
+  }, []);
+
+  const getRandomString = (length) => {
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i += 1) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  };
+
+  const handleGenerateRandomQrCode = () => {
+    setQrCode(getRandomString(10));
+  };
+
   const handleGenerateQrCode = () => {
     setQrCode(input);
     setInput('');
   };
 
   return (
-    <main className="single-app-container">
+    <main className="single-app-container random-qr-code">
       <Helmet>
         <title>Random QR Code</title>
         <meta name="description" content={keywords && keywords.join(', ')} />
@@ -69,21 +87,40 @@ export const RandomQrCode = () => {
             className="tab"
             onClick={() => setTab('Random text')}
           />
+          <Button
+            tertiary={tab === 'Text'}
+            secondary={tab !== 'Text'}
+            label="Text"
+            className="tab"
+            onClick={() => setTab('Text')}
+          />
         </div>
-        <TextFormInput
-          value={input}
-          placeholder="Enter your value"
-          onChange={setInput}
-        />
-        <Button
-          onClick={handleGenerateQrCode}
-          primary
-          label="Generate QR Code"
-          disabled={!(input && input.trim !== '')}
-        />
+
+        {tab === 'text' && (
+          <>
+            <TextFormInput
+              value={input}
+              placeholder="Enter your value"
+              onChange={setInput}
+            />
+            <Button
+              onClick={handleGenerateQrCode}
+              primary
+              label="Generate QR Code"
+              disabled={!(input && input.trim !== '')}
+            />
+          </>
+        )}
       </section>
       <section className="app-result-container">
         <QRCode id="qr-code-value" value={qrCode} />
+        {tab === 'Random code' && (
+          <Button
+            onClick={handleGenerateRandomQrCode}
+            primary
+            label="Regenerate"
+          />
+        )}
       </section>
     </main>
   );
