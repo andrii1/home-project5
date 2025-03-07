@@ -46,24 +46,28 @@ export const RandomQrCode = () => {
             secondary={tab !== 'Random code'}
             label="Random code"
             className="tab"
+            onClick={() => setTab('Random code')}
           />
           <Button
             tertiary={tab === 'Random string'}
             secondary={tab !== 'Random string'}
             label="Random string"
             className="tab"
+            onClick={() => setTab('Random string')}
           />
           <Button
             tertiary={tab === 'Random number'}
             secondary={tab !== 'Random number'}
             label="Random number"
             className="tab"
+            onClick={() => setTab('Random number')}
           />
           <Button
             tertiary={tab === 'Random text'}
             secondary={tab !== 'Random text'}
             label="Random text"
             className="tab"
+            onClick={() => setTab('Random text')}
           />
         </div>
         <TextFormInput
