@@ -152,4 +152,9 @@ export const TOOLS = [
     title: 'GitHub contribution chart',
     url: 'github-contribution-chart',
   },
+  {
+    id: 14,
+    title: '90 day rule calculator ',
+    url: '90-day-rule-calculator',
+  },
 ];
