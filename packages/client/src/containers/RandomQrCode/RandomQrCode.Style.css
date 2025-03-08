@@ -101,6 +101,11 @@
   height: 2.25rem;
 }
 
+.app-result-generator .qr-code-container {
+  /* max-width: 16rem;
+  max-height: 16rem; */
+}
+
 @media only screen and (max-width: 991px) {
   .single-app-container .app-input-container {
     width: 90%;

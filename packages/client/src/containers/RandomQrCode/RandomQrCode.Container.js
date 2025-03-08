@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet';
 import { Button } from '../../components/Button/Button.component';
 import './RandomQrCode.Style.css';
@@ -22,12 +22,19 @@ const keywords = [
   'random qr code maker',
 ];
 
+const optionsSize = ['256', '512', '1024'];
+
+const optionsLevel = ['L', 'M', 'Q', 'H'];
+
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
   const [tab, setTab] = useState('Random codesd');
   const [bgColor, setBgColor] = useState('#ffffff');
   const [fgColor, setFgColor] = useState('#000000');
+  const [size, setSize] = useState('256');
+  const [level, setLevel] = useState('L');
+  const svgRef = useRef();
 
   useEffect(() => {
     setQrCode(getRandomString(10));
@@ -53,6 +60,46 @@ export const RandomQrCode = () => {
   };
 
   const handleQrSize = () => {};
+
+  const downloadPNG = () => {
+    const svgElement = svgRef.current;
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+
+    // Get selected QR size from dropdown
+    const exportSize = parseInt(size, 10); // Convert size to number
+
+    // Create an Image element
+    const img = new Image();
+    const svgBlob = new Blob([svgData], {
+      type: 'image/svg+xml;charset=utf-8',
+    });
+    const url = URL.createObjectURL(svgBlob);
+
+    img.onload = () => {
+      // Create a canvas with the selected size
+      const canvas = document.createElement('canvas');
+      canvas.width = exportSize;
+      canvas.height = exportSize;
+      const ctx = canvas.getContext('2d');
+
+      // Draw SVG on Canvas at full resolution
+      ctx.drawImage(img, 0, 0, exportSize, exportSize);
+      URL.revokeObjectURL(url);
+
+      // Convert Canvas to PNG
+      const pngUrl = canvas.toDataURL('image/png');
+
+      // Create a download link
+      const a = document.createElement('a');
+      a.href = pngUrl;
+      a.download = `qr-code-${exportSize}x${exportSize}.png`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    };
+
+    img.src = url;
+  };
 
   return (
     <main className="single-app-container random-qr-code">
@@ -110,9 +157,10 @@ export const RandomQrCode = () => {
             bgColor="#ccc"
             fgColor="#bbb"
             level="H"
-            size="512"
+            size="High quality (1024x1024)"
             title="sadgsdg"
           />
+
           <Button
             onClick={handleGenerateRandomQrCode}
             primary
@@ -141,15 +189,23 @@ export const RandomQrCode = () => {
             )}
           </section>
           <section className="app-result-generator">
-            <QRCode
-              id="qr-code-value"
-              value={qrCode}
-              bgColor={bgColor}
-              fgColor={fgColor}
-              level="H"
-              size="256"
-              title="sadgsdg"
-            />
+            <div className="qr-code-container">
+              <QRCode
+                id="qr-code-value"
+                value={qrCode}
+                bgColor={bgColor}
+                fgColor={fgColor}
+                level={level}
+                size={size} // Selected export size
+                ref={svgRef}
+                style={{
+                  maxWidth: '16rem',
+                  maxHeight: '16rem',
+                  width: '100%',
+                  height: 'auto',
+                }} // UI limit
+              />
+            </div>
             <div className="customization-container">
               <div className="color-input-group">
                 <TextFormInput
@@ -167,16 +223,10 @@ export const RandomQrCode = () => {
                   className="color-input"
                 />
               </div>
-              <Dropdown
-                options={['1min', '2min', '3min', '5min', '10min']}
-                onSelect={handleQrSize}
-              />
+              <Dropdown options={optionsSize} onSelect={setSize} />
+              <Dropdown options={optionsLevel} onSelect={setLevel} />
               <div>
-                <Button
-                  onClick={handleGenerateRandomQrCode}
-                  secondary
-                  label="Download"
-                />
+                <Button onClick={downloadPNG} secondary label="Download" />
               </div>
               <div>
                 <Button
