@@ -6,6 +6,8 @@ import { Button } from '../../components/Button/Button.component';
 import './RandomQrCode.Style.css';
 import QRCode from 'react-qr-code';
 import TextFormInput from '../../components/Input/TextFormInput.component';
+import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
+import TextFormTextarea from '../../components/Input/TextFormTextarea.component';
 
 const keywords = [
   'random qr code',
@@ -23,7 +25,7 @@ const keywords = [
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
-  const [tab, setTab] = useState('Random code');
+  const [tab, setTab] = useState('Random codesd');
 
   useEffect(() => {
     setQrCode(getRandomString(10));
@@ -47,6 +49,8 @@ export const RandomQrCode = () => {
     setQrCode(input);
     setInput('');
   };
+
+  const handleQrSize = () => {};
 
   return (
     <main className="single-app-container random-qr-code">
@@ -115,21 +119,22 @@ export const RandomQrCode = () => {
         </section>
       )}
       {tab !== 'Random code' && (
-        <div>
+        <div className="generator-container">
           <section className="app-input-generator">
-            {tab === 'text' && (
+            {tab === 'Text' && (
               <>
-                <TextFormInput
+                <TextFormTextarea
+                  className="input-wrapper-text"
                   value={input}
                   placeholder="Enter your value"
                   onChange={setInput}
                 />
-                <Button
+                {/* <Button
                   onClick={handleGenerateQrCode}
                   primary
                   label="Generate QR Code"
                   disabled={!(input && input.trim !== '')}
-                />
+                /> */}
               </>
             )}
           </section>
@@ -140,30 +145,43 @@ export const RandomQrCode = () => {
               bgColor="#ccc"
               fgColor="#bbb"
               level="H"
-              size="512"
+              size="256"
               title="sadgsdg"
             />
             <div className="customization-container">
-              <TextFormInput
-                value={input}
-                placeholder="Enter your value"
-                onChange={(e) => setForegroundColor(e.target.value)}
-                type="color"
+              <div className="color-input-group">
+                <TextFormInput
+                  value={input}
+                  placeholder="Enter your value"
+                  onChange={(e) => setForegroundColor(e.target.value)}
+                  type="color"
+                />
+                <TextFormInput
+                  value={input}
+                  placeholder="Enter your value"
+                  onChange={(e) => setBackgroundColor(e.target.value)}
+                  type="color"
+                />
+              </div>
+              <Dropdown
+                options={['1min', '2min', '3min', '5min', '10min']}
+                onSelect={handleQrSize}
               />
-              <TextFormInput
-                value={input}
-                placeholder="Enter your value"
-                onChange={(e) => setBackgroundColor(e.target.value)}
-                type="color"
-              />
+              <div>
+                <Button
+                  onClick={handleGenerateRandomQrCode}
+                  secondary
+                  label="Download"
+                />
+              </div>
+              <div>
+                <Button
+                  onClick={handleGenerateRandomQrCode}
+                  primary
+                  label="Generate QR code"
+                />
+              </div>
             </div>
-            {tab === 'Random code' && (
-              <Button
-                onClick={handleGenerateRandomQrCode}
-                primary
-                label="Regenerate"
-              />
-            )}
           </section>
         </div>
       )}

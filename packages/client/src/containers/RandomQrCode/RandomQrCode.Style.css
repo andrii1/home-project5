@@ -49,6 +49,53 @@
   /* margin-bottom: 1rem; */
 }
 
+.generator-container {
+  display: flex;
+}
+.app-input-generator {
+  flex: 0 0 65%;
+  display: flex;
+  justify-content: center;
+}
+.app-result-generator {
+  flex: 0 0 35%;
+}
+
+.customization-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+  max-width: 20rem;
+  border: 1px solid;
+  margin: 1rem auto 0 auto;
+}
+
+.color-input-group {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+}
+
+.random-qr-code .dropdown select {
+  padding: 7px 10px !important;
+  margin: 0rem;
+  width: 100%;
+}
+
+.random-qr-code .dropdown {
+  width: 100%;
+}
+
+.random-qr-code .form-input {
+  margin: 0rem;
+}
+
+.random-qr-code .input-wrapper-text {
+  max-width: 40rem;
+}
+
 @media only screen and (max-width: 991px) {
   .single-app-container .app-input-container {
     width: 90%;
