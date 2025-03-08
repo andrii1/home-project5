@@ -96,6 +96,10 @@
   max-width: 40rem;
 }
 
+.random-qr-code .color-input {
+  padding: 0rem;
+}
+
 @media only screen and (max-width: 991px) {
   .single-app-container .app-input-container {
     width: 90%;

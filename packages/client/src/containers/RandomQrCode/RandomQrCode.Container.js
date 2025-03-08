@@ -26,6 +26,8 @@ export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
   const [tab, setTab] = useState('Random codesd');
+  const [bgColor, setBgColor] = useState('#ffffff');
+  const [fgColor, setFgColor] = useState('#000000');
 
   useEffect(() => {
     setQrCode(getRandomString(10));
@@ -142,8 +144,8 @@ export const RandomQrCode = () => {
             <QRCode
               id="qr-code-value"
               value={qrCode}
-              bgColor="#ccc"
-              fgColor="#bbb"
+              bgColor={bgColor}
+              fgColor={fgColor}
               level="H"
               size="256"
               title="sadgsdg"
@@ -151,16 +153,18 @@ export const RandomQrCode = () => {
             <div className="customization-container">
               <div className="color-input-group">
                 <TextFormInput
-                  value={input}
+                  value={fgColor}
                   placeholder="Enter your value"
-                  onChange={(e) => setForegroundColor(e.target.value)}
+                  onChange={setFgColor}
                   type="color"
+                  className="color-input"
                 />
                 <TextFormInput
-                  value={input}
+                  value={bgColor}
                   placeholder="Enter your value"
-                  onChange={(e) => setBackgroundColor(e.target.value)}
+                  onChange={setBgColor}
                   type="color"
+                  className="color-input"
                 />
               </div>
               <Dropdown
