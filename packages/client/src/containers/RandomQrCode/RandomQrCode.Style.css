@@ -68,7 +68,7 @@
   width: 100%;
   gap: 1rem;
   max-width: 20rem;
-  border: 1px solid;
+  /* border: 1px solid; */
   margin: 1rem auto 0 auto;
 }
 
@@ -99,11 +99,6 @@
 .random-qr-code .color-input {
   padding: 0rem;
   height: 2.25rem;
-}
-
-.app-result-generator .qr-code-container {
-  /* max-width: 16rem;
-  max-height: 16rem; */
 }
 
 @media only screen and (max-width: 991px) {

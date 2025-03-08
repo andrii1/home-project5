@@ -9,6 +9,7 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import TextFormTextarea from '../../components/Input/TextFormTextarea.component';
 import { Radio } from '../../components/Radio/Radio.component';
+import { Text, Dices, QrCode } from 'lucide-react';
 
 const keywords = [
   'random qr code',
@@ -29,7 +30,12 @@ const optionsSize = [
   { label: 'High quality (1024x1024)', value: '1024' },
 ];
 
-const optionsLevel = ['L', 'M', 'Q', 'H'];
+const optionsLevel = [
+  { label: 'Level L', value: 'L' },
+  { label: 'Level M', value: 'M' },
+  { label: 'Level Q', value: 'Q' },
+  { label: 'Level H', value: 'H' },
+];
 
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
@@ -163,6 +169,7 @@ export const RandomQrCode = () => {
             label="Random code"
             className="tab"
             onClick={() => setTab('Random code')}
+            icon={<QrCode size={14} />}
           />
           <Button
             tertiary={tab === 'Random'}
@@ -170,6 +177,7 @@ export const RandomQrCode = () => {
             label="Random"
             className="tab"
             onClick={() => setTab('Random')}
+            icon={<Dices size={14} />}
           />
           <Button
             tertiary={tab === 'Text'}
@@ -177,6 +185,7 @@ export const RandomQrCode = () => {
             label="Text"
             className="tab"
             onClick={() => setTab('Text')}
+            icon={<Text size={14} />}
           />
         </div>
       </section>

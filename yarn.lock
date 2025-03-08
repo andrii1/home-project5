@@ -9766,6 +9766,7 @@ __metadata:
     firebase: ^9.21.0
     highcharts: ^12.1.2
     highcharts-react-official: ^3.2.1
+    lucide-react: ^0.479.0
     moment: ^2.30.1
     prop-types: ^15.8.1
     react: ^18.0.0
@@ -16890,6 +16891,15 @@ __metadata:
   version: 7.18.3
   resolution: "lru-cache@npm:7.18.3"
   checksum: e550d772384709deea3f141af34b6d4fa392e2e418c1498c078de0ee63670f1f46f5eee746e8ef7e69e1c895af0d4224e62ee33e66a543a14763b0f2e74c1356
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^0.479.0":
+  version: 0.479.0
+  resolution: "lucide-react@npm:0.479.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 1cb1663e1f71e907d3137d651b1fbde606981180333fe8558bf1577785e66f1d3a52a303b3e3a7ee853aec5175cc58920c92f71b43ecd1268823a7e7d4ee93b1
   languageName: node
   linkType: hard
 
