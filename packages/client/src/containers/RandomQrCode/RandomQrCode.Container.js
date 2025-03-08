@@ -22,7 +22,11 @@ const keywords = [
   'random qr code maker',
 ];
 
-const optionsSize = ['256', '512', '1024'];
+const optionsSize = [
+  { label: 'Low quality (256x256)', value: '256' },
+  { label: 'Medium quality (512x512)', value: '512' },
+  { label: 'High quality (1024x1024)', value: '1024' },
+];
 
 const optionsLevel = ['L', 'M', 'Q', 'H'];
 

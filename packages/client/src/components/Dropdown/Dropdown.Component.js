@@ -11,15 +11,27 @@ export const Dropdown = ({
   selectedOptionValue,
   required,
 }) => {
-  const optionList =
-    options.length > 0 &&
-    options.map((item) => {
-      return (
-        <option key={item} value={item}>
-          {item}
-        </option>
-      );
-    });
+  const differentLabelAndValue = options.some(
+    (item) => typeof item === 'object' && item !== null,
+  );
+
+  const optionList = differentLabelAndValue
+    ? options.length > 0 &&
+      options.map((item) => {
+        return (
+          <option key={item} value={item.value}>
+            {item.label}
+          </option>
+        );
+      })
+    : options.length > 0 &&
+      options.map((item) => {
+        return (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        );
+      });
 
   const handleChange = (event) => {
     onSelect(event.target.value);
