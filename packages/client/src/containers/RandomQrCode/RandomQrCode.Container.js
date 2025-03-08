@@ -57,7 +57,7 @@ export const RandomQrCode = () => {
       <header className="hero">
         <h1 className="hero-header">Random QR code</h1>
       </header>
-      <section className="app-input-container">
+      <section className="tab-group">
         <div className="tab-group">
           <Button
             tertiary={tab === 'Random code'}
@@ -95,33 +95,78 @@ export const RandomQrCode = () => {
             onClick={() => setTab('Text')}
           />
         </div>
-
-        {tab === 'text' && (
-          <>
-            <TextFormInput
-              value={input}
-              placeholder="Enter your value"
-              onChange={setInput}
-            />
-            <Button
-              onClick={handleGenerateQrCode}
-              primary
-              label="Generate QR Code"
-              disabled={!(input && input.trim !== '')}
-            />
-          </>
-        )}
       </section>
-      <section className="app-result-container">
-        <QRCode id="qr-code-value" value={qrCode} />
-        {tab === 'Random code' && (
+      {tab === 'Random code' && (
+        <section className="app-result-container">
+          <QRCode
+            id="qr-code-value"
+            value={qrCode}
+            bgColor="#ccc"
+            fgColor="#bbb"
+            level="H"
+            size="512"
+            title="sadgsdg"
+          />
           <Button
             onClick={handleGenerateRandomQrCode}
             primary
             label="Regenerate"
           />
-        )}
-      </section>
+        </section>
+      )}
+      {tab !== 'Random code' && (
+        <div>
+          <section className="app-input-generator">
+            {tab === 'text' && (
+              <>
+                <TextFormInput
+                  value={input}
+                  placeholder="Enter your value"
+                  onChange={setInput}
+                />
+                <Button
+                  onClick={handleGenerateQrCode}
+                  primary
+                  label="Generate QR Code"
+                  disabled={!(input && input.trim !== '')}
+                />
+              </>
+            )}
+          </section>
+          <section className="app-result-generator">
+            <QRCode
+              id="qr-code-value"
+              value={qrCode}
+              bgColor="#ccc"
+              fgColor="#bbb"
+              level="H"
+              size="512"
+              title="sadgsdg"
+            />
+            <div className="customization-container">
+              <TextFormInput
+                value={input}
+                placeholder="Enter your value"
+                onChange={(e) => setForegroundColor(e.target.value)}
+                type="color"
+              />
+              <TextFormInput
+                value={input}
+                placeholder="Enter your value"
+                onChange={(e) => setBackgroundColor(e.target.value)}
+                type="color"
+              />
+            </div>
+            {tab === 'Random code' && (
+              <Button
+                onClick={handleGenerateRandomQrCode}
+                primary
+                label="Regenerate"
+              />
+            )}
+          </section>
+        </div>
+      )}
     </main>
   );
 };
