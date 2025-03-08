@@ -8,6 +8,7 @@ import QRCode from 'react-qr-code';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import TextFormTextarea from '../../components/Input/TextFormTextarea.component';
+import { Radio } from '../../components/Radio/Radio.component';
 
 const keywords = [
   'random qr code',
@@ -33,11 +34,12 @@ const optionsLevel = ['L', 'M', 'Q', 'H'];
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
-  const [tab, setTab] = useState('Random codesd');
+  const [tab, setTab] = useState('Random code');
   const [bgColor, setBgColor] = useState('#ffffff');
   const [fgColor, setFgColor] = useState('#000000');
   const [size, setSize] = useState('256');
   const [level, setLevel] = useState('L');
+  const [mode, setMode] = useState('string');
   const svgRef = useRef();
 
   useEffect(() => {
@@ -54,16 +56,55 @@ export const RandomQrCode = () => {
     return result;
   };
 
-  const handleGenerateRandomQrCode = () => {
-    setQrCode(getRandomString(10));
+  const generateRandomNumber = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  };
+
+  const generateRandomEmail = () => {
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const domains = [
+      '@gmail.com',
+      '@yahoo.com',
+      '@outlook.com',
+      '@example.com',
+      '@hotmail.com',
+    ];
+
+    // Generate a random string for the local part of the email (before the '@')
+    let randomString = '';
+    for (let i = 0; i < 10; i += 1) {
+      // You can adjust the length (10 in this case)
+      const randomChar = characters.charAt(
+        Math.floor(Math.random() * characters.length),
+      );
+      randomString += randomChar;
+    }
+
+    // Randomly select a domain
+    const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+
+    return randomString + randomDomain;
   };
 
   const handleGenerateQrCode = () => {
-    setQrCode(input);
-    setInput('');
+    if (tab === 'Random code') {
+      setQrCode(getRandomString(10));
+    } else if (tab === 'Random') {
+      if (mode === 'string') {
+        setQrCode(getRandomString(10));
+      } else if (mode === 'number') {
+        setQrCode(generateRandomNumber(1, 100));
+      } else if (mode === 'text') {
+        setQrCode('text');
+      } else if (mode === 'e-mail') {
+        setQrCode(generateRandomEmail());
+      }
+    } else if (tab === 'Text') {
+      setQrCode(input);
+      // setInput('');
+    }
   };
-
-  const handleQrSize = () => {};
 
   const downloadPNG = () => {
     const svgElement = svgRef.current;
@@ -124,25 +165,11 @@ export const RandomQrCode = () => {
             onClick={() => setTab('Random code')}
           />
           <Button
-            tertiary={tab === 'Random string'}
-            secondary={tab !== 'Random string'}
-            label="Random string"
+            tertiary={tab === 'Random'}
+            secondary={tab !== 'Random'}
+            label="Random"
             className="tab"
-            onClick={() => setTab('Random string')}
-          />
-          <Button
-            tertiary={tab === 'Random number'}
-            secondary={tab !== 'Random number'}
-            label="Random number"
-            className="tab"
-            onClick={() => setTab('Random number')}
-          />
-          <Button
-            tertiary={tab === 'Random text'}
-            secondary={tab !== 'Random text'}
-            label="Random text"
-            className="tab"
-            onClick={() => setTab('Random text')}
+            onClick={() => setTab('Random')}
           />
           <Button
             tertiary={tab === 'Text'}
@@ -158,38 +185,54 @@ export const RandomQrCode = () => {
           <QRCode
             id="qr-code-value"
             value={qrCode}
-            bgColor="#ccc"
-            fgColor="#bbb"
-            level="H"
-            size="High quality (1024x1024)"
+            // bgColor="#ccc"
+            // fgColor="#bbb"
+            level="L"
+            size="256"
             title="sadgsdg"
           />
 
-          <Button
-            onClick={handleGenerateRandomQrCode}
-            primary
-            label="Regenerate"
-          />
+          <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
         </section>
       )}
       {tab !== 'Random code' && (
         <div className="generator-container">
           <section className="app-input-generator">
-            {tab === 'Text' && (
-              <>
-                <TextFormTextarea
-                  className="input-wrapper-text"
-                  value={input}
-                  placeholder="Enter your value"
-                  onChange={setInput}
+            {tab === 'Random' && (
+              <div className="input-group">
+                <Radio
+                  value="string"
+                  label="Random string"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'string'}
                 />
-                {/* <Button
-                  onClick={handleGenerateQrCode}
-                  primary
-                  label="Generate QR Code"
-                  disabled={!(input && input.trim !== '')}
-                /> */}
-              </>
+                <Radio
+                  value="number"
+                  label="Random number"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'number'}
+                />
+                <Radio
+                  value="text"
+                  label="Random text"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'text'}
+                />
+                <Radio
+                  value="e-mail"
+                  label="Random e-mail"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'e-mail'}
+                />
+              </div>
+            )}
+            {tab === 'Text' && (
+              <TextFormTextarea
+                className="input-wrapper-text"
+                value={input}
+                placeholder="Enter your value"
+                onChange={setInput}
+              />
             )}
           </section>
           <section className="app-result-generator">
@@ -234,7 +277,7 @@ export const RandomQrCode = () => {
               </div>
               <div>
                 <Button
-                  onClick={handleGenerateRandomQrCode}
+                  onClick={handleGenerateQrCode}
                   primary
                   label="Generate QR code"
                 />
