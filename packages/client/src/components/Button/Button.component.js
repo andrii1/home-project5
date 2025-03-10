@@ -18,6 +18,7 @@ export const Button = ({
   type = 'button',
   children,
   disabled,
+  iconRight,
   ...props
 }) => {
   let mode;
@@ -40,13 +41,15 @@ export const Button = ({
         'storybook-button',
         `storybook-button--${size}`,
         mode,
+        `${iconRight && 'icon-right'}`,
         className,
       ].join(' ')}
       style={backgroundColor && { backgroundColor }}
       {...props}
     >
+      {!iconRight && icon}
       {label}
-      {icon}
+      {iconRight && icon}
       {children}
     </button>
   );
@@ -57,6 +60,7 @@ Button.propTypes = {
    * Is this the principal call to action on the page?
    */
   primary: PropTypes.bool,
+  iconRight: PropTypes.bool,
   lighterBg: PropTypes.bool,
   secondary: PropTypes.bool,
   icon: PropTypes.element,
@@ -92,6 +96,7 @@ Button.defaultProps = {
   className: null,
   color: null,
   primary: false,
+  iconRight: false,
   lighterBg: false,
   secondary: false,
   disabled: false,

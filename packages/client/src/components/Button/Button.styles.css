@@ -8,9 +8,16 @@
   line-height: 1;
 }
 
-.storybook-button svg {
+.storybook-button.icon-right svg {
   margin-left: 0.3rem;
+  margin-bottom: -0.1rem;
 }
+
+.storybook-button:not(.storybook-button.icon-right) svg {
+  margin-right: 0.3rem;
+  margin-bottom: -0.1rem;
+}
+
 .storybook-button--primary {
   color: white;
   background-color: #b5838d;
