@@ -93,7 +93,50 @@ export const RandomQrCode = () => {
     return randomString + randomDomain;
   };
 
-  const handleGenerateQrCode = () => {
+  const generateAIText = async () => {
+    try {
+      const response = await fetch(
+        'https://api.openai.com/v1/chat/completions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-4', // or "gpt-3.5-turbo"
+            messages: [
+              {
+                role: 'system',
+                content: 'You generate random paragraphs on various topics.',
+              },
+              {
+                role: 'user',
+                content:
+                  'Generate a random paragraph about any topic. Maximum 200 characters.',
+              },
+            ],
+            temperature: 0.8, // Increases randomness
+            max_tokens: 100, // Adjust for longer paragraphs
+          }),
+        },
+      );
+
+      const data = await response.json();
+      // console.log(data);
+
+      if (data.choices && data.choices.length > 0) {
+        return data.choices[0].message.content;
+      }
+      // console.error('No response from API:', data);
+      return null;
+    } catch (error) {
+      // console.error('Error fetching paragraph:', error);
+      return null;
+    }
+  };
+
+  const handleGenerateQrCode = async () => {
     if (tab === 'Random code') {
       setQrCode(getRandomString(10));
     } else if (tab === 'Random') {
@@ -102,7 +145,8 @@ export const RandomQrCode = () => {
       } else if (mode === 'number') {
         setQrCode(generateRandomNumber(1, 100));
       } else if (mode === 'text') {
-        setQrCode('text');
+        const aiText = await generateAIText();
+        setQrCode(aiText);
       } else if (mode === 'e-mail') {
         setQrCode(generateRandomEmail());
       }

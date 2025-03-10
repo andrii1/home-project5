@@ -101,8 +101,19 @@
   height: 2.25rem;
 }
 
+.generator-container .input-group {
+  flex-wrap: wrap;
+}
+
 @media only screen and (max-width: 991px) {
   .single-app-container .app-input-container {
     width: 90%;
+  }
+
+  .generator-container {
+    width: 90%;
+    margin: 0 auto;
+    flex-direction: column;
+    gap: 2rem;
   }
 }
