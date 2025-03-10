@@ -93,6 +93,29 @@ export const RandomQrCode = () => {
     return randomString + randomDomain;
   };
 
+  const getRandomWikipediaArticle = () => {
+    return `https://en.wikipedia.org/wiki/Special:Random`;
+  };
+
+  const getRandomMemeURL = async () => {
+    const response = await fetch('https://api.imgflip.com/get_memes');
+    const data = await response.json();
+    const { memes } = data.data;
+    const randomMeme = memes[Math.floor(Math.random() * memes.length)];
+    return randomMeme.url; // Returns the URL of the meme image
+  };
+
+  const getRandomWebsiteURL = () => {
+    const websites = [
+      'https://www.boredpanda.com/',
+      'https://www.funbrain.com/',
+      'https://www.wikipedia.org/',
+      'https://www.khanacademy.org/',
+      'https://www.duolingo.com/',
+    ];
+    return websites[Math.floor(Math.random() * websites.length)];
+  };
+
   const generateAIText = async (userContent) => {
     try {
       const response = await fetch(
@@ -163,6 +186,13 @@ export const RandomQrCode = () => {
           'Generate a random fun fact. Maximum 150 characters.',
         );
         setQrCode(aiText);
+      } else if (mode === 'wiki') {
+        setQrCode(getRandomWikipediaArticle());
+      } else if (mode === 'meme') {
+        const meme = await getRandomMemeURL();
+        setQrCode(meme);
+      } else if (mode === 'website') {
+        setQrCode(getRandomWebsiteURL());
       }
     } else if (tab === 'Text') {
       setQrCode(input);
@@ -309,6 +339,24 @@ export const RandomQrCode = () => {
                   label="Random fun fact"
                   onChange={(event) => setMode(event.target.value)}
                   checked={mode === 'fun-fact'}
+                />
+                <Radio
+                  value="wiki"
+                  label="Random WikiPedia article"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'wiki'}
+                />
+                <Radio
+                  value="meme"
+                  label="Random meme"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'meme'}
+                />
+                <Radio
+                  value="website"
+                  label="Random website"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'website'}
                 />
               </div>
             )}
