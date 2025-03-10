@@ -93,7 +93,7 @@ export const RandomQrCode = () => {
     return randomString + randomDomain;
   };
 
-  const generateAIText = async () => {
+  const generateAIText = async (userContent) => {
     try {
       const response = await fetch(
         'https://api.openai.com/v1/chat/completions',
@@ -112,8 +112,7 @@ export const RandomQrCode = () => {
               },
               {
                 role: 'user',
-                content:
-                  'Generate a random paragraph about any topic. Maximum 200 characters.',
+                content: userContent,
               },
             ],
             temperature: 0.8, // Increases randomness
@@ -144,11 +143,26 @@ export const RandomQrCode = () => {
         setQrCode(getRandomString(10));
       } else if (mode === 'number') {
         setQrCode(generateRandomNumber(1, 100));
-      } else if (mode === 'text') {
-        const aiText = await generateAIText();
-        setQrCode(aiText);
       } else if (mode === 'e-mail') {
         setQrCode(generateRandomEmail());
+      } else if (mode === 'text') {
+        const aiText = await generateAIText(
+          'Generate a random paragraph about any topic. Maximum 200 characters.',
+        );
+        setQrCode(aiText);
+      } else if (mode === 'word') {
+        const aiText = await generateAIText('Generate a random word.');
+        setQrCode(aiText);
+      } else if (mode === 'quote') {
+        const aiText = await generateAIText(
+          'Generate a random quote about any topic. Maximum 150 characters.',
+        );
+        setQrCode(aiText);
+      } else if (mode === 'fun-fact') {
+        const aiText = await generateAIText(
+          'Generate a random fun fact. Maximum 150 characters.',
+        );
+        setQrCode(aiText);
       }
     } else if (tab === 'Text') {
       setQrCode(input);
@@ -266,16 +280,35 @@ export const RandomQrCode = () => {
                   checked={mode === 'number'}
                 />
                 <Radio
+                  value="e-mail"
+                  label="Random e-mail"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'e-mail'}
+                />
+                <Radio
                   value="text"
                   label="Random text"
                   onChange={(event) => setMode(event.target.value)}
                   checked={mode === 'text'}
                 />
+
                 <Radio
-                  value="e-mail"
-                  label="Random e-mail"
+                  value="word"
+                  label="Random word"
                   onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'e-mail'}
+                  checked={mode === 'word'}
+                />
+                <Radio
+                  value="quote"
+                  label="Random quote"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'quote'}
+                />
+                <Radio
+                  value="fun-fact"
+                  label="Random fun fact"
+                  onChange={(event) => setMode(event.target.value)}
+                  checked={mode === 'fun-fact'}
                 />
               </div>
             )}

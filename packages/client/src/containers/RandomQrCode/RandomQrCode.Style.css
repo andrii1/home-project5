@@ -56,6 +56,7 @@
   flex: 0 0 65%;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 .app-result-generator {
   flex: 0 0 35%;
@@ -103,6 +104,10 @@
 
 .generator-container .input-group {
   flex-wrap: wrap;
+}
+
+.app-input-generator .category-input.radio {
+  height: 2rem;
 }
 
 @media only screen and (max-width: 991px) {
