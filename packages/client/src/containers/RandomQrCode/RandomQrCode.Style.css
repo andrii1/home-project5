@@ -110,6 +110,20 @@
   height: 2rem;
 }
 
+.random-qr-code .flex-3 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.random-qr-code .flex-5 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
 @media only screen and (max-width: 991px) {
   .single-app-container .app-input-container {
     width: 90%;

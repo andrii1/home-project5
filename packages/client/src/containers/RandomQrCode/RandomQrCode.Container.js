@@ -289,14 +289,6 @@ export const RandomQrCode = () => {
             icon={<QrCode size={14} />}
           />
           <Button
-            tertiary={tab === 'Random'}
-            secondary={tab !== 'Random'}
-            label="Random"
-            className="tab"
-            onClick={() => setTab('Random')}
-            icon={<Dices size={14} />}
-          />
-          <Button
             tertiary={tab === '3 random codes'}
             secondary={tab !== '3 random codes'}
             label="3 random codes"
@@ -313,6 +305,14 @@ export const RandomQrCode = () => {
             icon={<Dice5 size={14} />}
           />
           <Button
+            tertiary={tab === 'Random'}
+            secondary={tab !== 'Random'}
+            label="Random"
+            className="tab"
+            onClick={() => setTab('Random')}
+            icon={<Dices size={14} />}
+          />
+          <Button
             tertiary={tab === 'Text'}
             secondary={tab !== 'Text'}
             label="Text"
@@ -322,52 +322,49 @@ export const RandomQrCode = () => {
           />
         </div>
       </section>
-      {tab === 'Random code' && (
+      {tab === 'Random code' ||
+      tab === '3 random codes' ||
+      tab === '5 random codes' ? (
         <section className="app-result-container">
-          <QRCode
-            id="qr-code-value"
-            value={qrCode}
-            // bgColor="#ccc"
-            // fgColor="#bbb"
-            level="L"
-            size="256"
-            title="sadgsdg"
-          />
-
+          {tab === 'Random code' && (
+            <QRCode
+              id="qr-code-value"
+              value={qrCode}
+              level="L"
+              size={256}
+              title="QR Code"
+            />
+          )}
+          {tab === '3 random codes' && threeQrCodes && (
+            <div className="flex-3">
+              {threeQrCodes.map((item) => (
+                <QRCode
+                  key={item.id}
+                  value={item.value}
+                  level="L"
+                  size={256}
+                  title="QR Code"
+                />
+              ))}
+            </div>
+          )}
+          {tab === '5 random codes' && fiveQrCodes && (
+            <div className="flex-5">
+              {fiveQrCodes.map((item) => (
+                <QRCode
+                  key={item.id}
+                  value={item.value}
+                  level="L"
+                  size={256}
+                  title="QR Code"
+                />
+              ))}
+            </div>
+          )}
           <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
         </section>
-      )}
-      {tab === '3 random codes' && (
-        <section className="app-result-container">
-          {threeQrCodes &&
-            threeQrCodes.map((item) => (
-              <QRCode
-                key={item.id}
-                value={item.value}
-                level="L"
-                size={256}
-                title="QR Code"
-              />
-            ))}
-          <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
-        </section>
-      )}
-      {tab === '5 random codes' && (
-        <section className="app-result-container">
-          {fiveQrCodes &&
-            fiveQrCodes.map((item) => (
-              <QRCode
-                key={item.id}
-                value={item.value}
-                level="L"
-                size={256}
-                title="QR Code"
-              />
-            ))}
-          <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
-        </section>
-      )}
-      {tab !== 'Random code' && (
+      ) : null}
+      {tab === 'Random' || tab === 'Text' ? (
         <div className="generator-container">
           <section className="app-input-generator">
             {tab === 'Random' && (
@@ -494,7 +491,7 @@ export const RandomQrCode = () => {
             </div>
           </section>
         </div>
-      )}
+      ) : null}
     </main>
   );
 };
