@@ -40,6 +40,8 @@ const optionsLevel = [
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
+  const [threeQrCodes, setThreeQrCodes] = useState([]);
+  const [fiveQrCodes, setFiveQrCodes] = useState([]);
   const [tab, setTab] = useState('Random code');
   const [bgColor, setBgColor] = useState('#ffffff');
   const [fgColor, setFgColor] = useState('#000000');
@@ -50,6 +52,19 @@ export const RandomQrCode = () => {
 
   useEffect(() => {
     setQrCode(getRandomString(10));
+  }, []);
+
+  useEffect(() => {
+    const threeQrCodesArray = Array.from({ length: 3 }, () => ({
+      id: crypto.randomUUID(),
+      value: getRandomString(10),
+    }));
+    const fiveQrCodesArray = Array.from({ length: 5 }, () => ({
+      id: crypto.randomUUID(),
+      value: getRandomString(10),
+    }));
+    setThreeQrCodes(threeQrCodesArray);
+    setFiveQrCodes(fiveQrCodesArray);
   }, []);
 
   const getRandomString = (length) => {
@@ -194,6 +209,20 @@ export const RandomQrCode = () => {
       } else if (mode === 'website') {
         setQrCode(getRandomWebsiteURL());
       }
+    } else if (tab === '3 random codes') {
+      setThreeQrCodes(
+        threeQrCodes.map(() => ({
+          id: crypto.randomUUID(),
+          value: getRandomString(10),
+        })),
+      );
+    } else if (tab === '5 random codes') {
+      setFiveQrCodes(
+        fiveQrCodes.map(() => ({
+          id: crypto.randomUUID(),
+          value: getRandomString(10),
+        })),
+      );
     } else if (tab === 'Text') {
       setQrCode(input);
       // setInput('');
@@ -305,6 +334,36 @@ export const RandomQrCode = () => {
             title="sadgsdg"
           />
 
+          <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
+        </section>
+      )}
+      {tab === '3 random codes' && (
+        <section className="app-result-container">
+          {threeQrCodes &&
+            threeQrCodes.map((item) => (
+              <QRCode
+                key={item.id}
+                value={item.value}
+                level="L"
+                size={256}
+                title="QR Code"
+              />
+            ))}
+          <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
+        </section>
+      )}
+      {tab === '5 random codes' && (
+        <section className="app-result-container">
+          {fiveQrCodes &&
+            fiveQrCodes.map((item) => (
+              <QRCode
+                key={item.id}
+                value={item.value}
+                level="L"
+                size={256}
+                title="QR Code"
+              />
+            ))}
           <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
         </section>
       )}
