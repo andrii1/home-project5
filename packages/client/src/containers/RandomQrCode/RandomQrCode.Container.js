@@ -9,7 +9,7 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import TextFormTextarea from '../../components/Input/TextFormTextarea.component';
 import { Radio } from '../../components/Radio/Radio.component';
-import { Text, Dices, QrCode } from 'lucide-react';
+import { Text, Dices, QrCode, Dice3, Dice5 } from 'lucide-react';
 
 const keywords = [
   'random qr code',
@@ -266,6 +266,22 @@ export const RandomQrCode = () => {
             className="tab"
             onClick={() => setTab('Random')}
             icon={<Dices size={14} />}
+          />
+          <Button
+            tertiary={tab === '3 random codes'}
+            secondary={tab !== '3 random codes'}
+            label="3 random codes"
+            className="tab"
+            onClick={() => setTab('3 random codes')}
+            icon={<Dice3 size={14} />}
+          />
+          <Button
+            tertiary={tab === '5 random codes'}
+            secondary={tab !== '5 random codes'}
+            label="5 random codes"
+            className="tab"
+            onClick={() => setTab('5 random codes')}
+            icon={<Dice5 size={14} />}
           />
           <Button
             tertiary={tab === 'Text'}
