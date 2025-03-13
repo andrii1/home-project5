@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './NumberGeneratorDigits.Style.css';
 import { Button } from '../../components/Button/Button.component';
@@ -94,7 +94,7 @@ export const NumberGeneratorDigits = () => {
         </h1>
       </div>
       <section className="container-tool">
-        {numbersRandom && (
+        {numbersRandom.length > 0 && (
           <div className="form-result">
             {numbersRandom.join(' ')}
             <div className="form-result-options">
