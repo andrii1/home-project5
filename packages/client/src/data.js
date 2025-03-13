@@ -112,62 +112,25 @@ export const BREATHING_EXERCISE_DATA = {
 };
 
 export const TOOLS = [
-  { id: 1, title: 'Number Generator', url: 'numbergenerator' },
-  { id: 2, title: 'Random number wheel', url: 'random-number-wheel' },
-  { id: 3, title: 'List randomizer wheel', url: 'list-randomizer-wheel' },
+  { title: 'Number Generator', url: 'numbergenerator' },
   {
-    id: 4,
+    title: 'Random digit number generator',
+    url: 'random-digit-number-generator',
+  },
+  { title: 'Random number wheel', url: 'random-number-wheel' },
+  { title: 'List randomizer wheel', url: 'list-randomizer-wheel' },
+  {
     title: 'Random color generator React',
     url: 'random-color-generator-react',
   },
-  {
-    id: 5,
-    title: 'Random QR code',
-    url: 'random-qr-code',
-  },
-  {
-    id: 6,
-    title: 'Star rating',
-    url: 'star-rating',
-  },
-  {
-    id: 7,
-    title: 'GitHub profile search',
-    url: 'github-profile-search',
-  },
-  {
-    id: 8,
-    title: 'Weather app',
-    url: 'weather-app',
-  },
-  {
-    id: 9,
-    title: 'Eye gymnastics',
-    url: 'eye-gymnastics',
-  },
-  {
-    id: 10,
-    title: '7-11 breathing app',
-    url: '7-11-breathing-app',
-  },
-  {
-    id: 11,
-    title: 'Breathing app',
-    url: 'breathing-app',
-  },
-  {
-    id: 12,
-    title: 'Recipes',
-    url: 'recipes',
-  },
-  {
-    id: 13,
-    title: 'GitHub contribution chart',
-    url: 'github-contribution-chart',
-  },
-  {
-    id: 14,
-    title: '90 day rule calculator ',
-    url: '90-day-rule-calculator',
-  },
+  { title: 'Random QR code', url: 'random-qr-code' },
+  { title: 'Star rating', url: 'star-rating' },
+  { title: 'GitHub profile search', url: 'github-profile-search' },
+  { title: 'Weather app', url: 'weather-app' },
+  { title: 'Eye gymnastics', url: 'eye-gymnastics' },
+  { title: '7-11 breathing app', url: '7-11-breathing-app' },
+  { title: 'Breathing app', url: 'breathing-app' },
+  { title: 'Recipes', url: 'recipes' },
+  { title: 'GitHub contribution chart', url: 'github-contribution-chart' },
+  { title: '90 day rule calculator', url: '90-day-rule-calculator' },
 ];
