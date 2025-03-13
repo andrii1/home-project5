@@ -36,6 +36,7 @@ import { Recipes } from './containers/Recipes/Recipes.Container';
 import { ItemView } from './containers/ItemView/ItemView.container';
 import { GitHubStats } from './containers/GitHubStats/GitHubStats.Container';
 import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/NinetyDayRuleCalculator';
+import { NumberGeneratorDigits } from './containers/NumberGeneratorDigits/NumberGeneratorDigits.Container';
 
 function App() {
   return (
@@ -54,6 +55,16 @@ function App() {
               exact
               path="/numbergenerator/:numberMinParam/:numberMaxParam"
               element={<NumberGenerator />}
+            />
+            <Route
+              path="/random-digit-number-generator"
+              element={<NumberGeneratorDigits />}
+            />
+
+            <Route
+              exact
+              path="/random-digit-number-generator/:numberMinParam/:numberMaxParam"
+              element={<NumberGeneratorDigits />}
             />
             <Route
               exact
