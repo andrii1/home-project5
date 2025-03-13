@@ -17,19 +17,15 @@ export const NumberGeneratorDigits = () => {
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
-  const [numberRandom, setNumberRandom] = useState(false);
-  const [numberMin, numberMinError, validateNumberMin] =
-    useInputValidation('number');
-  const [numberMax, numberMaxError, validateNumberMax] =
-    useInputValidation('number');
+  const [numbersRandom, setNumbersRandom] = useState([]);
+  // const [numberMin, numberMinError, validateNumberMin] =
+  //   useInputValidation('number');
+  // const [numberMax, numberMaxError, validateNumberMax] =
+  //   useInputValidation('number');
   const [numberOfNumbers, setNumberOfNumbers] = useState('');
   const [numberOfDigits, setNumberOfDigits] = useState('');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
-  const [selectedOptionOddEven, setSelectedOptionOddEven] =
-    useState('Odd/Even');
-  const [selectedOptionInclusive, setSelectedOptionInclusive] =
-    useState('Inclusive');
 
   // useEffect(() => {
   //   if (numberOfNumbersParam && numberMaxParam) {
@@ -42,15 +38,19 @@ export const NumberGeneratorDigits = () => {
   //   }
   // }, [numberMinParam, numberMaxParam]);
 
-  const generateRandomNumber = (min, max) => {
-    const minCeiled = Math.ceil(min);
-    const maxFloored = Math.floor(max);
-    const finalValue = Math.floor(
-      Math.random() * (maxFloored - minCeiled + 1) + minCeiled,
-    );
+  const generateRandomNumbers = (numberOfNumbersP, numberOfDigitsP) => {
+    const numbers = [];
+    const min = 10 ** (numberOfDigitsP - 1);
+    const max = 10 ** numberOfDigitsP - 1;
 
-    setNumberRandom(finalValue);
+    for (let i = 0; i < numberOfNumbersP; i += 1) {
+      numbers.push(Math.floor(Math.random() * (max - min + 1)) + min);
+    }
+
+    setNumbersRandom(numbers);
   };
+
+  console.log(numbersRandom);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,7 +58,7 @@ export const NumberGeneratorDigits = () => {
       setInvalidForm(true);
       setValidForm(false);
     } else {
-      generateRandomNumber(numberOfNumbers, numberOfDigits);
+      generateRandomNumbers(numberOfNumbers, numberOfDigits);
       setInvalidForm(false);
       setValidForm(true);
     }
@@ -101,14 +101,14 @@ export const NumberGeneratorDigits = () => {
         </p>
       </div>
       <section className="container-tool">
-        {numberRandom && (
+        {numbersRandom && (
           <div className="form-result">
-            {numberRandom}
+            {numbersRandom.join(' ')}
             <div className="form-result-options">
               <button
                 type="button"
                 className="button-copy"
-                onClick={() => copyToClipboard(numberRandom)}
+                onClick={() => copyToClipboard(numbersRandom.join(' '))}
               >
                 <img src={iconCopy} alt="copy" className="icon-copy" />
               </button>
@@ -124,14 +124,14 @@ export const NumberGeneratorDigits = () => {
               <TextFormInput
                 type="number"
                 value={numberOfNumbers}
-                placeholder={numberOfNumbersParam || 'Number min'}
+                placeholder={numberOfNumbersParam || '2'}
                 onChange={setNumberOfNumbers}
                 label="random"
               />
               <TextFormInput
                 type="number"
                 value={numberOfDigits}
-                placeholder={numberOfDigitsParam || 'Number max'}
+                placeholder={numberOfDigitsParam || '6'}
                 onChange={setNumberOfDigits}
                 label="digit numbers"
               />
