@@ -13,7 +13,7 @@ import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import { useUserContext } from '../../userContext';
 
 export const NumberGeneratorDigits = () => {
-  const { numberMinParam, numberMaxParam } = useParams();
+  const { numberOfNumbersParam, numberOfDigitsParam } = useParams();
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
@@ -22,6 +22,8 @@ export const NumberGeneratorDigits = () => {
     useInputValidation('number');
   const [numberMax, numberMaxError, validateNumberMax] =
     useInputValidation('number');
+  const [numberOfNumbers, setNumberOfNumbers] = useState('');
+  const [numberOfDigits, setNumberOfDigits] = useState('');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
   const [selectedOptionOddEven, setSelectedOptionOddEven] =
@@ -29,42 +31,34 @@ export const NumberGeneratorDigits = () => {
   const [selectedOptionInclusive, setSelectedOptionInclusive] =
     useState('Inclusive');
 
-  useEffect(() => {
-    if (numberMinParam && numberMaxParam) {
-      generateRandomNumber(
-        numberMinParam,
-        numberMaxParam,
-        'Odd/Even',
-        'Inclusive',
-      );
-    }
-  }, [numberMinParam, numberMaxParam]);
+  // useEffect(() => {
+  //   if (numberOfNumbersParam && numberMaxParam) {
+  //     generateRandomNumber(
+  //       numberMinParam,
+  //       numberMaxParam,
+  //       'Odd/Even',
+  //       'Inclusive',
+  //     );
+  //   }
+  // }, [numberMinParam, numberMaxParam]);
 
-  const generateRandomNumber = (min, max, optionOdd, optionInclusive) => {
+  const generateRandomNumber = (min, max) => {
     const minCeiled = Math.ceil(min);
     const maxFloored = Math.floor(max);
-    let finalValue;
-
-    if (optionInclusive === 'Inclusive') {
-      finalValue = Math.floor(
-        Math.random() * (maxFloored - minCeiled + 1) + minCeiled,
-      );
-    } else if (optionInclusive === 'Exclusive') {
-      finalValue = Math.floor(
-        Math.random() * (maxFloored - minCeiled) + minCeiled,
-      );
-    }
+    const finalValue = Math.floor(
+      Math.random() * (maxFloored - minCeiled + 1) + minCeiled,
+    );
 
     setNumberRandom(finalValue);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (numberMinError || numberMaxError) {
+    if (!numberOfNumbers || !numberOfDigits) {
       setInvalidForm(true);
       setValidForm(false);
     } else {
-      generateRandomNumber(numberMin, numberMax);
+      generateRandomNumber(numberOfNumbers, numberOfDigits);
       setInvalidForm(false);
       setValidForm(true);
     }
@@ -87,8 +81,8 @@ export const NumberGeneratorDigits = () => {
     <main className="random-digit-number-generator">
       <Helmet>
         <title>
-          {numberMinParam && numberMaxParam
-            ? `${numberMinParam} - ${numberMaxParam} generator`
+          {numberOfNumbersParam && numberOfDigitsParam
+            ? `${numberOfNumbersParam} - ${numberOfDigitsParam} generator`
             : 'Number generator'}
         </title>
         <meta name="description" content="Random number generator" />
@@ -96,13 +90,13 @@ export const NumberGeneratorDigits = () => {
       {/* <div className="hero"></div> */}
       <div className="hero">
         <h1 className="hero-header">
-          {numberMinParam && numberMaxParam
-            ? `${numberMinParam} - ${numberMaxParam} generator`
+          {numberOfNumbersParam && numberOfDigitsParam
+            ? `${numberOfNumbers} - ${numberOfDigitsParam} generator`
             : 'Number generator'}
         </h1>
         <p className="subheading">
-          {numberMinParam && numberMaxParam
-            ? `Generate a random number from ${numberMinParam} to ${numberMaxParam}`
+          {numberOfNumbers && numberOfDigitsParam
+            ? `Generate a random number from ${numberOfNumbers} to ${numberOfDigitsParam}`
             : 'Generate a random number'}
         </p>
       </div>
@@ -129,17 +123,17 @@ export const NumberGeneratorDigits = () => {
             <div className="input-group">
               <TextFormInput
                 type="number"
-                value={numberMin}
-                placeholder={numberMinParam || 'Number min'}
-                onChange={validateNumberMin}
-                error={numberMinError}
+                value={numberOfNumbers}
+                placeholder={numberOfNumbersParam || 'Number min'}
+                onChange={setNumberOfNumbers}
+                label="random"
               />
               <TextFormInput
                 type="number"
-                value={numberMax}
-                placeholder={numberMaxParam || 'Number max'}
-                onChange={validateNumberMax}
-                error={numberMaxError}
+                value={numberOfDigits}
+                placeholder={numberOfDigitsParam || 'Number max'}
+                onChange={setNumberOfDigits}
+                label="digit numbers"
               />
             </div>
             <Button

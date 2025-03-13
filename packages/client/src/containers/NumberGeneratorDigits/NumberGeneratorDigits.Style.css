@@ -1,3 +1,10 @@
 .random-digit-number-generator .form-input {
   margin: 0rem;
 }
+
+.random-digit-number-generator .input-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  gap: 1rem;
+}
