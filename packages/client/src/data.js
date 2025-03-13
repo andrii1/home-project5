@@ -19,8 +19,10 @@ export const WEATHER_CITIES = [
 
 export const NUMBERS = [
   { numberMinParam: 0, numberMaxParam: 100 },
+  { numberMinParam: 1, numberMaxParam: 100 },
   { numberMinParam: 0, numberMaxParam: 10 },
   { numberMinParam: 0, numberMaxParam: 9 },
+  { numberMinParam: 0, numberMaxParam: 36 },
 ];
 
 export const RANDOM_NUMBER_DIGITS = [
