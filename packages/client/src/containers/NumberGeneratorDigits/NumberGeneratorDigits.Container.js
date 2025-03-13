@@ -9,22 +9,28 @@ import Toast from '../../components/Toast/Toast.Component';
 
 import { useUserContext } from '../../userContext';
 
-const keywords = [
-  'random number generator 6 numbers',
-  'random number generator 6 digits',
-];
-
 export const NumberGeneratorDigits = () => {
   const { numberOfNumbersParam, numberOfDigitsParam } = useParams();
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
   const [numbersRandom, setNumbersRandom] = useState([]);
-
   const [numberOfNumbers, setNumberOfNumbers] = useState('');
   const [numberOfDigits, setNumberOfDigits] = useState('');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
+
+  const keywords = numberOfDigitsParam
+    ? [
+        `random ${numberOfDigitsParam} digit number generator`,
+        `random number generator ${numberOfDigitsParam} numbers`,
+        `random number generator ${numberOfDigitsParam} digits`,
+      ]
+    : [
+        'random number generator',
+        'random digit number generator',
+        'random number generator digits',
+      ];
 
   useEffect(() => {
     if (numberOfNumbersParam && numberOfDigitsParam) {
@@ -43,8 +49,6 @@ export const NumberGeneratorDigits = () => {
 
     setNumbersRandom(numbers);
   };
-
-  console.log(numbersRandom);
 
   const handleSubmit = (event) => {
     event.preventDefault();

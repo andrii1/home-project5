@@ -7,6 +7,7 @@ const router = require('./sitemap-routes').default;
 const Sitemap = require('react-router-sitemap').default;
 const { WEATHER_CITIES } = require('./data');
 const { NUMBERS } = require('./data');
+const { RANDOM_NUMBER_DIGITS } = require('./data');
 const { BREATHING_EXERCISE_DATA } = require('./data');
 
 async function generateSitemap() {
@@ -32,6 +33,7 @@ async function generateSitemap() {
     // const idMapCategories = [];
 
     const idMapNumbers = [];
+    const idMapNumbersDigits = [];
     const idMapWheel = [];
     const idMapWeather = [];
     const idMapBreathing = [];
@@ -44,6 +46,13 @@ async function generateSitemap() {
       idMapWheel.push({
         numberMinParam: number.numberMinParam,
         numberMaxParam: number.numberMaxParam,
+      });
+    });
+
+    RANDOM_NUMBER_DIGITS.forEach((number) => {
+      idMapNumbersDigits.push({
+        numberOfNumbersParam: number.numberOfNumbersParam,
+        numberOfDigitsParam: number.numberOfDigitsParam,
       });
     });
 
@@ -73,6 +82,8 @@ async function generateSitemap() {
 
     const paramsConfig = {
       '/numbergenerator/:numberMinParam/:numberMaxParam': idMapNumbers,
+      '/random-digit-number-generator/:numberOfNumbersParam/:numberOfDigitsParam':
+        idMapNumbersDigits,
       '/random-number-wheel/:numberMinParam/:numberMaxParam': idMapWheel,
       '/weather-app/:cityParam': idMapWeather,
       '/breathing-app/:typeOfExerciseParam': idMapBreathing,

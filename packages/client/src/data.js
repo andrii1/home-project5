@@ -23,6 +23,19 @@ export const NUMBERS = [
   { numberMinParam: 0, numberMaxParam: 9 },
 ];
 
+export const RANDOM_NUMBER_DIGITS = [
+  { numberOfNumbersParam: 1, numberOfDigitsParam: 2 },
+  { numberOfNumbersParam: 1, numberOfDigitsParam: 4 },
+  { numberOfNumbersParam: 1, numberOfDigitsParam: 6 },
+  { numberOfNumbersParam: 1, numberOfDigitsParam: 8 },
+  { numberOfNumbersParam: 1, numberOfDigitsParam: 10 },
+  { numberOfNumbersParam: 2, numberOfDigitsParam: 2 },
+  { numberOfNumbersParam: 2, numberOfDigitsParam: 4 },
+  { numberOfNumbersParam: 2, numberOfDigitsParam: 6 },
+  { numberOfNumbersParam: 2, numberOfDigitsParam: 8 },
+  { numberOfNumbersParam: 2, numberOfDigitsParam: 10 },
+];
+
 export const BREATHING_EXERCISE_DATA = {
   '4-7-8': {
     breatheIn: 4000,
