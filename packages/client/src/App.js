@@ -63,7 +63,7 @@ function App() {
 
             <Route
               exact
-              path="/random-digit-number-generator/:numberMinParam/:numberMaxParam"
+              path="/random-digit-number-generator/:numberOfNumbersParam/:numberOfDigitsParam"
               element={<NumberGeneratorDigits />}
             />
             <Route

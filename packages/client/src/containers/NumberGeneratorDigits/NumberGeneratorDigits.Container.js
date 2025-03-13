@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import './NumberGeneratorDigits.Style.css';
-import { apiURL } from '../../apiURL';
 import { Button } from '../../components/Button/Button.component';
 import iconCopy from '../../assets/images/icons8-copy-24.png';
-import useInputValidation from '../../utils/hooks/useInputValidation';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import Toast from '../../components/Toast/Toast.Component';
-import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
 import { useUserContext } from '../../userContext';
+
+const keywords = [
+  'random number generator 6 numbers',
+  'random number generator 6 digits',
+];
 
 export const NumberGeneratorDigits = () => {
   const { numberOfNumbersParam, numberOfDigitsParam } = useParams();
@@ -18,25 +20,17 @@ export const NumberGeneratorDigits = () => {
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
   const [numbersRandom, setNumbersRandom] = useState([]);
-  // const [numberMin, numberMinError, validateNumberMin] =
-  //   useInputValidation('number');
-  // const [numberMax, numberMaxError, validateNumberMax] =
-  //   useInputValidation('number');
+
   const [numberOfNumbers, setNumberOfNumbers] = useState('');
   const [numberOfDigits, setNumberOfDigits] = useState('');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
 
-  // useEffect(() => {
-  //   if (numberOfNumbersParam && numberMaxParam) {
-  //     generateRandomNumber(
-  //       numberMinParam,
-  //       numberMaxParam,
-  //       'Odd/Even',
-  //       'Inclusive',
-  //     );
-  //   }
-  // }, [numberMinParam, numberMaxParam]);
+  useEffect(() => {
+    if (numberOfNumbersParam && numberOfDigitsParam) {
+      generateRandomNumbers(numberOfNumbersParam, numberOfDigitsParam);
+    }
+  }, [numberOfNumbersParam, numberOfDigitsParam]);
 
   const generateRandomNumbers = (numberOfNumbersP, numberOfDigitsP) => {
     const numbers = [];
@@ -81,24 +75,19 @@ export const NumberGeneratorDigits = () => {
     <main className="random-digit-number-generator">
       <Helmet>
         <title>
-          {numberOfNumbersParam && numberOfDigitsParam
-            ? `${numberOfNumbersParam} - ${numberOfDigitsParam} generator`
-            : 'Number generator'}
+          {numberOfDigitsParam
+            ? `Random ${numberOfDigitsParam} digit number generator`
+            : 'Random digit number generator'}
         </title>
-        <meta name="description" content="Random number generator" />
+        <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
       {/* <div className="hero"></div> */}
       <div className="hero">
         <h1 className="hero-header">
-          {numberOfNumbersParam && numberOfDigitsParam
-            ? `${numberOfNumbers} - ${numberOfDigitsParam} generator`
-            : 'Number generator'}
+          {numberOfDigitsParam
+            ? `Random ${numberOfDigitsParam} digit number generator`
+            : 'Random digit number generator'}
         </h1>
-        <p className="subheading">
-          {numberOfNumbers && numberOfDigitsParam
-            ? `Generate a random number from ${numberOfNumbers} to ${numberOfDigitsParam}`
-            : 'Generate a random number'}
-        </p>
       </div>
       <section className="container-tool">
         {numbersRandom && (
