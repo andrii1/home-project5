@@ -55,25 +55,6 @@ export const NumberGeneratorDigits = () => {
       );
     }
 
-    if (optionOdd === 'Odd') {
-      if (finalValue % 2 === 0) {
-        // generated number is even
-        if (finalValue === max) {
-          finalValue -= 1;
-        } else {
-          finalValue += 1;
-        }
-      }
-    } else if (optionOdd === 'Even') {
-      if (finalValue % 2 !== 0) {
-        // generated number is odd
-        if (finalValue === max) {
-          finalValue -= 1;
-        } else {
-          finalValue += 1;
-        }
-      }
-    }
     setNumberRandom(finalValue);
   };
 
@@ -83,12 +64,7 @@ export const NumberGeneratorDigits = () => {
       setInvalidForm(true);
       setValidForm(false);
     } else {
-      generateRandomNumber(
-        numberMin,
-        numberMax,
-        selectedOptionOddEven,
-        selectedOptionInclusive,
-      );
+      generateRandomNumber(numberMin, numberMax);
       setInvalidForm(false);
       setValidForm(true);
     }
@@ -107,11 +83,8 @@ export const NumberGeneratorDigits = () => {
     }, 2500);
   };
 
-  const optionsOddEven = ['Odd/even', 'Odd', 'Even'];
-  const optionsInclusive = ['Inclusive', 'Exclusive'];
-
   return (
-    <main>
+    <main className="random-digit-number-generator">
       <Helmet>
         <title>
           {numberMinParam && numberMaxParam
@@ -153,32 +126,22 @@ export const NumberGeneratorDigits = () => {
         )}
         <div className="form-box submit-box">
           <form onSubmit={handleSubmit}>
-            <div className="container-form-dropdown">
-              <Dropdown
-                options={optionsOddEven}
-                onSelect={(option) => setSelectedOptionOddEven(option)}
-                showFilterIcon={false}
-                showLabel={false}
+            <div className="input-group">
+              <TextFormInput
+                type="number"
+                value={numberMin}
+                placeholder={numberMinParam || 'Number min'}
+                onChange={validateNumberMin}
+                error={numberMinError}
               />
-              <Dropdown
-                options={optionsInclusive}
-                onSelect={(option) => setSelectedOptionInclusive(option)}
-                showFilterIcon={false}
-                showLabel={false}
+              <TextFormInput
+                type="number"
+                value={numberMax}
+                placeholder={numberMaxParam || 'Number max'}
+                onChange={validateNumberMax}
+                error={numberMaxError}
               />
             </div>
-            <TextFormInput
-              value={numberMin}
-              placeholder={numberMinParam || 'Number min'}
-              onChange={validateNumberMin}
-              error={numberMinError}
-            />
-            <TextFormInput
-              value={numberMax}
-              placeholder={numberMaxParam || 'Number max'}
-              onChange={validateNumberMax}
-              error={numberMaxError}
-            />
             <Button
               type="submit"
               primary
