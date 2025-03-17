@@ -1,17 +1,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './CharacterHeadcanonGenerator.Style.css';
 import { Button } from '../../components/Button/Button.component';
-import { Badge } from '../../components/Badge/Badge.component';
-import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
-import { capitalize } from '../../utils/capitalize';
 
-const keywords = ['Character headcanon generator'];
+const keywords = [
+  'Character headcanon generator',
+  'character headcanon ai',
+  'ai character headcanon generator',
+];
 
 export const CharacterHeadcanonGenerator = () => {
   const [characterName, setCharacterName] = useState();
@@ -59,10 +59,7 @@ export const CharacterHeadcanonGenerator = () => {
       if (data.choices && data.choices.length > 0) {
         setCharacterData(data.choices[0].message.content);
         setError(null);
-        // return;
       }
-      // console.error('No response from API:', data);
-      // return null;
     } catch (e) {
       setError({ message: e.message || 'An error occured' });
     }
@@ -74,26 +71,13 @@ export const CharacterHeadcanonGenerator = () => {
       ? `Generate a unique headcanon for the character named ${characterName}.`
       : 'Generate a random unique character headcanon.';
     fetchData(prompt);
-    // setSearch('');
   };
-
-  // const recipes = recipesData?.recipes.map((recipe) => {
-  //   return (
-  //     <CardSimple
-  //       title={recipe.title}
-  //       label={recipe.publisher}
-  //       urlImage={recipe.image_url}
-  //       urlLabel={recipe.source_url}
-  //       id={recipe.recipe_id}
-  //     />
-  //   );
-  // });
 
   return (
     <main className="single-app-container">
       <Helmet>
         <title>Character headcanon generator</title>
-        <meta name="description" content="Character headcanon generator" />
+        <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
       <header className="hero">
         <h1 className="hero-header">Character headcanon generator</h1>
