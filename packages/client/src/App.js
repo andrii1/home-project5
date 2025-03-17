@@ -37,6 +37,7 @@ import { ItemView } from './containers/ItemView/ItemView.container';
 import { GitHubStats } from './containers/GitHubStats/GitHubStats.Container';
 import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/NinetyDayRuleCalculator';
 import { NumberGeneratorDigits } from './containers/NumberGeneratorDigits/NumberGeneratorDigits.Container';
+import { CharacterHeadcanonGenerator } from './containers/CharacterHeadcanonGenerator/CharacterHeadcanonGenerator.Container';
 
 function App() {
   return (
@@ -108,6 +109,10 @@ function App() {
             <Route
               path="/90-day-rule-calculator"
               element={<NinetyDayRuleCalculator />}
+            />
+            <Route
+              path="/character-headcanon-generator"
+              element={<CharacterHeadcanonGenerator />}
             />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
