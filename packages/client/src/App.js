@@ -38,6 +38,7 @@ import { GitHubStats } from './containers/GitHubStats/GitHubStats.Container';
 import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/NinetyDayRuleCalculator';
 import { NumberGeneratorDigits } from './containers/NumberGeneratorDigits/NumberGeneratorDigits.Container';
 import { CharacterHeadcanonGenerator } from './containers/CharacterHeadcanonGenerator/CharacterHeadcanonGenerator.Container';
+import { GeneratorName } from './containers/GeneratorName/GeneratorName.Container';
 
 function App() {
   return (
@@ -114,6 +115,7 @@ function App() {
               path="/character-headcanon-generator"
               element={<CharacterHeadcanonGenerator />}
             />
+            <Route path="/generator-name" element={<GeneratorName />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import './GeneratorName.Style.css';
 import { Button } from '../../components/Button/Button.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
+import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
 const keywords = [
   'generator name',
@@ -14,9 +15,21 @@ const keywords = [
   'baby name generator',
 ];
 
+const optionsGender = [
+  { label: 'Boy', value: 'boy' },
+  { label: 'Girl', value: 'girl' },
+];
+
+const optionsStyle = [
+  { label: 'Classic', value: 'classic' },
+  { label: 'Modern', value: 'modern' },
+  { label: 'Unique', value: 'unique' },
+];
+
 export const GeneratorName = () => {
-  const [characterName, setCharacterName] = useState();
-  const [characterData, setCharacterData] = useState();
+  const [gender, setGender] = useState('boy');
+  const [style, setStyle] = useState('classic');
+  const [nameData, setNameData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +50,7 @@ export const GeneratorName = () => {
               {
                 role: 'system',
                 content:
-                  'You are character headcanon generator. You generate spicy character headcanons, ideally 4-8 words long, maximum 20 words long.',
+                  'You are a baby name generator. You are not repeating yourself.',
               },
               {
                 role: 'user',
@@ -58,7 +71,7 @@ export const GeneratorName = () => {
       }
 
       if (data.choices && data.choices.length > 0) {
-        setCharacterData(data.choices[0].message.content);
+        setNameData(data.choices[0].message.content);
         setError(null);
       }
     } catch (e) {
@@ -67,10 +80,8 @@ export const GeneratorName = () => {
     setLoading(false);
   };
 
-  const handleCharacterName = () => {
-    const prompt = characterName
-      ? `Generate a unique headcanon for the character named ${characterName}.`
-      : 'Generate a random unique character headcanon.';
+  const handleInput = () => {
+    const prompt = `Suggest a baby name for a ${gender} that is ${style} in style.`;
     fetchData(prompt);
   };
 
@@ -85,16 +96,11 @@ export const GeneratorName = () => {
       </header>
       <section className="app-input-container">
         <div className="search-input-container">
-          <TextFormInput
-            value={characterName}
-            placeholder="Enter character name"
-            onChange={setCharacterName}
-          />
-          <Button
-            onClick={handleCharacterName}
-            primary
-            label="Create headcanon"
-          />
+          <div className="dropdown-group">
+            <Dropdown options={optionsGender} onSelect={setGender} />
+            <Dropdown options={optionsStyle} onSelect={setStyle} />
+          </div>
+          <Button onClick={handleInput} primary label="Generate name" />
         </div>
       </section>
       <section className="app-result-container">
@@ -103,7 +109,7 @@ export const GeneratorName = () => {
         ) : (
           <>
             {error && <p className="error-message">{error.message}</p>}
-            {characterData && !error && <div>{characterData}</div>}
+            {nameData && !error && <div>{nameData}</div>}
           </>
         )}
       </section>

@@ -26,3 +26,7 @@
 .single-app-container .form-input {
   width: 100%;
 }
+.single-app-container .dropdown select {
+  padding: 7px 10px !important;
+  margin: 0rem;
+}
