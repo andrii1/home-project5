@@ -98,7 +98,7 @@ export const CharacterHeadcanonGenerator = () => {
       </section>
       <section className="app-result-container">
         {loading ? (
-          <p>Loading...</p>
+          <div>Loading...</div>
         ) : (
           <>
             {error && <p className="error-message">{error.message}</p>}

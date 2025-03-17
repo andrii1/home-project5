@@ -30,6 +30,7 @@ export const GeneratorName = () => {
   const [gender, setGender] = useState('boy');
   const [style, setStyle] = useState('classic');
   const [nameData, setNameData] = useState();
+  const [names, setNames] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -49,8 +50,11 @@ export const GeneratorName = () => {
             messages: [
               {
                 role: 'system',
-                content:
-                  'You are a baby name generator. You are not repeating yourself.',
+                content: `You are a baby name generator. ${
+                  names.length > 0
+                    ? `You are not using these names: ${names.join(', ')}`
+                    : ''
+                }`,
               },
               {
                 role: 'user',
@@ -72,6 +76,10 @@ export const GeneratorName = () => {
 
       if (data.choices && data.choices.length > 0) {
         setNameData(data.choices[0].message.content);
+        setNames((prevNames) => [
+          ...prevNames,
+          data.choices[0].message.content,
+        ]);
         setError(null);
       }
     } catch (e) {
@@ -105,7 +113,7 @@ export const GeneratorName = () => {
       </section>
       <section className="app-result-container">
         {loading ? (
-          <p>Loading...</p>
+          <div>Loading...</div>
         ) : (
           <>
             {error && <p className="error-message">{error.message}</p>}
