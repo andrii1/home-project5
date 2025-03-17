@@ -139,4 +139,8 @@ export const TOOLS = [
     title: 'Character headcanon generator',
     url: 'character-headcanon-generator',
   },
+  {
+    title: 'Name generator',
+    url: 'generator-name',
+  },
 ];

@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 
 import './GeneratorName.Style.css';
 import { Button } from '../../components/Button/Button.component';
-import TextFormInput from '../../components/Input/TextFormInput.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
 const keywords = [
@@ -13,6 +12,8 @@ const keywords = [
   'the name generator',
   'ai name generator',
   'baby name generator',
+  'random name generator',
+  'stylish name generator',
 ];
 
 const optionsGender = [
@@ -96,11 +97,11 @@ export const GeneratorName = () => {
   return (
     <main className="single-app-container">
       <Helmet>
-        <title>Character headcanon generator</title>
+        <title>Name generator</title>
         <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
       <header className="hero">
-        <h1 className="hero-header">Character headcanon generator</h1>
+        <h1 className="hero-header">Name generator</h1>
       </header>
       <section className="app-input-container">
         <div className="search-input-container">
