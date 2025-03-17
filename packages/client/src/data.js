@@ -135,4 +135,8 @@ export const TOOLS = [
   { title: 'Recipes', url: 'recipes' },
   { title: 'GitHub contribution chart', url: 'github-contribution-chart' },
   { title: '90 day rule calculator', url: '90-day-rule-calculator' },
+  {
+    title: 'Character headcanon generator',
+    url: 'character-headcanon-generator',
+  },
 ];
