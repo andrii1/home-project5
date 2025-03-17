@@ -11,69 +11,105 @@ import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 
-const keywords = [];
+const keywords = ['Character headcanon generator'];
 
 export const CharacterHeadcanonGenerator = () => {
-  const [search, setSearch] = useState();
-  const [recipesData, setRecipesData] = useState();
+  const [characterName, setCharacterName] = useState();
+  const [characterData, setCharacterData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (param) => {
+  const fetchData = async (prompt) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://forkify-api.herokuapp.com/api/search?q=${param}`,
+        'https://api.openai.com/v1/chat/completions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-4', // or "gpt-3.5-turbo"
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You are character headcanon generator. You generate spicy character headcanons, ideally 4-8 words long, maximum 20 words long.',
+              },
+              {
+                role: 'user',
+                content: prompt,
+              },
+            ],
+            temperature: 0.8, // Increases randomness
+            max_tokens: 100, // Adjust for longer paragraphs
+          }),
+        },
       );
+
       const data = await response.json();
+      // console.log(data);
 
       if (!response.ok) {
         throw new Error(data.message || 'Failed to fetch');
       }
-      setRecipesData(data);
-      setError(null);
 
-      // setSearch('');
+      if (data.choices && data.choices.length > 0) {
+        setCharacterData(data.choices[0].message.content);
+        setError(null);
+        // return;
+      }
+      // console.error('No response from API:', data);
+      // return null;
     } catch (e) {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
   };
 
-  const handleSearch = () => {
-    fetchData(search);
-    setSearch('');
+  const handleCharacterName = () => {
+    const prompt = characterName
+      ? `Generate a unique headcanon for the character named ${characterName}.`
+      : 'Generate a random unique character headcanon.';
+    fetchData(prompt);
+    // setSearch('');
   };
 
-  const recipes = recipesData?.recipes.map((recipe) => {
-    return (
-      <CardSimple
-        title={recipe.title}
-        label={recipe.publisher}
-        urlImage={recipe.image_url}
-        urlLabel={recipe.source_url}
-        id={recipe.recipe_id}
-      />
-    );
-  });
+  // const recipes = recipesData?.recipes.map((recipe) => {
+  //   return (
+  //     <CardSimple
+  //       title={recipe.title}
+  //       label={recipe.publisher}
+  //       urlImage={recipe.image_url}
+  //       urlLabel={recipe.source_url}
+  //       id={recipe.recipe_id}
+  //     />
+  //   );
+  // });
 
   return (
     <main className="single-app-container">
       <Helmet>
-        <title>Title</title>
-        <meta name="description" content="decsription" />
+        <title>Character headcanon generator</title>
+        <meta name="description" content="Character headcanon generator" />
       </Helmet>
       <header className="hero">
-        <h1 className="hero-header">Recipes app</h1>
+        <h1 className="hero-header">Character headcanon generator</h1>
       </header>
       <section className="app-input-container">
         <div className="search-input-container">
           <TextFormInput
-            value={search}
-            placeholder="Find recipes"
-            onChange={setSearch}
+            value={characterName}
+            placeholder="Enter character name"
+            onChange={setCharacterName}
           />
-          <Button onClick={handleSearch} primary label="Search" />
+          <Button
+            onClick={handleCharacterName}
+            primary
+            label="Create headcanon"
+          />
         </div>
       </section>
       <section className="app-result-container">
@@ -82,9 +118,7 @@ export const CharacterHeadcanonGenerator = () => {
         ) : (
           <>
             {error && <p className="error-message">{error.message}</p>}
-            {recipesData && !error && (
-              <div className="container-cards">{recipes}</div>
-            )}
+            {characterData && !error && <div>{characterData}</div>}
           </>
         )}
       </section>
