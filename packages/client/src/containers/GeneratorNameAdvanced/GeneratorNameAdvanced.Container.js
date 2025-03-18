@@ -1,9 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import './GeneratorName.Style.css';
+import './GeneratorNameAdvanced.Style.css';
 import { Button } from '../../components/Button/Button.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 
@@ -14,6 +15,20 @@ const keywords = [
   'baby name generator',
   'random name generator',
   'stylish name generator',
+];
+
+const tabs = [
+  { label: 'Elf', value: 'elf' },
+  { label: 'Girl', value: 'jedi' },
+  { label: 'Elf', value: 'zoo' },
+  { label: 'Girl', value: 'dnd' },
+  { label: 'Elf', value: 'bgmi' },
+  { label: 'Girl', value: 'pubg' },
+  { label: 'Elf', value: 'villain' },
+  { label: 'Girl', value: 'username' },
+  { label: 'Elf', value: 'japanese' },
+  { label: 'Girl', value: 'last name' },
+  { label: 'Girl', value: 'middle name' },
 ];
 
 const optionsGender = [
@@ -34,6 +49,7 @@ export const GeneratorNameAdvanced = () => {
   const [names, setNames] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const { tabParam = 'elf' } = useParams();
 
   const fetchData = async (prompt) => {
     setLoading(true);
@@ -97,12 +113,84 @@ export const GeneratorNameAdvanced = () => {
   return (
     <main className="single-app-container">
       <Helmet>
-        <title>Name generator</title>
+        <title>Random name generator</title>
         <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
       <header className="hero">
-        <h1 className="hero-header">Name generator</h1>
+        <h1 className="hero-header">Random name generators</h1>
       </header>
+      <section className="tab-group">
+        <div className="tab-group">
+          <Link to="/name-generator">
+            <Button
+              tertiary={tabParam === 'elf'}
+              secondary={tabParam !== 'elf'}
+              label="Elf name generator"
+              className="tab"
+            />
+          </Link>
+          <Button
+            tertiary={tabParam === 'jedi'}
+            secondary={tabParam !== 'jedi'}
+            label="Jedi name generator"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'zoo'}
+            secondary={tabParam !== 'zoo'}
+            label="Planet zoo"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'dnd'}
+            secondary={tabParam !== 'dnd'}
+            label="dnd"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'bgmi'}
+            secondary={tabParam !== 'bgmi'}
+            label="bgmi"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'pubg'}
+            secondary={tabParam !== 'pubg'}
+            label="pubg"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'villain'}
+            secondary={tabParam !== 'villain'}
+            label="villain"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'username'}
+            secondary={tabParam !== 'username'}
+            label="username"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'japanese'}
+            secondary={tabParam !== 'japanese'}
+            label="japanese"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'last name'}
+            secondary={tabParam !== 'last name'}
+            label="last name"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'middle name'}
+            secondary={tabParam !== 'middle name'}
+            label="middle name"
+            className="tab"
+          />
+        </div>
+      </section>
       <section className="app-input-container">
         <div className="search-input-container">
           <div className="dropdown-group">

@@ -39,6 +39,7 @@ import { NinetyDayRuleCalculator } from './containers/NinetyDayRuleCalculator/Ni
 import { NumberGeneratorDigits } from './containers/NumberGeneratorDigits/NumberGeneratorDigits.Container';
 import { CharacterHeadcanonGenerator } from './containers/CharacterHeadcanonGenerator/CharacterHeadcanonGenerator.Container';
 import { GeneratorName } from './containers/GeneratorName/GeneratorName.Container';
+import { GeneratorNameAdvanced } from './containers/GeneratorNameAdvanced/GeneratorNameAdvanced.Container';
 
 function App() {
   return (
@@ -116,6 +117,7 @@ function App() {
               element={<CharacterHeadcanonGenerator />}
             />
             <Route path="/generator-name" element={<GeneratorName />} />
+            <Route path="/name-generator" element={<GeneratorNameAdvanced />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />
