@@ -18,10 +18,20 @@ const keywords = [
 ];
 
 const tabs = [
-  { label: 'Name', value: 'name' },
+  {
+    label: 'Name',
+    value: 'name',
+    keywords: [
+      'generator name',
+      'the name generator',
+      'ai name generator',
+      'baby name generator',
+      'random name generator',
+      'stylish name generator',
+    ],
+  },
   { label: 'Middle name', value: 'middle-name' },
   { label: 'Last name', value: 'last-name' },
-  { label: 'Middle name', value: 'middle-name' },
   { label: 'Elf', value: 'elf' },
   { label: 'Jedi', value: 'jedi' },
   { label: 'Zoo', value: 'zoo' },
@@ -136,78 +146,7 @@ export const GeneratorName = () => {
         <h1 className="hero-header">Name generator</h1>
       </header>
       <section className="tab-group">
-        <div className="tab-group">
-          {tabsGroup}
-          {/* <Link to="/name-generator">
-            <Button
-              tertiary={tabParam === 'elf'}
-              secondary={tabParam !== 'elf'}
-              label="Elf name generator"
-              className="tab"
-            />
-          </Link>
-          <Button
-            tertiary={tabParam === 'jedi'}
-            secondary={tabParam !== 'jedi'}
-            label="Jedi name generator"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'zoo'}
-            secondary={tabParam !== 'zoo'}
-            label="Planet zoo"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'dnd'}
-            secondary={tabParam !== 'dnd'}
-            label="dnd"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'bgmi'}
-            secondary={tabParam !== 'bgmi'}
-            label="bgmi"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'pubg'}
-            secondary={tabParam !== 'pubg'}
-            label="pubg"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'villain'}
-            secondary={tabParam !== 'villain'}
-            label="villain"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'username'}
-            secondary={tabParam !== 'username'}
-            label="username"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'japanese'}
-            secondary={tabParam !== 'japanese'}
-            label="japanese"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'last name'}
-            secondary={tabParam !== 'last name'}
-            label="last name"
-            className="tab"
-          />
-          <Button
-            tertiary={tabParam === 'middle name'}
-            secondary={tabParam !== 'middle name'}
-            label="middle name"
-            className="tab"
-          />
-         */}
-        </div>
+        <div className="tab-group">{tabsGroup}</div>
       </section>
       <section className="app-input-container">
         <div className="search-input-container">

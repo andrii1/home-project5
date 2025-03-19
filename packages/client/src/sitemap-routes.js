@@ -29,7 +29,7 @@ export default (
     <Route path="/github-contribution-chart" />
     <Route path="/90-day-rule-calculator" />
     <Route path="/character-headcanon-generator" />
-    <Route path="/generator-name" />
+    <Route path="/name-generator" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

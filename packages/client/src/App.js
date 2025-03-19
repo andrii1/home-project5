@@ -116,8 +116,13 @@ function App() {
               path="/character-headcanon-generator"
               element={<CharacterHeadcanonGenerator />}
             />
-            <Route path="/generator-name" element={<GeneratorName />} />
-            <Route path="/name-generator" element={<GeneratorNameAdvanced />} />
+            <Route path="/name-generator" element={<GeneratorName />} />
+            <Route
+              exact
+              path="/name-generator/:tabParam"
+              element={<GeneratorName />}
+            />
+            {/* <Route path="/name-generator" element={<GeneratorNameAdvanced />} /> */}
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

@@ -141,6 +141,6 @@ export const TOOLS = [
   },
   {
     title: 'Name generator',
-    url: 'generator-name',
+    url: 'name-generator',
   },
 ];
