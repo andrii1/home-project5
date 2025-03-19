@@ -30,6 +30,7 @@ export default (
     <Route path="/90-day-rule-calculator" />
     <Route path="/character-headcanon-generator" />
     <Route path="/name-generator" />
+    <Route path="/name-generator/:tabParam" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

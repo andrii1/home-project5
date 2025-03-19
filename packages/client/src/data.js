@@ -113,6 +113,88 @@ export const BREATHING_EXERCISE_DATA = {
   },
 };
 
+export const tabsNameGenerator = [
+  {
+    label: 'Name',
+    value: 'name',
+    title: 'Name generator',
+    keywords: [
+      'generator name',
+      'the name generator',
+      'ai name generator',
+      'baby name generator',
+      'random name generator',
+      'stylish name generator',
+    ],
+  },
+  {
+    label: 'Middle name',
+    value: 'middle-name',
+    title: 'Middle name generator',
+    keywords: ['Middle name generator'],
+  },
+  {
+    label: 'Last name',
+    value: 'last-name',
+    title: 'Last name generator',
+    keywords: ['last name generator'],
+  },
+  {
+    label: 'Username',
+    value: 'username',
+    title: 'Username generator',
+    keywords: ['generator username'],
+  },
+  {
+    label: 'Elf',
+    value: 'elf',
+    title: 'Elf name generator',
+    keywords: ['Generate elf name'],
+  },
+  {
+    label: 'Jedi',
+    value: 'jedi',
+    title: 'Jedi name generator',
+    keywords: ['generator Jedi name'],
+  },
+  {
+    label: 'Zoo',
+    value: 'zoo',
+    title: 'Zoo name generator',
+    keywords: ['generator zoo name'],
+  },
+  {
+    label: 'Dnd',
+    value: 'dnd',
+    title: 'dnd name generator',
+    keywords: ['generator dnd name'],
+  },
+  {
+    label: 'Bgmi',
+    value: 'bgmi',
+    title: 'BGMI name generator',
+    keywords: ['generator name for BGMI'],
+  },
+  {
+    label: 'PUBG',
+    value: 'pubg',
+    title: 'PUBG name generator',
+    keywords: ['generator name PUBG'],
+  },
+  {
+    label: 'Villain',
+    value: 'villain',
+    title: 'Villain name generator',
+    keywords: ['generator villain name'],
+  },
+  {
+    label: 'Japanese',
+    value: 'japanese',
+    title: 'Japanese name generator',
+    keywords: ['generator Japanese name'],
+  },
+];
+
 export const TOOLS = [
   { title: 'Number Generator', url: 'numbergenerator' },
   {

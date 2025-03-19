@@ -9,6 +9,7 @@ const { WEATHER_CITIES } = require('./data');
 const { NUMBERS } = require('./data');
 const { RANDOM_NUMBER_DIGITS } = require('./data');
 const { BREATHING_EXERCISE_DATA } = require('./data');
+const { tabsNameGenerator } = require('./data');
 
 async function generateSitemap() {
   try {
@@ -37,6 +38,7 @@ async function generateSitemap() {
     const idMapWheel = [];
     const idMapWeather = [];
     const idMapBreathing = [];
+    const idMapNameGenerators = [];
 
     NUMBERS.forEach((number) => {
       idMapNumbers.push({
@@ -68,6 +70,12 @@ async function generateSitemap() {
       });
     });
 
+    tabsNameGenerator.forEach((generator) => {
+      idMapNameGenerators.push({
+        tabParam: generator.value,
+      });
+    });
+
     // prompts.forEach((prompt) => {
     //   idMap.push({ id: prompt.id });
     // });
@@ -87,6 +95,7 @@ async function generateSitemap() {
       '/random-number-wheel/:numberMinParam/:numberMaxParam': idMapWheel,
       '/weather-app/:cityParam': idMapWeather,
       '/breathing-app/:typeOfExerciseParam': idMapBreathing,
+      '/name-generator/:tabParam': idMapNameGenerators,
       // '/apps/:id': idMap,
       // '/apps/topic/:topicIdParam': idMapTopics,
       // '/apps/category/:categoryIdParam': idMapCategories,

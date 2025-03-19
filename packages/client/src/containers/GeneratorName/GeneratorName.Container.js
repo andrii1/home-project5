@@ -7,46 +7,7 @@ import { Helmet } from 'react-helmet';
 import './GeneratorName.Style.css';
 import { Button } from '../../components/Button/Button.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
-
-const keywords = [
-  'generator name',
-  'the name generator',
-  'ai name generator',
-  'baby name generator',
-  'random name generator',
-  'stylish name generator',
-];
-
-const tabs = [
-  {
-    label: 'Name',
-    value: 'name',
-    title: 'Name generator',
-    keywords: [
-      'generator name',
-      'the name generator',
-      'ai name generator',
-      'baby name generator',
-      'random name generator',
-      'stylish name generator',
-    ],
-  },
-  {
-    label: 'Middle name',
-    value: 'middle-name',
-    title: 'Middle name generator',
-  },
-  { label: 'Last name', value: 'last-name', title: 'Last name generator' },
-  { label: 'Username', value: 'username', title: 'Username generator' },
-  { label: 'Elf', value: 'elf', title: 'Elf name generator' },
-  { label: 'Jedi', value: 'jedi', title: 'Jedi name generator' },
-  { label: 'Zoo', value: 'zoo', title: 'Zoo name generator' },
-  { label: 'Dnd', value: 'dnd', title: 'dnd name generator' },
-  { label: 'Bgmi', value: 'bgmi', title: 'BGMI name generator' },
-  { label: 'PUBG', value: 'pubg', title: 'PUBG name generator' },
-  { label: 'Villain', value: 'villain', title: 'Villain name generator' },
-  { label: 'Japanese', value: 'japanese', title: 'Japanese name generator' },
-];
+import { tabsNameGenerator as tabs } from '../../data';
 
 const optionsGender = [
   { label: 'Boy', value: 'boy' },
@@ -183,7 +144,10 @@ As you can see, the vast majority are just the name of the location and then "Zo
     <main className="single-app-container">
       <Helmet>
         <title>{tab.title}</title>
-        <meta name="description" content={keywords && keywords.join(', ')} />
+        <meta
+          name="description"
+          content={tab.keywords.length > 0 && tab.keywords.join(', ')}
+        />
       </Helmet>
       <header className="hero">
         <h1 className="hero-header">{tab.title}</h1>
