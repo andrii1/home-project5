@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
@@ -61,8 +61,11 @@ export const GeneratorName = () => {
   const [names, setNames] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
-
   const { tabParam = 'name' } = useParams();
+
+  useEffect(() => {
+    setNames([]);
+  }, [tabParam]);
 
   const tabsGroup = tabs.map((tab) => {
     return (
