@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import './GeneratorName.Style.css';
@@ -14,6 +15,22 @@ const keywords = [
   'baby name generator',
   'random name generator',
   'stylish name generator',
+];
+
+const tabs = [
+  { label: 'Name', value: 'name' },
+  { label: 'Middle name', value: 'middle-name' },
+  { label: 'Last name', value: 'last-name' },
+  { label: 'Middle name', value: 'middle-name' },
+  { label: 'Elf', value: 'elf' },
+  { label: 'Jedi', value: 'jedi' },
+  { label: 'Zoo', value: 'zoo' },
+  { label: 'Dnd', value: 'dnd' },
+  { label: 'Bgmi', value: 'bgmi' },
+  { label: 'PUBG', value: 'pubg' },
+  { label: 'Villain', value: 'villain' },
+  { label: 'Username', value: 'username' },
+  { label: 'Japanese', value: 'japanese' },
 ];
 
 const optionsGender = [
@@ -34,6 +51,21 @@ export const GeneratorName = () => {
   const [names, setNames] = useState([]);
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+
+  const { tabParam = 'name' } = useParams();
+
+  const tabsGroup = tabs.map((tab) => {
+    return (
+      <Link to={`/name-generator/${tab.value}`}>
+        <Button
+          tertiary={tabParam === tab.value}
+          secondary={tabParam !== tab.value}
+          label={tab.label}
+          className="tab"
+        />
+      </Link>
+    );
+  });
 
   const fetchData = async (prompt) => {
     setLoading(true);
@@ -103,6 +135,80 @@ export const GeneratorName = () => {
       <header className="hero">
         <h1 className="hero-header">Name generator</h1>
       </header>
+      <section className="tab-group">
+        <div className="tab-group">
+          {tabsGroup}
+          {/* <Link to="/name-generator">
+            <Button
+              tertiary={tabParam === 'elf'}
+              secondary={tabParam !== 'elf'}
+              label="Elf name generator"
+              className="tab"
+            />
+          </Link>
+          <Button
+            tertiary={tabParam === 'jedi'}
+            secondary={tabParam !== 'jedi'}
+            label="Jedi name generator"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'zoo'}
+            secondary={tabParam !== 'zoo'}
+            label="Planet zoo"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'dnd'}
+            secondary={tabParam !== 'dnd'}
+            label="dnd"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'bgmi'}
+            secondary={tabParam !== 'bgmi'}
+            label="bgmi"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'pubg'}
+            secondary={tabParam !== 'pubg'}
+            label="pubg"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'villain'}
+            secondary={tabParam !== 'villain'}
+            label="villain"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'username'}
+            secondary={tabParam !== 'username'}
+            label="username"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'japanese'}
+            secondary={tabParam !== 'japanese'}
+            label="japanese"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'last name'}
+            secondary={tabParam !== 'last name'}
+            label="last name"
+            className="tab"
+          />
+          <Button
+            tertiary={tabParam === 'middle name'}
+            secondary={tabParam !== 'middle name'}
+            label="middle name"
+            className="tab"
+          />
+         */}
+        </div>
+      </section>
       <section className="app-input-container">
         <div className="search-input-container">
           <div className="dropdown-group">
