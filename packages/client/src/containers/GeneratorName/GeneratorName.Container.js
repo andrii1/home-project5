@@ -21,6 +21,7 @@ const tabs = [
   {
     label: 'Name',
     value: 'name',
+    title: 'Name generator',
     keywords: [
       'generator name',
       'the name generator',
@@ -30,17 +31,21 @@ const tabs = [
       'stylish name generator',
     ],
   },
-  { label: 'Middle name', value: 'middle-name' },
-  { label: 'Last name', value: 'last-name' },
-  { label: 'Username', value: 'username' },
-  { label: 'Elf', value: 'elf' },
-  { label: 'Jedi', value: 'jedi' },
-  { label: 'Zoo', value: 'zoo' },
-  { label: 'Dnd', value: 'dnd' },
-  { label: 'Bgmi', value: 'bgmi' },
-  { label: 'PUBG', value: 'pubg' },
-  { label: 'Villain', value: 'villain' },
-  { label: 'Japanese', value: 'japanese' },
+  {
+    label: 'Middle name',
+    value: 'middle-name',
+    title: 'Middle name generator',
+  },
+  { label: 'Last name', value: 'last-name', title: 'Last name generator' },
+  { label: 'Username', value: 'username', title: 'Username generator' },
+  { label: 'Elf', value: 'elf', title: 'Elf name generator' },
+  { label: 'Jedi', value: 'jedi', title: 'Jedi name generator' },
+  { label: 'Zoo', value: 'zoo', title: 'Zoo name generator' },
+  { label: 'Dnd', value: 'dnd', title: 'dnd name generator' },
+  { label: 'Bgmi', value: 'bgmi', title: 'BGMI name generator' },
+  { label: 'PUBG', value: 'pubg', title: 'PUBG name generator' },
+  { label: 'Villain', value: 'villain', title: 'Villain name generator' },
+  { label: 'Japanese', value: 'japanese', title: 'Japanese name generator' },
 ];
 
 const optionsGender = [
@@ -172,14 +177,16 @@ As you can see, the vast majority are just the name of the location and then "Zo
     fetchData(prompt);
   };
 
+  const tab = tabs.find((item) => item.value === tabParam);
+
   return (
     <main className="single-app-container">
       <Helmet>
-        <title>Name generator</title>
+        <title>{tab.title}</title>
         <meta name="description" content={keywords && keywords.join(', ')} />
       </Helmet>
       <header className="hero">
-        <h1 className="hero-header">Name generator</h1>
+        <h1 className="hero-header">{tab.title}</h1>
       </header>
       <section className="tab-group">
         <div className="tab-group">{tabsGroup}</div>
