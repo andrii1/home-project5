@@ -65,6 +65,7 @@ export const GeneratorName = () => {
 
   useEffect(() => {
     setNames([]);
+    setNameData('');
   }, [tabParam]);
 
   const tabsGroup = tabs.map((tab) => {
@@ -96,7 +97,7 @@ export const GeneratorName = () => {
             messages: [
               {
                 role: 'system',
-                content: `You are a baby name generator. ${
+                content: `You are a name generator. ${
                   names.length > 0
                     ? `You are not using these names: ${names.join(', ')}`
                     : ''
@@ -142,6 +143,19 @@ export const GeneratorName = () => {
       prompt = `Suggest a middle name for a ${gender} that is ${style} in style.`;
     } else if (tabParam === 'last-name') {
       prompt = `Suggest a last name for a ${gender} that is ${style} in style.`;
+    } else if (tabParam === 'elf') {
+      prompt = `Generate a unique and elegant elf name.`;
+    } else if (tabParam === 'jedi') {
+      prompt = `Generate a unique and elegant Jedi name.`;
+    } else if (tabParam === 'zoo') {
+      prompt = `Generate one zoo name for Planet Zoo game. You can use these formulas:
+      - [Name, sometimes I use a fictional character] Memorial Zoo
+      - [Location] Central/City/State/National Zoo
+      - [theme of zoo, like Reptile or Primate] Adventure Park / [theme of zoo] Park
+      - The [location] [theme of zoo] Sanctuary
+      - [Location and/or Theme] Reserve and Zoo
+Here's a wiki that lists irl zoo names: https://en.wikipedia.org/wiki/List_of_zoos_by_country
+As you can see, the vast majority are just the name of the location and then "Zoo" in whatever language is appropriate. Very, very few irl zoos have creative or engaging names.`;
     }
     fetchData(prompt);
   };
@@ -160,10 +174,14 @@ export const GeneratorName = () => {
       </section>
       <section className="app-input-container">
         <div className="search-input-container">
-          <div className="dropdown-group">
-            <Dropdown options={optionsGender} onSelect={setGender} />
-            <Dropdown options={optionsStyle} onSelect={setStyle} />
-          </div>
+          {tabParam === 'name' ||
+          tabParam === 'middle-name' ||
+          tabParam === 'last-name' ? (
+            <div className="dropdown-group">
+              <Dropdown options={optionsGender} onSelect={setGender} />
+              <Dropdown options={optionsStyle} onSelect={setStyle} />
+            </div>
+          ) : null}
           <Button onClick={handleInput} primary label="Generate name" />
         </div>
       </section>
