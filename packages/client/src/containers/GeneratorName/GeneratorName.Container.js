@@ -132,7 +132,14 @@ export const GeneratorName = () => {
   };
 
   const handleInput = () => {
-    const prompt = `Suggest a baby name for a ${gender} that is ${style} in style.`;
+    let prompt;
+    if (tabParam === 'name') {
+      prompt = `Suggest a baby name for a ${gender} that is ${style} in style.`;
+    } else if (tabParam === 'middle-name') {
+      prompt = `Suggest a middle name for a ${gender} that is ${style} in style.`;
+    } else if (tabParam === 'last-name') {
+      prompt = `Suggest a last name for a ${gender} that is ${style} in style.`;
+    }
     fetchData(prompt);
   };
 
