@@ -32,6 +32,7 @@ const tabs = [
   },
   { label: 'Middle name', value: 'middle-name' },
   { label: 'Last name', value: 'last-name' },
+  { label: 'Username', value: 'username' },
   { label: 'Elf', value: 'elf' },
   { label: 'Jedi', value: 'jedi' },
   { label: 'Zoo', value: 'zoo' },
@@ -39,7 +40,6 @@ const tabs = [
   { label: 'Bgmi', value: 'bgmi' },
   { label: 'PUBG', value: 'pubg' },
   { label: 'Villain', value: 'villain' },
-  { label: 'Username', value: 'username' },
   { label: 'Japanese', value: 'japanese' },
 ];
 
@@ -143,6 +143,8 @@ export const GeneratorName = () => {
       prompt = `Suggest a middle name for a ${gender} that is ${style} in style.`;
     } else if (tabParam === 'last-name') {
       prompt = `Suggest a last name for a ${gender} that is ${style} in style.`;
+    } else if (tabParam === 'username') {
+      prompt = `Generate a unique and elegant username.`;
     } else if (tabParam === 'elf') {
       prompt = `Generate a unique and elegant elf name.`;
     } else if (tabParam === 'jedi') {
@@ -156,6 +158,16 @@ export const GeneratorName = () => {
       - [Location and/or Theme] Reserve and Zoo
 Here's a wiki that lists irl zoo names: https://en.wikipedia.org/wiki/List_of_zoos_by_country
 As you can see, the vast majority are just the name of the location and then "Zoo" in whatever language is appropriate. Very, very few irl zoos have creative or engaging names.`;
+    } else if (tabParam === 'dnd') {
+      prompt = `Generate one dragon name for dnd game.`;
+    } else if (tabParam === 'bgmi') {
+      prompt = `Generate one username for Battlegrounds Mobile India game.`;
+    } else if (tabParam === 'pubg') {
+      prompt = `Generate one username for PUBG game with stylish symbols.`;
+    } else if (tabParam === 'villain') {
+      prompt = `Generate one villain name for some online game.`;
+    } else if (tabParam === 'japanese') {
+      prompt = `Generate one japanese name.`;
     }
     fetchData(prompt);
   };
