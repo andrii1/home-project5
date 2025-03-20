@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './Items.styles.css';
 import TextFormInput from '../Input/TextFormInput.component';
 import { Button } from '../Button/Button.component';
-import { MAX_ITEMS_WHEEL } from '../../constants';
+import { MAX_ITEMS_WHEEL } from '../../lib/constants';
 
 export const Items = ({ handleAddItem, handleRemoveItem, items }) => {
   const [listItem, setListItem] = useState('');
