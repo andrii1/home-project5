@@ -39,12 +39,25 @@ const optionsLevel = [
 ];
 
 const tabs = [
-  { value: 'Random code', icon: <QrCode size={14} /> },
-  { value: '3 random codes', icon: <Dice3 size={14} /> },
-  { value: '5 random codes', icon: <Dice5 size={14} /> },
-  { value: 'Random', icon: <Dices size={14} /> },
-  { value: 'Text', icon: <Text size={14} /> },
-  { value: 'UPI', icon: <ScanQrCode size={14} /> },
+  { value: 'Random code', Icon: QrCode },
+  { value: '3 random codes', Icon: Dice3 },
+  { value: '5 random codes', Icon: Dice5 },
+  { value: 'Random', Icon: Dices },
+  { value: 'Text', Icon: Text },
+  { value: 'UPI', Icon: ScanQrCode },
+];
+
+const randomRadioOptions = [
+  { value: 'string', label: 'Random string' },
+  { value: 'number', label: 'Random number' },
+  { value: 'e-mail', label: 'Random e-mail' },
+  { value: 'text', label: 'Random text' },
+  { value: 'word', label: 'Random word' },
+  { value: 'quote', label: 'Random quote' },
+  { value: 'fun-fact', label: 'Random fun fact' },
+  { value: 'wiki', label: 'Random WikiPedia article' },
+  { value: 'meme', label: 'Random meme' },
+  { value: 'website', label: 'Random website' },
 ];
 
 export const RandomQrCode = () => {
@@ -325,7 +338,7 @@ export const RandomQrCode = () => {
               label={item.value}
               className="tab"
               onClick={() => setTab(item.value)}
-              icon={item.icon}
+              icon={<item.Icon size={14} />}
             />
           ))}
         </div>
@@ -377,67 +390,15 @@ export const RandomQrCode = () => {
           <section className="app-input-generator">
             {tab === 'Random' && (
               <div className="input-group">
-                <Radio
-                  value="string"
-                  label="Random string"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'string'}
-                />
-                <Radio
-                  value="number"
-                  label="Random number"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'number'}
-                />
-                <Radio
-                  value="e-mail"
-                  label="Random e-mail"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'e-mail'}
-                />
-                <Radio
-                  value="text"
-                  label="Random text"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'text'}
-                />
-
-                <Radio
-                  value="word"
-                  label="Random word"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'word'}
-                />
-                <Radio
-                  value="quote"
-                  label="Random quote"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'quote'}
-                />
-                <Radio
-                  value="fun-fact"
-                  label="Random fun fact"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'fun-fact'}
-                />
-                <Radio
-                  value="wiki"
-                  label="Random WikiPedia article"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'wiki'}
-                />
-                <Radio
-                  value="meme"
-                  label="Random meme"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'meme'}
-                />
-                <Radio
-                  value="website"
-                  label="Random website"
-                  onChange={(event) => setMode(event.target.value)}
-                  checked={mode === 'website'}
-                />
+                {randomRadioOptions.map((option) => (
+                  <Radio
+                    key={option.value}
+                    value={option.value}
+                    label={option.label}
+                    onChange={(event) => setMode(event.target.value)}
+                    checked={mode === option.value}
+                  />
+                ))}
               </div>
             )}
             {tab === 'Text' && (
