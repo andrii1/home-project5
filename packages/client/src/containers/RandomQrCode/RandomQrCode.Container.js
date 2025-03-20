@@ -9,7 +9,7 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import { Dropdown } from '../../components/Dropdown/Dropdown.Component';
 import TextFormTextarea from '../../components/Input/TextFormTextarea.component';
 import { Radio } from '../../components/Radio/Radio.component';
-import { Text, Dices, QrCode, Dice3, Dice5 } from 'lucide-react';
+import { Text, Dices, QrCode, Dice3, Dice5, ScanQrCode } from 'lucide-react';
 
 const keywords = [
   'random qr code',
@@ -173,6 +173,14 @@ export const RandomQrCode = () => {
     }
   };
 
+  const generateUpiLink = () => {
+    if (!upiId) return '';
+    let upiLink = `upi://pay?pa=${upiId}`;
+    if (amount) upiLink += `&am=${amount}`;
+    if (name) upiLink += `&pn=${name}`;
+    return upiLink;
+  };
+
   const handleGenerateQrCode = async () => {
     if (tab === 'Random code') {
       setQrCode(getRandomString(10));
@@ -226,6 +234,8 @@ export const RandomQrCode = () => {
     } else if (tab === 'Text') {
       setQrCode(input);
       // setInput('');
+    } else if (tab === 'upi') {
+      setQrCode(input);
     }
   };
 
@@ -320,6 +330,14 @@ export const RandomQrCode = () => {
             onClick={() => setTab('Text')}
             icon={<Text size={14} />}
           />
+          <Button
+            tertiary={tab === 'upi'}
+            secondary={tab !== 'upi'}
+            label="UPI"
+            className="tab"
+            onClick={() => setTab('upi')}
+            icon={<ScanQrCode size={14} />}
+          />
         </div>
       </section>
       {tab === 'Random code' ||
@@ -364,7 +382,7 @@ export const RandomQrCode = () => {
           <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
         </section>
       ) : null}
-      {tab === 'Random' || tab === 'Text' ? (
+      {tab === 'Random' || tab === 'Text' || tab === 'upi' ? (
         <div className="generator-container">
           <section className="app-input-generator">
             {tab === 'Random' && (
@@ -433,6 +451,14 @@ export const RandomQrCode = () => {
               </div>
             )}
             {tab === 'Text' && (
+              <TextFormTextarea
+                className="input-wrapper-text"
+                value={input}
+                placeholder="Enter your value"
+                onChange={setInput}
+              />
+            )}
+            {tab === 'upi' && (
               <TextFormTextarea
                 className="input-wrapper-text"
                 value={input}
