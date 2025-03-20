@@ -124,6 +124,18 @@
   justify-content: center;
 }
 
+.upi-container {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+}
+
+.input-group-upi {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 @media only screen and (max-width: 991px) {
   .single-app-container .app-input-container {
     width: 90%;

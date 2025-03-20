@@ -22,6 +22,7 @@ const keywords = [
   'generate random qr code',
   'random qr codes to scan',
   'random qr code maker',
+  'upi qr code generator',
 ];
 
 const optionsSize = [
@@ -48,6 +49,12 @@ export const RandomQrCode = () => {
   const [size, setSize] = useState('256');
   const [level, setLevel] = useState('L');
   const [mode, setMode] = useState('string');
+  const [username, setUsername] = useState(''); // Username part of UPI ID
+  const [upiProvider, setUpiProvider] = useState(''); // Default provider
+  const [amount, setAmount] = useState('');
+  const [name, setName] = useState('');
+  const [validForm, setValidForm] = useState(false);
+  const [invalidForm, setInvalidForm] = useState(false);
   const svgRef = useRef();
 
   useEffect(() => {
@@ -174,10 +181,15 @@ export const RandomQrCode = () => {
   };
 
   const generateUpiLink = () => {
-    if (!upiId) return '';
-    let upiLink = `upi://pay?pa=${upiId}`;
-    if (amount) upiLink += `&am=${amount}`;
-    if (name) upiLink += `&pn=${name}`;
+    if (!username || !upiProvider) return ''; // Ensure both fields are filled
+
+    let upiLink = `upi://pay?pa=${encodeURIComponent(
+      username,
+    )}@${encodeURIComponent(upiProvider)}`;
+
+    if (amount) upiLink += `&am=${encodeURIComponent(amount)}`;
+    if (name) upiLink += `&pn=${encodeURIComponent(name)}`;
+
     return upiLink;
   };
 
@@ -235,7 +247,14 @@ export const RandomQrCode = () => {
       setQrCode(input);
       // setInput('');
     } else if (tab === 'upi') {
-      setQrCode(input);
+      if (!username || !upiProvider) {
+        setInvalidForm(true);
+        setValidForm(false);
+      } else {
+        setQrCode(generateUpiLink());
+        setInvalidForm(false);
+        setValidForm(true);
+      }
     }
   };
 
@@ -459,12 +478,34 @@ export const RandomQrCode = () => {
               />
             )}
             {tab === 'upi' && (
-              <TextFormTextarea
-                className="input-wrapper-text"
-                value={input}
-                placeholder="Enter your value"
-                onChange={setInput}
-              />
+              <div className="upi-container">
+                <div className="input-group-upi">
+                  <TextFormInput
+                    value={username}
+                    placeholder="cashlessconsumer"
+                    onChange={setUsername}
+                  />
+                  <span>@</span>
+                  <TextFormInput
+                    value={upiProvider}
+                    placeholder="cnrb"
+                    onChange={setUpiProvider}
+                  />
+                </div>
+                <TextFormInput
+                  value={name}
+                  placeholder="Srikanth"
+                  onChange={setName}
+                />
+                <TextFormInput
+                  value={amount}
+                  placeholder="10"
+                  onChange={setAmount}
+                />
+                {invalidForm && (
+                  <p className="error-message">Form is not valid</p>
+                )}
+              </div>
             )}
           </section>
           <section className="app-result-generator">
