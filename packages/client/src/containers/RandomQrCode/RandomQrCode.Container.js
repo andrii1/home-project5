@@ -38,6 +38,15 @@ const optionsLevel = [
   { label: 'Level H', value: 'H' },
 ];
 
+const tabs = [
+  { value: 'Random code', icon: <QrCode size={14} /> },
+  { value: '3 random codes', icon: <Dice3 size={14} /> },
+  { value: '5 random codes', icon: <Dice5 size={14} /> },
+  { value: 'Random', icon: <Dices size={14} /> },
+  { value: 'Text', icon: <Text size={14} /> },
+  { value: 'UPI', icon: <ScanQrCode size={14} /> },
+];
+
 export const RandomQrCode = () => {
   const [input, setInput] = useState('');
   const [qrCode, setQrCode] = useState('');
@@ -309,54 +318,16 @@ export const RandomQrCode = () => {
       </header>
       <section className="tab-group">
         <div className="tab-group">
-          <Button
-            tertiary={tab === 'Random code'}
-            secondary={tab !== 'Random code'}
-            label="Random code"
-            className="tab"
-            onClick={() => setTab('Random code')}
-            icon={<QrCode size={14} />}
-          />
-          <Button
-            tertiary={tab === '3 random codes'}
-            secondary={tab !== '3 random codes'}
-            label="3 random codes"
-            className="tab"
-            onClick={() => setTab('3 random codes')}
-            icon={<Dice3 size={14} />}
-          />
-          <Button
-            tertiary={tab === '5 random codes'}
-            secondary={tab !== '5 random codes'}
-            label="5 random codes"
-            className="tab"
-            onClick={() => setTab('5 random codes')}
-            icon={<Dice5 size={14} />}
-          />
-          <Button
-            tertiary={tab === 'Random'}
-            secondary={tab !== 'Random'}
-            label="Random"
-            className="tab"
-            onClick={() => setTab('Random')}
-            icon={<Dices size={14} />}
-          />
-          <Button
-            tertiary={tab === 'Text'}
-            secondary={tab !== 'Text'}
-            label="Text"
-            className="tab"
-            onClick={() => setTab('Text')}
-            icon={<Text size={14} />}
-          />
-          <Button
-            tertiary={tab === 'upi'}
-            secondary={tab !== 'upi'}
-            label="UPI"
-            className="tab"
-            onClick={() => setTab('upi')}
-            icon={<ScanQrCode size={14} />}
-          />
+          {tabs.map((item) => (
+            <Button
+              tertiary={tab === item.value}
+              secondary={tab !== item.value}
+              label={item.value}
+              className="tab"
+              onClick={() => setTab(item.value)}
+              icon={item.icon}
+            />
+          ))}
         </div>
       </section>
       {tab === 'Random code' ||
@@ -401,7 +372,7 @@ export const RandomQrCode = () => {
           <Button onClick={handleGenerateQrCode} primary label="Regenerate" />
         </section>
       ) : null}
-      {tab === 'Random' || tab === 'Text' || tab === 'upi' ? (
+      {tab === 'Random' || tab === 'Text' || tab === 'UPI' ? (
         <div className="generator-container">
           <section className="app-input-generator">
             {tab === 'Random' && (
@@ -477,7 +448,7 @@ export const RandomQrCode = () => {
                 onChange={setInput}
               />
             )}
-            {tab === 'upi' && (
+            {tab === 'UPI' && (
               <div className="upi-container">
                 <div className="input-group-upi">
                   <TextFormInput
