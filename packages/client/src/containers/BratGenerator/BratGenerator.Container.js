@@ -1,8 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import html2canvas from 'html2canvas';
 
 import './BratGenerator.Style.css';
 import { Button } from '../../components/Button/Button.component';
@@ -24,48 +25,50 @@ export const BratGenerator = () => {
   const [loading, setLoading] = useState(false);
   const [color, setColor] = useState('#8acf00');
   const [colorPickerSelected, setColorPickerSelected] = useState(false);
-
-  const fetchData = async (param) => {
-    setLoading(true);
-    try {
-      const response = await fetch(
-        `https://forkify-api.herokuapp.com/api/search?q=${param}`,
-      );
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Failed to fetch');
-      }
-      setRecipesData(data);
-      setError(null);
-
-      // setSearch('');
-    } catch (e) {
-      setError({ message: e.message || 'An error occured' });
-    }
-    setLoading(false);
-  };
-
-  // const handleInput = () => {
-  //   fetchData(input);
-  //   setInput('');
-  // };
-
-  const recipes = recipesData?.recipes.map((recipe) => {
-    return (
-      <CardSimple
-        title={recipe.title}
-        label={recipe.publisher}
-        urlImage={recipe.image_url}
-        urlLabel={recipe.source_url}
-        id={recipe.recipe_id}
-      />
-    );
-  });
+  const bratWrapperRef = useRef();
 
   const handleChangeColor = (colorParam) => {
     setColorPickerSelected(false);
     setColor(colorParam);
+  };
+
+  const downloadPNG = () => {
+    const bratWrapper = bratWrapperRef.current;
+
+    // Set canvas dimensions to 512x512 px
+    const width = 512;
+    const height = 512;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+
+    // Apply blur filter to the background
+    ctx.filter = 'blur(3px)';
+    ctx.fillStyle = color; // Set background color
+    ctx.fillRect(0, 0, width, height); // Draw the background
+
+    // Apply blur to the text (line-height simulation and blur filter)
+    ctx.filter = 'blur(1px)'; // Apply blur to text (adjust as needed)
+    ctx.font = '700 47.7px "Roboto", sans-serif'; // Set font size
+    ctx.textAlign = 'center'; // Align text in the center horizontally
+    ctx.textBaseline = 'middle'; // Align text in the center vertically
+
+    const textX = width / 2; // Center the text horizontally
+    const textY = height / 2; // Center the text vertically
+
+    // Draw the text (apply line height)
+    ctx.fillStyle = 'black'; // Set text color to white
+    ctx.fillText(input, textX, textY);
+
+    // Convert canvas content to PNG image
+    const imgData = canvas.toDataURL('image/png');
+
+    // Create a download link and trigger the download
+    const link = document.createElement('a');
+    link.href = imgData;
+    link.download = 'brat-image.png'; // Set file name
+    link.click();
   };
 
   return (
@@ -106,10 +109,11 @@ export const BratGenerator = () => {
         </div>
       </section>
       <section className="app-result-container">
-        <div className="brat-wrapper">
+        <div className="brat-wrapper" ref={bratWrapperRef}>
           <div className="brat-container" style={{ backgroundColor: color }} />
           <div className="brat-text">{input}</div>
         </div>
+        <Button onClick={downloadPNG} primary label="Download" />
         {/* {loading ? (
           <div>Loading...</div>
         ) : (
