@@ -23,6 +23,7 @@ export const BratGenerator = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [color, setColor] = useState('#8acf00');
+  const [colorPickerSelected, setColorPickerSelected] = useState(false);
 
   const fetchData = async (param) => {
     setLoading(true);
@@ -62,6 +63,11 @@ export const BratGenerator = () => {
     );
   });
 
+  const handleChangeColor = (colorParam) => {
+    setColorPickerSelected(false);
+    setColor(colorParam);
+  };
+
   return (
     <main className="single-app-container">
       <Helmet>
@@ -82,11 +88,19 @@ export const BratGenerator = () => {
             {defaultColors.map((item) => (
               <button
                 type="button"
-                className="color-input"
+                className={`color-input ${item === color && 'selected'}`}
                 style={{ backgroundColor: item }}
-                onClick={() => setColor(item)}
+                onClick={() => handleChangeColor(item)}
               />
             ))}
+            <input
+              type="color"
+              className={`color-picker ${colorPickerSelected && 'selected'}`}
+              onChange={(event) => {
+                setColor(event.target.value);
+                setColorPickerSelected(true);
+              }}
+            />
           </div>
           {/* <Button onClick={handleInput} primary label="Search" /> */}
         </div>

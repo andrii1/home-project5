@@ -36,3 +36,38 @@
   border: 0;
   cursor: pointer;
 }
+
+.color-input.selected {
+  border: 1px solid;
+}
+
+.color-picker {
+  appearance: none; /* Removes default styling */
+  width: 2rem; /* Adjust size */
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+}
+
+/* Remove the default color picker UI (for WebKit browsers like Chrome, Safari) */
+.color-picker::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%;
+}
+
+/* Remove default border in Firefox */
+.color-picker::-moz-color-swatch {
+  border-radius: 50%;
+  border: none;
+}
+
+.color-picker.selected {
+  border: 1px solid;
+}
