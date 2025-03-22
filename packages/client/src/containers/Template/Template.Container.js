@@ -14,7 +14,7 @@ import { capitalize } from '../../utils/capitalize';
 const keywords = [];
 
 export const Template = () => {
-  const [search, setSearch] = useState();
+  const [input, setInput] = useState();
   const [recipesData, setRecipesData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -41,8 +41,8 @@ export const Template = () => {
   };
 
   const handleSearch = () => {
-    fetchData(search);
-    setSearch('');
+    fetchData(input);
+    setInput('');
   };
 
   const recipes = recipesData?.recipes.map((recipe) => {
@@ -69,9 +69,9 @@ export const Template = () => {
       <section className="app-input-container">
         <div className="search-input-container">
           <TextFormInput
-            value={search}
+            value={input}
             placeholder="Find recipes"
-            onChange={setSearch}
+            onChange={setInput}
           />
           <Button onClick={handleSearch} primary label="Search" />
         </div>

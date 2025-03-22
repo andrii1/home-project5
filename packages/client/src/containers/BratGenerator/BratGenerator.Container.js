@@ -15,7 +15,7 @@ import TextFormTextarea from '../../components/Input/TextFormTextarea.component'
 const keywords = [];
 
 export const BratGenerator = () => {
-  const [search, setSearch] = useState();
+  const [input, setInput] = useState();
   const [recipesData, setRecipesData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -41,10 +41,10 @@ export const BratGenerator = () => {
     setLoading(false);
   };
 
-  const handleSearch = () => {
-    fetchData(search);
-    setSearch('');
-  };
+  // const handleInput = () => {
+  //   fetchData(input);
+  //   setInput('');
+  // };
 
   const recipes = recipesData?.recipes.map((recipe) => {
     return (
@@ -70,17 +70,17 @@ export const BratGenerator = () => {
       <section className="app-input-container">
         <div className="search-input-container">
           <TextFormTextarea
-            value={search}
+            value={input}
             placeholder="Enter text..."
-            onChange={setSearch}
+            onChange={setInput}
           />
-          <Button onClick={handleSearch} primary label="Search" />
+          {/* <Button onClick={handleInput} primary label="Search" /> */}
         </div>
       </section>
       <section className="app-result-container">
         <div className="brat-wrapper">
           <div className="brat-container" />
-          <div className="brat-text">Brat Text</div>
+          <div className="brat-text">{input}</div>
         </div>
         {/* {loading ? (
           <div>Loading...</div>
