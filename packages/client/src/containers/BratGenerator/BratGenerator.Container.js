@@ -11,14 +11,18 @@ import { CardSimple } from '../../components/CardSimple/CardSimple.component';
 import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 import TextFormTextarea from '../../components/Input/TextFormTextarea.component';
+import { setAnalyticsCollectionEnabled } from 'firebase/analytics';
 
 const keywords = [];
+
+const defaultColors = ['#8acf00', '#3498db', '#e74c3c', '#f39c12', '#9b59b6'];
 
 export const BratGenerator = () => {
   const [input, setInput] = useState();
   const [recipesData, setRecipesData] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState('#8acf00');
 
   const fetchData = async (param) => {
     setLoading(true);
@@ -74,12 +78,22 @@ export const BratGenerator = () => {
             placeholder="Enter text..."
             onChange={setInput}
           />
+          <div className="color-group">
+            {defaultColors.map((item) => (
+              <button
+                type="button"
+                className="color-input"
+                style={{ backgroundColor: item }}
+                onClick={() => setColor(item)}
+              />
+            ))}
+          </div>
           {/* <Button onClick={handleInput} primary label="Search" /> */}
         </div>
       </section>
       <section className="app-result-container">
         <div className="brat-wrapper">
-          <div className="brat-container" />
+          <div className="brat-container" style={{ backgroundColor: color }} />
           <div className="brat-text">{input}</div>
         </div>
         {/* {loading ? (

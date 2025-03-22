@@ -20,9 +20,19 @@
   width: 90%;
   word-wrap: break-word;
   line-height: 1.2;
-
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+.color-group {
+  display: flex;
+  gap: 0.5rem;
+}
+.color-input {
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  cursor: pointer;
 }
