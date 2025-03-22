@@ -225,4 +225,8 @@ export const TOOLS = [
     title: 'Name generator',
     url: 'name-generator',
   },
+  {
+    title: 'Brat generator',
+    url: 'brat-generator',
+  },
 ];

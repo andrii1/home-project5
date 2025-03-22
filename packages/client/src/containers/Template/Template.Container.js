@@ -61,7 +61,10 @@ export const Template = () => {
     <main className="single-app-container">
       <Helmet>
         <title>Title</title>
-        <meta name="description" content="decsription" />
+        <meta
+          name="description"
+          content={keywords.length > 0 && keywords.join(', ')}
+        />
       </Helmet>
       <header className="hero">
         <h1 className="hero-header">Recipes app</h1>

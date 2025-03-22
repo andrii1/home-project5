@@ -31,6 +31,7 @@ export default (
     <Route path="/character-headcanon-generator" />
     <Route path="/name-generator" />
     <Route path="/name-generator/:tabParam" />
+    <Route path="/brat-generator" />
     {/* <Route exact path="/apps/:id" />
     <Route exact path="/apps/topic/:topicIdParam" />
     <Route exact path="/apps/category/:categoryIdParam" /> */}

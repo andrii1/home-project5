@@ -71,3 +71,9 @@
 .color-picker.selected {
   border: 1px solid;
 }
+
+.guide-container {
+  text-align: justify;
+  width: 80%;
+  margin: 0 auto;
+}
