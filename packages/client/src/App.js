@@ -40,6 +40,7 @@ import { NumberGeneratorDigits } from './containers/NumberGeneratorDigits/Number
 import { CharacterHeadcanonGenerator } from './containers/CharacterHeadcanonGenerator/CharacterHeadcanonGenerator.Container';
 import { GeneratorName } from './containers/GeneratorName/GeneratorName.Container';
 import { GeneratorNameAdvanced } from './containers/GeneratorNameAdvanced/GeneratorNameAdvanced.Container';
+import { BratGenerator } from './containers/BratGenerator/BratGenerator.Container';
 
 function App() {
   return (
@@ -122,6 +123,7 @@ function App() {
               path="/name-generator/:tabParam"
               element={<GeneratorName />}
             />
+            <Route path="/brat-generator" element={<BratGenerator />} />
             {/* <Route path="/name-generator" element={<GeneratorNameAdvanced />} /> */}
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />

@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import getStripe from '../../lib/getStripe';
+import getStripe from '../../utils/getStripe';
 import { Helmet } from 'react-helmet';
 import { CSVLink } from 'react-csv';
 import { Button, TablePagination } from '@mui/material';
