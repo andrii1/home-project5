@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import html2canvas from 'html2canvas';
 
 import './BratGenerator.Style.css';
 import { Button } from '../../components/Button/Button.component';
