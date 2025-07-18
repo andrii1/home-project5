@@ -33,8 +33,8 @@ const api = new GhostAdminAPI({
 // }
 
 // Credentials (from .env)
-const USER_UID = process.env.USER_UID_MAH_LOCAL;
-const API_PATH = process.env.API_PATH_MAH_LOCAL;
+const USER_UID = process.env.USER_UID_MAH_PROD;
+const API_PATH = process.env.API_PATH_MAH_PROD;
 // WordPress Credentials (from .env)
 
 // fetch helpers
