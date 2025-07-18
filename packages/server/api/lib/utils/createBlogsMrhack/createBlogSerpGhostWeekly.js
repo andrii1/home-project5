@@ -22,15 +22,13 @@ const api = new GhostAdminAPI({
   version: 'v4.0', // or whatever version your Ghost install uses
 });
 
-// const today = new Date();
-// const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+const today = new Date();
+const isSunday = today.getDay() === 0; // 0 = Sunday
 
-// const allowedDays = [0, 3, 5]; // Sunday, Wednesday, Friday
-
-// if (!allowedDays.includes(todayDay)) {
-//   console.log('Not an allowed day, skipping job.');
-//   process.exit(0);
-// }
+if (!isSunday) {
+  console.log('Not Sunday, skipping weekly job.');
+  process.exit(0);
+}
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
