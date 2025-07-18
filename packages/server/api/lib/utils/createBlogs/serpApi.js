@@ -18,10 +18,17 @@ const excludeList = [
   'state',
 ];
 // const seedList = ["maker", "template", "generator", "calculator", "tool"];
-const seedList = ['maker', 'template'];
+const seedList = [
+  'maker',
+  'template',
+  'generator',
+  'examples',
+  'calculator',
+  'converter',
+];
 
 const list =
-  '*Maker, template, generator, ideas, examples, design, creator, generator online, template generator, file generator, samples, calculator, tool, app, converter*';
+  'Maker, template, generator, ideas, examples, design, creator, generator online, template generator, file generator, samples, calculator, tool, app, converter';
 
 async function fetchSerpApi(seedParam) {
   const params = new URLSearchParams({
@@ -48,7 +55,7 @@ async function fetchSerpApi(seedParam) {
 
 const useAllQueries = async () => {
   let allQueries = [];
-  for (seed of seedList) {
+  for (const seed of seedList) {
     const result = await fetchSerpApi(seed);
     allQueries.push(...result);
   }

@@ -17,8 +17,8 @@ const openai = new OpenAI({
 const fetchSerpApi = require('./serpApi');
 
 // Credentials (from .env)
-const USER_UID = process.env.USER_UID_MAH_LOCAL;
-const API_PATH = process.env.API_PATH_MAH_LOCAL;
+const USER_UID = process.env.USER_UID_MAH_PROD;
+const API_PATH = process.env.API_PATH_MAH_PROD;
 // WordPress Credentials (from .env)
 
 const WP_URL_POSTS = process.env.WP_URL_POSTS_TB;
@@ -50,7 +50,7 @@ async function insertQuery(queryObj) {
 async function createBlogContent(queryParam) {
   // Generate a short description using OpenAI
 
-  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. At least 1300 words.`;
+  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. At least 1300 words. Output with html tags, no markdown, to insert in Wordpress.`;
   // console.log(prompt);
 
   const completion = await openai.chat.completions.create({
@@ -109,17 +109,18 @@ const createPostMain = async () => {
     });
 
     if (newQuery.existing) {
-      console.log('Duplicate query skipped:', text);
+      console.log('Duplicate query skipped:', query);
       continue;
     }
 
     const blogTitle = capitalizeFirstWord(query);
-    const blogContent = createBlogContent(query);
+    const blogContent = await createBlogContent(query);
 
     const postData = {
       title: blogTitle,
       content: blogContent,
       status: 'publish',
+      categories: [91],
     };
 
     createPost(postData);
