@@ -18,26 +18,18 @@ const excludeList = [
   'state',
 ];
 // const seedList = ["maker", "template", "generator", "calculator", "tool"];
-const seedList = [
-  'maker',
-  'template',
-  'generator',
-  'creator',
-  'examples',
-  'calculator',
-  'converter',
-];
+const seedList = ['app', 'error', 'website', 'app iphone', 'widget'];
 
 const list =
   'Maker, template, generator, ideas, examples, design, creator, generator online, template generator, file generator, samples, calculator, tool, app, converter';
 
-async function fetchSerpApi(seedParam) {
+async function fetchSerpApi(seedParam, periodParam) {
   const params = new URLSearchParams({
     engine: 'google_trends',
     q: seedParam,
     hl: 'en',
     geo: 'US',
-    date: 'now 1-d',
+    date: `now ${periodParam}-d`,
     data_type: 'RELATED_QUERIES',
     api_key: SERP_API_KEY,
   });
@@ -54,10 +46,10 @@ async function fetchSerpApi(seedParam) {
   }
 }
 
-const useAllQueries = async () => {
+const useAllQueries = async (period) => {
   const allQueries = [];
   for (const seed of seedList) {
-    const result = await fetchSerpApi(seed);
+    const result = await fetchSerpApi(seed, period);
     allQueries.push(...result);
   }
   console.log(allQueries);
@@ -65,5 +57,5 @@ const useAllQueries = async () => {
   return allQueries;
 };
 
-useAllQueries().catch(console.error);
+// useAllQueries().catch(console.error);
 module.exports = useAllQueries;

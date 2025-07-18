@@ -39,6 +39,42 @@ const createQuery = async (token, body) => {
   }
 };
 
+const createQueryMrhack = async (token, body) => {
+  try {
+    const userUid = token.split(' ')[1];
+    const user = (await knex('users').where({ uid: userUid }))[0];
+    if (!user) {
+      throw new HttpError('User not found', 401);
+    }
+
+    // Optional: check for existing tag
+    const existing = await knex('queriesMrhack')
+      .whereRaw('LOWER(title) = ?', [body.title.toLowerCase()])
+      .first();
+
+    if (existing) {
+      return {
+        successful: true,
+        existing: true,
+        queryId: existing.id,
+      };
+    }
+
+    const [queryId] = await knex('queriesMrhack').insert({
+      title: body.title.toLowerCase(),
+    });
+
+    return {
+      successful: true,
+      queryId,
+      queryTitle: body.title,
+    };
+  } catch (error) {
+    return error.message;
+  }
+};
+
 module.exports = {
   createQuery,
+  createQueryMrhack,
 };

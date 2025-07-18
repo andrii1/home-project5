@@ -13,15 +13,27 @@ const queriesController = require('../controllers/queries.controller');
 
 router.post('/', (req, res) => {
   const { token } = req.headers;
-  queriesController
-    .createQuery(token, req.body)
-    .then((result) => res.json(result))
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
+  if (req.query.table === 'queriesMrhack') {
+    queriesController
+      .createQueryMrhack(token, req.body)
+      .then((result) => res.json(result))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
 
-      res.status(400).send('Bad request').end();
-    });
+        res.status(400).send('Bad request').end();
+      });
+  } else {
+    queriesController
+      .createQuery(token, req.body)
+      .then((result) => res.json(result))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+
+        res.status(400).send('Bad request').end();
+      });
+  }
 });
 
 module.exports = router;
