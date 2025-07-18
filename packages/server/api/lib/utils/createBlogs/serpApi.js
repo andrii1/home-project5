@@ -22,6 +22,7 @@ const seedList = [
   'maker',
   'template',
   'generator',
+  'creator',
   'examples',
   'calculator',
   'converter',
@@ -54,7 +55,7 @@ async function fetchSerpApi(seedParam) {
 }
 
 const useAllQueries = async () => {
-  let allQueries = [];
+  const allQueries = [];
   for (const seed of seedList) {
     const result = await fetchSerpApi(seed);
     allQueries.push(...result);
