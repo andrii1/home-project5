@@ -20,9 +20,6 @@ const excludeList = [
 // const seedList = ["maker", "template", "generator", "calculator", "tool"];
 const seedList = ['app', 'error', 'website', 'app iphone', 'widget'];
 
-const list =
-  'Maker, template, generator, ideas, examples, design, creator, generator online, template generator, file generator, samples, calculator, tool, app, converter';
-
 async function fetchSerpApi(seedParam, periodParam) {
   const params = new URLSearchParams({
     engine: 'google_trends',
