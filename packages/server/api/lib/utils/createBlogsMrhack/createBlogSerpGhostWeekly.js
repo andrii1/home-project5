@@ -52,7 +52,7 @@ async function insertQuery(queryObj) {
 async function createBlogContent(queryParam) {
   // Generate a short description using OpenAI
 
-  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. At least 1300 words. Output with html tags, no markdown, to insert in Ghost CMS.`;
+  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. At least 1300 words. Do not include published by [Your Name] or Published on [Date]. Output with html tags, no markdown, to insert in Ghost CMS.`;
   // console.log(prompt);
 
   const completion = await openai.chat.completions.create({
