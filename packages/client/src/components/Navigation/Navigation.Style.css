@@ -290,7 +290,7 @@ ul li,
 }
 
 .img-logo {
-  max-width: 14rem;
+  /* max-width: 14rem; */
   /* padding-top: 1rem; */
 }
 
@@ -344,6 +344,9 @@ ul li,
 
 .div-logout {
   border-top: 1px solid #ddd;
+}
+.main-logo {
+  max-width: 4.5rem;
 }
 
 @media only screen and (max-width: 1150px) {

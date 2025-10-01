@@ -378,7 +378,7 @@ export const Navigation = () => {
           <ul>
             <li>
               <NavLink to="/" className="nav-link logo-link">
-                <img src={logo} alt="logo" className="img-logo" />
+                <img src={logo} alt="logo" className="img-logo main-logo" />
               </NavLink>
             </li>
             <li className="navigation-search">
