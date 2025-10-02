@@ -15,7 +15,12 @@ router.get('/', (req, res, next) => {
   const { token } = req.headers;
   // TO DO : once we will add authentication I will update it
   queriesController
-    .getQueries(token)
+    .getQueries({
+      token,
+      days: req.query.days,
+      column: req.query.column,
+      direction: req.query.direction,
+    })
     .then((result) => res.json(result))
     .catch(next);
 });

@@ -72,6 +72,9 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
       .map((item) => ({
         title: item.query,
         value: normalizeValue(item.value),
+        source: `${seedParam}, ${periodParam}${
+          categoryParam ? `, ${categoryParam}` : ''
+        }`,
       }))
       .filter(
         (item) =>

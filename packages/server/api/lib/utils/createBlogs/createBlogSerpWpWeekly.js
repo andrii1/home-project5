@@ -112,10 +112,7 @@ const createPostMain = async () => {
   console.log('queries', queries);
 
   for (const query of queries) {
-    const newQuery = await insertQuery({
-      title: query.title,
-      value: query.value,
-    });
+    const newQuery = await insertQuery(query);
 
     if (newQuery.existing) {
       console.log('Duplicate query skipped:', query.title);

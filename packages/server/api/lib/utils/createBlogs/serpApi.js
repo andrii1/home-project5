@@ -50,6 +50,7 @@ async function fetchSerpApi(seedParam, periodParam) {
       .map((item) => ({
         title: item.query,
         value: normalizeValue(item.value), // relative score
+        source: `${seedParam}, ${periodParam}`,
       }))
       .filter(
         (item) =>

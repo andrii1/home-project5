@@ -68,6 +68,7 @@ const createQuery = async (token, body) => {
       title: body.title.toLowerCase(),
       value: body.value,
       status: false,
+      source: body.source,
     });
 
     return {
