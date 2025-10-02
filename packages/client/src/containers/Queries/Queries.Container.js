@@ -47,13 +47,10 @@ export const Queries = () => {
     });
 
     // Days
-    console.log(days, 'days');
-
     if (days) {
       params.append('days', days);
     }
     const url = `${apiURL()}/queriesMrhack?${params.toString()}`;
-    console.log(url);
 
     setLoading(true);
 
