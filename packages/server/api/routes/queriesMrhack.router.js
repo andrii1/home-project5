@@ -15,7 +15,7 @@ router.get('/', (req, res, next) => {
   const { token } = req.headers;
   // TO DO : once we will add authentication I will update it
   queriesMrhackController
-    .getQueries(token)
+    .getQueries({ token, days: req.query.days })
     .then((result) => res.json(result))
     .catch(next);
 });

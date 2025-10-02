@@ -13,8 +13,19 @@ import { capitalize } from '../../utils/capitalize';
 import { apiURL } from '../../apiURL';
 import { useUserContext } from '../../userContext';
 import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
+import DropDownView from '../../components/CategoriesListDropDown/CategoriesListDropDown.component';
 
 const keywords = [];
+
+const daysOptions = [
+  { label: '1 day', value: 1 },
+  { label: '7 days', value: 7 },
+  { label: '14 days', value: 14 },
+  { label: '1 month', value: 30 },
+  { label: '3 months', value: 90 },
+  { label: '6 months', value: 180 },
+  { label: '1 year', value: 365 },
+];
 
 export const Queries = () => {
   const { user, loading: userLoading } = useUserContext();
@@ -22,10 +33,19 @@ export const Queries = () => {
   const [queries, setQueries] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
+  const [days, setDays] = useState('7');
   const navigate = useNavigate();
 
   const fetchQueries = useCallback(async () => {
-    const url = `${apiURL()}/queriesMrhack`;
+    const params = new URLSearchParams({
+      // column: orderBy.column,
+      // direction: orderBy.direction,
+    });
+    // Days
+    if (days.length > 0) {
+      params.append('days', days);
+    }
+    const url = `${apiURL()}/queriesMrhack?${params.toString()}`;
     setLoading(true);
 
     try {
@@ -124,6 +144,13 @@ export const Queries = () => {
             value={input}
             placeholder="Find recipes"
             onChange={setInput}
+          />
+          <DropDownView
+            selectedOptionValue={days}
+            className="no-line-height"
+            options={daysOptions}
+            onSelect={(option) => setDays(option.value)}
+            showFilterIcon={false}
           />
           <Button onClick={handleSearch} primary label="Search" />
         </div>

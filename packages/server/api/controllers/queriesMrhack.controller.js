@@ -7,8 +7,7 @@ require('dotenv').config();
 
 const USER_UID = process.env.USER_UID_MAH_PROD;
 
-// get by user-id
-const getQueries = async (token) => {
+const getQueries = async ({ token, days = null }) => {
   const userUid = token.split(' ')[1];
   const correctUser = userUid === USER_UID;
   // const user = (await knex('users').where({ uid: userUid }))[0];
@@ -22,7 +21,18 @@ const getQueries = async (token) => {
   }
 
   try {
-    const queries = await knex('queriesMrhack');
+    let queryBuilder = knex('queriesMrhack');
+
+    if (days) {
+      // Filter queries from the last X days
+      queryBuilder = queryBuilder.where(
+        'created_at',
+        '>=',
+        knex.raw(`NOW() - INTERVAL ? DAY`, [days]),
+      );
+    }
+
+    const queries = await queryBuilder;
 
     return queries;
   } catch (error) {
