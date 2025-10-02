@@ -3,6 +3,32 @@ Can be deleted as soon as the first real controller is added. */
 
 const knex = require('../../config/db');
 const HttpError = require('../lib/utils/http-error');
+require('dotenv').config();
+
+const USER_UID = process.env.USER_UID_MAH_PROD;
+
+// get by user-id
+const getQueries = async (token) => {
+  const userUid = token.split(' ')[1];
+  const correctUser = userUid === USER_UID;
+  // const user = (await knex('users').where({ uid: userUid }))[0];
+
+  if (!token) {
+    throw new HttpError('There are not users', 401);
+  }
+
+  if (!correctUser) {
+    throw new HttpError('Access denined for user', 401);
+  }
+
+  try {
+    const queries = await knex('queriesMrhack');
+
+    return queries;
+  } catch (error) {
+    return error.message;
+  }
+};
 
 const createQuery = async (token, body) => {
   try {
@@ -13,7 +39,7 @@ const createQuery = async (token, body) => {
     }
 
     // Optional: check for existing tag
-    const existing = await knex('queries')
+    const existing = await knex('queriesMrhack')
       .whereRaw('LOWER(title) = ?', [body.title.toLowerCase()])
       .first();
 
@@ -25,8 +51,10 @@ const createQuery = async (token, body) => {
       };
     }
 
-    const [queryId] = await knex('queries').insert({
+    const [queryId] = await knex('queriesMrhack').insert({
       title: body.title.toLowerCase(),
+      value: body.value,
+      status: false,
     });
 
     return {
@@ -34,36 +62,6 @@ const createQuery = async (token, body) => {
       queryId,
       queryTitle: body.title,
     };
-  } catch (error) {
-    return error.message;
-  }
-};
-
-// get by user-id
-const getQueries = async (token) => {
-  const userUid = token.split(' ')[1];
-  const user = (await knex('users').where({ uid: userUid }))[0];
-
-  if (!token) {
-    throw new HttpError('There are not users', 401);
-  }
-
-  try {
-    const favorites = await knex('apps')
-      .select('apps.*', 'favorites.id as favoritesID')
-      .leftJoin('favorites', function () {
-        this.on('apps.id', '=', 'favorites.app_id');
-      })
-      .where('favorites.user_id', '=', `${user.id}`);
-
-    if (favorites.length === 0) {
-      throw new HttpError(
-        `There are no favorites available with this user`,
-        404,
-      );
-    }
-
-    return favorites;
   } catch (error) {
     return error.message;
   }

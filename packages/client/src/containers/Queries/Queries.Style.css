@@ -1,0 +1,17 @@
+.queries-container table {
+  width: 90%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+.queries-container th,
+.queries-container td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+}
+.queries-container th {
+  background-color: #f4f4f4;
+}
+.queries-container tr:nth-child(even) {
+  background-color: #fafafa;
+}

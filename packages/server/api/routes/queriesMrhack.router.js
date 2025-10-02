@@ -9,7 +9,7 @@ const router = express.Router({ mergeParams: true });
 // router.use('/:id/apps', topicAppsRouter);
 
 // controllers
-const queriesController = require('../controllers/queries.controller');
+const queriesController = require('../controllers/queriesMrhack.controller');
 
 router.get('/', (req, res, next) => {
   const { token } = req.headers;

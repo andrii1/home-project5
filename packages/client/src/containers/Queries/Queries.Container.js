@@ -12,6 +12,7 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 import { apiURL } from '../../apiURL';
 import { useUserContext } from '../../userContext';
+import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
 
 const keywords = [];
 
@@ -57,14 +58,19 @@ export const Queries = () => {
     setInput('');
   };
 
+  const displayValue = (value) => {
+    if (Math.trunc(value) === 100) return 'Breakout';
+    return `+${Math.round(value * 100 * 100) / 100}%`;
+  };
+
   const queriesList = queries?.map((query) => {
     return (
-      <li>
-        <div>{query.title}</div>
-        <div>{query.value}</div>
-        <div>{query.created_at}</div>
-        <div>{query.status}</div>
-      </li>
+      <tr>
+        <td>{query.title}</td>
+        <td>{displayValue(query.value)}</td>
+        <td>{getDateFromTimestamp(query.created_at)}</td>
+        <td>{query.status}</td>
+      </tr>
     );
   });
 
@@ -73,8 +79,10 @@ export const Queries = () => {
     if (!user) return navigate('/');
   }, [user, userLoading, navigate]);
 
+  console.log(queries);
+
   return (
-    <main className="single-app-container">
+    <main className="single-app-container queries-container">
       <Helmet>
         <title>Title</title>
         <meta
@@ -83,7 +91,7 @@ export const Queries = () => {
         />
       </Helmet>
       <header className="hero">
-        <h1 className="hero-header">Recipes app</h1>
+        <h1 className="hero-header">Queries</h1>
       </header>
       <section className="app-input-container">
         <div className="search-input-container">
@@ -102,9 +110,17 @@ export const Queries = () => {
           <>
             {error && <p className="error-message">{error.message}</p>}
             {queries && !error && (
-              <div className="container-cards">
-                <ul>{queriesList}</ul>
-              </div>
+              <table border="1" cellSpacing="0" cellPadding="8">
+                <thead>
+                  <tr>
+                    <th>Query</th>
+                    <th>Value</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>{queriesList}</tbody>
+              </table>
             )}
           </>
         )}
