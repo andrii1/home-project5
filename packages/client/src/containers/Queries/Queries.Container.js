@@ -35,7 +35,7 @@ export const Queries = () => {
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState('7');
   const [orderBy, setOrderBy] = useState({
-    column: 'id',
+    column: 'value',
     direction: 'desc',
   });
   const navigate = useNavigate();
@@ -149,11 +149,11 @@ export const Queries = () => {
       </header>
       <section className="app-input-container">
         <div className="search-input-container">
-          <TextFormInput
+          {/* <TextFormInput
             value={input}
             placeholder="Find recipes"
             onChange={setInput}
-          />
+          /> */}
           <DropDownView
             selectedOptionValue={days}
             className="no-line-height"
@@ -161,7 +161,7 @@ export const Queries = () => {
             onSelect={(option) => setDays(option.value)}
             showFilterIcon={false}
           />
-          <Button onClick={handleSearch} primary label="Search" />
+          {/* <Button onClick={handleSearch} primary label="Search" /> */}
         </div>
       </section>
       <section className="app-result-container">
