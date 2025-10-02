@@ -67,14 +67,15 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
   try {
     const response = await fetch(`https://serpapi.com/search?${params}`);
     const data = await response.json();
-    const filteredData = data.related_queries.rising
+    const rising = data.related_queries?.rising || [];
+    const filteredData = rising
       .map((item) => ({
         title: item.query,
-        value: normalizeValue(item.value), // relative score
+        value: normalizeValue(item.value),
       }))
       .filter(
         (item) =>
-          !excludeList.some((word) => item.query.toLowerCase().includes(word)),
+          !excludeList.some((word) => item.title.toLowerCase().includes(word)),
       );
 
     console.log(filteredData);
