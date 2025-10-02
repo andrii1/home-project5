@@ -41,6 +41,7 @@ import { CharacterHeadcanonGenerator } from './containers/CharacterHeadcanonGene
 import { GeneratorName } from './containers/GeneratorName/GeneratorName.Container';
 import { GeneratorNameAdvanced } from './containers/GeneratorNameAdvanced/GeneratorNameAdvanced.Container';
 import { BratGenerator } from './containers/BratGenerator/BratGenerator.Container';
+import { Queries } from './containers/Queries/Queries.Container';
 
 function App() {
   return (
@@ -125,6 +126,7 @@ function App() {
             />
             <Route path="/brat-generator" element={<BratGenerator />} />
             {/* <Route path="/name-generator" element={<GeneratorNameAdvanced />} /> */}
+            <Route path="/queries" element={<Queries />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

@@ -25,7 +25,7 @@ const api = new GhostAdminAPI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 3, 5]; // Sunday, Wednesday, Friday
+const allowedDays = [0, 3, 4, 5]; // Sunday, Wednesday, Friday
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -87,16 +87,17 @@ const createPostMain = async () => {
 
   for (const query of queries) {
     const newQuery = await insertQuery({
-      title: query,
+      title: query.title,
+      value: query.value,
     });
 
     if (newQuery.existing) {
-      console.log('Duplicate query skipped:', query);
+      console.log('Duplicate query skipped:', query.title);
       continue;
     }
 
-    const blogTitle = capitalizeFirstWord(query);
-    const blogContent = await createBlogContent(query);
+    const blogTitle = capitalizeFirstWord(query.title);
+    const blogContent = await createBlogContent(query.title);
 
     const postData = {
       title: blogTitle,

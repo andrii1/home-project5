@@ -1,0 +1,114 @@
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable jsx-a11y/control-has-associated-label */
+import React, { useState, useEffect, useCallback } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+
+import './Queries.Style.css';
+import { Button } from '../../components/Button/Button.component';
+import { Badge } from '../../components/Badge/Badge.component';
+import { CardSimple } from '../../components/CardSimple/CardSimple.component';
+import TextFormInput from '../../components/Input/TextFormInput.component';
+import { capitalize } from '../../utils/capitalize';
+import { apiURL } from '../../apiURL';
+import { useUserContext } from '../../userContext';
+
+const keywords = [];
+
+export const Queries = () => {
+  const { user, loading: userLoading } = useUserContext();
+  const [input, setInput] = useState();
+  const [queries, setQueries] = useState();
+  const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const fetchData = useCallback(async () => {
+    const url = `${apiURL()}/queriesMrhack`;
+    setLoading(true);
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          token: `token ${user?.uid}`,
+        },
+      });
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch');
+      }
+      setQueries(data);
+      setError(null);
+
+      // setSearch('');
+    } catch (e) {
+      setError({ message: e.message || 'An error occured' });
+    }
+    setLoading(false);
+  }, [user]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const handleSearch = () => {
+    fetchData(input);
+    setInput('');
+  };
+
+  const queriesList = queries?.map((query) => {
+    return (
+      <li>
+        <div>{query.title}</div>
+        <div>{query.value}</div>
+        <div>{query.created_at}</div>
+        <div>{query.status}</div>
+      </li>
+    );
+  });
+
+  useEffect(() => {
+    if (userLoading) return;
+    if (!user) return navigate('/');
+  }, [user, userLoading, navigate]);
+
+  return (
+    <main className="single-app-container">
+      <Helmet>
+        <title>Title</title>
+        <meta
+          name="description"
+          content={keywords.length > 0 && keywords.join(', ')}
+        />
+      </Helmet>
+      <header className="hero">
+        <h1 className="hero-header">Recipes app</h1>
+      </header>
+      <section className="app-input-container">
+        <div className="search-input-container">
+          <TextFormInput
+            value={input}
+            placeholder="Find recipes"
+            onChange={setInput}
+          />
+          <Button onClick={handleSearch} primary label="Search" />
+        </div>
+      </section>
+      <section className="app-result-container">
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            {error && <p className="error-message">{error.message}</p>}
+            {queries && !error && (
+              <div className="container-cards">
+                <ul>{queriesList}</ul>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </main>
+  );
+};

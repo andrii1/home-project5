@@ -37,7 +37,7 @@ async function fetchSerpApi(seedParam, periodParam) {
     const data = await response.json();
     const filteredData = data.related_queries.rising
       .map((item) => ({
-        query: item.query,
+        title: item.query,
         value: normalizeValue(item.value), // relative score
       }))
       .filter(
