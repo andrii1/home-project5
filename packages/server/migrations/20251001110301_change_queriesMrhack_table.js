@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
   return knex.schema.alterTable('queriesMrhack', (table) => {
-    table.string('value');
+    table.integer('value');
     table.boolean('status').defaultTo('false');
   });
 };

@@ -62,6 +62,8 @@ const createQueryMrhack = async (token, body) => {
 
     const [queryId] = await knex('queriesMrhack').insert({
       title: body.title.toLowerCase(),
+      value: body.value,
+      status: false,
     });
 
     return {

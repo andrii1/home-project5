@@ -4,6 +4,7 @@
 require('dotenv').config();
 
 const { SERP_API_KEY } = process.env;
+const normalizeValue = require('../normalizeValue');
 
 const excludeList = [
   'insurance',
@@ -34,7 +35,15 @@ async function fetchSerpApi(seedParam, periodParam) {
   try {
     const response = await fetch(`https://serpapi.com/search?${params}`);
     const data = await response.json();
-    const filteredData = data.related_queries.rising.map((item) => item.query);
+    const filteredData = data.related_queries.rising
+      .map((item) => ({
+        query: item.query,
+        value: normalizeValue(item.value), // relative score
+      }))
+      .filter(
+        (item) =>
+          !excludeList.some((word) => item.query.toLowerCase().includes(word)),
+      );
 
     console.log(filteredData);
     return filteredData;
