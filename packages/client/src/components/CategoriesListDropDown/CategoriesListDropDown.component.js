@@ -22,11 +22,7 @@ const DropDownView = ({
         : options.find((opt) => String(opt.value) === selectedValue);
 
     // Pass either the raw string or the object.value
-    onSelect?.(
-      typeof selectedOption === 'string'
-        ? selectedOption
-        : selectedOption?.value,
-    );
+    onSelect?.(selectedOption);
   };
 
   const optionList =

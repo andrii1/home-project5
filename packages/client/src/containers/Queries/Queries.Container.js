@@ -34,18 +34,27 @@ export const Queries = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState('7');
+  const [orderBy, setOrderBy] = useState({
+    column: 'id',
+    direction: 'desc',
+  });
   const navigate = useNavigate();
 
   const fetchQueries = useCallback(async () => {
     const params = new URLSearchParams({
-      // column: orderBy.column,
-      // direction: orderBy.direction,
+      column: orderBy.column,
+      direction: orderBy.direction,
     });
+
     // Days
-    if (days.length > 0) {
+    console.log(days, 'days');
+
+    if (days) {
       params.append('days', days);
     }
     const url = `${apiURL()}/queriesMrhack?${params.toString()}`;
+    console.log(url);
+
     setLoading(true);
 
     try {
@@ -67,7 +76,7 @@ export const Queries = () => {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
-  }, [user]);
+  }, [user, days]);
 
   useEffect(() => {
     fetchQueries();
