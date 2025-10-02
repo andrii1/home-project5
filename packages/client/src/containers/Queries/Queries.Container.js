@@ -174,7 +174,27 @@ export const Queries = () => {
               <table border="1" cellSpacing="0" cellPadding="8">
                 <thead>
                   <tr>
-                    <th>Query</th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'title',
+                          direction:
+                            prev.column === 'title' && prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Query
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'title' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'title' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
                     <th
                       onClick={() =>
                         setOrderBy((prev) => ({
@@ -196,8 +216,50 @@ export const Queries = () => {
                           '▲'}
                       </span>
                     </th>
-                    <th>Date</th>
-                    <th>Status</th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'created_at',
+                          direction:
+                            prev.column === 'created_at' &&
+                            prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Date
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'created_at' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'created_at' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'status',
+                          direction:
+                            prev.column === 'status' &&
+                            prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Status
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'status' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'status' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>{queriesList}</tbody>
