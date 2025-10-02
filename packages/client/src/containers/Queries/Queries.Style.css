@@ -15,3 +15,8 @@
 .queries-container tr:nth-child(even) {
   background-color: #fafafa;
 }
+
+.queries-container .line-through {
+  text-decoration: line-through;
+  text-decoration-thickness: 0.05rem;
+}

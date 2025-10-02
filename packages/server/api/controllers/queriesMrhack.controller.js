@@ -67,7 +67,18 @@ const createQuery = async (token, body) => {
   }
 };
 
+const editQuery = async (queryId, updatedQuery) => {
+  if (!queryId) {
+    throw new HttpError('No query', 400);
+  }
+
+  return knex('queriesMrhack').where({ id: queryId }).update({
+    status: updatedQuery.status,
+  });
+};
+
 module.exports = {
   createQuery,
   getQueries,
+  editQuery,
 };

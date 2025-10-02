@@ -9,12 +9,12 @@ const router = express.Router({ mergeParams: true });
 // router.use('/:id/apps', topicAppsRouter);
 
 // controllers
-const queriesController = require('../controllers/queriesMrhack.controller');
+const queriesMrhackController = require('../controllers/queriesMrhack.controller');
 
 router.get('/', (req, res, next) => {
   const { token } = req.headers;
   // TO DO : once we will add authentication I will update it
-  queriesController
+  queriesMrhackController
     .getQueries(token)
     .then((result) => res.json(result))
     .catch(next);
@@ -23,7 +23,7 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res) => {
   const { token } = req.headers;
 
-  queriesController
+  queriesMrhackController
     .createQuery(token, req.body)
     .then((result) => res.json(result))
     .catch((error) => {
@@ -32,6 +32,13 @@ router.post('/', (req, res) => {
 
       res.status(400).send('Bad request').end();
     });
+});
+
+router.patch('/:id', (req, res, next) => {
+  queriesMrhackController
+    .editQuery(req.params.id, req.body)
+    .then((result) => res.json(result))
+    .catch(next);
 });
 
 module.exports = router;

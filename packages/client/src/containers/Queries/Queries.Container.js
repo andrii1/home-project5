@@ -24,7 +24,7 @@ export const Queries = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const fetchData = useCallback(async () => {
+  const fetchQueries = useCallback(async () => {
     const url = `${apiURL()}/queriesMrhack`;
     setLoading(true);
 
@@ -50,11 +50,30 @@ export const Queries = () => {
   }, [user]);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchQueries();
+  }, [fetchQueries]);
+
+  const handleUpdateQuery = (query) => {
+    const updateQuery = async () => {
+      const response = await fetch(`${apiURL()}/queriesMrhack/${query.id} `, {
+        method: 'PATCH',
+        headers: {
+          token: `token ${user?.uid}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status: !query.status }),
+      });
+
+      if (response.ok) {
+        fetchQueries();
+      }
+    };
+
+    updateQuery();
+  };
 
   const handleSearch = () => {
-    fetchData(input);
+    fetchQueries(input);
     setInput('');
   };
 
@@ -66,10 +85,18 @@ export const Queries = () => {
   const queriesList = queries?.map((query) => {
     return (
       <tr>
-        <td>{query.title}</td>
+        <td className={query.status && 'line-through'}>{query.title}</td>
         <td>{displayValue(query.value)}</td>
         <td>{getDateFromTimestamp(query.created_at)}</td>
-        <td>{query.status}</td>
+        <td>
+          <input
+            type="checkbox"
+            checked={query.status}
+            onClick={() => {
+              handleUpdateQuery(query);
+            }}
+          />
+        </td>
       </tr>
     );
   });
@@ -78,8 +105,6 @@ export const Queries = () => {
     if (userLoading) return;
     if (!user) return navigate('/');
   }, [user, userLoading, navigate]);
-
-  console.log(queries);
 
   return (
     <main className="single-app-container queries-container">

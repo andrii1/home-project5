@@ -40,7 +40,7 @@ const API_PATH = process.env.API_PATH_MAH_PROD;
 // fetch helpers
 
 async function insertQuery(queryObj) {
-  const res = await fetch(`${API_PATH}/queries?table=queriesMrhack`, {
+  const res = await fetch(`${API_PATH}/queriesMrhack`, {
     method: 'POST',
     headers: {
       token: `token ${USER_UID}`,
