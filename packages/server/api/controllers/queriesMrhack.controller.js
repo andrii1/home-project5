@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const USER_UID = process.env.USER_UID_MAH_PROD;
 
-const getQueries = async ({ token, days = null }) => {
+const getQueries = async ({ token, days = null, column, direction }) => {
   const userUid = token.split(' ')[1];
   const correctUser = userUid === USER_UID;
   // const user = (await knex('users').where({ uid: userUid }))[0];
@@ -32,7 +32,10 @@ const getQueries = async ({ token, days = null }) => {
       );
     }
 
-    const queries = await queryBuilder;
+    const queries = await queryBuilder.orderBy(
+      column || 'created_at',
+      direction || 'desc',
+    );
 
     return queries;
   } catch (error) {

@@ -76,7 +76,7 @@ export const Queries = () => {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
-  }, [user, days]);
+  }, [orderBy.column, orderBy.direction, days, user?.uid]);
 
   useEffect(() => {
     fetchQueries();
@@ -175,7 +175,27 @@ export const Queries = () => {
                 <thead>
                   <tr>
                     <th>Query</th>
-                    <th>Value</th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'value',
+                          direction:
+                            prev.column === 'value' && prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Value{' '}
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'value' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'value' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
                     <th>Date</th>
                     <th>Status</th>
                   </tr>
