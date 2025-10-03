@@ -33,9 +33,23 @@
   margin: 0rem;
 }
 
+.single-app-container .app-input-container,
+.single-app-container .app-result-container {
+  width: 100% !important;
+}
+
 @media only screen and (max-width: 991px) {
-  .single-app-container .app-input-container,
+  /* .single-app-container .app-input-container,
   .single-app-container .app-result-container {
     width: 90%;
+  } */
+
+  /* .single-app-container .app-input-container,
+  .single-app-container .app-result-container {
+    width: 100% !important;
+  } */
+
+  .single-app-container {
+    width: 90% !important;
   }
 }
