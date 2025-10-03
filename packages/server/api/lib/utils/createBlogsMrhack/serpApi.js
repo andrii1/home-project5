@@ -72,11 +72,13 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
       ? serpCategories.find((c) => c.id === categoryParam)?.name ||
         categoryParam
       : null;
+    const periodName =
+      periodParam === '7' ? 'weekly' : periodParam === '1' ? 'daily' : '';
     const filteredData = rising
       .map((item) => ({
         title: item.query,
         value: normalizeValue(item.value),
-        source: `${seedParam}, ${periodParam}${
+        source: `${seedParam}, ${periodName}${
           categoryName ? `, ${categoryName}` : ''
         }`,
       }))
