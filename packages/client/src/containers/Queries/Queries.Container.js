@@ -165,7 +165,7 @@ export const Queries = () => {
         {loading ? (
           <div>Loading...</div>
         ) : (
-          <>
+          <div className="table-container">
             {error && <p className="error-message">{error.message}</p>}
             {queries && !error && (
               <table border="1">
@@ -262,7 +262,7 @@ export const Queries = () => {
                 <tbody>{queriesList}</tbody>
               </table>
             )}
-          </>
+          </div>
         )}
       </section>
     </main>

@@ -2,7 +2,13 @@
   width: 90%;
   border-collapse: collapse;
   font-family: Arial, sans-serif;
+
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  table-layout: auto; /* let columns shrink naturally */
+  word-wrap: break-word; /* break long words */
 }
+
 .queries-container th,
 .queries-container td {
   border: 1px solid #ccc;
@@ -23,12 +29,13 @@
 }
 
 .queries-container .table-container {
-  display: flex;
-  justify-content: center;
+  width: 90%;
+  /* overflow-x: auto;
+  -webkit-overflow-scrolling: touch; */
 }
 
-@media only screen and (max-width: 992px) {
+/* @media only screen and (max-width: 992px) {
   .queries-container .table-container {
     max-width: 12rem;
   }
-}
+} */

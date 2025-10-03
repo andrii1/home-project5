@@ -68,12 +68,16 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
     const response = await fetch(`https://serpapi.com/search?${params}`);
     const data = await response.json();
     const rising = data.related_queries?.rising || [];
+    const categoryName = categoryParam
+      ? serpCategories.find((c) => c.id === categoryParam)?.name ||
+        categoryParam
+      : null;
     const filteredData = rising
       .map((item) => ({
         title: item.query,
         value: normalizeValue(item.value),
         source: `${seedParam}, ${periodParam}${
-          categoryParam ? `, ${categoryParam}` : ''
+          categoryName ? `, ${categoryName}` : ''
         }`,
       }))
       .filter(
