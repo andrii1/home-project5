@@ -30,6 +30,12 @@ const daysOptions = [
   { label: '1 year', value: 365 },
 ];
 
+const sourcesOptions = [
+  { label: 'All', value: 'all' },
+  { label: 'Apps', value: 'apps' },
+  { label: 'Not apps', value: 'not-apps' },
+];
+
 export const Queries = () => {
   const { user, loading: userLoading } = useUserContext();
   const [input, setInput] = useState();
@@ -43,7 +49,7 @@ export const Queries = () => {
   });
   const navigate = useNavigate();
 
-  const [sources, setSources] = useState([]);
+  const [sources, setSources] = useState('apps');
 
   const fetchQueries = useCallback(async () => {
     const params = new URLSearchParams({
@@ -55,6 +61,12 @@ export const Queries = () => {
     if (days) {
       params.append('days', days);
     }
+
+    // Sources
+    if (sources && sources !== 'all') {
+      params.append('sources', sources);
+    }
+
     const url = `${apiURL()}/queriesMrhack?${params.toString()}`;
 
     setLoading(true);
@@ -79,7 +91,7 @@ export const Queries = () => {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
-  }, [orderBy.column, orderBy.direction, days, user?.uid]);
+  }, [orderBy.column, orderBy.direction, days, sources, user?.uid]);
 
   useEffect(() => {
     fetchQueries();
@@ -197,6 +209,13 @@ export const Queries = () => {
             className="no-line-height"
             options={daysOptions}
             onSelect={(option) => setDays(option.value)}
+            showFilterIcon={false}
+          />
+          <DropDownView
+            selectedOptionValue={sources}
+            className="no-line-height"
+            options={sourcesOptions}
+            onSelect={(option) => setSources(option.value)}
             showFilterIcon={false}
           />
           {/* <Button onClick={handleSearch} primary label="Search" /> */}

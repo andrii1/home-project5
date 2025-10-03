@@ -18,6 +18,7 @@ router.get('/', (req, res, next) => {
     .getQueries({
       token,
       days: req.query.days,
+      sources: req.query.sources,
       column: req.query.column,
       direction: req.query.direction,
     })
