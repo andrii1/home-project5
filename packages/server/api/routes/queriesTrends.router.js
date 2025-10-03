@@ -27,8 +27,9 @@ const queriesTrendsController = require('../controllers/queriesTrends.controller
  *        description: Unexpected error.
  */
 router.get('/', (req, res, next) => {
+  const { token } = req.headers;
   queriesTrendsController
-    .getQueriesTrends(req.query.days)
+    .getQueriesTrends({ token, days: req.query.days })
     .then((result) => res.json(result))
     .catch(next);
 });

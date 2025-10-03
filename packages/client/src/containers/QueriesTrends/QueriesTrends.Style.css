@@ -1,0 +1,8 @@
+.queries-trends-container .queries-table .c-1,
+.queries-trends-container .queries-table .c-2 {
+  border-right: 1px solid #ccc;
+}
+
+.queries-trends-container .queries-table .c-3 {
+  border-right: none !important;
+}

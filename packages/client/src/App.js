@@ -42,6 +42,7 @@ import { GeneratorName } from './containers/GeneratorName/GeneratorName.Containe
 import { GeneratorNameAdvanced } from './containers/GeneratorNameAdvanced/GeneratorNameAdvanced.Container';
 import { BratGenerator } from './containers/BratGenerator/BratGenerator.Container';
 import { Queries } from './containers/Queries/Queries.Container';
+import { QueriesTrends } from './containers/QueriesTrends/QueriesTrends.Container';
 
 function App() {
   return (
@@ -127,6 +128,7 @@ function App() {
             <Route path="/brat-generator" element={<BratGenerator />} />
             {/* <Route path="/name-generator" element={<GeneratorNameAdvanced />} /> */}
             <Route path="/queries" element={<Queries />} />
+            <Route path="/queries-trends" element={<QueriesTrends />} />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

@@ -2,8 +2,11 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
+const HttpError = require('../lib/utils/http-error');
+const normalizeValue = require('../../api/lib/utils/normalizeValue');
+
 const { SERP_API_KEY } = process.env;
-const normalizeValue = require('../normalizeValue');
+const USER_UID = process.env.USER_UID_MAH_PROD;
 
 const excludeList = [
   'insurance',
@@ -91,7 +94,19 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
   }
 }
 
-const getQueriesTrends = async ({ days = 7 }) => {
+const getQueriesTrends = async ({ token, days = 7 }) => {
+  const userUid = token.split(' ')[1];
+  const correctUser = userUid === USER_UID;
+  // const user = (await knex('users').where({ uid: userUid }))[0];
+
+  if (!token) {
+    throw new HttpError('There are not users', 401);
+  }
+
+  if (!correctUser) {
+    throw new HttpError('Access denined for user', 401);
+  }
+
   try {
     const allQueries = [];
     for (const seed of seedListApp) {
@@ -100,6 +115,7 @@ const getQueriesTrends = async ({ days = 7 }) => {
         allQueries.push(...result);
       }
     }
+    allQueries.sort((a, b) => b.value - a.value);
     return allQueries;
   } catch (error) {
     return error.message;
