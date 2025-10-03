@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import React, { useState, useEffect, useCallback } from 'react';
@@ -112,13 +110,11 @@ export const Queries = () => {
 
   const queriesList = queries?.map((query) => {
     return (
-      <div className="row">
-        <div className={`${query.status && 'line-through'} c-1`}>
-          {query.title}
-        </div>
-        <div className="c-2">{displayValue(query.value)}</div>
-        <div className="c-3">{getDateFromTimestamp(query.created_at)}</div>
-        <div className="c-4">
+      <tr>
+        <td className={query.status && 'line-through'}>{query.title}</td>
+        <td>{displayValue(query.value)}</td>
+        <td>{getDateFromTimestamp(query.created_at)}</td>
+        <td>
           <input
             type="checkbox"
             checked={query.status}
@@ -126,8 +122,8 @@ export const Queries = () => {
               handleUpdateQuery(query);
             }}
           />
-        </div>
-      </div>
+        </td>
+      </tr>
     );
   });
 
@@ -172,100 +168,99 @@ export const Queries = () => {
           <>
             {error && <p className="error-message">{error.message}</p>}
             {queries && !error && (
-              <div className="queries-table">
-                <div className="row header">
-                  <div
-                    className="c-1"
-                    onClick={() =>
-                      setOrderBy((prev) => ({
-                        column: 'title',
-                        direction:
-                          prev.column === 'title' && prev.direction === 'desc'
-                            ? 'asc'
-                            : 'desc',
-                      }))
-                    }
-                  >
-                    Query
-                    <span className="multi-dropdown-arrow">
-                      {orderBy.column === 'title' &&
-                        orderBy.direction === 'desc' &&
-                        '▼'}
-                      {orderBy.column === 'title' &&
-                        orderBy.direction === 'asc' &&
-                        '▲'}
-                    </span>
-                  </div>
-                  <div
-                    className="c-2"
-                    onClick={() =>
-                      setOrderBy((prev) => ({
-                        column: 'value',
-                        direction:
-                          prev.column === 'value' && prev.direction === 'desc'
-                            ? 'asc'
-                            : 'desc',
-                      }))
-                    }
-                  >
-                    Value{' '}
-                    <span className="multi-dropdown-arrow">
-                      {orderBy.column === 'value' &&
-                        orderBy.direction === 'desc' &&
-                        '▼'}
-                      {orderBy.column === 'value' &&
-                        orderBy.direction === 'asc' &&
-                        '▲'}
-                    </span>
-                  </div>
-                  <div
-                    className="c-3"
-                    onClick={() =>
-                      setOrderBy((prev) => ({
-                        column: 'created_at',
-                        direction:
-                          prev.column === 'created_at' &&
-                          prev.direction === 'desc'
-                            ? 'asc'
-                            : 'desc',
-                      }))
-                    }
-                  >
-                    Date
-                    <span className="multi-dropdown-arrow">
-                      {orderBy.column === 'created_at' &&
-                        orderBy.direction === 'desc' &&
-                        '▼'}
-                      {orderBy.column === 'created_at' &&
-                        orderBy.direction === 'asc' &&
-                        '▲'}
-                    </span>
-                  </div>
-                  <div
-                    className="c-4"
-                    onClick={() =>
-                      setOrderBy((prev) => ({
-                        column: 'status',
-                        direction:
-                          prev.column === 'status' && prev.direction === 'desc'
-                            ? 'asc'
-                            : 'desc',
-                      }))
-                    }
-                  >
-                    {' '}
-                    <span className="multi-dropdown-arrow">
-                      {orderBy.column === 'status' &&
-                        orderBy.direction === 'desc' &&
-                        '▼'}
-                      {orderBy.column === 'status' &&
-                        orderBy.direction === 'asc' &&
-                        '▲'}
-                    </span>
-                  </div>
-                </div>
+              <table border="1">
+                <thead>
+                  <tr>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'title',
+                          direction:
+                            prev.column === 'title' && prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Query
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'title' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'title' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'value',
+                          direction:
+                            prev.column === 'value' && prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Value{' '}
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'value' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'value' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'created_at',
+                          direction:
+                            prev.column === 'created_at' &&
+                            prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Date
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'created_at' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'created_at' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
+                    <th
+                      onClick={() =>
+                        setOrderBy((prev) => ({
+                          column: 'status',
+                          direction:
+                            prev.column === 'status' &&
+                            prev.direction === 'desc'
+                              ? 'asc'
+                              : 'desc',
+                        }))
+                      }
+                    >
+                      Status
+                      <span className="multi-dropdown-arrow">
+                        {orderBy.column === 'status' &&
+                          orderBy.direction === 'desc' &&
+                          '▼'}
+                        {orderBy.column === 'status' &&
+                          orderBy.direction === 'asc' &&
+                          '▲'}
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
                 <tbody>{queriesList}</tbody>
-              </div>
+              </table>
             )}
           </>
         )}
