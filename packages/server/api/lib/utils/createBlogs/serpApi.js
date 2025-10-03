@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
@@ -46,11 +47,14 @@ async function fetchSerpApi(seedParam, periodParam) {
   try {
     const response = await fetch(`https://serpapi.com/search?${params}`);
     const data = await response.json();
+    const periodName =
+      periodParam === '7' ? 'weekly' : periodParam === '1' ? 'daily' : '';
+
     const filteredData = data.related_queries.rising
       .map((item) => ({
         title: item.query,
         value: normalizeValue(item.value), // relative score
-        source: `${seedParam}, ${periodParam}`,
+        source: `${seedParam}, ${periodName}`,
       }))
       .filter(
         (item) =>
