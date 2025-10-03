@@ -168,7 +168,7 @@ export const Queries = () => {
           <>
             {error && <p className="error-message">{error.message}</p>}
             {queries && !error && (
-              <table border="1" cellSpacing="0" cellPadding="8">
+              <table border="1">
                 <thead>
                   <tr>
                     <th
