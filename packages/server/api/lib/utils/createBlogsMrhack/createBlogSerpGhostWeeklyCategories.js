@@ -11,6 +11,8 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 
 const OpenAI = require('openai');
 const fetchSerpApi = require('./serpApi');
+const searchApps = require('./searchApps');
+const insertApps = require('./insertApps');
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // make sure this is set in your .env
@@ -82,13 +84,17 @@ function capitalizeFirstWord(str) {
 const createPostMain = async () => {
   const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);
-
+  const dedupedQueries = [];
   for (const query of queries) {
     const newQuery = await insertQuery(query);
 
     if (newQuery.existing) {
       console.log('Duplicate query skipped:', query);
       continue;
+    }
+
+    if (query.source.includes('app')) {
+      dedupedQueries.push(query.title);
     }
 
     const blogTitle = capitalizeFirstWord(query.title);
@@ -116,6 +122,9 @@ const createPostMain = async () => {
 
     await createPost(postData);
   }
+
+  const apps = await searchApps(dedupedQueries);
+  await insertApps(apps);
 };
 
 createPostMain().catch(console.error);
