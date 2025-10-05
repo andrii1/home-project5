@@ -119,7 +119,7 @@ export const Queries = () => {
     );
   };
 
-  const handleUpdateQuery = (query) => {
+  const handleUpdateQueryStatus = (query) => {
     // Optimistically update immediately
     setQueries((prev) =>
       prev.map((item) =>
@@ -154,6 +154,45 @@ export const Queries = () => {
     updateQuery();
   };
 
+  const handleUpdateQueryHighlighted = (query) => {
+    // Optimistically update immediately
+    setQueries((prev) =>
+      prev.map((item) =>
+        item.id === query.id
+          ? { ...item, highlighted: !item.highlighted }
+          : item,
+      ),
+    );
+
+    const updateQuery = async () => {
+      try {
+        const response = await fetch(`${apiURL()}/queriesMrhack/${query.id}`, {
+          method: 'PATCH',
+          headers: {
+            token: `token ${user?.uid}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ highlighted: !query.highlighted }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update');
+        }
+      } catch (err) {
+        // Roll back if error
+        setQueries((prev) =>
+          prev.map((item) =>
+            item.id === query.id
+              ? { ...item, highlighted: query.highlighted }
+              : item,
+          ),
+        );
+      }
+    };
+
+    updateQuery();
+  };
+
   const handleSearch = () => {
     fetchQueries(input);
     setInput('');
@@ -167,7 +206,14 @@ export const Queries = () => {
   const queriesList = queries?.map((query) => {
     return (
       <div className="row tbody">
-        <div className={`${query.status && 'line-through'} c-1`}>
+        <div
+          onClick={() => {
+            handleUpdateQueryHighlighted(query);
+          }}
+          className={`${query.status && 'line-through'} ${
+            query.highlighted && 'green'
+          } c-1`}
+        >
           {query.title}
         </div>
         <div className="c-2">{displayValue(query.value)}</div>
@@ -177,7 +223,7 @@ export const Queries = () => {
             type="checkbox"
             checked={query.status}
             onClick={() => {
-              handleUpdateQuery(query);
+              handleUpdateQueryStatus(query);
             }}
           />
         </div>

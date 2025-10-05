@@ -104,6 +104,14 @@
   text-decoration-thickness: 0.05rem;
 }
 
+.queries-container .row.tbody .c-1 {
+  cursor: pointer;
+}
+
+.queries-container .green {
+  background-color: springgreen;
+}
+
 .source-box {
   display: none;
   position: absolute;
