@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* TODO: This is an example controller to illustrate a server side controller.
 Can be deleted as soon as the first real controller is added. */
 
@@ -102,9 +103,11 @@ const editQuery = async (queryId, updatedQuery) => {
     throw new HttpError('No query', 400);
   }
 
-  return knex('queriesMrhack').where({ id: queryId }).update({
-    status: updatedQuery.status,
-  });
+  const updateData = Object.fromEntries(
+    Object.entries(updatedQuery).filter(([_, v]) => v !== undefined),
+  );
+
+  return knex('queriesMrhack').where({ id: queryId }).update(updateData);
 };
 
 module.exports = {
