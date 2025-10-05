@@ -212,13 +212,28 @@ export const Queries = () => {
           }}
           className={`${query.status && 'line-through'} ${
             query.highlighted && 'green'
-          } c-1`}
+          } c-1 mobile`}
+        >
+          {query.title}
+        </div>
+        <div
+          className={`${query.status && 'line-through'} ${
+            query.highlighted && 'green'
+          } c-1 desktop`}
         >
           {query.title}
         </div>
         <div className="c-2">{displayValue(query.value)}</div>
         <div className="c-3">{getDateFromTimestamp(query.created_at)}</div>
         <div className="c-4">
+          <span
+            className="icon-highlighted"
+            onClick={() => {
+              handleUpdateQueryHighlighted(query);
+            }}
+          >
+            🟢
+          </span>
           <input
             type="checkbox"
             checked={query.status}
@@ -237,7 +252,7 @@ export const Queries = () => {
             onClick={() => {
               handleQueriesSources(query.id);
             }}
-            className="info-icon"
+            className="icon-info"
           />
         </div>
       </div>
