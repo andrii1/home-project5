@@ -119,6 +119,10 @@
   display: flex;
 }
 
+.info-icon {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 992px) {
   .queries-container .queries-table {
     width: 100%;

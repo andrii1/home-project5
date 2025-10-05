@@ -84,6 +84,7 @@ export const Queries = () => {
       }
       const queriesArray = data.map((item) => ({ ...item, open: false }));
       setQueries(queriesArray);
+
       setError(null);
 
       // setSearch('');
@@ -119,18 +120,34 @@ export const Queries = () => {
   };
 
   const handleUpdateQuery = (query) => {
-    const updateQuery = async () => {
-      const response = await fetch(`${apiURL()}/queriesMrhack/${query.id} `, {
-        method: 'PATCH',
-        headers: {
-          token: `token ${user?.uid}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status: !query.status }),
-      });
+    // Optimistically update immediately
+    setQueries((prev) =>
+      prev.map((item) =>
+        item.id === query.id ? { ...item, status: !item.status } : item,
+      ),
+    );
 
-      if (response.ok) {
-        fetchQueries();
+    const updateQuery = async () => {
+      try {
+        const response = await fetch(`${apiURL()}/queriesMrhack/${query.id}`, {
+          method: 'PATCH',
+          headers: {
+            token: `token ${user?.uid}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ status: !query.status }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to update');
+        }
+      } catch (err) {
+        // Roll back if error
+        setQueries((prev) =>
+          prev.map((item) =>
+            item.id === query.id ? { ...item, status: query.status } : item,
+          ),
+        );
       }
     };
 
@@ -174,6 +191,7 @@ export const Queries = () => {
             onClick={() => {
               handleQueriesSources(query.id);
             }}
+            className="info-icon"
           />
         </div>
       </div>
@@ -188,7 +206,7 @@ export const Queries = () => {
   return (
     <main className="single-app-container queries-container">
       <Helmet>
-        <title>Title</title>
+        <title>Queries</title>
         <meta
           name="description"
           content={keywords.length > 0 && keywords.join(', ')}
