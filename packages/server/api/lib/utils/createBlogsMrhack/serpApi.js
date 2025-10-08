@@ -20,7 +20,7 @@ const excludeList = [
 ];
 
 const serpCategories = [
-  // { id: 0, name: 'All categories' },
+  { id: 0, name: 'All categories' },
   { id: 3, name: 'Arts & Entertainment' },
   { id: 5, name: 'Computers & Electronics' },
   { id: 7, name: 'Finance' },

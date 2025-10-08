@@ -24,11 +24,21 @@ const api = new GhostAdminAPI({
   version: 'v4.0', // or whatever version your Ghost install uses
 });
 
-const today = new Date();
-const isSunday = today.getDay() === 0; // 0 = Sunday
+// const today = new Date();
+// const isSunday = today.getDay() === 0; // 0 = Sunday
 
-if (!isSunday) {
-  console.log('Not Sunday, skipping weekly job.');
+// if (!isSunday) {
+//   console.log('Not Sunday, skipping weekly job.');
+//   process.exit(0);
+// }
+
+const today = new Date();
+const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+const allowedDays = [1, 5]; // Monday, Friday
+
+if (!allowedDays.includes(todayDay)) {
+  console.log('Not an allowed day, skipping job.');
   process.exit(0);
 }
 
