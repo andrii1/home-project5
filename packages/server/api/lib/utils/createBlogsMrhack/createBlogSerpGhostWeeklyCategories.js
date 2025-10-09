@@ -35,7 +35,7 @@ const api = new GhostAdminAPI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [1, 5]; // Monday, Friday
+const allowedDays = [1, 3, 6]; // Monday, Wednesday, Saturday
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
