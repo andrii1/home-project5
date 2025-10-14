@@ -3,7 +3,7 @@
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 
-const { SERP_API_KEY } = process.env;
+const { SERP_API_KEY2 } = process.env;
 const normalizeValue = require('../normalizeValue');
 
 const excludeList = [
@@ -57,7 +57,7 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
     geo: 'US',
     date: `now ${periodParam}-d`,
     data_type: 'RELATED_QUERIES',
-    api_key: SERP_API_KEY,
+    api_key: SERP_API_KEY2,
   });
 
   if (categoryParam) {
