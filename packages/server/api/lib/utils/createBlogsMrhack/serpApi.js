@@ -3,8 +3,12 @@
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 
-const { SERP_API_KEY2 } = process.env;
+const { SERP_API_KEY, SERP_API_KEY2 } = process.env;
 const normalizeValue = require('../normalizeValue');
+
+const apiKeys = [SERP_API_KEY, SERP_API_KEY2];
+
+let currentKeyIndex = 0;
 
 const excludeList = [
   'insurance',
@@ -50,6 +54,11 @@ const seedList = ['app', 'error', 'website', 'app iphone', 'widget'];
 const seedListApp = ['app'];
 
 async function fetchSerpApi(seedParam, periodParam, categoryParam) {
+  const apiKey = apiKeys[currentKeyIndex];
+
+  // Rotate to next key (loop back when reaching the end)
+  currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
+
   const params = new URLSearchParams({
     engine: 'google_trends',
     q: seedParam,
@@ -57,7 +66,7 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
     geo: 'US',
     date: `now ${periodParam}-d`,
     data_type: 'RELATED_QUERIES',
-    api_key: SERP_API_KEY2,
+    api_key: apiKey,
   });
 
   if (categoryParam) {
