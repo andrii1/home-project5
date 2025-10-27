@@ -13,6 +13,7 @@ const OpenAI = require('openai');
 const fetchSerpApi = require('./serpApi');
 const searchApps = require('./searchApps');
 const insertApps = require('./insertApps');
+const insertDeals = require('./insertDeals');
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // make sure this is set in your .env
@@ -135,6 +136,7 @@ const createPostMain = async () => {
 
   const apps = await searchApps(dedupedQueries);
   await insertApps(apps);
+  await insertDeals(apps);
 };
 
 createPostMain().catch(console.error);
