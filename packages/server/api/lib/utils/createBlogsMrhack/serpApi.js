@@ -50,8 +50,8 @@ const serpCategories = [
 ];
 
 // const seedList = ["maker", "template", "generator", "calculator", "tool"];
-const seedList = ['app', 'error', 'website', 'app iphone', 'widget'];
-const seedListApp = ['app'];
+// const seedList = ['error', 'website', 'app iphone', 'widget'];
+// const seedListApp = ['app'];
 
 async function fetchSerpApi(seedParam, periodParam, categoryParam) {
   const apiKey = apiKeys[currentKeyIndex];
@@ -103,18 +103,12 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
   }
 }
 
-const useAllQueries = async (period, withCategories = false) => {
+const useAllQueries = async (period, seedList) => {
   const allQueries = [];
-  if (withCategories) {
-    for (const seed of seedListApp) {
-      for (const category of serpCategories) {
-        const result = await fetchSerpApi(seed, period, category.id);
-        allQueries.push(...result);
-      }
-    }
-  } else {
-    for (const seed of seedList) {
-      const result = await fetchSerpApi(seed, period);
+
+  for (const seed of seedList) {
+    for (const category of serpCategories) {
+      const result = await fetchSerpApi(seed, period, category.id);
       allQueries.push(...result);
     }
   }

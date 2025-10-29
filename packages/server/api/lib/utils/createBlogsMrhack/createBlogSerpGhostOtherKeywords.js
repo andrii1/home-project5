@@ -36,7 +36,9 @@ const api = new GhostAdminAPI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [1, 3, 6]; // Monday, Wednesday, Saturday
+const allowedDays = [0, 1, 3, 4, 5, 6];
+const allowedDaysWeek = [0, 3, 5];
+const allowedDaysDay = [1, 4, 6];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -46,7 +48,8 @@ if (!allowedDays.includes(todayDay)) {
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
-// WordPress Credentials (from .env)
+
+const seedList = ['error', 'website', 'app iphone', 'widget'];
 
 // fetch helpers
 
@@ -93,7 +96,15 @@ function capitalizeFirstWord(str) {
 }
 
 const createPostMain = async () => {
-  const queries = await fetchSerpApi('7', true);
+  let queries;
+  if (allowedDaysWeek.includes(todayDay)) {
+    queries = await fetchSerpApi('7', seedList);
+  }
+
+  if (allowedDaysDay.includes(todayDay)) {
+    queries = await fetchSerpApi('1', seedList);
+  }
+  // const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);
   const dedupedQueries = [];
   for (const query of queries) {
