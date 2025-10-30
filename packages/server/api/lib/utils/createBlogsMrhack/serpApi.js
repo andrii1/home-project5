@@ -3,10 +3,10 @@
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 
-const { SERP_API_KEY, SERP_API_KEY2 } = process.env;
+const { SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3 } = process.env;
 const normalizeValue = require('../normalizeValue');
 
-const apiKeys = [SERP_API_KEY, SERP_API_KEY2];
+const apiKeys = [SERP_API_KEY, SERP_API_KEY3];
 
 let currentKeyIndex = 0;
 
@@ -103,12 +103,18 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
   }
 }
 
-const useAllQueries = async (period, seedList) => {
+const useAllQueries = async (period, seedList, includeCategories) => {
   const allQueries = [];
-
-  for (const seed of seedList) {
-    for (const category of serpCategories) {
-      const result = await fetchSerpApi(seed, period, category.id);
+  if (includeCategories) {
+    for (const seed of seedList) {
+      for (const category of serpCategories) {
+        const result = await fetchSerpApi(seed, period, category.id);
+        allQueries.push(...result);
+      }
+    }
+  } else {
+    for (const seed of seedList) {
+      const result = await fetchSerpApi(seed, period);
       allQueries.push(...result);
     }
   }

@@ -98,11 +98,11 @@ function capitalizeFirstWord(str) {
 const createPostMain = async () => {
   let queries;
   if (allowedDaysWeek.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList);
+    queries = await fetchSerpApi('7', seedList, true);
   }
 
   if (allowedDaysDay.includes(todayDay)) {
-    queries = await fetchSerpApi('1', seedList);
+    queries = await fetchSerpApi('1', seedList, false);
   }
   // const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);

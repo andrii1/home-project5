@@ -36,9 +36,9 @@ const api = new GhostAdminAPI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 1, 3, 4, 5, 6];
-const allowedDaysWeek = [0, 3, 5];
-const allowedDaysDay = [1, 4, 6];
+const allowedDays = [0, 5];
+// const allowedDaysWeek = [0, 3, 5];
+// const allowedDaysDay = [1, 4, 6];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -96,15 +96,15 @@ function capitalizeFirstWord(str) {
 }
 
 const createPostMain = async () => {
-  let queries;
-  if (allowedDaysWeek.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList);
-  }
+  // let queries;
+  // if (allowedDaysWeek.includes(todayDay)) {
+  //   queries = await fetchSerpApi('7', seedList);
+  // }
 
-  if (allowedDaysDay.includes(todayDay)) {
-    queries = await fetchSerpApi('1', seedList);
-  }
-  // const queries = await fetchSerpApi('7', true);
+  // if (allowedDaysDay.includes(todayDay)) {
+  //   queries = await fetchSerpApi('1', seedList);
+  // }
+  const queries = await fetchSerpApi('7', seedList, false);
   console.log('queries', queries);
   const dedupedQueries = [];
   for (const query of queries) {
