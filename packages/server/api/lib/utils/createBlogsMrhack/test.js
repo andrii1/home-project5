@@ -107,7 +107,7 @@ const createPostMain = async () => {
   //   'music x pro app tutorial',
   // ];
 
-  const queries = await fetchSerpApi('30', true);
+  const queries = await fetchSerpApi('30', seedList, false);
   console.log('queries', queries);
   const dedupedQueries = [];
   for (const query of queries) {
