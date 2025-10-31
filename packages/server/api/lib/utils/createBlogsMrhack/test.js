@@ -49,7 +49,7 @@ if (!allowedDays.includes(todayDay)) {
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
 
-const seedList = ['app'];
+const seedList = ['app ios'];
 
 // fetch helpers
 
@@ -107,7 +107,7 @@ const createPostMain = async () => {
   //   'music x pro app tutorial',
   // ];
 
-  const queries = await fetchSerpApi('30', seedList, false);
+  const queries = await fetchSerpApi('7', seedList, false);
   console.log('queries', queries);
   const dedupedQueries = [];
   for (const query of queries) {
