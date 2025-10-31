@@ -109,48 +109,49 @@ async function insertDeal(title, appleId, appId) {
 const insertDeals = async (appsParam) => {
   console.log(appsParam);
   for (const appItem of appsParam) {
-    const appleId = appItem.id;
+    try {
+      const appleId = appItem.id;
 
-    const app = await fetchAppByAppleId(appleId);
-    const category = app.primaryGenreName;
-    const categoryAppleId = app.primaryGenreId;
-    const appTitle = app.trackName;
-    const appDescription = app.description;
-    const appUrl = app.sellerUrl;
+      const app = await fetchAppByAppleId(appleId);
+      const category = app.primaryGenreName;
+      const categoryAppleId = app.primaryGenreId;
+      const appTitle = app.trackName;
+      const appDescription = app.description;
+      const appUrl = app.sellerUrl;
 
-    const newCategory = await insertCategory(category, categoryAppleId);
-    const { categoryId } = newCategory;
-    console.log('Inserted category:', newCategory);
+      const newCategory = await insertCategory(category, categoryAppleId);
+      const { categoryId } = newCategory;
+      console.log('Inserted category:', newCategory);
 
-    const createdTopic = await createTopicWithChatGpt(
-      category,
-      appTitle,
-      appDescription,
-    );
-    console.log('createdTopic', createdTopic);
+      const createdTopic = await createTopicWithChatGpt(
+        category,
+        appTitle,
+        appDescription,
+      );
+      console.log('createdTopic', createdTopic);
 
-    const newTopic = await insertTopic(createdTopic, categoryId);
-    const { topicId } = newTopic;
-    console.log('Inserted topic:', newTopic);
+      const newTopic = await insertTopic(createdTopic, categoryId);
+      const { topicId } = newTopic;
+      console.log('Inserted topic:', newTopic);
 
-    const newApp = await insertApp({ appTitle, appleId, appUrl, topicId });
-    const { appId } = newApp;
-    const newAppTitle = newApp.appTitle;
-    console.log('Inserted app:', newApp);
+      const newApp = await insertApp({ appTitle, appleId, appUrl, topicId });
+      const { appId } = newApp;
+      const newAppTitle = newApp.appTitle;
+      console.log('Inserted app (deals):', newApp);
 
-    // const deal = `${newAppTitle} referral codes`;
+      // const deal = `${newAppTitle} referral codes`;
 
-    const match = newAppTitle.match(/^(.*?)(?:-|:)/);
-    const appName = match ? match[1].trim() : newAppTitle;
-    const deal = `${appName} referral codes`;
+      const match = newAppTitle.match(/^(.*?)(?:-|:)/);
+      const appName = match ? match[1].trim() : newAppTitle;
+      const deal = `${appName} referral codes`;
 
-    const newDeal = await insertDeal(deal, appleId, appId);
-    // const { dealId } = newDeal;
-    // console.log('Inserted deal:', newDeal);
-
-    // const newCode = await insertCode(code, dealId);
-    // const codeId = newCode.codeId;
-    // console.log("Inserted code:", newCode);
+      const newDeal = await insertDeal(deal, appleId, appId);
+      // const { dealId } = newDeal;
+      console.log('Inserted deal:', newDeal);
+    } catch (err) {
+      console.error(`❌ Failed to insert app ${appItem.id}:`, err.message);
+      // continue with next app
+    }
   }
 };
 

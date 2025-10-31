@@ -5,7 +5,7 @@ require('dotenv').config();
 const HttpError = require('../lib/utils/http-error');
 const normalizeValue = require('../../api/lib/utils/normalizeValue');
 
-const { SERP_API_KEY2 } = process.env;
+const { SERP_API_KEY } = process.env;
 const USER_UID = process.env.USER_UID_MAH_PROD;
 
 const excludeList = [
@@ -57,7 +57,7 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
     geo: 'US',
     date: `now ${periodParam}-d`,
     data_type: 'RELATED_QUERIES',
-    api_key: SERP_API_KEY2,
+    api_key: SERP_API_KEY,
   });
 
   if (categoryParam) {
