@@ -96,7 +96,16 @@ function capitalizeFirstWord(str) {
 }
 
 const createPostMain = async () => {
-  const queries = await fetchSerpApi('1', seedList, false);
+  const queries = [
+    'green status cash app',
+    'green status cash',
+    'green status cash app',
+    'out of milk app',
+    'ego driver ksa',
+    'jump jump vpn app',
+    'blush ai app review',
+    'music x pro app tutorial',
+  ];
 
   // const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);

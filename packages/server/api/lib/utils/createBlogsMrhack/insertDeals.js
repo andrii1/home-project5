@@ -145,6 +145,8 @@ const insertDeals = async (appsParam) => {
       const appName = match ? match[1].trim() : newAppTitle;
       const deal = `${appName} referral codes`;
 
+      console.log('deal', deal);
+
       const newDeal = await insertDeal(deal, appleId, appId);
       // const { dealId } = newDeal;
       console.log('Inserted deal:', newDeal);
