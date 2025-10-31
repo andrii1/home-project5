@@ -122,34 +122,34 @@ const createPostMain = async () => {
       dedupedQueries.push(query.title);
     }
 
-    const blogTitle = capitalizeFirstWord(query.title);
-    const blogContent = await createBlogContent(query.title);
+    // const blogTitle = capitalizeFirstWord(query.title);
+    // const blogContent = await createBlogContent(query.title);
 
-    const postData = {
-      title: blogTitle,
-      mobiledoc: JSON.stringify({
-        version: '0.3.1',
-        atoms: [],
-        cards: [
-          [
-            'html',
-            {
-              cardName: 'html',
-              html: blogContent,
-            },
-          ],
-        ],
-        markups: [],
-        sections: [[10, 0]],
-      }),
-      status: 'published',
-    };
+    // const postData = {
+    //   title: blogTitle,
+    //   mobiledoc: JSON.stringify({
+    //     version: '0.3.1',
+    //     atoms: [],
+    //     cards: [
+    //       [
+    //         'html',
+    //         {
+    //           cardName: 'html',
+    //           html: blogContent,
+    //         },
+    //       ],
+    //     ],
+    //     markups: [],
+    //     sections: [[10, 0]],
+    //   }),
+    //   status: 'published',
+    // };
 
-    await createPost(postData);
+    // await createPost(postData);
   }
 
   const apps = await searchApps(dedupedQueries);
-  await insertApps(apps);
+  // await insertApps(apps);
   await insertDeals(apps);
 };
 
