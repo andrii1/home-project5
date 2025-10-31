@@ -64,7 +64,7 @@ async function insertApp({ appTitle, appleId, appUrl, categoryId }) {
 }
 
 const insertApps = async (appsParam) => {
-  console.log(appsParam);
+  // console.log(appsParam);
   for (const appItem of appsParam) {
     try {
       const appleId = appItem.id;

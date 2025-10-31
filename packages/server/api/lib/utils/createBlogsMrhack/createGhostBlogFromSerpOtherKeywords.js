@@ -145,6 +145,7 @@ const createPostMain = async () => {
     await createPost(postData);
   }
 
+  console.log('dedupedQueries', dedupedQueries);
   const apps = await searchApps(dedupedQueries);
   await insertApps(apps);
   await insertDeals(apps);

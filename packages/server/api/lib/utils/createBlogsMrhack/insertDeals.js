@@ -107,7 +107,7 @@ async function insertDeal(title, appleId, appId) {
 }
 
 const insertDeals = async (appsParam) => {
-  console.log(appsParam);
+  // console.log(appsParam);
   for (const appItem of appsParam) {
     try {
       const appleId = appItem.id;
@@ -137,15 +137,13 @@ const insertDeals = async (appsParam) => {
       const newApp = await insertApp({ appTitle, appleId, appUrl, topicId });
       const { appId } = newApp;
       const newAppTitle = newApp.appTitle;
-      console.log('Inserted app (deals):', newApp);
+      console.log('Inserted app:', newApp);
 
       // const deal = `${newAppTitle} referral codes`;
 
       const match = newAppTitle.match(/^(.*?)(?:-|:)/);
       const appName = match ? match[1].trim() : newAppTitle;
       const deal = `${appName} referral codes`;
-
-      console.log('deal', deal);
 
       const newDeal = await insertDeal(deal, appleId, appId);
       // const { dealId } = newDeal;
