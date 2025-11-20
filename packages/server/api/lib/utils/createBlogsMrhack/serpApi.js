@@ -6,7 +6,7 @@ require('dotenv').config();
 const { SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3 } = process.env;
 const normalizeValue = require('../normalizeValue');
 
-const apiKeys = [SERP_API_KEY, SERP_API_KEY3];
+const apiKeys = [SERP_API_KEY, SERP_API_KEY2];
 
 let currentKeyIndex = 0;
 

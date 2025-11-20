@@ -37,19 +37,22 @@ const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
 const allowedDays = [0, 1, 3, 4, 5, 6];
-const allowedDaysWeek = [0, 3, 5];
-const allowedDaysDay = [1, 4, 6];
+
+const allowedDaysAppWeek = [0, 3, 5];
+const allowedDaysAppDay = [1, 4, 6];
+const allowedDaysOtherKeywords = [0, 5];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
   process.exit(0);
 }
 
+const seedListAppKeyword = ['app'];
+const seedListOtherKeywords = ['error', 'website', 'app iphone', 'widget'];
+
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
-
-const seedList = ['app'];
 
 // fetch helpers
 
@@ -96,14 +99,35 @@ function capitalizeFirstWord(str) {
 }
 
 const createPostMain = async () => {
-  let queries;
-  if (allowedDaysWeek.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList, true);
+  // let queries;
+  // if (allowedDaysWeek.includes(todayDay)) {
+  //   queries = await fetchSerpApi('7', seedList, true);
+  // }
+
+  // if (allowedDaysDay.includes(todayDay)) {
+  //   queries = await fetchSerpApi('1', seedList, false);
+  // }
+
+  let queries = [];
+
+  // 1. Existing weekly logic
+  if (allowedDaysAppWeek.includes(todayDay)) {
+    const q = await fetchSerpApi('7', seedListAppKeyword, true);
+    queries = queries.concat(q);
   }
 
-  if (allowedDaysDay.includes(todayDay)) {
-    queries = await fetchSerpApi('1', seedList, false);
+  // 2. Existing daily logic
+  if (allowedDaysAppDay.includes(todayDay)) {
+    const q = await fetchSerpApi('1', seedListAppKeyword, false);
+    queries = queries.concat(q);
   }
+
+  // 3. NEW: additional queries for special keyword days
+  if (allowedDaysOtherKeywords.includes(todayDay)) {
+    const q = await fetchSerpApi('7', seedListOtherKeywords, false);
+    queries = queries.concat(q);
+  }
+
   // const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);
   const dedupedQueries = [];
