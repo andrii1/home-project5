@@ -15,6 +15,7 @@ const cloudinary = require('./cloudinary.router');
 const queries = require('./queries.router');
 const queriesMrhack = require('./queriesMrhack.router');
 const queriesTrends = require('./queriesTrends.router');
+const queriesSerpApi = require('./queriesSerpApi.router');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -57,5 +58,6 @@ router.use('/comments', comments);
 router.use('/queries', queries);
 router.use('/queriesMrhack', queriesMrhack);
 router.use('/queriesTrends', queriesTrends);
+router.use('/queriesSerpApi', queriesSerpApi);
 
 module.exports = router;

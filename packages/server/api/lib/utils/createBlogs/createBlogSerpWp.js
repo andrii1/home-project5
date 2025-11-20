@@ -15,15 +15,15 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // make sure this is set in your .env
 });
 
-// const today = new Date();
-// const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+const today = new Date();
+const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-// const allowedDays = [0, 3, 5]; // Sunday, Wednesday, Friday
+const allowedDays = [0, 3, 5]; // Sunday, Wednesday, Friday
 
-// if (!allowedDays.includes(todayDay)) {
-//   console.log('Not an allowed day, skipping job.');
-//   process.exit(0);
-// }
+if (!allowedDays.includes(todayDay)) {
+  console.log('Not an allowed day, skipping job.');
+  process.exit(0);
+}
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
