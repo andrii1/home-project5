@@ -1,15 +1,32 @@
 const knex = require('../../../config/db');
 
-async function updateSiteId() {
+async function run() {
   try {
-    const updated = await knex('queriesMrhack').update({ site_id: 1 });
+    // 1. Fetch rows from queries table
+    const rows = await knex('queries');
 
-    console.log(`Updated ${updated} rows.`);
+    if (!rows.length) {
+      console.log('No rows found in queries table.');
+      return;
+    }
+
+    // 2. Add site_id = 2
+    const updatedRows = rows.map((r) => ({
+      ...r,
+      site_id: 2,
+    }));
+
+    // 3. Insert into queriesMrhack
+    await knex('queriesMrhack').insert(updatedRows);
+
+    console.log(
+      `Inserted ${updatedRows.length} rows into queriesMrhack with site_id = 2`,
+    );
   } catch (err) {
-    console.error('Error updating site_id:', err);
+    console.error(err);
   } finally {
-    await knex.destroy();
+    knex.destroy();
   }
 }
 
-updateSiteId();
+run();
