@@ -67,7 +67,7 @@ export const Queries = () => {
       params.append('sources', sources);
     }
 
-    const url = `${apiURL()}/queriesMrhack?${params.toString()}`;
+    const url = `${apiURL()}/queries?${params.toString()}`;
 
     setLoading(true);
 
@@ -129,7 +129,7 @@ export const Queries = () => {
 
     const updateQuery = async () => {
       try {
-        const response = await fetch(`${apiURL()}/queriesMrhack/${query.id}`, {
+        const response = await fetch(`${apiURL()}/queries/${query.id}`, {
           method: 'PATCH',
           headers: {
             token: `token ${user?.uid}`,
@@ -166,7 +166,7 @@ export const Queries = () => {
 
     const updateQuery = async () => {
       try {
-        const response = await fetch(`${apiURL()}/queriesMrhack/${query.id}`, {
+        const response = await fetch(`${apiURL()}/queries/${query.id}`, {
           method: 'PATCH',
           headers: {
             token: `token ${user?.uid}`,
