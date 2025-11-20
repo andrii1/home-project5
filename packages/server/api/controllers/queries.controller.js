@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* TODO: This is an example controller to illustrate a server side controller.
 Can be deleted as soon as the first real controller is added. */
 
@@ -7,7 +8,13 @@ require('dotenv').config();
 
 const USER_UID = process.env.USER_UID_MAH_PROD;
 
-const getQueries = async ({ token, days = null, column, direction }) => {
+const getQueries = async ({
+  token,
+  days = null,
+  sources,
+  column,
+  direction,
+}) => {
   const userUid = token.split(' ')[1];
   const correctUser = userUid === USER_UID;
   // const user = (await knex('users').where({ uid: userUid }))[0];
@@ -30,6 +37,16 @@ const getQueries = async ({ token, days = null, column, direction }) => {
         '>=',
         knex.raw(`NOW() - INTERVAL ? DAY`, [days]),
       );
+    }
+
+    if (sources === 'apps') {
+      // Filter queries from the last X days
+      queryBuilder = queryBuilder.where('source', 'like', '%app%');
+    }
+
+    if (sources === 'not-apps') {
+      // Filter queries from the last X days
+      queryBuilder = queryBuilder.where('source', 'not like', '%app%');
     }
 
     const queries = await queryBuilder.orderBy(
@@ -81,7 +98,20 @@ const createQuery = async (token, body) => {
   }
 };
 
+const editQuery = async (queryId, updatedQuery) => {
+  if (!queryId) {
+    throw new HttpError('No query', 400);
+  }
+
+  const updateData = Object.fromEntries(
+    Object.entries(updatedQuery).filter(([_, v]) => v !== undefined),
+  );
+
+  return knex('queries').where({ id: queryId }).update(updateData);
+};
+
 module.exports = {
   createQuery,
   getQueries,
+  editQuery,
 };

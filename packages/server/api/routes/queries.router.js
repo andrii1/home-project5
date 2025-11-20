@@ -18,6 +18,7 @@ router.get('/', (req, res, next) => {
     .getQueries({
       token,
       days: req.query.days,
+      sources: req.query.sources,
       column: req.query.column,
       direction: req.query.direction,
     })
@@ -37,6 +38,13 @@ router.post('/', (req, res) => {
 
       res.status(400).send('Bad request').end();
     });
+});
+
+router.patch('/:id', (req, res, next) => {
+  queriesController
+    .editQuery(req.params.id, req.body)
+    .then((result) => res.json(result))
+    .catch(next);
 });
 
 module.exports = router;

@@ -25,14 +25,6 @@ const api = new GhostAdminAPI({
   version: 'v4.0', // or whatever version your Ghost install uses
 });
 
-// const today = new Date();
-// const isSunday = today.getDay() === 0; // 0 = Sunday
-
-// if (!isSunday) {
-//   console.log('Not Sunday, skipping weekly job.');
-//   process.exit(0);
-// }
-
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
@@ -57,7 +49,7 @@ const API_PATH = process.env.API_PATH_MAH_PROD;
 // fetch helpers
 
 async function insertQuery(queryObj) {
-  const res = await fetch(`${API_PATH}/queriesMrhack`, {
+  const res = await fetch(`${API_PATH}/queries`, {
     method: 'POST',
     headers: {
       token: `token ${USER_UID}`,
@@ -112,19 +104,19 @@ const createPostMain = async () => {
 
   // 1. Existing weekly logic
   if (allowedDaysAppWeek.includes(todayDay)) {
-    const q = await fetchSerpApi('7', seedListAppKeyword, true);
+    const q = await fetchSerpApi('7', seedListAppKeyword, true, 1);
     queries = queries.concat(q);
   }
 
   // 2. Existing daily logic
   if (allowedDaysAppDay.includes(todayDay)) {
-    const q = await fetchSerpApi('1', seedListAppKeyword, false);
+    const q = await fetchSerpApi('1', seedListAppKeyword, false, 1);
     queries = queries.concat(q);
   }
 
   // 3. NEW: additional queries for special keyword days
   if (allowedDaysOtherKeywords.includes(todayDay)) {
-    const q = await fetchSerpApi('7', seedListOtherKeywords, false);
+    const q = await fetchSerpApi('7', seedListOtherKeywords, false, 1);
     queries = queries.concat(q);
   }
 

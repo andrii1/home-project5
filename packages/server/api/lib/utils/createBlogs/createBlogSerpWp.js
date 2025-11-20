@@ -120,7 +120,7 @@ function capitalizeFirstWord(str) {
 }
 
 const createPostMain = async () => {
-  const queries = await fetchSerpApi('7', seedList, false);
+  const queries = await fetchSerpApi('7', seedList, false, 2);
   console.log('queries', queries);
 
   for (const query of queries) {

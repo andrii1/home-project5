@@ -49,7 +49,12 @@ const serpCategories = [
   { id: 1077, name: 'Sports News' },
 ];
 
-async function fetchSerpApi(seedParam, periodParam, categoryParam) {
+async function fetchSerpApi(
+  seedParam,
+  periodParam,
+  categoryParam,
+  siteIdParam,
+) {
   const apiKey = apiKeys[currentKeyIndex];
 
   // Rotate to next key (loop back when reaching the end)
@@ -86,6 +91,7 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
         source: `${seedParam}, ${periodName}${
           categoryName ? `, ${categoryName}` : ''
         }`,
+        site_id: siteIdParam,
       }))
       .filter(
         (item) =>
@@ -99,18 +105,18 @@ async function fetchSerpApi(seedParam, periodParam, categoryParam) {
   }
 }
 
-const useAllQueries = async (period, seedList, includeCategories) => {
+const useAllQueries = async (period, seedList, includeCategories, siteId) => {
   const allQueries = [];
   if (includeCategories) {
     for (const seed of seedList) {
       for (const category of serpCategories) {
-        const result = await fetchSerpApi(seed, period, category.id);
+        const result = await fetchSerpApi(seed, period, category.id, siteId);
         allQueries.push(...result);
       }
     }
   } else {
     for (const seed of seedList) {
-      const result = await fetchSerpApi(seed, period);
+      const result = await fetchSerpApi(seed, period, null, siteId);
       allQueries.push(...result);
     }
   }
