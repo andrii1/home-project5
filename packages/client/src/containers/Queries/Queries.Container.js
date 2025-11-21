@@ -89,7 +89,7 @@ export const Queries = () => {
     }
 
     // Sources
-    if (sources && sources !== 'all') {
+    if (sources && sources !== 'all' && sites === '1') {
       params.append('sources', sources);
     }
 
@@ -327,13 +327,15 @@ export const Queries = () => {
             onSelect={(option) => setDays(option.value)}
             showFilterIcon={false}
           />
-          <DropDownView
-            selectedOptionValue={sources}
-            className="no-line-height"
-            options={sourcesOptions}
-            onSelect={(option) => setSources(option.value)}
-            showFilterIcon={false}
-          />
+          {sites === '1' && (
+            <DropDownView
+              selectedOptionValue={sources}
+              className="no-line-height"
+              options={sourcesOptions}
+              onSelect={(option) => setSources(option.value)}
+              showFilterIcon={false}
+            />
+          )}
           {/* <Button onClick={handleSearch} primary label="Search" /> */}
         </div>
       </section>
