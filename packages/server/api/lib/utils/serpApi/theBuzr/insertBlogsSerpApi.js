@@ -9,38 +9,43 @@
 require('dotenv').config();
 
 const fetchSerpApi = require('../serpApi');
-const searchApps = require('../searchApps');
-const insertDeals = require('../insertDeals');
 const OpenAI = require('openai');
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // make sure this is set in your .env
 });
 
-const today = new Date();
-const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+// const today = new Date();
+// const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 1, 3, 5];
-const allowedDaysWeek = [0, 3, 5];
-const allowedDaysDay = [1];
+// const allowedDays = [0, 3, 5];
 
-if (!allowedDays.includes(todayDay)) {
-  console.log('Not an allowed day, skipping job.');
-  process.exit(0);
-}
+// if (!allowedDays.includes(todayDay)) {
+//   console.log('Not an allowed day, skipping job.');
+//   process.exit(0);
+// }
 
 // Credentials (from .env)
-const USER_UID_DEALS = process.env.USER_UID_DEALS_PROD;
-const API_PATH_DEALS = process.env.API_PATH_DEALS_PROD;
+const USER_UID_BLOG = process.env.USER_UID_BLOG_PROD;
+const API_PATH_BLOG = process.env.API_PATH_BLOG_PROD;
+// Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
 
-const seedList = ['invite code', 'referral code', 'promo code'];
-
-// const queries = [
-//   { title: 'emochi ai promo code' },
-//   { title: 'meta viewpoints referral codes' },
-// ];
+const seedList = [
+  'how to use',
+  'how to delete',
+  'how to withdraw',
+  'review',
+  'tutorial',
+  'application',
+  'stop',
+  'how to fix',
+  'how to earn',
+  'how to get free',
+  'for free',
+  'stock',
+];
 
 // fetch helpers
 
@@ -63,7 +68,7 @@ async function insertQuery(queryObj) {
 async function createBlogContent(queryParam) {
   // Generate a short description using OpenAI
 
-  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. Also, you should mention and link to topappdeals.com - as a source of promo codes, referral codes. At least 1300 words. Do not include published by [Your Name] or Published on [Date]. Do not include title, headline, h1, h2 of the blog, just content of the article. Output with markdown.`;
+  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. At least 1300 words. Do not include published by [Your Name] or Published on [Date]. Do not include title, headline, h1, h2 of the blog, just content of the article. Output with markdown.`;
   // console.log(prompt);
 
   const completion = await openai.chat.completions.create({
@@ -79,10 +84,10 @@ async function createBlogContent(queryParam) {
 
 const createPost = async (postDataParam) => {
   try {
-    const response = await fetch(`${API_PATH_DEALS}/blogs`, {
+    const response = await fetch(`${API_PATH_BLOG}/blogs`, {
       method: 'POST',
       headers: {
-        token: `token ${USER_UID_DEALS}`,
+        token: `token ${USER_UID_BLOG}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(postDataParam),
@@ -102,16 +107,16 @@ const createPost = async (postDataParam) => {
 };
 
 const createPostMain = async () => {
-  // const queries = await fetchSerpApi('7');
+  const queries = await fetchSerpApi('7', seedList, false, 4);
 
-  let queries;
-  if (allowedDaysWeek.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList, false, 3);
-  }
+  // let queries;
+  // if (allowedDaysWeek.includes(todayDay)) {
+  //   queries = await fetchSerpApi('7');
+  // }
 
-  if (allowedDaysDay.includes(todayDay)) {
-    queries = await fetchSerpApi('1', seedList, false, 3);
-  }
+  // if (allowedDaysDay.includes(todayDay)) {
+  //   queries = await fetchSerpApi('1');
+  // }
 
   console.log('queries', queries);
   const dedupedQueries = [];
@@ -144,8 +149,8 @@ const createPostMain = async () => {
     }
   }
 
-  const apps = await searchApps(dedupedQueries);
-  await insertDeals(apps);
+  // const apps = await searchBlogs(dedupedQueries);
+  // await insertBlogs(apps);
 };
 
 createPostMain().catch(console.error);
