@@ -108,13 +108,6 @@ const createPost = async (postDataParam) => {
   }
 };
 
-function cleanUp(str) {
-  return str
-    .replace(/\bquotes?\b/gi, '') // remove "quote"/"quotes"
-    .replace(/\s+/g, ' ') // collapse extra spaces
-    .trim(); // remove leading/trailing space
-}
-
 function capitalizeFirstWord(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
