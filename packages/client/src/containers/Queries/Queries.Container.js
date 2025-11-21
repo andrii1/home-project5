@@ -31,7 +31,7 @@ const daysOptions = [
 ];
 
 const sourcesOptions = [
-  { label: 'All', value: 'all' },
+  { label: 'All', value: '' },
   { label: 'Apps', value: 'apps' },
   { label: 'Not apps', value: 'not-apps' },
 ];
@@ -43,7 +43,7 @@ export const Queries = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState('7');
-  const [sites, setSites] = useState('');
+  const [sites, setSites] = useState('1');
   const [orderBy, setOrderBy] = useState({
     column: 'value',
     direction: 'desc',
@@ -59,7 +59,7 @@ export const Queries = () => {
       const data = await response.json();
       // Build options
       const options = [
-        { label: 'All', value: null },
+        { label: 'All', value: '' },
         ...data.map((site) => ({
           label: site.title,
           value: site.id,
@@ -95,8 +95,6 @@ export const Queries = () => {
 
     const url = `${apiURL()}/queries?${params.toString()}`;
 
-    console.log('url', url);
-
     setLoading(true);
 
     try {
@@ -126,8 +124,9 @@ export const Queries = () => {
     fetchQueries();
   }, [fetchQueries]);
 
-  console.log('sitesOptions', sitesOptions);
-  console.log('queries', queries);
+  // console.log('sitesOptions', sitesOptions);
+  // console.log('queries', queries);
+  // console.log('sites', sites);
 
   // useEffect(() => {
   //   const sourcesArray = queries.map((query) => ({
@@ -308,7 +307,7 @@ export const Queries = () => {
         <h1 className="hero-header">Queries</h1>
       </header>
       <section className="app-input-container">
-        <div className="search-input-container">
+        <div className="queries-input-container">
           {/* <TextFormInput
             value={input}
             placeholder="Find recipes"

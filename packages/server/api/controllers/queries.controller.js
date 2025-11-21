@@ -53,7 +53,7 @@ const getQueries = async ({
     }
 
     if (sites) {
-      queryBuilder = queryBuilder.where('site_id', Number(sites));
+      queryBuilder = queryBuilder.where('site_id', sites);
     }
 
     const queries = await queryBuilder.orderBy(
