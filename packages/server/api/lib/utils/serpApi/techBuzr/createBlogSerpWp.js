@@ -7,7 +7,7 @@
 // const fetch = require("node-fetch");
 
 require('dotenv').config();
-const fetchSerpApi = require('../createBlogsMrhack/serpApi');
+const fetchSerpApi = require('../serpApi');
 
 const OpenAI = require('openai');
 
