@@ -21,12 +21,12 @@ async function run() {
       const { id, ...data } = r; // remove auto-increment id
       return {
         ...data,
-        site_id: 2,
+        site_id: 3,
       };
     });
 
     // 3. Insert into queriesMrhack
-    await knex('queriesMrhack').insert(cleanedRows);
+    await knex('queries').insert(cleanedRows);
 
     console.log(`Inserted ${cleanedRows.length} rows into queriesMrhack.`);
   } catch (err) {
