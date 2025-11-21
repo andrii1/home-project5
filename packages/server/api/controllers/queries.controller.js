@@ -12,7 +12,7 @@ const getQueries = async ({
   token,
   days = null,
   sources,
-  site,
+  sites,
   column,
   direction,
 }) => {
@@ -52,8 +52,8 @@ const getQueries = async ({
       queryBuilder = queryBuilder.where('source', 'not like', '%app%');
     }
 
-    if (site) {
-      queryBuilder = queryBuilder.where('site_id', site);
+    if (sites) {
+      queryBuilder = queryBuilder.where('site_id', sites);
     }
 
     const queries = await queryBuilder.orderBy(

@@ -43,19 +43,45 @@ export const Queries = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState('7');
+  const [sites, setSites] = useState('1');
   const [orderBy, setOrderBy] = useState({
     column: 'value',
     direction: 'desc',
   });
+  const [sitesOptions, setSitesOptions] = useState([]);
   const navigate = useNavigate();
 
   const [sources, setSources] = useState('apps');
+
+  useEffect(() => {
+    async function fetchSites() {
+      const response = await fetch(`${apiURL()}/sites`);
+      const data = await response.json();
+      // Build options
+      const options = [
+        { label: 'All', value: null },
+        ...data.map((site) => ({
+          label: site.name,
+          value: site.id,
+        })),
+      ];
+
+      setSitesOptions(options);
+    }
+
+    fetchSites();
+  }, []);
 
   const fetchQueries = useCallback(async () => {
     const params = new URLSearchParams({
       column: orderBy.column,
       direction: orderBy.direction,
     });
+
+    // Site
+    if (sites) {
+      params.append('sites', sites);
+    }
 
     // Days
     if (days) {
@@ -92,7 +118,7 @@ export const Queries = () => {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
-  }, [orderBy.column, orderBy.direction, days, sources, user?.uid]);
+  }, [orderBy.column, orderBy.direction, days, sources, sites, user?.uid]);
 
   useEffect(() => {
     fetchQueries();
@@ -283,6 +309,13 @@ export const Queries = () => {
             placeholder="Find recipes"
             onChange={setInput}
           /> */}
+          <DropDownView
+            selectedOptionValue={sites}
+            className="no-line-height"
+            options={sitesOptions}
+            onSelect={(option) => setSites(option.value)}
+            showFilterIcon={false}
+          />
           <DropDownView
             selectedOptionValue={days}
             className="no-line-height"
