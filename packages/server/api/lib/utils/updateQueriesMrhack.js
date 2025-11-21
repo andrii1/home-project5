@@ -19,10 +19,9 @@ async function run() {
       return;
     }
 
-    const cleanedRows = rows.map(({ id, created_at, updated_at, ...rest }) => ({
+    const cleanedRows = rows.map(({ id, created_at, ...rest }) => ({
       ...rest,
       created_at: created_at ? formatMySqlDate(created_at) : null,
-      updated_at: updated_at ? formatMySqlDate(updated_at) : null,
       site_id: 3,
     }));
 
