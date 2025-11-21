@@ -12,6 +12,7 @@ const getQueries = async ({
   token,
   days = null,
   sources,
+  site,
   column,
   direction,
 }) => {
@@ -28,7 +29,9 @@ const getQueries = async ({
   }
 
   try {
-    let queryBuilder = knex('queries');
+    let queryBuilder = knex('queries')
+      .select('queries.*', 'sites.title as siteTitle')
+      .join('sites', 'queries.site_id', '=', 'sites.id');
 
     if (days) {
       // Filter queries from the last X days
@@ -47,6 +50,10 @@ const getQueries = async ({
     if (sources === 'not-apps') {
       // Filter queries from the last X days
       queryBuilder = queryBuilder.where('source', 'not like', '%app%');
+    }
+
+    if (site) {
+      queryBuilder = queryBuilder.where('site_id', site);
     }
 
     const queries = await queryBuilder.orderBy(
