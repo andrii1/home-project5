@@ -98,7 +98,7 @@ export const Queries = () => {
     }
 
     // Sources
-    if (sources && sources !== 'all' && sites === 1) {
+    if (sources && sites === 1) {
       params.append('sources', sources);
     }
 
@@ -141,8 +141,6 @@ export const Queries = () => {
     dataSources,
     user?.uid,
   ]);
-
-  console.log('sites', sites);
 
   useEffect(() => {
     fetchQueries();
