@@ -11,9 +11,6 @@ const GhostAdminAPI = require('@tryghost/admin-api');
 const getSearchQueries = require('../useSearchConsoleApi');
 
 const OpenAI = require('openai');
-const searchApps = require('../searchApps');
-const insertApps = require('../insertApps');
-const insertDeals = require('../insertDeals');
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // make sure this is set in your .env

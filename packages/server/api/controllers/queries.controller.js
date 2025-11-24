@@ -98,6 +98,7 @@ const createQuery = async (token, body) => {
       value: body.value,
       status: false,
       source: body.source,
+      site_id: body.site_id,
       ...(body.data_source && { data_source: body.data_source }),
     });
 
