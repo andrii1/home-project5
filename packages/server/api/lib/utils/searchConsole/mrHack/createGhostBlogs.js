@@ -22,15 +22,15 @@ const api = new GhostAdminAPI({
   version: 'v4.0', // or whatever version your Ghost install uses
 });
 
-// const today = new Date();
-// const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+const today = new Date();
+const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-// const allowedDays = [0];
+const allowedDays = [0];
 
-// if (!allowedDays.includes(todayDay)) {
-//   console.log('Not an allowed day, skipping job.');
-//   process.exit(0);
-// }
+if (!allowedDays.includes(todayDay)) {
+  console.log('Not an allowed day, skipping job.');
+  process.exit(0);
+}
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
@@ -81,15 +81,6 @@ function capitalizeFirstWord(str) {
 }
 
 const createPostMain = async () => {
-  // let queries;
-  // if (allowedDaysWeek.includes(todayDay)) {
-  //   queries = await fetchSerpApi('7', seedList, true);
-  // }
-
-  // if (allowedDaysDay.includes(todayDay)) {
-  //   queries = await fetchSerpApi('1', seedList, false);
-  // }
-
   const queries = await getSearchQueries('mrhack.io', '1', 'searchConsole');
 
   // const queries = await fetchSerpApi('7', true);

@@ -92,21 +92,7 @@ const createPost = async (postDataParam) => {
 };
 
 const createPostMain = async () => {
-  const queries = await getSearchQueries(
-    'https://www.thebuzr.com',
-    '4',
-    'searchConsole',
-  );
-  // const queries = await fetchSerpApi('7', seedList, false, 4);
-
-  // let queries;
-  // if (allowedDaysWeek.includes(todayDay)) {
-  //   queries = await fetchSerpApi('7');
-  // }
-
-  // if (allowedDaysDay.includes(todayDay)) {
-  //   queries = await fetchSerpApi('1');
-  // }
+  const queries = await getSearchQueries('thebuzr.com', '4', 'searchConsole');
 
   console.log('queries', queries);
   const dedupedQueries = [];
