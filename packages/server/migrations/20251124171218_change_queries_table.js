@@ -6,7 +6,7 @@ export async function up(knex) {
       .enum('data_source', [
         'googleTrends',
         'searchConsole',
-        'keywordTools',
+        'keywordTool',
         'ahrefs',
       ])
       .notNullable()

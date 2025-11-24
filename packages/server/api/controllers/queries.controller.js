@@ -13,6 +13,7 @@ const getQueries = async ({
   days = null,
   sources,
   sites,
+  dataSources,
   column,
   direction,
 }) => {
@@ -54,6 +55,10 @@ const getQueries = async ({
 
     if (sites) {
       queryBuilder = queryBuilder.where('site_id', sites);
+    }
+
+    if (dataSources) {
+      queryBuilder = queryBuilder.where('data_source', dataSources);
     }
 
     const queries = await queryBuilder.orderBy(

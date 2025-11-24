@@ -36,6 +36,14 @@ const sourcesOptions = [
   { label: 'Not apps', value: 'not-apps' },
 ];
 
+const dataSourcesOptions = [
+  { label: 'All', value: '' },
+  { label: 'GT', value: 'googleTrends' },
+  { label: 'SC', value: 'searchConsole' },
+  { label: 'KT', value: 'keywordTool' },
+  { label: 'Ahrefs', value: 'ahrefs' },
+];
+
 export const Queries = () => {
   const { user, loading: userLoading } = useUserContext();
   const [input, setInput] = useState();
@@ -43,7 +51,7 @@ export const Queries = () => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [days, setDays] = useState('7');
-  const [sites, setSites] = useState('1');
+  const [sites, setSites] = useState(1);
   const [orderBy, setOrderBy] = useState({
     column: 'value',
     direction: 'desc',
@@ -52,6 +60,7 @@ export const Queries = () => {
   const navigate = useNavigate();
 
   const [sources, setSources] = useState('apps');
+  const [dataSources, setDataSources] = useState('googleTrends');
 
   useEffect(() => {
     async function fetchSites() {
@@ -89,8 +98,13 @@ export const Queries = () => {
     }
 
     // Sources
-    if (sources && sources !== 'all' && sites === '1') {
+    if (sources && sources !== 'all' && sites === 1) {
       params.append('sources', sources);
+    }
+
+    // Data sources
+    if (dataSources) {
+      params.append('dataSources', dataSources);
     }
 
     const url = `${apiURL()}/queries?${params.toString()}`;
@@ -118,7 +132,17 @@ export const Queries = () => {
       setError({ message: e.message || 'An error occured' });
     }
     setLoading(false);
-  }, [orderBy.column, orderBy.direction, days, sources, sites, user?.uid]);
+  }, [
+    orderBy.column,
+    orderBy.direction,
+    days,
+    sources,
+    sites,
+    dataSources,
+    user?.uid,
+  ]);
+
+  console.log('sites', sites);
 
   useEffect(() => {
     fetchQueries();
@@ -327,7 +351,7 @@ export const Queries = () => {
             onSelect={(option) => setDays(option.value)}
             showFilterIcon={false}
           />
-          {sites === '1' && (
+          {sites === 1 && (
             <DropDownView
               selectedOptionValue={sources}
               className="no-line-height"
@@ -336,6 +360,13 @@ export const Queries = () => {
               showFilterIcon={false}
             />
           )}
+          <DropDownView
+            selectedOptionValue={dataSources}
+            className="no-line-height"
+            options={dataSourcesOptions}
+            onSelect={(option) => setDataSources(option.value)}
+            showFilterIcon={false}
+          />
           {/* <Button onClick={handleSearch} primary label="Search" /> */}
         </div>
       </section>

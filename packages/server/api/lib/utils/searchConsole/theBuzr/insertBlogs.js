@@ -8,7 +8,6 @@
 
 require('dotenv').config();
 
-const fetchSerpApi = require('../serpApi');
 const OpenAI = require('openai');
 const getSearchQueries = require('../useSearchConsoleApi');
 
@@ -19,7 +18,7 @@ const openai = new OpenAI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 3, 5];
+const allowedDays = [0];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -32,21 +31,6 @@ const API_PATH_BLOG = process.env.API_PATH_BLOG_PROD;
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
-
-const seedList = [
-  'how to use',
-  'how to delete',
-  'how to withdraw',
-  'review',
-  'tutorial',
-  'application',
-  'stop',
-  'how to fix',
-  'how to earn',
-  'how to get free',
-  'for free',
-  'stock',
-];
 
 // fetch helpers
 
