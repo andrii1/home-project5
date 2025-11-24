@@ -90,11 +90,7 @@ const createPostMain = async () => {
   //   queries = await fetchSerpApi('1', seedList, false);
   // }
 
-  const queries = await getSearchQueries(
-    'https://www.mrhack.io',
-    '1',
-    'searchConsole',
-  );
+  const queries = await getSearchQueries('mrhack.io', '1', 'searchConsole');
 
   // const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);

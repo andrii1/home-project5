@@ -27,7 +27,7 @@ function getLast7DaysRange() {
   };
 }
 
-async function getSearchQueries(siteUrl, siteIdParam, dataSourceParam) {
+async function getSearchQueries(siteUrlParam, siteIdParam, dataSourceParam) {
   const auth = new google.auth.GoogleAuth({
     credentials: key,
     scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
@@ -36,7 +36,7 @@ async function getSearchQueries(siteUrl, siteIdParam, dataSourceParam) {
   const authClient = await auth.getClient();
   google.options({ auth: authClient });
 
-  // const siteUrl = siteUrlParam; // must match exactly how it's registered in GSC
+  const siteUrl = `sc-domain:${siteUrlParam}`; // must match exactly how it's registered in GSC
 
   const { startDate, endDate } = getLast7DaysRange();
 
