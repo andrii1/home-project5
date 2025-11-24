@@ -27,7 +27,7 @@ function getLast7DaysRange() {
   };
 }
 
-async function getSearchQueries() {
+async function getSearchQueries(siteUrl, siteIdParam, dataSourceParam) {
   const auth = new google.auth.GoogleAuth({
     credentials: key,
     scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
@@ -36,7 +36,7 @@ async function getSearchQueries() {
   const authClient = await auth.getClient();
   google.options({ auth: authClient });
 
-  const siteUrl = 'https://www.motivately.co/'; // must match exactly how it's registered in GSC
+  // const siteUrl = siteUrlParam; // must match exactly how it's registered in GSC
 
   const { startDate, endDate } = getLast7DaysRange();
 
@@ -53,7 +53,14 @@ async function getSearchQueries() {
   const rows = res.data.rows || [];
   const result = rows
     .map((row) => row.keys[0])
-    .filter((item) => item.includes('quote'));
+    .map((item) => ({
+      title: item,
+      value: null,
+      source: `7 days`,
+      site_id: siteIdParam,
+      data_source: dataSourceParam,
+    }));
+  // .filter((item) => item.includes('quote'));
 
   return result;
 }
