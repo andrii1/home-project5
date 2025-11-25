@@ -21,11 +21,11 @@ const generateIndex = require('./core/generateIndex');
 const S3_BUCKET = process.env.AWS_S3_BUCKET_NAME;
 
 (async () => {
-  // const today = new Date();
-  // if (today.getDay() !== 0) {
-  //   console.log('Not Sunday — skipping weekly sitemap job.');
-  //   return;
-  // }
+  const today = new Date();
+  if (today.getDay() !== 0) {
+    console.log('Not Sunday — skipping weekly sitemap job.');
+    return;
+  }
 
   // Load all config files from /config/
   const sites = fs
