@@ -2,6 +2,15 @@
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 const fs = require('fs');
+const path = require('path');
+
+// Absolute path to config folder, based on the location of run.js
+const configDir = path.join(__dirname, 'config');
+
+if (!fs.existsSync(configDir)) {
+  console.error('Config folder not found:', configDir);
+  process.exit(1);
+}
 
 const fetchData = require('./core/fetchData');
 const buildUrls = require('./core/buildUrls');
@@ -20,9 +29,14 @@ const S3_BUCKET = process.env.AWS_S3_BUCKET_NAME;
 
   // Load all config files from /config/
   const sites = fs
-    .readdirSync('./config')
+    .readdirSync(configDir)
     .filter((f) => f.endsWith('.config.js'))
-    .map((f) => require(`./config/${f}`));
+    .map((f) => require(path.join(configDir, f)));
+
+  console.log(
+    'Loaded sites:',
+    sites.map((s) => s.host),
+  );
 
   for (const site of sites) {
     console.log(`\n🚀 Starting sitemap for: ${site.host}`);
