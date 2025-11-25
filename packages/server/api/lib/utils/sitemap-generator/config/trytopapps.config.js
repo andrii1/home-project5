@@ -1,6 +1,6 @@
 module.exports = {
-  host: 'https://www.topappdeals.com',
-  folder: 'topappdeals',
+  host: 'https://www.trytopapps.com',
+  folder: 'trytopapps',
   staticRoutes: ['/', '/apps', '/faq', '/login', '/signup'],
   apiPaths: [
     { path: 'apps', prefix: 'apps' },
