@@ -53,6 +53,53 @@ function capitalizeFirstWord(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
+async function fetchCategories() {
+  try {
+    const res = await fetch(`${API_PATH_BLOG}/categories`);
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    console.error('Failed to fetch categories:', error);
+    return null;
+  }
+}
+
+async function insertCategory(title) {
+  const res = await fetch(`${API_PATH_BLOG}/categories`, {
+    method: 'POST',
+    headers: {
+      token: `token ${USER_UID_BLOG}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ title }),
+  });
+  const data = await res.json();
+  return data; // assume it returns { id, full_name }
+}
+
+async function createCategoryWithChatGpt(
+  blogTitle,
+  blogContent,
+  listOfCategories,
+) {
+  // Generate a short description using OpenAI
+  const prompt = `Select a category for this blog: ${blogTitle} with content: "${blogContent}". Select only from list of existing categories: "${listOfCategories}". Return category title only.`;
+
+  const completion = await openai.chat.completions.create({
+    model: 'gpt-4o-mini',
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.7,
+    max_tokens: 100,
+  });
+
+  const topic = completion.choices[0].message.content.trim();
+  return topic;
+}
+
 async function insertQuery(queryObj) {
   const res = await fetch(`${API_PATH}/queries`, {
     method: 'POST',
@@ -135,12 +182,23 @@ const createPostMain = async () => {
 
       const blogTitle = capitalizeFirstWord(query.title);
       const blogContent = await createBlogContent(query.title);
+      const listOfCategories = await fetchCategories();
+
+      const createdCategory = await createCategoryWithChatGpt(
+        blogTitle,
+        blogContent,
+        listOfCategories,
+      );
+
+      const newCategory = await insertCategory(createdCategory);
+      const { categoryId } = newCategory;
 
       const postData = {
         title: blogTitle,
         content: blogContent,
         status: 'published',
         user_id: '1',
+        category_id: categoryId,
       };
 
       await createPost(postData);
