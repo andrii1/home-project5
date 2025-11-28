@@ -35,7 +35,7 @@ const allowedDays = [0, 1, 3, 4, 5, 6];
 // const allowedDaysOtherKeywords = [0, 5];
 const allowedDaysAppWeek = [0];
 const allowedDaysAppDay = [0];
-const allowedDaysOtherKeywords = [4];
+const allowedDaysOtherKeywords = [4, 5, 6];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
