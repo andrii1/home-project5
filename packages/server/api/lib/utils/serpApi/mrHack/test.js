@@ -30,10 +30,9 @@ const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
 const allowedDays = [0, 1, 3, 4, 5, 6];
 
-// const allowedDaysAppWeek = [0, 3, 5];
-// const allowedDaysAppDay = [1, 4, 6];
-// const allowedDaysOtherKeywords = [0, 5];
-const allowedDaysOtherKeywords = [4];
+const allowedDaysAppWeek = [0, 3, 5];
+const allowedDaysAppDay = [1, 4, 6];
+const allowedDaysOtherKeywords = [0, 5];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -41,13 +40,13 @@ if (!allowedDays.includes(todayDay)) {
 }
 
 const seedListAppKeyword = ['app'];
-const seedListOtherKeywords = ['error', 'website', 'app iphone', 'widget'];
+const seedListOtherKeywords = ['error'];
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
-const USER_UID_ERRORS = process.env.USER_UID_ERRORS_PROD;
-const API_PATH_ERRORS = process.env.API_PATH_ERRORS_PROD;
+const USER_UID_ERRORS = process.env.USER_UID_ERRORS_LOCAL;
+const API_PATH_ERRORS = process.env.API_PATH_ERRORS_LOCAL;
 
 // fetch helpers
 
@@ -147,62 +146,62 @@ const createPostMain = async () => {
   let queries = [];
 
   // 1. Existing weekly logic
-  if (allowedDaysAppWeek.includes(todayDay)) {
-    const q = await fetchSerpApi('7', seedListAppKeyword, true, 1);
-    queries = queries.concat(q);
-  }
+  // if (allowedDaysAppWeek.includes(todayDay)) {
+  //   const q = await fetchSerpApi('7', seedListAppKeyword, true, 1);
+  //   queries = queries.concat(q);
+  // }
 
-  // 2. Existing daily logic
-  if (allowedDaysAppDay.includes(todayDay)) {
-    const q = await fetchSerpApi('1', seedListAppKeyword, false, 1);
-    queries = queries.concat(q);
-  }
+  // // 2. Existing daily logic
+  // if (allowedDaysAppDay.includes(todayDay)) {
+  //   const q = await fetchSerpApi('1', seedListAppKeyword, false, 1);
+  //   queries = queries.concat(q);
+  // }
 
-  // 3. NEW: additional queries for special keyword days
-  if (allowedDaysOtherKeywords.includes(todayDay)) {
-    const q = await fetchSerpApi('7', seedListOtherKeywords, false, 1);
-    queries = queries.concat(q);
-  }
+  // // 3. NEW: additional queries for special keyword days
+  // if (allowedDaysOtherKeywords.includes(todayDay)) {
+  const q = await fetchSerpApi('7', seedListOtherKeywords, false, 1);
+  queries = queries.concat(q);
+  // }
 
   // const queries = await fetchSerpApi('7', true);
   console.log('queries', queries);
   const dedupedQueries = [];
   for (const query of queries) {
-    const newQuery = await insertQuery(query);
+    // const newQuery = await insertQuery(query);
 
-    if (newQuery.existing) {
-      console.log('Duplicate query skipped:', query);
-      continue;
-    }
+    // if (newQuery.existing) {
+    //   console.log('Duplicate query skipped:', query);
+    //   continue;
+    // }
 
     if (query.source.includes('app')) {
       dedupedQueries.push(query.title);
     }
 
-    const blogTitle = capitalizeFirstWord(query.title);
-    const blogContent = await createBlogContent(query.title);
+    // const blogTitle = capitalizeFirstWord(query.title);
+    // const blogContent = await createBlogContent(query.title);
 
-    const postData = {
-      title: blogTitle,
-      mobiledoc: JSON.stringify({
-        version: '0.3.1',
-        atoms: [],
-        cards: [
-          [
-            'html',
-            {
-              cardName: 'html',
-              html: blogContent,
-            },
-          ],
-        ],
-        markups: [],
-        sections: [[10, 0]],
-      }),
-      status: 'published',
-    };
+    // const postData = {
+    //   title: blogTitle,
+    //   mobiledoc: JSON.stringify({
+    //     version: '0.3.1',
+    //     atoms: [],
+    //     cards: [
+    //       [
+    //         'html',
+    //         {
+    //           cardName: 'html',
+    //           html: blogContent,
+    //         },
+    //       ],
+    //     ],
+    //     markups: [],
+    //     sections: [[10, 0]],
+    //   }),
+    //   status: 'published',
+    // };
 
-    await createPost(postData);
+    // await createPost(postData);
 
     if (query.source.includes('error')) {
       const errorTitle = capitalizeFirstWord(query.title);
@@ -219,10 +218,10 @@ const createPostMain = async () => {
     }
   }
 
-  console.log('dedupedQueries', dedupedQueries);
-  const apps = await searchApps(dedupedQueries);
-  await insertApps(apps);
-  await insertDeals(apps);
+  // console.log('dedupedQueries', dedupedQueries);
+  // const apps = await searchApps(dedupedQueries);
+  // await insertApps(apps);
+  // await insertDeals(apps);
 };
 
 createPostMain().catch(console.error);

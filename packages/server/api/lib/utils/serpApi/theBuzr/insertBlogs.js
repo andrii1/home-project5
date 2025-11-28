@@ -37,6 +37,7 @@ const seedList = [
   'how to delete',
   'how to withdraw',
   'review',
+  'reviews',
   'tutorial',
   'application',
   'stop',
@@ -45,6 +46,7 @@ const seedList = [
   'how to get free',
   'for free',
   'stock',
+  'price',
 ];
 
 // fetch helpers
