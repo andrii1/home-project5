@@ -118,6 +118,9 @@ const seedList = [
   'buy shein',
   'discounts',
   'what to do if',
+  't shirt',
+  'cap with',
+  'sticker with',
 ];
 
 const seedListUa = [
