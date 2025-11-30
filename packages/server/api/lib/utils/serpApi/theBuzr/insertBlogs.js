@@ -78,6 +78,7 @@ const seedList = [
   'creator',
   'fitness',
   'wellness',
+  'buy cheap',
   'buy amazon',
   'but whatnot',
   'buy tiktok',
