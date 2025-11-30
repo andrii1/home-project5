@@ -37,6 +37,8 @@ const seedList = [
   'examples',
   'calculator',
   'converter',
+  'planner',
+  'tracker',
 ];
 
 // WordPress Credentials (from .env)
