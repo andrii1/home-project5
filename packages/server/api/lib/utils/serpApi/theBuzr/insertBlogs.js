@@ -19,10 +19,10 @@ const openai = new OpenAI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 1, 2, 3, 4, 5];
+const allowedDays = [0, 1, 3, 4, 5];
 const allowedDaysEng = [0, 5];
 const allowedDaysUa = [3];
-const allowedDaysTrendingNow = [1, 2, 4];
+const allowedDaysTrendingNow = [1, 4];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -129,6 +129,7 @@ const seedList = [
   'affiliate links',
   'near me',
   'how long',
+  'top 10',
 ];
 
 const seedListUa = [
