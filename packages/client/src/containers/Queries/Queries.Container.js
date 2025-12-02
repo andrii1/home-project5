@@ -42,6 +42,7 @@ const dataSourcesOptions = [
   { label: 'SC', value: 'searchConsole' },
   { label: 'KT', value: 'keywordTool' },
   { label: 'Ahrefs', value: 'ahrefs' },
+  { label: 'GT Now', value: 'googleTrendingNow' },
 ];
 
 export const Queries = () => {

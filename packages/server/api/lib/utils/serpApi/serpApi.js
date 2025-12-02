@@ -3,10 +3,11 @@
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 
-const { SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3 } = process.env;
+const { SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3, SERP_API_KEY4 } =
+  process.env;
 const normalizeValue = require('../normalizeValue');
 
-const apiKeys = [SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3];
+const apiKeys = [SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3, SERP_API_KEY4];
 
 let currentKeyIndex = 0;
 
@@ -54,6 +55,8 @@ async function fetchSerpApi(
   periodParam,
   categoryParam,
   siteIdParam,
+  langParam = 'en',
+  geoParam = 'US',
 ) {
   const apiKey = apiKeys[currentKeyIndex];
 
@@ -105,18 +108,39 @@ async function fetchSerpApi(
   }
 }
 
-const useAllQueries = async (period, seedList, includeCategories, siteId) => {
+const useAllQueries = async (
+  period,
+  seedList,
+  includeCategories,
+  siteId,
+  language,
+  geo,
+) => {
   const allQueries = [];
   if (includeCategories) {
     for (const seed of seedList) {
       for (const category of serpCategories) {
-        const result = await fetchSerpApi(seed, period, category.id, siteId);
+        const result = await fetchSerpApi(
+          seed,
+          period,
+          category.id,
+          siteId,
+          language,
+          geo,
+        );
         allQueries.push(...result);
       }
     }
   } else {
     for (const seed of seedList) {
-      const result = await fetchSerpApi(seed, period, null, siteId);
+      const result = await fetchSerpApi(
+        seed,
+        period,
+        null,
+        siteId,
+        language,
+        geo,
+      );
       allQueries.push(...result);
     }
   }

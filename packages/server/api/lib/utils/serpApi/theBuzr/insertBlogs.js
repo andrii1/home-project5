@@ -9,6 +9,7 @@
 require('dotenv').config();
 
 const fetchSerpApi = require('../serpApi');
+const fetchSerpApiTrendingNow = require('../serpApiTrendingNow');
 const OpenAI = require('openai');
 
 const openai = new OpenAI({
@@ -18,7 +19,10 @@ const openai = new OpenAI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 1, 3, 5];
+const allowedDays = [0, 1, 3, 4, 5];
+const allowedDaysEng = [0, 5];
+const allowedDaysUa = [3];
+const allowedDaysTrendingNow = [1, 4];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -123,6 +127,8 @@ const seedList = [
   'sticker with',
   'affiliate',
   'affiliate links',
+  'near me',
+  'how long',
 ];
 
 const seedListUa = [
@@ -195,16 +201,20 @@ const createPost = async (postDataParam) => {
 };
 
 const createPostMain = async () => {
-  const queries = await fetchSerpApi('7', seedList, false, 4);
+  // const queries = await fetchSerpApi('7', seedList, false, 4);
 
-  // let queries;
-  // if (allowedDaysWeek.includes(todayDay)) {
-  //   queries = await fetchSerpApi('7');
-  // }
+  let queries;
+  if (allowedDaysEng.includes(todayDay)) {
+    queries = await fetchSerpApi('7', seedList, false, 4);
+  }
 
-  // if (allowedDaysDay.includes(todayDay)) {
-  //   queries = await fetchSerpApi('1');
-  // }
+  if (allowedDaysUa.includes(todayDay)) {
+    queries = await fetchSerpApi('7', seedListUa, false, 4, 'uk', '');
+  }
+
+  if (allowedDaysTrendingNow.includes(todayDay)) {
+    queries = await fetchSerpApiTrendingNow('24', 4, 'googleTrendingNow');
+  }
 
   console.log('queries', queries);
   const dedupedQueries = [];
