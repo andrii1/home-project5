@@ -3,11 +3,24 @@
 /* eslint-disable no-restricted-syntax */
 require('dotenv').config();
 
-const { SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3, SERP_API_KEY4 } =
-  process.env;
+const {
+  SERP_API_KEY,
+  SERP_API_KEY2,
+  SERP_API_KEY3,
+  SERP_API_KEY4,
+  SERP_API_KEY5,
+  SERP_API_KEY6,
+} = process.env;
 const normalizeValue = require('../normalizeValue');
 
-const apiKeys = [SERP_API_KEY, SERP_API_KEY2, SERP_API_KEY3, SERP_API_KEY4];
+const apiKeys = [
+  SERP_API_KEY,
+  SERP_API_KEY2,
+  SERP_API_KEY3,
+  SERP_API_KEY4,
+  SERP_API_KEY5,
+  SERP_API_KEY6,
+];
 
 let currentKeyIndex = 0;
 
