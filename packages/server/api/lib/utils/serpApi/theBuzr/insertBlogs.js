@@ -19,10 +19,10 @@ const openai = new OpenAI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 1, 3, 4, 5];
-const allowedDaysEng = [0, 5];
+const allowedDays = [0, 1, 3];
+const allowedDaysEng = [0];
 const allowedDaysUa = [3];
-const allowedDaysTrendingNow = [1, 4];
+const allowedDaysTrendingNow = [1];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -84,6 +84,9 @@ const seedList = [
   'wellness',
   'buy cheap',
   'buy amazon',
+  'amazon',
+  'buy',
+  'shop',
   'buy whatnot',
   'buy tiktok',
   'supplies for',
@@ -130,6 +133,18 @@ const seedList = [
   'near me',
   'how long',
   'top 10',
+  'startup',
+  'funding',
+  'banned',
+  'unable',
+  `can't`,
+  'problem',
+  'turn off',
+  'visit',
+  'tickets',
+  'book tickets',
+  'tour',
+  'sales',
 ];
 
 const seedListUa = [
@@ -140,6 +155,8 @@ const seedListUa = [
   'безплатно',
   'подорож',
   'купити',
+  'купити україна',
+  'дешево',
 ];
 
 // fetch helpers

@@ -21,7 +21,8 @@ const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
 const allowedDays = [0, 1, 3, 5];
-const allowedDaysWeek = [0, 3, 5];
+// const allowedDaysWeek = [0, 3, 5];
+const allowedDaysWeek = [0, 5];
 const allowedDaysDay = [1];
 
 if (!allowedDays.includes(todayDay)) {
