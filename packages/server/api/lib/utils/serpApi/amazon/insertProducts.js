@@ -14,7 +14,7 @@ const API_PATH = process.env.API_PATH_AMAZON_PROD;
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [4];
+const allowedDays = [3];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
