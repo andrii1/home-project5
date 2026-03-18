@@ -31,6 +31,7 @@ const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 const allowedDays = [0, 1, 3, 4, 5, 6];
 
 const allowedDaysAppWeek = [0, 3, 5];
+const allowedDaysAppWeekWorld = [1, 4];
 const allowedDaysAppDay = [1, 4, 6];
 // const allowedDaysOtherKeywords = [0, 5];
 const allowedDaysOtherKeywords = [0];
@@ -149,6 +150,12 @@ const createPostMain = async () => {
   // 1. Existing weekly logic
   if (allowedDaysAppWeek.includes(todayDay)) {
     const q = await fetchSerpApi('7', seedListAppKeyword, true, 1);
+    queries = queries.concat(q);
+  }
+
+  // 1a. Apps worldwide
+  if (allowedDaysAppWeekWorld.includes(todayDay)) {
+    const q = await fetchSerpApi('7', seedListAppKeyword, true, 1, 'en', '');
     queries = queries.concat(q);
   }
 

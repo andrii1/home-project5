@@ -79,8 +79,8 @@ async function fetchSerpApi(
   const params = new URLSearchParams({
     engine: 'google_trends',
     q: seedParam,
-    hl: 'en',
-    geo: 'US',
+    hl: langParam,
+    geo: geoParam,
     date: `now ${periodParam}-d`,
     data_type: 'RELATED_QUERIES',
     api_key: apiKey,
@@ -100,13 +100,14 @@ async function fetchSerpApi(
       : null;
     const periodName =
       periodParam === '7' ? 'weekly' : periodParam === '1' ? 'daily' : '';
+    const geoName = geoParam || 'World';
     const filteredData = rising
       .map((item) => ({
         title: item.query,
         value: normalizeValue(item.value),
         source: `${seedParam}, ${periodName}${
           categoryName ? `, ${categoryName}` : ''
-        }`,
+        }, ${langParam}, ${geoName}`,
         site_id: siteIdParam,
       }))
       .filter(

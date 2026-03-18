@@ -107,11 +107,11 @@ const createPostMain = async () => {
 
   let queries;
   if (allowedDaysWeek.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList, false, 3);
+    queries = await fetchSerpApi('7', seedList, false, 3, 'en', '');
   }
 
   if (allowedDaysDay.includes(todayDay)) {
-    queries = await fetchSerpApi('1', seedList, false, 3);
+    queries = await fetchSerpApi('1', seedList, false, 3, 'en', '');
   }
 
   console.log('queries', queries);
