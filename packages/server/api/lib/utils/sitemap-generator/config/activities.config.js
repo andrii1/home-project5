@@ -1,5 +1,5 @@
 module.exports = {
-  host: 'https://www.booktravelactivities.com/',
+  host: 'https://www.booktravelactivities.com',
   folder: 'activities',
   staticRoutes: ['/', '/products'],
   apiPaths: [
