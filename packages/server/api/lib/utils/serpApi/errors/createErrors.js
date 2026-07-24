@@ -31,8 +31,6 @@ const seedList = ['error', 'is down', 'not working'];
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
-const USER_UID_ERRORS = process.env.USER_UID_ERRORS_PROD;
-const API_PATH_ERRORS = process.env.API_PATH_ERRORS_PROD;
 
 // fetch helpers
 
