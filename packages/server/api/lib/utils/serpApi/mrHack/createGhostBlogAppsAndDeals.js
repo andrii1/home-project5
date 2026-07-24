@@ -42,7 +42,7 @@ if (!allowedDays.includes(todayDay)) {
 }
 
 const seedListAppKeyword = ['app'];
-const seedListOtherKeywords = ['error', 'website', 'app iphone', 'widget'];
+const seedListOtherKeywords = ['website', 'app iphone', 'widget'];
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;
@@ -211,19 +211,19 @@ const createPostMain = async () => {
 
     await createPost(postData);
 
-    if (query.source.includes('error')) {
-      const errorTitle = capitalizeFirstWord(query.title);
-      const errorContent = await createErrorContent(query.title);
+    // if (query.source.includes('error')) {
+    //   const errorTitle = capitalizeFirstWord(query.title);
+    //   const errorContent = await createErrorContent(query.title);
 
-      const errorData = {
-        title: errorTitle,
-        content: errorContent,
-        status: 'published',
-        user_id: '1',
-      };
+    //   const errorData = {
+    //     title: errorTitle,
+    //     content: errorContent,
+    //     status: 'published',
+    //     user_id: '1',
+    //   };
 
-      await createError(errorData);
-    }
+    //   await createError(errorData);
+    // }
   }
 
   console.log('dedupedQueries', dedupedQueries);
