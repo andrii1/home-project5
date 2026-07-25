@@ -56,4 +56,11 @@ router.get('/', (req, res, next) => {
  *        description: Unexpected error.
  */
 
+router.get('/:id', (req, res, next) => {
+  gamesController
+    .getGameById(req.params.id)
+    .then((result) => res.json(result))
+    .catch(next);
+});
+
 module.exports = router;
