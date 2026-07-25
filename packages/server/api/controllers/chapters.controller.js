@@ -31,7 +31,7 @@ const getChaptersByGame = async (game) => {
   }
 };
 
-const getChaptersById = async (id) => {
+const getChapterById = async (id) => {
   if (!id) {
     throw new HttpError('Id should be a number', 400);
   }
@@ -50,5 +50,5 @@ const getChaptersById = async (id) => {
 module.exports = {
   getChapters,
   getChaptersByGame,
-  getChaptersById,
+  getChapterById,
 };

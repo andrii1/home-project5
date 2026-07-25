@@ -45,6 +45,7 @@ import { Queries } from './containers/Queries/Queries.Container';
 import { QueriesTrends } from './containers/QueriesTrends/QueriesTrends.Container';
 import { Games } from './containers/Games/Games.Container';
 import { GameView } from './containers/GameView/GameView.container';
+import { ChapterView } from './containers/ChapterView/ChapterView.container';
 
 function App() {
   return (
@@ -137,6 +138,16 @@ function App() {
               path="/gameplay/games/:slugParam"
               element={<GameView />}
             />
+            <Route
+              exact
+              path="/gameplay/chapters/:id"
+              element={<ChapterView />}
+            />
+            {/* <Route
+              exact
+              path="/gameplay/questions/:id"
+              element={<QuestionView />}
+            /> */}
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

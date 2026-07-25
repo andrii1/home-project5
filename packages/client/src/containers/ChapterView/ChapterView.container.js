@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/media-has-caption */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -20,8 +19,9 @@ import TextFormTextarea from '../../components/Input/TextFormTextarea.component'
 import Toast from '../../components/Toast/Toast.Component';
 import Markdown from 'markdown-to-jsx';
 import { Loading } from '../../components/Loading/Loading.Component';
+import { ThumbsUp, ThumbsDown, Globe } from 'lucide-react';
 import Rating from '../../components/Rating/Rating.component';
-
+import globe from '../../assets/images/globe.svg';
 import { formatDuration } from '../../utils/formatDuration';
 import { getFlagEmoji } from '../../utils/getFlagEmoji';
 
@@ -49,33 +49,32 @@ import appImage from '../../assets/images/app-placeholder.svg';
 import { faHeart, faCopy } from '@fortawesome/free-regular-svg-icons';
 
 import { apiURL } from '../../apiURL';
-import './GameView.styles.css';
+import './ChapterView.styles.css';
 import { useUserContext } from '../../userContext';
 import { getMostUsedWords } from '../../utils/getMostUsedWords';
 import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
 
-export const GameView = () => {
-  const { slugParam } = useParams();
+export const ChapterView = () => {
+  const { id } = useParams();
   const [openModal, setOpenModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
-  const [id, setId] = useState(null);
   const [favorites, setFavorites] = useState([]);
-  const [chapters, setChapters] = useState([]);
+  const [topicsFromChapters, setTopicsFromChapters] = useState([]);
   const navigate = useNavigate();
-  const [game, setGame] = useState({});
+  const [chapter, setChapter] = useState({});
   const [dealCodes, setDealCodes] = useState([]);
-  // const [gameGameStore, setGameGameStore] = useState({});
-  // const [gameGameStoreScraper, setGameGameStoreScraper] = useState(
+  // const [chapterChapterStore, setChapterChapterStore] = useState({});
+  // const [chapterChapterStoreScraper, setChapterChapterStoreScraper] = useState(
   //   {},
   // );
-  const [similarGames, setSimilarGames] = useState([]);
-  const [similarGamesCountry, setSimilarGamesCountry] = useState([]);
-  const [similarGamesArea, setSimilarGamesArea] = useState([]);
-  const [similarGamesCity, setSimilarGamesCity] = useState([]);
+  const [similarChapters, setSimilarChapters] = useState([]);
+  const [similarChaptersCountry, setSimilarChaptersCountry] = useState([]);
+  const [similarChaptersArea, setSimilarChaptersArea] = useState([]);
+  const [similarChaptersCity, setSimilarChaptersCity] = useState([]);
 
-  const [similarDealsFromGame, setSimilarDealsFromGame] = useState([]);
+  const [similarDealsFromChapter, setSimilarDealsFromChapter] = useState([]);
   const [comments, setComments] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -91,82 +90,143 @@ export const GameView = () => {
   const [openAddCodeForm, setOpenAddCodeForm] = useState(false);
   const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
   const [tags, setTags] = useState([]);
+  const [occasions, setOccasions] = useState([]);
   const [highlights, setHighlights] = useState([]);
   const [useCases, setUseCases] = useState([]);
-  // const {
-  //   likes: positiveLikes,
-  //   allLikes: allPositiveLikes,
-  //   addLike: addPositiveLike,
-  //   deleteLike: deletePositiveLike,
-  // } = useLikes(user, 'positiveLikes');
-
-  // const {
-  //   likes: negativeLikes,
-  //   allLikes: allNegativeLikes,
-  //   addLike: addNegativeLike,
-  //   deleteLike: deleteNegativeLike,
-  // } = useLikes(user, 'negativeLikes');
-
+  const [userTypes, setUserTypes] = useState([]);
   const [faqs, setFaqs] = useState([]);
 
   useEffect(() => {
-    async function fetchSingleGame(gameId) {
-      const response = await fetch(`${apiURL()}/games/${gameId}`);
-      const gameResponse = await response.json();
-      setGame(gameResponse[0]);
-      setId(gameResponse[0].id);
+    async function fetchSingleChapter(chapterId) {
+      const response = await fetch(`${apiURL()}/chapters/${chapterId}`);
+      const chapterResponse = await response.json();
+      setChapter(chapterResponse[0]);
     }
 
-    fetchSingleGame(slugParam);
-  }, [slugParam]);
-
-  useEffect(() => {
-    async function fetchChapters(idParam) {
-      setLoading(true);
-      try {
-        const response = await fetch(`${apiURL()}/chapters?game=${idParam}`);
-        const data = await response.json();
-
-        setChapters(data);
-      } catch (e) {
-        setError({ message: e.message || 'Failed to fetch data' });
-      }
-      setLoading(false);
-    }
-
-    fetchChapters(id);
+    fetchSingleChapter(id);
   }, [id]);
 
-  console.log('chapters', chapters);
+  useEffect(() => {
+    async function fetchTagsForChapter(chapterId) {
+      const response = await fetch(`${apiURL()}/tags/?chapter=${chapterId}`);
+      const data = await response.json();
+      setTags(data);
+    }
+
+    async function fetchOccasionsForChapter(chapterId) {
+      const response = await fetch(
+        `${apiURL()}/occasions/?chapter=${chapterId}`,
+      );
+      const data = await response.json();
+      setOccasions(data);
+    }
+
+    async function fetchHighlightsForChapter(chapterId) {
+      const response = await fetch(
+        `${apiURL()}/highlights/?chapter=${chapterId}`,
+      );
+      const data = await response.json();
+      setHighlights(data);
+    }
+
+    async function fetchUseCasesForChapter(chapterId) {
+      const response = await fetch(
+        `${apiURL()}/useCases/?chapter=${chapterId}`,
+      );
+      const data = await response.json();
+      setUseCases(data);
+    }
+
+    async function fetchUserTypesForChapter(chapterId) {
+      const response = await fetch(
+        `${apiURL()}/userTypes/?chapter=${chapterId}`,
+      );
+      const data = await response.json();
+      setUserTypes(data);
+    }
+
+    // async function fetchCodesForADeal(dealId) {
+    //   const response = await fetch(`${apiURL()}/codes/?deal=${dealId}`);
+    //   const chapterResponse = await response.json();
+    //   setDealCodes(chapterResponse);
+    // }
+
+    // async function fetchSearchesForADeal(dealId) {
+    //   const response = await fetch(`${apiURL()}/searches/?deal=${dealId}`);
+    //   const chapterResponse = await response.json();
+    //   setSearches(chapterResponse);
+    // }
+
+    // async function fetchKeywordsForADeal(dealId) {
+    //   const response = await fetch(`${apiURL()}/keywords/?deal=${dealId}`);
+    //   const chapterResponse = await response.json();
+    //   setKeywords(chapterResponse);
+    // }
+
+    // fetchSingleChapter(id);
+    // fetchCodesForADeal(id);
+    // fetchSearchesForADeal(id);
+    // fetchKeywordsForADeal(id);
+
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null); // Clear previous errors
+      try {
+        await fetchTagsForChapter(id);
+        await fetchOccasionsForChapter(id);
+        await fetchHighlightsForChapter(id);
+
+        await fetchUseCasesForChapter(id);
+        await fetchUserTypesForChapter(id);
+        // await fetchCodesForADeal(id);
+        // await fetchSearchesForADeal(id);
+        // await fetchKeywordsForADeal(id);
+      } catch (e) {
+        setError({ message: e.message || 'Failed to fetch data' });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   useEffect(() => {
-    async function fetchSimilarGames() {
+    async function fetchSimilarChapters() {
       setLoading(true);
       try {
-        const response = await fetch(`${apiURL()}/games`);
+        const response = await fetch(
+          `${apiURL()}/chapters?page=0&column=rating&direction=desc`,
+        );
         const data = await response.json();
 
-        const filteredData = data.filter((item) => item.id !== game.id);
+        const filteredData = data.data.filter((item) => item.id !== chapter.id);
 
-        setSimilarGames(filteredData);
+        setSimilarChapters(filteredData);
       } catch (e) {
         setError({ message: e.message || 'Failed to fetch data' });
       }
       setLoading(false);
     }
 
-    fetchSimilarGames();
-  }, [game.id]);
+    fetchSimilarChapters();
+  }, [
+    chapter.id,
+    chapter.categorySlug,
+    chapter.countrySlug,
+    chapter.citySlug,
+    chapter.areaSlug,
+  ]);
 
-  const fetchCommentsByGameId = useCallback(async (gameId) => {
-    const response = await fetch(`${apiURL()}/comments?gameId=${gameId}`);
+  const fetchCommentsByChapterId = useCallback(async (chapterId) => {
+    const response = await fetch(`${apiURL()}/comments?chapterId=${chapterId}`);
     const commentResponse = await response.json();
     setComments(commentResponse);
   }, []);
 
   useEffect(() => {
-    // fetchCommentsByGameId(id);
-  }, [fetchCommentsByGameId, id]);
+    fetchCommentsByChapterId(id);
+  }, [fetchCommentsByChapterId, id]);
 
   const navigateBack = () => {
     navigate(-1);
@@ -181,11 +241,11 @@ export const GameView = () => {
       },
       body: JSON.stringify({
         content: commentContent,
-        game_id: id,
+        chapter_id: id,
       }),
     });
     if (response.ok) {
-      fetchCommentsByGameId(id);
+      fetchCommentsByChapterId(id);
     }
   };
 
@@ -219,53 +279,49 @@ export const GameView = () => {
     return date.toISOString().split('T')[0];
   };
 
-  const cardItems = similarGames.map((item) => {
-    // const relatedTopics = topics
-    //   .filter((topic) => topic.categoryId === category.id)
-    //   .map((item) => item.id);
-    return (
-      <Card
-        id={item.id}
-        cardUrl={`../gameplay/games/${item.slug}`}
-        title={item.title}
-        urlImage={item.url_image}
-        summary={item.summary}
-      />
-    );
-  });
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      const results = [];
+      const combinedText = `${chapter?.title} ${chapter?.description} ${chapter?.description_ai}`;
+      const words = getMostUsedWords(combinedText, 10);
 
-  const cardItemsCountry = similarGamesCountry.map((item) => {
-    // const relatedTopics = topics
-    //   .filter((topic) => topic.categoryId === category.id)
-    //   .map((item) => item.id);
-    return (
-      <Card
-        id={item.id}
-        cardUrl={`/games/${item.slug}`}
-        title={item.title}
-        price={item.price}
-        currency={item.currency}
-        urlAffiliate={item.url_affiliate}
-        description={item.description}
-        url={item.url}
-        urlImage={item.url_image}
-        topic={item.categoryTitle}
-        gameTitle={item.gameTitle}
-        rating={item.rating}
-        reviews={item.reviews}
-        isoCode={item.countryIsoCode}
-      />
-    );
-  });
+      for (const [word] of words) {
+        try {
+          const res = await fetch(
+            `${apiURL()}/chapters?page=0&column=id&direction=desc&search=${encodeURIComponent(
+              word,
+            )}`,
+          );
+          const data = await res.json();
+          if (data.data.length > 1) {
+            const wordWithLink = {
+              title: word,
+              url: `chapters/search/${word}`,
+            };
+            results.push(wordWithLink);
+          }
+        } catch (err) {
+          return;
+        }
+      }
 
-  const cardItemsArea = similarGamesArea.map((item) => {
+      setTopicsFromChapters(results);
+      setLoading(false);
+    }
+    if (chapter?.title) {
+      fetchData();
+    }
+  }, [chapter?.description, chapter?.description_ai, chapter?.title]);
+
+  const cardItems = similarChapters.map((item) => {
     // const relatedTopics = topics
     //   .filter((topic) => topic.categoryId === category.id)
     //   .map((item) => item.id);
     return (
       <Card
         id={item.id}
-        cardUrl={`/games/${item.slug}`}
+        cardUrl={`/chapters/${item.slug}`}
         title={item.title}
         price={item.price}
         currency={item.currency}
@@ -274,57 +330,17 @@ export const GameView = () => {
         url={item.url}
         urlImage={item.url_image}
         topic={item.categoryTitle}
-        gameTitle={item.gameTitle}
+        chapterTitle={item.chapterTitle}
         rating={item.rating}
         reviews={item.reviews}
         isoCode={item.countryIsoCode}
       />
     );
   });
-
-  const cardItemsCity = similarGamesCity.map((item) => {
-    // const relatedTopics = topics
-    //   .filter((topic) => topic.categoryId === category.id)
-    //   .map((item) => item.id);
-    return (
-      <Card
-        id={item.id}
-        cardUrl={`/games/${item.slug}`}
-        title={item.title}
-        price={item.price}
-        currency={item.currency}
-        urlAffiliate={item.url_affiliate}
-        description={item.description}
-        url={item.url}
-        urlImage={item.url_image}
-        topic={item.categoryTitle}
-        gameTitle={item.gameTitle}
-        rating={item.rating}
-        reviews={item.reviews}
-        isoCode={item.countryIsoCode}
-      />
-    );
-  });
-
-  // const cardItemsSimilarDealsFromGame = similarDealsFromGame.map((item) => {
-  //   return (
-  //     <Card
-  //       id={item.id}
-  //       cardUrl={`/games/${item.id}`}
-  //       title={item.title}
-  //       description={item.description}
-  //       url={item.url}
-  //       urlImage={item.url_image === null ? 'deal' : item.url_image}
-  //       topic={item.topicTitle}
-  //       gameTitle={item.gameTitle}
-  //       smallCard
-  //     />
-  //   );
-  // });
 
   const searchItems = searches.map((search) => {
     return (
-      <Link to={`../../games/searchterm/${search.id}`} target="_blank">
+      <Link to={`../../chapters/searchterm/${search.id}`} target="_blank">
         <Button
           size="medium"
           secondary
@@ -355,7 +371,7 @@ export const GameView = () => {
     fetchFavorites();
   }, [fetchFavorites]);
 
-  const addFavorite = async (gameId) => {
+  const addFavorite = async (chapterId) => {
     const response = await fetch(`${apiURL()}/favorites`, {
       method: 'POST',
       headers: {
@@ -363,7 +379,7 @@ export const GameView = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        game_id: gameId,
+        chapter_id: chapterId,
       }),
     });
     if (response.ok) {
@@ -424,7 +440,7 @@ export const GameView = () => {
     fetchRatings();
   }, [fetchRatings]);
 
-  const addRating = async (gameId) => {
+  const addRating = async (chapterId) => {
     const response = await fetch(`${apiURL()}/ratings`, {
       method: 'POST',
       headers: {
@@ -432,7 +448,7 @@ export const GameView = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        game_id: gameId,
+        chapter_id: chapterId,
       }),
     });
     if (response.ok) {
@@ -441,8 +457,8 @@ export const GameView = () => {
     }
   };
 
-  const deleteRating = async (gameId) => {
-    const response = await fetch(`${apiURL()}/ratings/${gameId}`, {
+  const deleteRating = async (chapterId) => {
+    const response = await fetch(`${apiURL()}/ratings/${chapterId}`, {
       method: 'DELETE',
       headers: {
         token: `token ${user?.uid}`,
@@ -483,35 +499,6 @@ export const GameView = () => {
     return `${codes.length} ${title}`;
   };
 
-  // const images = [
-  //   {
-  //     original: 'https://picsum.photos/id/1018/1000/600/',
-  //     thumbnail: 'https://picsum.photos/id/1018/250/150/',
-  //   },
-  //   {
-  //     original: 'https://picsum.photos/id/1015/300/600/',
-  //     thumbnail: 'https://picsum.photos/id/1015/150/450/',
-  //   },
-  //   {
-  //     original: 'https://picsum.photos/id/1019/1000/600/',
-  //     thumbnail: 'https://picsum.photos/id/1019/250/150/',
-  //   },
-  // ];
-
-  // if (loading) {
-  //   return (
-  //     <>
-  //       <Helmet>
-  //         <title>Loading...</title>
-  //         <meta name="description" content="Fetching deal details" />
-  //       </Helmet>
-  //       <main className="loading-container">
-  //         <Loading />
-  //       </main>
-  //     </>
-  //   );
-  // }
-
   const handleFaqs = (faqId) => {
     setFaqs(
       faqs.map((item) => {
@@ -523,16 +510,16 @@ export const GameView = () => {
     );
   };
 
-  const discount = game.discount_percentage || 0;
+  const discount = chapter.discount_percentage || 0;
 
   // Calculate original price
   const originalPrice =
-    discount > 0 ? game.price / (1 - discount / 100) : game.price;
+    discount > 0 ? chapter.price / (1 - discount / 100) : chapter.price;
 
   const descriptionText = (
-    game.description ||
-    game.summary ||
-    game.description_ai ||
+    chapter.description ||
+    chapter.summary ||
+    chapter.description_ai ||
     'No description available'
   )
     .replace(/\*+/g, '')
@@ -550,31 +537,31 @@ export const GameView = () => {
   // usage
   const priceValidUntil = getPriceValidUntil(30);
 
-  const gameSchema = {
+  const chapterSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Game',
-    name: game.title,
-    image: game.url_image,
+    '@type': 'Chapter',
+    name: chapter.title,
+    image: chapter.url_image,
     description: descriptionText,
-    sku: game.id,
+    sku: chapter.id,
     brand: {
       '@type': 'Brand',
-      name: 'Catch Top Deals',
+      name: 'Book Travel Activities',
     },
     offers: {
       '@type': 'Offer',
-      url: `https://www.miniappshub.com/games/${game.slug}`,
-      priceCurrency: game.currency,
-      price: game.price,
+      url: `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
+      priceCurrency: chapter.currency,
+      price: chapter.price,
       priceValidUntil,
       itemCondition: 'https://schema.org/NewCondition',
       availability: `https://schema.org/InStock`,
     },
-    ...(game.rating && {
+    ...(chapter.rating && {
       aggregateRating: {
         '@type': 'AggregateRating',
-        ratingValue: game.rating,
-        reviewCount: game.reviews || 0,
+        ratingValue: chapter.rating,
+        reviewCount: chapter.reviews || 0,
       },
     }),
   };
@@ -588,19 +575,19 @@ export const GameView = () => {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.miniappshub.com',
+        item: 'https://www.booktravelactivities.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Games',
-        item: 'https://www.miniappshub.com/games',
+        name: 'Chapters',
+        item: 'https://www.booktravelactivities.com/chapters',
       },
       {
         '@type': 'ListItem',
         position: 3,
-        name: game.title,
-        item: `https://www.miniappshub.com/games/${game.slug}`,
+        name: chapter.title,
+        item: `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
       },
     ],
   };
@@ -616,7 +603,7 @@ export const GameView = () => {
     );
   });
 
-  const isBestseller = Boolean(Number(game.bestseller));
+  const isBestseller = Boolean(Number(chapter.bestseller));
 
   if (error) {
     return (
@@ -635,154 +622,372 @@ export const GameView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${game?.title} - Catch Top Deals`}</title>
+        <title>{`${chapter?.title} - Book Travel Activities`}</title>
         <meta
           name="description"
           content={
-            game.meta_description ||
-            `${game?.title} - reviews, deals, discounts.`
+            chapter.meta_description ||
+            `${chapter?.title} - reviews, deals, discounts.`
           }
         />
         {/* Canonical URL */}
         <link
           rel="canonical"
-          href={`https://www.miniappshub.com/games/${game.slug}`}
+          href={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
         />
         {/* Robots meta for large image preview (Google Discover) */}
         <meta name="robots" content="max-image-preview:large" />
 
         {/* Open Graph */}
-        <meta property="og:type" content="game" />
-        <meta property="og:title" content={game.title} />
+        <meta property="og:type" content="chapter" />
+        <meta property="og:title" content={chapter.title} />
         <meta
           property="og:description"
-          content={game.meta_description || descriptionText}
+          content={chapter.meta_description || descriptionText}
         />
-        <meta property="og:image" content={game.url_image} />
+        <meta property="og:image" content={chapter.url_image} />
         <meta
           property="og:url"
-          content={`https://www.miniappshub.com/games/${game.slug}`}
+          content={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
         />
-        <meta property="og:site_name" content="Catch Top Deals" />
+        <meta property="og:site_name" content="Book Travel Activities" />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={game.title} />
+        <meta name="twitter:title" content={chapter.title} />
         <meta
           name="twitter:description"
-          content={game.meta_description || descriptionText}
+          content={chapter.meta_description || descriptionText}
         />
-        <meta name="twitter:image" content={game.url_image} />
+        <meta name="twitter:image" content={chapter.url_image} />
 
         {/* Rich content */}
-        <script type="application/ld+json">{JSON.stringify(gameSchema)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(chapterSchema)}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
         </script>
       </Helmet>
       <main>
         <section className="container-appview">
-          <div className="header gameplay">
-            <h1 className="hero-header">{game?.title}</h1>
+          <div className="header">
+            <h1 className="hero-header">{chapter?.title}</h1>
           </div>
-          {game.url_image && (
+          {chapter.url_image && (
             <div className="activity-img-container">
               <img
                 className="appview-image-activities"
-                alt={game.image_alt_text || game.title}
-                src={game.url_image}
+                alt={chapter.image_alt_text || chapter.title}
+                src={chapter.url_image}
               />
-              {game.image_credit && <span>{game.image_credit}</span>}
+              {chapter.image_credit && <span>{chapter.image_credit}</span>}
             </div>
           )}
-          {!game.url_image && game.countryIsoCode && (
+          {!chapter.url_image && chapter.countryIsoCode && (
             <span className="img-emoji">
-              {getFlagEmoji(game.countryIsoCode)}
+              {getFlagEmoji(chapter.countryIsoCode)}
             </span>
           )}
-          <div className="container-cards container-cards-blog">
-            {chapters?.map((chapter) => {
-              return (
-                <Link
-                  to={`../gameplay/chapters/${chapter.id}`}
-                  className="card-blog"
-                >
-                  <h2>{chapter.title}</h2>
-                  {/* {game.meta_description && (
-                                  <div className="blog-preview">{`${game.meta_description}`}</div>
-                                )}
-                                <div className="date">
-                                  {getDateFromTimestamp(game.created_at)}
-                                </div> */}
-                </Link>
-              );
-            })}
-          </div>
 
-          {game.description && (
-            <div className="container-description">
-              {/* <div className="container-title">
-              <h2>{game.title}</h2>
-            </div> */}
-              {game.summary && (
-                <>
-                  <h3>Summary</h3>
-                  <p className="game-description main-description">
-                    <Markdown>{game.summary}</Markdown>
-                  </p>
-                </>
-              )}
-              {game.description && (
-                <>
-                  <h3>Description</h3>
-                  {game.description && (
-                    <p className="game-description main-description">
-                      <Markdown>{game.description}</Markdown>
-                    </p>
+          {/* {chapter.url_image && (
+            <div
+              style={{
+                backgroundImage: `url(${chapter.url_image})`,
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+              }}
+            ></div>
+          )} */}
+          {/* {chapter.url_image && (
+            <img
+              className="appview-icon default-icon"
+              alt={`${chapter.title}`}
+              src={chapter.url_image || mousePointer}
+            />
+          )} */}
+          {/* <span className="img-emoji">🌍</span>
+          <Globe size="15rem" className="appview-icon default-icon" /> */}
+
+          {/* <img
+            className={`appview-icon ${!chapter.url_icon && 'default-icon'}`}
+            alt={`${chapter.title}`}
+            src={chapter.url_icon || mousePointer}
+          /> */}
+
+          {/* <ImageGallery items={images} /> */}
+          <div className="rating-price-group">
+            {chapter.rating && (
+              <Rating rating={chapter.rating} reviews={chapter.reviews} />
+            )}
+            {chapter.price && (
+              <div className="price-group">
+                {isBestseller && (
+                  <div>
+                    <Badge
+                      backgroundColor="#e53935"
+                      size="small"
+                      label="Bestseller"
+                    />
+                  </div>
+                )}
+                {/* Discount */}
+                <div className="from-discount-group">
+                  <span className="price-label">From</span>
+                  {discount > 0 && (
+                    <span className="original-price">
+                      {chapter.currency === 'USD' && '$ '}
+                      {chapter.currency === 'EUR' && '€ '}
+                      {Math.floor(originalPrice)}.
+                      {originalPrice.toFixed(2).split('.')[1]}
+                    </span>
                   )}
-                  {/* {game.description_ai && (
+
+                  {discount > 0 && (
+                    <span className="discount">-{discount}%</span>
+                  )}
+                </div>
+                {/* Original price */}
+                <div className="price">
+                  {chapter.currency === 'USD' && (
+                    <span className="currency">$</span>
+                  )}
+                  {chapter.currency === 'EUR' && (
+                    <span className="currency">€</span>
+                  )}
+                  <span className="amount">
+                    {Math.floor(parseFloat(chapter.price))}
+                  </span>
+                  <span className="cents">
+                    {parseFloat(chapter.price).toFixed(2).split('.')[1]}
+                  </span>
+                  {/* Show original price crossed if discount exists */}
+                </div>
+              </div>
+            )}
+          </div>
+          <div className="container-deal-actions">
+            <div className="container-appview-buttons">
+              {chapter.url_affiliate && (
+                <Link to={chapter.url_affiliate} target="_blank">
+                  <Button
+                    fourth
+                    size="large"
+                    icon={
+                      <FontAwesomeIcon
+                        icon={faArrowUpRightFromSquare}
+                        size="sm"
+                      />
+                    }
+                    label="Book Now"
+                  />
+                </Link>
+              )}
+            </div>
+            <div className="container-rating">
+              Rating
+              {user &&
+              allRatings.some((rating) => rating.chapter_id === chapter.id) &&
+              ratings.some((rating) => rating.id === chapter.id) ? (
+                <button
+                  type="button"
+                  className="button-rating"
+                  onClick={(event) => deleteRating(chapter.id)}
+                >
+                  <FontAwesomeIcon icon={faCaretUp} />
+                  {
+                    allRatings.filter(
+                      (rating) => rating.chapter_id === chapter.id,
+                    ).length
+                  }
+                </button>
+              ) : user ? (
+                <button
+                  type="button"
+                  className="button-rating"
+                  onClick={(event) => addRating(chapter.id)}
+                >
+                  <FontAwesomeIcon icon={faCaretUp} />
+                  {
+                    allRatings.filter(
+                      (rating) => rating.chapter_id === chapter.id,
+                    ).length
+                  }
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="button-rating"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setModalTitle('Sign up to vote');
+                  }}
+                >
+                  <FontAwesomeIcon icon={faCaretUp} />
+                  {
+                    allRatings.filter(
+                      (rating) => rating.chapter_id === chapter.id,
+                    ).length
+                  }
+                </button>
+              )}
+            </div>
+
+            <div>
+              {user && favorites.some((x) => x.id === chapter.id) ? (
+                <button
+                  type="button"
+                  onClick={() => handleDeleteBookmarks(chapter.id)}
+                  onKeyDown={() => handleDeleteBookmarks(chapter.id)}
+                  className="button-bookmark"
+                >
+                  Remove chapter from saved &nbsp;
+                  <FontAwesomeIcon icon={faHeartSolid} size="lg" />
+                </button>
+              ) : user ? (
+                <button
+                  type="button"
+                  onClick={() => addFavorite(chapter.id)}
+                  onKeyDown={() => addFavorite(chapter.id)}
+                  className="button-bookmark"
+                >
+                  Save this chapter &nbsp;
+                  <FontAwesomeIcon icon={faHeart} size="lg" />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setModalTitle('Sign up to add bookmarks');
+                  }}
+                  onKeyDown={() => addFavorite(chapter.id)}
+                  className="button-bookmark"
+                >
+                  Save <FontAwesomeIcon icon={faHeart} size="lg" />
+                </button>
+              )}
+            </div>
+          </div>
+          {/* <div className="container-details container-badges">
+            <h2 className="no-margin">Pricing</h2>
+            <div className="container-tags">
+              <div className="badges">
+                <div className="badges-keywords">
+                  {!!chapter.pricing_free && (
+                    <Link to="../chapters/pricing/free">
+                      <Button secondary label="free" size="small" />
+                    </Link>
+                  )}
+                  {!!chapter.pricing_freemium && (
+                    <Link to="../chapters/pricing/freemium">
+                      <Button secondary label="freemium" size="small" />
+                    </Link>
+                  )}
+                  {!!chapter.pricing_subscription && (
+                    <Link to="../chapters/pricing/subscription">
+                      <Button secondary label="subscription" size="small" />
+                    </Link>
+                  )}
+                  {!!chapter.pricing_one_time && (
+                    <Link to="../chapters/pricing/one-time">
+                      <Button secondary label="one-time" size="small" />
+                    </Link>
+                  )}
+                  {!!chapter.pricing_trial_available && (
+                    <Link to="../chapters/pricing/trial">
+                      <Button secondary label="trial" size="small" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="container-tags">
+              <div className="badges">
+                <p className="p-no-margin">iOS chapter: </p>
+                <div className="badges-keywords">
+                  {!!chapter.pricing_ios_chapter_free && (
+                    <Link to="../chapters/pricing/ios-free">
+                      <Button secondary label="free" size="small" />
+                    </Link>
+                  )}
+                  {!!chapter.pricing_ios_chapter_paid && (
+                    <Link to="../chapters/pricing/ios-paid">
+                      <Button secondary label="paid" size="small" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+            {!!chapter.pricing_ios_chapter_paid &&
+              chapter.price > 0 &&
+              `${chapter.price} ${chapter.currency}`}
+            {chapter.pricing_details && (
+              <p className="p-no-margin">{chapter.pricing_details}</p>
+            )}
+            {chapter.pricing_url && (
+              <div>
+                <Link target="_blank" to={chapter.pricing_url}>
+                  <span className="underline">Pricing page</span>{' '}
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="sm" />
+                </Link>
+              </div>
+            )}
+          </div> */}
+          <div className="container-description">
+            <div className="container-title">
+              <h2>{chapter.title}</h2>
+            </div>
+            {chapter.summary && (
+              <>
+                <h3>Summary</h3>
+                <p className="chapter-description main-description">
+                  <Markdown>{chapter.summary}</Markdown>
+                </p>
+              </>
+            )}
+            {(chapter.description || chapter.description_ai) && (
+              <>
+                <h3>Description</h3>
+                {chapter.description && (
+                  <p className="chapter-description main-description">
+                    <Markdown>{chapter.description}</Markdown>
+                  </p>
+                )}
+                {chapter.description_ai && (
                   <>
                     <h3>AI summary</h3>
-                    <p className="game-description main-description">
-                      <Markdown>{game.description_ai}</Markdown>
+                    <p className="chapter-description main-description">
+                      <Markdown>{chapter.description_ai}</Markdown>
                     </p>
                   </>
-                )} */}
-                </>
-              )}
-              {game.whats_included && (
-                <>
-                  <h3>What is included</h3>
-                  <p className="game-description main-description">
-                    <Markdown>{game.whats_included}</Markdown>
-                  </p>
-                </>
-              )}
-              {game.whats_excluded && (
-                <>
-                  <h3>What is excluded</h3>
-                  <p className="game-description main-description">
-                    <Markdown>{game.whats_excluded}</Markdown>
-                  </p>
-                </>
-              )}
-            </div>
-          )}
-          {game.url_video && (
-            <div className="container-description">
-              <video controls width="600">
-                <source src={game.url_video} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
+                )}
+              </>
+            )}
+            {chapter.whats_included && (
+              <>
+                <h3>What is included</h3>
+                <p className="chapter-description main-description">
+                  <Markdown>{chapter.whats_included}</Markdown>
+                </p>
+              </>
+            )}
+            {chapter.whats_excluded && (
+              <>
+                <h3>What is excluded</h3>
+                <p className="chapter-description main-description">
+                  <Markdown>{chapter.whats_excluded}</Markdown>
+                </p>
+              </>
+            )}
+          </div>
 
           {/* <div className="container-codes">
             {dealCodes.length > 0 ? (
               <>
                 <div className="container-title">
                   <h2>
-                    {game.title} -{' '}
+                    {chapter.title} -{' '}
                     {dealCodes.length > 0
                       ? `${showNumberOfCodesInTitle(dealCodes)}`
                       : ''}
@@ -942,7 +1147,7 @@ export const GameView = () => {
           {/* {!user && (
             <div className="container-details cta">
               <div>
-                <h2>🔥 Add your game!</h2>
+                <h2>🔥 Add your chapter!</h2>
                 <p>Create an account to get started for free</p>
               </div>
               <div>
@@ -952,11 +1157,11 @@ export const GameView = () => {
               </div>
             </div>
           )} */}
-          {/* <div className="container-comments">
-            <h2 className="h-no-margin h-no-margin-bottom">Reviews</h2>
+          <div className="container-comments">
+            <h2 className="h-no-margin h-no-margin-bottom">Comments</h2>
             {comments.length === 0 && (
               <div>
-                <i>No reviews yet. </i>
+                <i>No comments yet. </i>
                 {user && <i>Add a first one below.</i>}
               </div>
             )}
@@ -982,7 +1187,7 @@ export const GameView = () => {
                   <Link to="/login" className="simple-link">
                     log in
                   </Link>{' '}
-                  to add reviews
+                  to add comments
                 </i>
               </div>
             )}
@@ -993,7 +1198,7 @@ export const GameView = () => {
                     <textarea
                       className="form-input textarea-new-comment"
                       value={comment}
-                      placeholder="Your review..."
+                      placeholder="Your comment..."
                       onChange={commentHandler}
                     />
 
@@ -1001,7 +1206,7 @@ export const GameView = () => {
                       primary
                       className="btn-add-prompt"
                       type="submit"
-                      label="Add review"
+                      label="Add comment"
                     />
                     {validForm && (
                       <Modal
@@ -1017,102 +1222,102 @@ export const GameView = () => {
                 </div>
               </div>
             )}
-          </div> */}
+          </div>
           {/* <div className="container-details container-badges">
             <h2 className="no-margin">Reviews</h2>
           </div> */}
-          {/* <div className="container-details container-badges">
+          <div className="container-details container-badges">
             <h2 className="no-margin">Additional info</h2>
-            {game.duration && (
+            {chapter.duration && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Duration: </p>
-                  <div>{formatDuration(game.duration)}</div>
+                  <div>{formatDuration(chapter.duration)}</div>
                 </div>
               </div>
             )}
-            {game.wheelchair_access && (
+            {chapter.wheelchair_access && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Wheelchair access: </p>
-                  <div>{game.wheelchair_access ? 'Yes' : 'No'}</div>
+                  <div>{chapter.wheelchair_access ? 'Yes' : 'No'}</div>
                 </div>
               </div>
             )}
-            {game.smartphone_ticket && (
+            {chapter.smartphone_ticket && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Smartphone ticket: </p>
-                  <div>{game.smartphone_ticket ? 'Yes' : 'No'}</div>
+                  <div>{chapter.smartphone_ticket ? 'Yes' : 'No'}</div>
                 </div>
               </div>
             )}
-            {game.private_tour !== undefined && (
+            {chapter.private_tour !== undefined && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Private tour: </p>
-                  <div>{game.private_tour ? 'Yes' : 'No'}</div>
+                  <div>{chapter.private_tour ? 'Yes' : 'No'}</div>
                 </div>
               </div>
             )}
-            {game.free_cancellation !== undefined && (
+            {chapter.free_cancellation !== undefined && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Free cancellation: </p>
-                  <div>{game.free_cancellation ? 'Yes' : 'No'}</div>
+                  <div>{chapter.free_cancellation ? 'Yes' : 'No'}</div>
                 </div>
               </div>
             )}
-            {game.likely_to_sell_out !== undefined && (
+            {chapter.likely_to_sell_out !== undefined && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Likely to sell out: </p>
-                  <div>{game.likely_to_sell_out ? 'Yes' : 'No'}</div>
+                  <div>{chapter.likely_to_sell_out ? 'Yes' : 'No'}</div>
                 </div>
               </div>
             )}
-            {game.instant_confirmation !== undefined && (
+            {chapter.instant_confirmation !== undefined && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Instant confirmation: </p>
-                  <div>{game.instant_confirmation ? 'Yes' : 'No'}</div>
+                  <div>{chapter.instant_confirmation ? 'Yes' : 'No'}</div>
                 </div>
               </div>
             )}
-          </div> */}
-          {/* <div className="container-details container-badges">
+          </div>
+          <div className="container-details container-badges">
             <h2 className="no-margin">Location</h2>
-            {game.address && (
+            {chapter.address && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Address: </p>
-                  <div>{game.address}</div>
+                  <div>{chapter.address}</div>
                 </div>
               </div>
             )}
-            {game.postal_code && (
+            {chapter.postal_code && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Postal code: </p>
-                  <div>{game.postal_code}</div>
+                  <div>{chapter.postal_code}</div>
                 </div>
               </div>
             )}
-            {(game.geolocation_lat || game.geolocation_lng) && (
+            {(chapter.geolocation_lat || chapter.geolocation_lng) && (
               <>
-                {game.geolocation_lat && (
+                {chapter.geolocation_lat && (
                   <div className="container-tags">
                     <div className="badges">
                       <p>Latitude: </p>
-                      <div>{game.geolocation_lat}</div>
+                      <div>{chapter.geolocation_lat}</div>
                     </div>
                   </div>
                 )}
-                {game.geolocation_lng && (
+                {chapter.geolocation_lng && (
                   <div className="container-tags">
                     <div className="badges">
                       <p>Longitude: </p>
-                      <div>{game.geolocation_lng}</div>
+                      <div>{chapter.geolocation_lng}</div>
                     </div>
                   </div>
                 )}
@@ -1122,25 +1327,25 @@ export const GameView = () => {
               <div className="badges">
                 <p>Country: </p>
                 <div>
-                  <Link to={`/games/countries/${game.countrySlug}`}>
+                  <Link to={`/chapters/countries/${chapter.countrySlug}`}>
                     <Button
                       secondary
-                      label={game.countryTitle?.toLowerCase()}
+                      label={chapter.countryTitle?.toLowerCase()}
                       size="small"
                     />
                   </Link>
                 </div>
               </div>
             </div>
-            {game.areaSlug && (
+            {chapter.areaSlug && (
               <div className="container-tags">
                 <div className="badges">
                   <p>Region/Area: </p>
                   <div>
-                    <Link to={`/games/areas/${game.areaSlug}`}>
+                    <Link to={`/chapters/areas/${chapter.areaSlug}`}>
                       <Button
                         secondary
-                        label={game.areaTitle?.toLowerCase()}
+                        label={chapter.areaTitle?.toLowerCase()}
                         size="small"
                       />
                     </Link>
@@ -1152,53 +1357,39 @@ export const GameView = () => {
               <div className="badges">
                 <p>City: </p>
                 <div>
-                  <Link to={`/games/cities/${game.citySlug}`}>
+                  <Link to={`/chapters/cities/${chapter.citySlug}`}>
                     <Button
                       secondary
-                      label={game.cityTitle?.toLowerCase()}
+                      label={chapter.cityTitle?.toLowerCase()}
                       size="small"
                     />
                   </Link>
                 </div>
               </div>
             </div>
-          </div> */}
-          {/* <div className="container-details container-badges">
-            <h2 className="no-margin">Taxonomy</h2>
-            <div className="container-tags">
-              <div className="badges">
-                <p>Platform: </p>
-                <div>
-                  <Link to={`/games/platforms/${game.platformSlug}`}>
-                    <Button
-                      secondary
-                      label={game.platformTitle?.toLowerCase()}
-                      size="small"
-                    />
-                  </Link>
-                </div>
-              </div>
-            </div>
+          </div>
+          <div className="container-details container-badges">
+            <h2 className="no-margin">Category & tags</h2>
             <div className="container-tags">
               <div className="badges">
                 <p>Category: </p>
                 <div>
-                  <Link to={`/games/categories/${game.categorySlug}`}>
+                  <Link to={`/chapters/categories/${chapter.categorySlug}`}>
                     <Button
                       secondary
-                      label={game.categoryTitle?.toLowerCase()}
+                      label={chapter.categoryTitle?.toLowerCase()}
                       size="small"
                     />
                   </Link>
                 </div>
               </div>
             </div>
-            {topicsFromGames.length > 0 && (
+            {topicsFromChapters.length > 0 && (
               <div className="container-tags">
                 <div className="badges">
                   <p className="p-no-margin">Related topics: </p>
                   <div className="badges-keywords">
-                    {topicsFromGames.map((topic, index) => (
+                    {topicsFromChapters.map((topic, index) => (
                       <Link to={`../../${topic.url}`}>
                         <Button secondary label={topic.title} size="small" />
                       </Link>
@@ -1213,7 +1404,7 @@ export const GameView = () => {
                   <p className="p-no-margin">Tags: </p>
                   <div className="badges-keywords">
                     {tags.map((tag) => (
-                      <Link to={`../games/tags/${tag.slug}`}>
+                      <Link to={`../chapters/tags/${tag.slug}`}>
                         <Button
                           secondary
                           label={tag.title.toLowerCase()}
@@ -1225,8 +1416,8 @@ export const GameView = () => {
                 </div>
               </div>
             )}
-          </div> */}
-          {/* <div className="container-details container-badges">
+          </div>
+          <div className="container-details container-badges">
             <h2 className="no-margin">Highlights & use cases</h2>
             {highlights.length > 0 && (
               <div className="container-tags">
@@ -1234,7 +1425,7 @@ export const GameView = () => {
                   <p className="p-no-margin">Highlights: </p>
                   <div className="badges-keywords">
                     {highlights.map((tag) => (
-                      <Link to={`../games/highlights/${tag.slug}`}>
+                      <Link to={`../chapters/highlights/${tag.slug}`}>
                         <Button
                           secondary
                           label={tag.title.toLowerCase()}
@@ -1253,7 +1444,7 @@ export const GameView = () => {
                   <p className="p-no-margin">Use cases: </p>
                   <div className="badges-keywords">
                     {useCases.map((tag) => (
-                      <Link to={`../games/useCases/${tag.slug}`}>
+                      <Link to={`../chapters/useCases/${tag.slug}`}>
                         <Button
                           secondary
                           label={tag.title.toLowerCase()}
@@ -1265,13 +1456,54 @@ export const GameView = () => {
                 </div>
               </div>
             )}
-          </div> */}
+          </div>
+          <div className="container-details container-badges">
+            <h2 className="no-margin">For who and when</h2>
+
+            {userTypes.length > 0 && (
+              <div className="container-tags">
+                <div className="badges">
+                  <p className="p-no-margin">Best for: </p>
+                  <div className="badges-keywords">
+                    {userTypes.map((tag) => (
+                      <Link to={`../chapters/userTypes/${tag.slug}`}>
+                        <Button
+                          secondary
+                          label={tag.title.toLowerCase()}
+                          size="small"
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {occasions.length > 0 && (
+              <div className="container-tags">
+                <div className="badges">
+                  <p className="p-no-margin">Occasions: </p>
+                  <div className="badges-keywords">
+                    {occasions.map((tag) => (
+                      <Link to={`../chapters/occasions/${tag.slug}`}>
+                        <Button
+                          secondary
+                          label={tag.title.toLowerCase()}
+                          size="small"
+                        />
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* <div className="container-related-searches">
             <h3>Related searches</h3>
             <div className="topics-div searches">
               {searches.map((search) => (
-                <Link to={`/games/search/${search.id}`} target="_blank">
+                <Link to={`/chapters/search/${search.id}`} target="_blank">
                   <Button secondary label={search.title} />
                 </Link>
               ))}
@@ -1284,29 +1516,29 @@ export const GameView = () => {
               className="button-copy"
               onClick={() =>
                 copyToClipboard(
-                  `https://www.miniappshub.com/games/${game.slug}`,
+                  `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
                 )
               }
             />
-            <FacebookShareButton url={`/games/${game.slug}`}>
+            <FacebookShareButton url={`/chapters/${chapter.slug}`}>
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.miniappshub.com/games/${game.slug}`}
-              title={`Check out this game: '${game.title}'`}
-              hashtags={['Games']}
+              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+              title={`Check out this chapter: '${chapter.title}'`}
+              hashtags={['Chapters']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
             <LinkedinShareButton
-              url={`https://www.miniappshub.com/games/${game.slug}`}
+              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
             >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
-              subject="Check out this game!"
-              body={`This game is great: '${game.title}'`}
-              url={`https://www.miniappshub.com/games/${game.slug}`}
+              subject="Check out this chapter!"
+              body={`This chapter is great: '${chapter.title}'`}
+              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>
@@ -1315,40 +1547,40 @@ export const GameView = () => {
             </Toast>
           </div>
           {/* <ContainerCta user={user} /> */}
-          {/* {similarDealsFromGame.length > 0 && (
+          {/* {similarDealsFromChapter.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Other deals from {game.gameTitle} game</h2>
+              <h2>🔎 Other deals from {chapter.chapterTitle} chapter</h2>
               <div className="container-cards small-cards">
-                {cardItemsSimilarDealsFromGame}
+                {cardItemsSimilarDealsFromChapter}
               </div>
             </div>
           )} */}
-          {similarGames.length > 0 && (
+          {similarChapters.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Similar games</h2>
+              <h2>🔎 Similar activities in {chapter.categoryTitle}</h2>
               <div className="container-cards small-cards">{cardItems}</div>
             </div>
           )}
-          {/* {similarGamesCity.length > 0 && (
+          {similarChaptersCity.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Deals in {game.cityTitle}</h2>
+              <h2>🔎 Activities in {chapter.cityTitle}</h2>
               <div className="container-cards small-cards">{cardItemsCity}</div>
             </div>
           )}
-          {similarGamesArea.length > 0 && (
+          {similarChaptersArea.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Deals in {game.areaTitle}</h2>
+              <h2>🔎 Activities in {chapter.areaTitle}</h2>
               <div className="container-cards small-cards">{cardItemsArea}</div>
             </div>
           )}
-          {similarGamesCountry.length > 0 && (
+          {similarChaptersCountry.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Deals in {game.countryTitle}</h2>
+              <h2>🔎 Activities in {chapter.countryTitle}</h2>
               <div className="container-cards small-cards">
                 {cardItemsCountry}
               </div>
             </div>
-          )} */}
+          )}
           {/* {searches.length > 0 && (
             <div className="container-alternatives">
               <h2>🔎 Related searches</h2>
