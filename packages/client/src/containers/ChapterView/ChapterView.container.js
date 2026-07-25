@@ -188,19 +188,17 @@ export const ChapterView = () => {
       }
     };
 
-    fetchData();
+    // fetchData();
   }, [id]);
 
   useEffect(() => {
     async function fetchSimilarChapters() {
       setLoading(true);
       try {
-        const response = await fetch(
-          `${apiURL()}/chapters?page=0&column=rating&direction=desc`,
-        );
+        const response = await fetch(`${apiURL()}/chapters`);
         const data = await response.json();
 
-        const filteredData = data.data.filter((item) => item.id !== chapter.id);
+        const filteredData = data.filter((item) => item.id !== chapter.id);
 
         setSimilarChapters(filteredData);
       } catch (e) {
@@ -278,41 +276,6 @@ export const ChapterView = () => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   };
-
-  useEffect(() => {
-    async function fetchData() {
-      setLoading(true);
-      const results = [];
-      const combinedText = `${chapter?.title} ${chapter?.description} ${chapter?.description_ai}`;
-      const words = getMostUsedWords(combinedText, 10);
-
-      for (const [word] of words) {
-        try {
-          const res = await fetch(
-            `${apiURL()}/chapters?page=0&column=id&direction=desc&search=${encodeURIComponent(
-              word,
-            )}`,
-          );
-          const data = await res.json();
-          if (data.data.length > 1) {
-            const wordWithLink = {
-              title: word,
-              url: `chapters/search/${word}`,
-            };
-            results.push(wordWithLink);
-          }
-        } catch (err) {
-          return;
-        }
-      }
-
-      setTopicsFromChapters(results);
-      setLoading(false);
-    }
-    if (chapter?.title) {
-      fetchData();
-    }
-  }, [chapter?.description, chapter?.description_ai, chapter?.title]);
 
   const cardItems = similarChapters.map((item) => {
     // const relatedTopics = topics
@@ -671,7 +634,7 @@ export const ChapterView = () => {
       </Helmet>
       <main>
         <section className="container-appview">
-          <div className="header">
+          <div className="header gameplay">
             <h1 className="hero-header">{chapter?.title}</h1>
           </div>
           {chapter.url_image && (
@@ -716,58 +679,9 @@ export const ChapterView = () => {
           /> */}
 
           {/* <ImageGallery items={images} /> */}
-          <div className="rating-price-group">
-            {chapter.rating && (
-              <Rating rating={chapter.rating} reviews={chapter.reviews} />
-            )}
-            {chapter.price && (
-              <div className="price-group">
-                {isBestseller && (
-                  <div>
-                    <Badge
-                      backgroundColor="#e53935"
-                      size="small"
-                      label="Bestseller"
-                    />
-                  </div>
-                )}
-                {/* Discount */}
-                <div className="from-discount-group">
-                  <span className="price-label">From</span>
-                  {discount > 0 && (
-                    <span className="original-price">
-                      {chapter.currency === 'USD' && '$ '}
-                      {chapter.currency === 'EUR' && '€ '}
-                      {Math.floor(originalPrice)}.
-                      {originalPrice.toFixed(2).split('.')[1]}
-                    </span>
-                  )}
 
-                  {discount > 0 && (
-                    <span className="discount">-{discount}%</span>
-                  )}
-                </div>
-                {/* Original price */}
-                <div className="price">
-                  {chapter.currency === 'USD' && (
-                    <span className="currency">$</span>
-                  )}
-                  {chapter.currency === 'EUR' && (
-                    <span className="currency">€</span>
-                  )}
-                  <span className="amount">
-                    {Math.floor(parseFloat(chapter.price))}
-                  </span>
-                  <span className="cents">
-                    {parseFloat(chapter.price).toFixed(2).split('.')[1]}
-                  </span>
-                  {/* Show original price crossed if discount exists */}
-                </div>
-              </div>
-            )}
-          </div>
           <div className="container-deal-actions">
-            <div className="container-appview-buttons">
+            {/* <div className="container-appview-buttons">
               {chapter.url_affiliate && (
                 <Link to={chapter.url_affiliate} target="_blank">
                   <Button
@@ -783,7 +697,7 @@ export const ChapterView = () => {
                   />
                 </Link>
               )}
-            </div>
+            </div> */}
             <div className="container-rating">
               Rating
               {user &&
@@ -1226,150 +1140,9 @@ export const ChapterView = () => {
           {/* <div className="container-details container-badges">
             <h2 className="no-margin">Reviews</h2>
           </div> */}
+
           <div className="container-details container-badges">
-            <h2 className="no-margin">Additional info</h2>
-            {chapter.duration && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Duration: </p>
-                  <div>{formatDuration(chapter.duration)}</div>
-                </div>
-              </div>
-            )}
-            {chapter.wheelchair_access && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Wheelchair access: </p>
-                  <div>{chapter.wheelchair_access ? 'Yes' : 'No'}</div>
-                </div>
-              </div>
-            )}
-            {chapter.smartphone_ticket && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Smartphone ticket: </p>
-                  <div>{chapter.smartphone_ticket ? 'Yes' : 'No'}</div>
-                </div>
-              </div>
-            )}
-            {chapter.private_tour !== undefined && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Private tour: </p>
-                  <div>{chapter.private_tour ? 'Yes' : 'No'}</div>
-                </div>
-              </div>
-            )}
-            {chapter.free_cancellation !== undefined && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Free cancellation: </p>
-                  <div>{chapter.free_cancellation ? 'Yes' : 'No'}</div>
-                </div>
-              </div>
-            )}
-            {chapter.likely_to_sell_out !== undefined && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Likely to sell out: </p>
-                  <div>{chapter.likely_to_sell_out ? 'Yes' : 'No'}</div>
-                </div>
-              </div>
-            )}
-            {chapter.instant_confirmation !== undefined && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Instant confirmation: </p>
-                  <div>{chapter.instant_confirmation ? 'Yes' : 'No'}</div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="container-details container-badges">
-            <h2 className="no-margin">Location</h2>
-            {chapter.address && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Address: </p>
-                  <div>{chapter.address}</div>
-                </div>
-              </div>
-            )}
-            {chapter.postal_code && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Postal code: </p>
-                  <div>{chapter.postal_code}</div>
-                </div>
-              </div>
-            )}
-            {(chapter.geolocation_lat || chapter.geolocation_lng) && (
-              <>
-                {chapter.geolocation_lat && (
-                  <div className="container-tags">
-                    <div className="badges">
-                      <p>Latitude: </p>
-                      <div>{chapter.geolocation_lat}</div>
-                    </div>
-                  </div>
-                )}
-                {chapter.geolocation_lng && (
-                  <div className="container-tags">
-                    <div className="badges">
-                      <p>Longitude: </p>
-                      <div>{chapter.geolocation_lng}</div>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
-            <div className="container-tags">
-              <div className="badges">
-                <p>Country: </p>
-                <div>
-                  <Link to={`/chapters/countries/${chapter.countrySlug}`}>
-                    <Button
-                      secondary
-                      label={chapter.countryTitle?.toLowerCase()}
-                      size="small"
-                    />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            {chapter.areaSlug && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p>Region/Area: </p>
-                  <div>
-                    <Link to={`/chapters/areas/${chapter.areaSlug}`}>
-                      <Button
-                        secondary
-                        label={chapter.areaTitle?.toLowerCase()}
-                        size="small"
-                      />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div className="container-tags">
-              <div className="badges">
-                <p>City: </p>
-                <div>
-                  <Link to={`/chapters/cities/${chapter.citySlug}`}>
-                    <Button
-                      secondary
-                      label={chapter.cityTitle?.toLowerCase()}
-                      size="small"
-                    />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="container-details container-badges">
-            <h2 className="no-margin">Category & tags</h2>
+            <h2 className="no-margin">Taxonomy</h2>
             <div className="container-tags">
               <div className="badges">
                 <p>Category: </p>
@@ -1384,7 +1157,7 @@ export const ChapterView = () => {
                 </div>
               </div>
             </div>
-            {topicsFromChapters.length > 0 && (
+            {/* {topicsFromChapters.length > 0 && (
               <div className="container-tags">
                 <div className="badges">
                   <p className="p-no-margin">Related topics: </p>
@@ -1397,7 +1170,7 @@ export const ChapterView = () => {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
             {tags.length > 0 && (
               <div className="container-tags">
                 <div className="badges">
@@ -1405,87 +1178,6 @@ export const ChapterView = () => {
                   <div className="badges-keywords">
                     {tags.map((tag) => (
                       <Link to={`../chapters/tags/${tag.slug}`}>
-                        <Button
-                          secondary
-                          label={tag.title.toLowerCase()}
-                          size="small"
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="container-details container-badges">
-            <h2 className="no-margin">Highlights & use cases</h2>
-            {highlights.length > 0 && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p className="p-no-margin">Highlights: </p>
-                  <div className="badges-keywords">
-                    {highlights.map((tag) => (
-                      <Link to={`../chapters/highlights/${tag.slug}`}>
-                        <Button
-                          secondary
-                          label={tag.title.toLowerCase()}
-                          size="small"
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {useCases.length > 0 && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p className="p-no-margin">Use cases: </p>
-                  <div className="badges-keywords">
-                    {useCases.map((tag) => (
-                      <Link to={`../chapters/useCases/${tag.slug}`}>
-                        <Button
-                          secondary
-                          label={tag.title.toLowerCase()}
-                          size="small"
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="container-details container-badges">
-            <h2 className="no-margin">For who and when</h2>
-
-            {userTypes.length > 0 && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p className="p-no-margin">Best for: </p>
-                  <div className="badges-keywords">
-                    {userTypes.map((tag) => (
-                      <Link to={`../chapters/userTypes/${tag.slug}`}>
-                        <Button
-                          secondary
-                          label={tag.title.toLowerCase()}
-                          size="small"
-                        />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {occasions.length > 0 && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p className="p-no-margin">Occasions: </p>
-                  <div className="badges-keywords">
-                    {occasions.map((tag) => (
-                      <Link to={`../chapters/occasions/${tag.slug}`}>
                         <Button
                           secondary
                           label={tag.title.toLowerCase()}

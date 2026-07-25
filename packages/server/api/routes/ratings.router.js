@@ -12,7 +12,7 @@ const ratingsController = require('../controllers/ratings.controller');
  *    summary: Get all product's ratings
  *    description:
  *      Will return all ratings of product.
- *    produces: application/json
+ *    produces: chapterlication/json
  *    parameters:
  *     - in: path
  *       name: ID
@@ -29,9 +29,9 @@ const ratingsController = require('../controllers/ratings.controller');
 router.get('/', (req, res, next) => {
   const { token } = req.headers;
   // TO DO : once we will add authentication I will update it
-  if (req.query.appId && token) {
+  if (req.query.chapterId && token) {
     ratingsController
-      .getRatingsByAppId(token, req.query.appId)
+      .getRatingsByChapterId(token, req.query.chapterId)
       .then((result) => res.json(result))
       .catch(next);
   } else if (token) {
@@ -56,7 +56,7 @@ router.get('/', (req, res, next) => {
  *    summary: Create a favorite
  *    description:
  *      Will create a favorite.
- *    produces: application/json
+ *    produces: chapterlication/json
  *    parameters:
  *      - in: body
  *        name: ratings
@@ -96,7 +96,7 @@ router.post('/', (req, res, next) => {
  *    summary: Delete an favorite
  *    description:
  *      Will delete a favorite with a given ID.
- *    produces: application/json
+ *    produces: chapterlication/json
  *    parameters:
  *      - in: path
  *        description: ID of the favorite to delete.

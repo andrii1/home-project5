@@ -4,9 +4,9 @@ const router = express.Router({ mergeParams: true });
 const commentsController = require('../controllers/comments.controller');
 
 router.get('/', (req, res, next) => {
-  if (req.query.appId) {
+  if (req.query.chapterId) {
     commentsController
-      .getCommentsByAppId(req.query.appId)
+      .getCommentsByChapterId(req.query.chapterId)
       .then((result) => res.json(result))
       .catch(next);
   } else {
@@ -25,7 +25,7 @@ router.get('/', (req, res, next) => {
  *    summary: Create a favorite
  *    description:
  *      Will create a favorite.
- *    produces: application/json
+ *    produces: chapterlication/json
  *    parameters:
  *      - in: body
  *        name: favorites
@@ -65,7 +65,7 @@ router.post('/', (req, res, next) => {
  *    summary: Delete an favorite
  *    description:
  *      Will delete a favorite with a given ID.
- *    produces: application/json
+ *    produces: chapterlication/json
  *    parameters:
  *      - in: path
  *        description: ID of the favorite to delete.
