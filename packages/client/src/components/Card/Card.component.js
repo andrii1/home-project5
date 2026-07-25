@@ -11,7 +11,6 @@ import {
   faHeart as faHeartSolid,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import appImage from '../../assets/images/app-placeholder.svg';
 // import appImage from '../../../public/assets/images/small-screenshot.png';
 import { useUserContext } from '../../userContext';
 
@@ -19,12 +18,17 @@ import './Card.styles.css';
 
 export const Card = ({
   title,
-  description,
+  summary,
+  referralCode,
+  referralCodeOnClick,
   topic,
   topicId,
-  pricingType,
+  appId,
+  appTitle,
   url,
+  cardUrl,
   urlImage,
+  urlImageIcon,
   id,
   className,
   smallCard = true,
@@ -38,73 +42,74 @@ export const Card = ({
   if (smallCard) {
     return (
       <Link
+        to={cardUrl}
         className="card-category--small card-image--small"
         style={{
-          backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/w_500,q_auto,f_auto/apps_ai/${urlImage}.png )`,
+          backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/w_500,q_auto,f_auto/deals/${urlImage}.${
+            urlImage === 'deal' ? 'svg' : 'png'
+          } )`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
         }}
       >
         <div className="card-header">
-          <Link to={`/games/${id}`} target="_blank">
+          <Link to={cardUrl} target="_blank">
             <h2>{title}</h2>
           </Link>
+        </div>
+        <div className="topics-bookmark--small">
+          <Badge
+            className="storybook-badge--transparent"
+            label={topic}
+            size="small"
+          />
+          {appTitle && <Badge primary label={appTitle} size="small" />}
         </div>
       </Link>
     );
   }
 
   return (
-    <div className={listCard ? 'card-list' : 'card-category'}>
-      <Link
-        to={`/games/${id}`}
-        target="_blank"
-        className={`card-image ${listCard ? 'list' : ''}`}
-        style={{
-          backgroundImage: `url(http://res.cloudinary.com/dgarvanzw/image/upload/w_${
-            listCard ? '500' : '700'
-          },q_auto,f_auto/apps_ai/${urlImage}.png )`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}
-      />
+    <Link to={cardUrl} className={listCard ? 'card-list' : 'card-category'}>
+      <div className={`card-image ${listCard ? 'list' : ''}`}>
+        <img
+          className={`${listCard ? 'img-app-icon-list' : 'img-app-icon'} ${
+            urlImageIcon ? 'icon-shadow' : ''
+          }`}
+          alt="test"
+          src={urlImage}
+        />
+      </div>
+
       <div className={`card-body ${listCard ? 'list' : ''}`}>
         <div className="card-header">
           <div className="card-title">
-            <Link to={`/games/${id}`} target="_blank">
-              <h2>{title}</h2>
-            </Link>
-            <Link to={`/games/${id}`} target="_blank">
-              <FontAwesomeIcon
-                className="icon-card"
-                icon={faArrowUpRightFromSquare}
-                style={{ color: '#e5989b' }}
-                size="lg"
-              />
-            </Link>
+            <h2>{title}</h2>
           </div>
+          {/* <Badge label={appTitle} size="small" /> */}
         </div>
-        {description && (
-          <div className="card-description">
-            {`${description.split(' ').slice(0, 15).join(' ')}...`}
-          </div>
-        )}
+        {summary && <div className="card-description">{summary}</div>}
       </div>
-    </div>
+    </Link>
   );
 };
 
 Card.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
+  summary: PropTypes.string,
+  referralCode: PropTypes.string,
+  referralCodeOnClick: PropTypes.func,
   topic: PropTypes.string,
   topicId: PropTypes.string,
-  pricingType: PropTypes.string,
+  appTitle: PropTypes.string,
+  appId: PropTypes.string,
   id: PropTypes.string,
   url: PropTypes.shape,
+  cardUrl: PropTypes.shape,
   urlImage: PropTypes.string,
   smallCard: PropTypes.bool,
   listCard: PropTypes.bool,
+  urlImageIcon: PropTypes.bool,
   className: PropTypes.string,
   isFavorite: PropTypes.func,
   addFavorite: PropTypes.func,
@@ -114,18 +119,23 @@ Card.propTypes = {
 
 Card.defaultProps = {
   title: null,
-  description: null,
-  pricingType: null,
+  summary: null,
+  referralCode: null,
+  appTitle: null,
+  appId: null,
   topicId: null,
   topic: null,
   url: null,
+  cardUrl: null,
   urlImage: null,
   id: null,
   smallCard: false,
   listCard: false,
+  urlImageIcon: false,
   className: null,
   isFavorite: undefined,
   addFavorite: undefined,
   deleteBookmark: undefined,
   bookmarkOnClick: undefined,
+  referralCodeOnClick: undefined,
 };

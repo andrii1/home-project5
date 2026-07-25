@@ -1105,12 +1105,12 @@ export const Games = () => {
               return (
                 <Card
                   listCard={listView}
-                  id={game.id}
+                  id={game.slug}
                   title={game.title}
-                  description={game.description}
+                  summary={game.summary}
                   url={game.url}
                   urlImage={game.url_image || globe}
-                  cardUrl={`/games/${game.slug}`}
+                  cardUrl={`../gameplay/games/${game.slug}`}
                 />
               );
             })}

@@ -222,7 +222,13 @@ export const GameView = () => {
     //   .filter((topic) => topic.categoryId === category.id)
     //   .map((item) => item.id);
     return (
-      <Card id={item.id} cardUrl={`/games/${item.slug}`} title={item.title} />
+      <Card
+        id={item.id}
+        cardUrl={`/games/${item.slug}`}
+        title={item.title}
+        urlImage={item.url_image}
+        summary={item.summary}
+      />
     );
   });
 
