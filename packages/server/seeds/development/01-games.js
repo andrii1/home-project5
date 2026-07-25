@@ -24,15 +24,15 @@ Some questions are available for free, and the full experience can be unlocked v
 
 Privacy Policy: https://www.notion.so/Privacy-Policy-Stalkie-1f2e5143b6d280d5b393c4b26a8e9c91
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/`,
-      website_url: 'https://stalkie-website.vercel.app',
-      image_url:
+      url: 'https://stalkie-website.vercel.app',
+      url_image:
         'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8f/7a/3d/8f7a3d84-1312-e059-9bac-cda32e64c9e8/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg',
       meta_description:
         'Dive into a fake phone, uncover secrets, and solve mysteries in Stalkie, the mobile detective game.',
       created_at: '2026-07-25 14:29:55.688427',
       summary:
         'Become a detective in Stalkie, an immersive narrative investigation game filled with hidden clues.',
-      app_store_id: '6745106241',
+      apple_id: '6745106241',
     },
     {
       id: 2,
@@ -62,15 +62,15 @@ Note: Some chapters require a Premium unlock.
 Some investigations are available for free, while the complete experience can be unlocked through an in-app purchase.
 
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/`,
-      website_url: 'https://saclicstudio.com',
-      image_url:
+      url: 'https://saclicstudio.com',
+      url_image:
         'https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e7/a4/30/e7a430ce-b933-d514-6859-16eb54f29063/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg',
       meta_description:
         'Immerse yourself in a fictional investigation, piecing together clues from a simulated phone interface.',
       created_at: '2026-07-25 14:29:56.976659',
       summary:
         "Investigate a cold case by exploring a stranger's phone and uncovering the truth.",
-      app_store_id: '6762513021',
+      apple_id: '6762513021',
     },
   ]);
 };
