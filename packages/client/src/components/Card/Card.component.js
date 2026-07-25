@@ -46,13 +46,9 @@ export const Card = ({
         }}
       >
         <div className="card-header">
-          <Link to={`/apps/${id}`} target="_blank">
+          <Link to={`/games/${id}`} target="_blank">
             <h2>{title}</h2>
           </Link>
-        </div>
-        <div className="topics-bookmark--small">
-          <Badge secondary label={topic} size="small" />
-          <Badge label={pricingType} size="small" />
         </div>
       </Link>
     );
@@ -61,7 +57,7 @@ export const Card = ({
   return (
     <div className={listCard ? 'card-list' : 'card-category'}>
       <Link
-        to={`/apps/${id}`}
+        to={`/games/${id}`}
         target="_blank"
         className={`card-image ${listCard ? 'list' : ''}`}
         style={{
@@ -75,10 +71,10 @@ export const Card = ({
       <div className={`card-body ${listCard ? 'list' : ''}`}>
         <div className="card-header">
           <div className="card-title">
-            <Link to={`/apps/${id}`} target="_blank">
+            <Link to={`/games/${id}`} target="_blank">
               <h2>{title}</h2>
             </Link>
-            <Link to={`/apps/${id}`} target="_blank">
+            <Link to={`/games/${id}`} target="_blank">
               <FontAwesomeIcon
                 className="icon-card"
                 icon={faArrowUpRightFromSquare}
@@ -87,92 +83,15 @@ export const Card = ({
               />
             </Link>
           </div>
-          <Badge label={pricingType} size="small" />
         </div>
         {description && (
           <div className="card-description">
             {`${description.split(' ').slice(0, 15).join(' ')}...`}
           </div>
         )}
-        <div className="topics-bookmark">
-          <Link to={`/apps/topic/${topicId}`}>
-            <Button label={topic} size="small" />
-          </Link>
-
-          {user && isFavorite ? (
-            <button
-              type="button"
-              onClick={deleteBookmark}
-              onKeyDown={deleteBookmark}
-              className="button-bookmark"
-            >
-              <FontAwesomeIcon icon={faHeartSolid} size="lg" />
-            </button>
-          ) : user ? (
-            <button
-              type="button"
-              onClick={addFavorite}
-              onKeyDown={addFavorite}
-              className="button-bookmark"
-            >
-              <FontAwesomeIcon icon={faHeart} size="lg" />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={bookmarkOnClick}
-              onKeyDown={addFavorite}
-              className="button-bookmark"
-            >
-              <FontAwesomeIcon icon={faHeart} size="lg" />
-            </button>
-          )}
-        </div>
       </div>
     </div>
   );
-
-  //   return (
-  //     <div className="card-list">
-  //       <Link
-  //         to={`/apps/${id}`}
-  //         target="_blank"
-  //         className="card-image list"
-  //         style={{
-  //           backgroundImage: `url(/assets/images/finalscout-sm.png)`,
-  //           backgroundRepeat: 'no-repeat',
-  //           backgroundSize: 'cover',
-  //         }}
-  //       />
-  //       <div className="card-body list">
-  //         <div className="card-header">
-  //           <div className="card-title">
-  //             <Link to={`/apps/${id}`} target="_blank">
-  //               <h2>{title}</h2>
-  //             </Link>
-  //             <Link to={`/apps/${id}`} target="_blank">
-  //               <FontAwesomeIcon
-  //                 className="icon-card"
-  //                 icon={faArrowUpRightFromSquare}
-  //                 style={{ color: '#e5989b' }}
-  //                 size="lg"
-  //               />
-  //             </Link>
-  //           </div>
-  //           <Badge label={pricingType} size="small" />
-  //         </div>
-  //         <div className="card-description">
-  //           {`${description.split(' ').slice(0, 35).join(' ')}...`}
-  //         </div>
-  //         <div className="topics-bookmark">
-  //           <Link to={`/apps/topic/${topicId}`}>
-  //             <Button label={topic} size="small" />
-  //           </Link>
-  //           <FontAwesomeIcon icon={faHeart} size="lg" />
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
 };
 
 Card.propTypes = {

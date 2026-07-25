@@ -12,7 +12,7 @@ import { useUserContext } from '../../userContext';
 import confetti from 'canvas-confetti';
 import Modal from '../../components/Modal/Modal.Component';
 import { capitalize } from '../../utils/capitalize';
-import { MAX_ITEMS_WHEEL } from '../../lib/constants';
+import { MAX_ITEMS_WHEEL } from '../../lib/constants/constants';
 import { Items } from '../../components/Items/Items.component';
 
 export const ListRandomizerWheel = () => {
