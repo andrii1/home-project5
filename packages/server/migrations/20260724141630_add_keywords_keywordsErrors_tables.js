@@ -9,6 +9,7 @@ exports.up = function (knex) {
       table.string('slug').notNullable();
       table.string('title').notNullable();
       table.text('meta_description').nullable();
+      table.unique(['slug']);
     })
     .createTable('keywordsChapters', (table) => {
       table.increments();
