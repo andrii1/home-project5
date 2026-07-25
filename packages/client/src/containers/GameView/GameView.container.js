@@ -561,7 +561,7 @@ export const GameView = () => {
     },
     offers: {
       '@type': 'Offer',
-      url: `https://www.catchtopdeals.com/games/${game.slug}`,
+      url: `https://www.miniappshub.com/games/${game.slug}`,
       priceCurrency: game.currency,
       price: game.price,
       priceValidUntil,
@@ -586,19 +586,19 @@ export const GameView = () => {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.catchtopdeals.com',
+        item: 'https://www.miniappshub.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Games',
-        item: 'https://www.catchtopdeals.com/games',
+        item: 'https://www.miniappshub.com/games',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: game.title,
-        item: `https://www.catchtopdeals.com/games/${game.slug}`,
+        item: `https://www.miniappshub.com/games/${game.slug}`,
       },
     ],
   };
@@ -644,7 +644,7 @@ export const GameView = () => {
         {/* Canonical URL */}
         <link
           rel="canonical"
-          href={`https://www.catchtopdeals.com/games/${game.slug}`}
+          href={`https://www.miniappshub.com/games/${game.slug}`}
         />
         {/* Robots meta for large image preview (Google Discover) */}
         <meta name="robots" content="max-image-preview:large" />
@@ -659,7 +659,7 @@ export const GameView = () => {
         <meta property="og:image" content={game.url_image} />
         <meta
           property="og:url"
-          content={`https://www.catchtopdeals.com/games/${game.slug}`}
+          content={`https://www.miniappshub.com/games/${game.slug}`}
         />
         <meta property="og:site_name" content="Catch Top Deals" />
 
@@ -951,7 +951,7 @@ export const GameView = () => {
               </div>
             </div>
           )} */}
-          <div className="container-comments">
+          {/* <div className="container-comments">
             <h2 className="h-no-margin h-no-margin-bottom">Reviews</h2>
             {comments.length === 0 && (
               <div>
@@ -1016,7 +1016,7 @@ export const GameView = () => {
                 </div>
               </div>
             )}
-          </div>
+          </div> */}
           {/* <div className="container-details container-badges">
             <h2 className="no-margin">Reviews</h2>
           </div> */}
@@ -1283,7 +1283,7 @@ export const GameView = () => {
               className="button-copy"
               onClick={() =>
                 copyToClipboard(
-                  `https://www.catchtopdeals.com/games/${game.slug}`,
+                  `https://www.miniappshub.com/games/${game.slug}`,
                 )
               }
             />
@@ -1291,21 +1291,21 @@ export const GameView = () => {
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.catchtopdeals.com/games/${game.slug}`}
+              url={`https://www.miniappshub.com/games/${game.slug}`}
               title={`Check out this game: '${game.title}'`}
               hashtags={['Games']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
             <LinkedinShareButton
-              url={`https://www.catchtopdeals.com/games/${game.slug}`}
+              url={`https://www.miniappshub.com/games/${game.slug}`}
             >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
               subject="Check out this game!"
               body={`This game is great: '${game.title}'`}
-              url={`https://www.catchtopdeals.com/games/${game.slug}`}
+              url={`https://www.miniappshub.com/games/${game.slug}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>
