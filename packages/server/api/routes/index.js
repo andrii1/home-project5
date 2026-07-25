@@ -16,6 +16,9 @@ const queries = require('./queries.router');
 const queriesTrends = require('./queriesTrends.router');
 const sites = require('./sites.router');
 const games = require('./games.router');
+const chapters = require('./chapters.router');
+const questions = require('./questions.router');
+const answers = require('./answers.router');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -59,5 +62,8 @@ router.use('/queries', queries);
 router.use('/queriesTrends', queriesTrends);
 router.use('/sites', sites);
 router.use('/games', games);
+router.use('/chapters', chapters);
+router.use('/questions', questions);
+router.use('/answers', answers);
 
 module.exports = router;
