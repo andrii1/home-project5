@@ -13,7 +13,6 @@ exports.up = function (knex) {
     table.text('url_image').nullable();
     table.string('meta_description').nullable();
     table.datetime('created_at', { precision: 6 }).defaultTo(knex.fn.now(6));
-
     table.unique(['slug']);
   });
 };

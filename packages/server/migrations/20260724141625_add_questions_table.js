@@ -7,7 +7,6 @@ exports.up = function (knex) {
     table.increments();
     table.string('question_id', 100).notNullable();
     table.text('title').nullable();
-    table.text('answer').nullable();
     table.text('description').nullable();
     table.integer('chapter_id').unsigned();
     table.foreign('chapter_id').references('id').inTable('chapters');
