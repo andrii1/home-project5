@@ -15,6 +15,7 @@ const cloudinary = require('./cloudinary.router');
 const queries = require('./queries.router');
 const queriesTrends = require('./queriesTrends.router');
 const sites = require('./sites.router');
+const games = require('./games.router');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -57,5 +58,6 @@ router.use('/comments', comments);
 router.use('/queries', queries);
 router.use('/queriesTrends', queriesTrends);
 router.use('/sites', sites);
+router.use('/games', games);
 
 module.exports = router;

@@ -5,7 +5,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable('answers', (table) => {
     table.increments();
-    table.text('title').notNullable();
+    table.string('title', 255).notNullable();
     table.text('description').nullable();
     table.integer('question_id').unsigned();
     table.foreign('question_id').references('id').inTable('questions');
@@ -13,7 +13,7 @@ exports.up = function (knex) {
     table.foreign('user_id').references('id').inTable('users');
     table.datetime('created_at', { precision: 6 }).defaultTo(knex.fn.now(6));
     table.datetime('updated_at', { precision: 6 }).defaultTo(knex.fn.now(6));
-    table.unique(['game_id', 'chapter_id', 'question_id', 'title']);
+    table.unique(['question_id', 'title']);
   });
 };
 
