@@ -4,6 +4,9 @@ documentation. Can be deleted when the first real route is added. */
 const express = require('express');
 
 const router = express.Router({ mergeParams: true });
+// const chapterAppsRouter = require('./chapterApps.router');
+
+// router.use('/:id/apps', chapterAppsRouter);
 
 // controllers
 const chaptersController = require('../controllers/chapters.controller');
@@ -22,61 +25,31 @@ const chaptersController = require('../controllers/chapters.controller');
  *      200:
  *        description: Successful request
  *      5XX:
- *        description: Unexpected chapter.
+ *        description: Unexpected error.
  */
-// router.get('/', (req, res, next) => {
-//   if (req.query.page) {
-//     chaptersController
-//       .getChaptersPagination(
-//         req.query.page,
-//         req.query.column,
-//         req.query.direction,
-//       )
-//       .then((result) => res.json(result))
-//       .catch(next);
-//   } else {
-//     chaptersController
-//       .getChapters()
-//       .then((result) => res.json(result))
-//       .catch(next);
-//   }
-// });
-
 router.get('/', (req, res, next) => {
-  if (
-    req.query.categories ||
-    req.query.socials ||
-    req.query.other ||
-    req.query.search ||
-    req.query.tags ||
-    req.query.keywords ||
-    req.query.page ||
-    req.query.highlights ||
-    req.query.products
-  ) {
-    // const array = req.query.filteredTopics.split(',');
+  if (req.query.game) {
     chaptersController
-      .getChaptersBy({
-        page: req.query.page,
-        column: req.query.column,
-        direction: req.query.direction,
-        categories: req.query.categories,
-        socials: req.query.socials,
-        other: req.query.other,
-        search: req.query.search,
-        tags: req.query.tags,
-        keywords: req.query.keywords,
-        highlights: req.query.highlights,
-        products: req.query.products,
-      })
+      .getChaptersByGame(req.query.game)
       .then((result) => res.json(result))
       .catch(next);
   } else {
-    chaptersController
-      .getChapters()
-      .then((result) => res.json(result))
-      .catch(next);
+    try {
+      chaptersController
+        .getChapters()
+        .then((result) => res.json(result))
+        .catch(next);
+    } catch (error) {
+      res.status(404).json({ error: 'Bad Get Request' });
+    }
   }
+});
+
+router.get('/:id', (req, res, next) => {
+  chaptersController
+    .getChapterById(req.params.id)
+    .then((result) => res.json(result))
+    .catch(next);
 });
 
 /**
@@ -101,125 +74,7 @@ router.get('/', (req, res, next) => {
  *      200:
  *        description: Successful request
  *      5XX:
- *        description: Unexpected chapter.
+ *        description: Unexpected error.
  */
-router.get('/:id', (req, res, next) => {
-  chaptersController
-    .getChapterById(req.params.id)
-    .then((result) => res.json(result))
-    .catch(next);
-});
-
-/**
- * @swagger
- * /exampleResources:
- *  post:
- *    tags:
- *    - exampleResources
- *    summary: Create a exampleResource
- *    description:
- *      Will create a exampleResource.
- *    produces: application/json
- *    parameters:
- *      - in: body
- *        name: exampleResource
- *        description: The exampleResource to create.
- *        schema:
- *          type: object
- *          required:
- *            - title
- *          properties:
- *            title:
- *              type: string
- *    responses:
- *      201:
- *        description: ExampleResources created
- *      5XX:
- *        description: Unexpected chapter.
- */
-router.post('/node', (req, res) => {
-  const { token } = req.headers;
-  chaptersController
-    .createChapterNode(token, req.body)
-    .then((result) => res.json(result))
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
-
-      res.status(400).send('Bad request').end();
-    });
-});
-
-/**
- * @swagger
- * /exampleResources/{ID}:
- *  patch:
- *    tags:
- *    - exampleResources
- *    summary: Create an exampleResource
- *    description:
- *      Will create an exampleResource.
- *    produces: application/json
- *    parameters:
- *      - in: path
- *        name: ID
- *        description: ID of the exampleResource to patch.
- *      - in: body
- *        name: exampleResource
- *        description: The exampleResource to create.
- *        schema:
- *          type: object
- *          properties:
- *            title:
- *              type: string
- *    responses:
- *      200:
- *        description: ExampleResource was patched
- *      5XX:
- *        description: Unexpected chapter.
- */
-// router.patch('/:id', (req, res, next) => {
-//   chaptersController
-//     .editChapter(req.params.id, req.body)
-//     .then((result) => res.json(result))
-//     .catch(next);
-// });
-
-/**
- * @swagger
- * /exampleResources/{ID}:
- *  delete:
- *    tags:
- *    - exampleResources
- *    summary: Delete an exampleResource
- *    description:
- *      Will delete a exampleResource with a given ID.
- *    produces: application/json
- *    parameters:
- *      - in: path
- *        name: ID
- *        description: ID of the exampleResource to delete.
- *    responses:
- *      200:
- *        description: exampleResource deleted
- *      5XX:
- *        description: Unexpected chapter.
- */
-// router.delete('/:id', (req, res) => {
-//   chaptersController
-//     .deleteChapter(req.params.id, req)
-//     .then((result) => {
-//       // If result is equal to 0, then that means the exampleResource id does not exist
-//       if (result === 0) {
-//         res
-//           .status(404)
-//           .send('The exampleResource ID you provided does not exist.');
-//       } else {
-//         res.json({ success: true });
-//       }
-//     })
-//     // eslint-disable-next-line no-console
-//     .catch((chapter) => console.log(chapter));
-// });
 
 module.exports = router;

@@ -43,6 +43,8 @@ import { GeneratorNameAdvanced } from './containers/GeneratorNameAdvanced/Genera
 import { BratGenerator } from './containers/BratGenerator/BratGenerator.Container';
 import { Queries } from './containers/Queries/Queries.Container';
 import { QueriesTrends } from './containers/QueriesTrends/QueriesTrends.Container';
+import { Games } from './containers/Games/Games.Container';
+import { GameView } from './containers/GameView/GameView.container';
 
 function App() {
   return (
@@ -129,6 +131,12 @@ function App() {
             {/* <Route path="/name-generator" element={<GeneratorNameAdvanced />} /> */}
             <Route path="/queries" element={<Queries />} />
             <Route path="/queries-trends" element={<QueriesTrends />} />
+            <Route path="/gameplay" element={<Games />} />
+            <Route
+              exact
+              path="/gameplay/games/:slugParam"
+              element={<GameView />}
+            />
             <Route path="/landing" element={<LandingPage />} />
             <Route path="/test" element={<Prompts />} />
             <Route path="/categories" element={<Categories />} />

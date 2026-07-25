@@ -89,9 +89,11 @@ export const Card = ({
           </div>
           <Badge label={pricingType} size="small" />
         </div>
-        <div className="card-description">
-          {`${description.split(' ').slice(0, 15).join(' ')}...`}
-        </div>
+        {description && (
+          <div className="card-description">
+            {`${description.split(' ').slice(0, 15).join(' ')}...`}
+          </div>
+        )}
         <div className="topics-bookmark">
           <Link to={`/apps/topic/${topicId}`}>
             <Button label={topic} size="small" />

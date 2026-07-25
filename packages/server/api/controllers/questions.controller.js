@@ -21,7 +21,7 @@ const getQuestions = async () => {
   }
 };
 
-// Get questions by Category
+// Get Questions by Chapter
 const getQuestionsByChapter = async (chapter) => {
   try {
     const questions = await knex('questions').where({ chapter_id: chapter });

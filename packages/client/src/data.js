@@ -229,4 +229,8 @@ export const TOOLS = [
     title: 'Brat generator',
     url: 'brat-generator',
   },
+  {
+    title: 'Gameplay',
+    url: 'gameplay',
+  },
 ];
