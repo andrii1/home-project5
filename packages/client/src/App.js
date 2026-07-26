@@ -141,7 +141,7 @@ function App() {
             />
             <Route
               exact
-              path="/gameplay/chapters/:id"
+              path="/gameplay/chapters/:slugParam"
               element={<ChapterView />}
             />
             <Route

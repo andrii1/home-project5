@@ -40,8 +40,8 @@ const getChaptersByGame = async (game) => {
   }
 };
 
-const getChapterById = async (id) => {
-  if (!id) {
+const getChapterById = async (slug) => {
+  if (!slug) {
     throw new HttpError('Id should be a number', 400);
   }
 
@@ -55,9 +55,9 @@ const getChapterById = async (id) => {
         'games.slug as gameSlug',
       )
       .join('games', 'chapters.game_id', '=', 'games.id')
-      .where('chapters.id', id);
+      .where('chapters.slug', slug);
     if (chapter.length === 0) {
-      throw new Error(`incorrect entry with the id of ${id}`, 404);
+      throw new Error(`incorrect entry with the id of ${slug}`, 404);
     }
     return chapter;
   } catch (error) {

@@ -56,7 +56,7 @@ import { getMostUsedWords } from '../../utils/getMostUsedWords';
 import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
 
 export const ChapterView = () => {
-  const { id } = useParams();
+  const { slugParam } = useParams();
   const [openModal, setOpenModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [openToast, setOpenToast] = useState(false);
@@ -97,16 +97,18 @@ export const ChapterView = () => {
   const [userTypes, setUserTypes] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     async function fetchSingleChapter(chapterId) {
       const response = await fetch(`${apiURL()}/chapters/${chapterId}`);
       const chapterResponse = await response.json();
       setChapter(chapterResponse[0]);
+      setId(chapterResponse[0].id);
     }
 
-    fetchSingleChapter(id);
-  }, [id]);
+    fetchSingleChapter(slugParam);
+  }, [slugParam]);
 
   useEffect(() => {
     async function fetchTagsForChapter(chapterId) {
