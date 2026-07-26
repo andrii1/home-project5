@@ -205,7 +205,9 @@ export const QuestionView = () => {
     async function fetchSimilarQuestions() {
       setLoading(true);
       try {
-        const response = await fetch(`${apiURL()}/questions`);
+        const response = await fetch(
+          `${apiURL()}/questions?chapter=${question.chapterId}`,
+        );
         const data = await response.json();
 
         const filteredData = data.filter((item) => item.id !== question.id);
@@ -218,13 +220,7 @@ export const QuestionView = () => {
     }
 
     fetchSimilarQuestions();
-  }, [
-    question.id,
-    question.categorySlug,
-    question.countrySlug,
-    question.citySlug,
-    question.areaSlug,
-  ]);
+  }, [question.id, question.chapterId]);
 
   const fetchAnswersByQuestionId = useCallback(async (questionId) => {
     const response = await fetch(`${apiURL()}/answers?question=${questionId}`);
@@ -294,19 +290,8 @@ export const QuestionView = () => {
     return (
       <Card
         id={item.id}
-        cardUrl={`/questions/${item.slug}`}
-        title={item.title}
-        price={item.price}
-        currency={item.currency}
-        urlAffiliate={item.url_affiliate}
-        description={item.description}
-        url={item.url}
-        urlImage={item.url_image}
-        topic={item.categoryTitle}
-        questionTitle={item.questionTitle}
-        rating={item.rating}
-        reviews={item.reviews}
-        isoCode={item.countryIsoCode}
+        cardUrl={`../gameplay/questions/${item.question_id}`}
+        title={item.question_title}
         smallCard
       />
     );
@@ -596,7 +581,7 @@ export const QuestionView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${question?.title} - Gameplay`}</title>
+        <title>{`${question?.title}, ${question?.chapterTitle}, ${question?.gameTitle} - Gameplay`}</title>
         <meta
           name="description"
           content={
@@ -646,7 +631,10 @@ export const QuestionView = () => {
       <main>
         <section className="container-appview">
           <div className="header gameplay">
-            <h1 className="hero-header">{question?.title} gameplay</h1>
+            <h1 className="hero-header">
+              {question?.title}, {question?.chapterTitle}, {question?.gameTitle}{' '}
+              gameplay
+            </h1>
           </div>
           {question.url_image && (
             <div className="activity-img-container">
@@ -750,6 +738,20 @@ export const QuestionView = () => {
                 </div>
               </div>
             </div>
+            <div className="container-tags">
+              <div className="badges">
+                <p>Chapter: </p>
+                <div>
+                  <Link to={`../gameplay/chapters/${question.chapterId}`}>
+                    <Button
+                      secondary
+                      label={question.chapterTitle?.toLowerCase()}
+                      size="small"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </div>
             {/* {topicsFromQuestions.length > 0 && (
               <div className="container-tags">
                 <div className="badges">
@@ -842,7 +844,10 @@ export const QuestionView = () => {
           )} */}
           {similarQuestions.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Other questions in {question.categoryTitle}</h2>
+              <h2>
+                🔎 Other questions in {question.chapterTitle},{' '}
+                {question.gameTitle}
+              </h2>
               <div className="container-cards small-cards">{cardItems}</div>
             </div>
           )}

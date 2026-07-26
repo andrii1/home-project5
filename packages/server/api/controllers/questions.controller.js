@@ -20,6 +20,8 @@ const getQuestionsByChapter = async (chapter) => {
     const rows = await knex('questions')
       .leftJoin('answers', 'questions.id', 'answers.question_id')
       .leftJoin('users', 'users.id', 'answers.user_id')
+      .leftJoin('chapters', 'questions.chapter_id', '=', 'chapters.id')
+      .leftJoin('games', 'chapters.game_id', '=', 'games.id')
       .where('questions.chapter_id', chapter)
       .select(
         'questions.id as id',
@@ -27,6 +29,9 @@ const getQuestionsByChapter = async (chapter) => {
         'questions.title as question_title',
         'answers.id as answer_id',
         'answers.title as answer_title',
+        'games.title as gameTitle',
+        'games.slug as gameSlug',
+        'chapters.title as chapterTitle',
         'users.full_name as user_full_name',
       );
 
@@ -67,7 +72,17 @@ const getQuestionById = async (id) => {
   }
 
   try {
-    const question = await knex('questions').where('questions.id', id);
+    const question = await knex('questions')
+      .select(
+        'questions.*',
+        'games.title as gameTitle',
+        'games.slug as gameSlug',
+        'chapters.title as chapterTitle',
+        'chapters.id as chapterId',
+      )
+      .leftJoin('chapters', 'questions.chapter_id', '=', 'chapters.id')
+      .leftJoin('games', 'chapters.game_id', '=', 'games.id')
+      .where('questions.id', id);
     if (question.length === 0) {
       throw new Error(`incorrect entry with the id of ${id}`, 404);
     }
