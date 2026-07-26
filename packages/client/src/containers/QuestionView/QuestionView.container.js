@@ -49,40 +49,40 @@ import appImage from '../../assets/images/app-placeholder.svg';
 import { faHeart, faCopy } from '@fortawesome/free-regular-svg-icons';
 
 import { apiURL } from '../../apiURL';
-import './ChapterView.styles.css';
+import './QuestionView.styles.css';
 import { useUserContext } from '../../userContext';
 import { getMostUsedWords } from '../../utils/getMostUsedWords';
 import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
 
-export const ChapterView = () => {
+export const QuestionView = () => {
   const { id } = useParams();
   const [openModal, setOpenModal] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [openToast, setOpenToast] = useState(false);
   const [animation, setAnimation] = useState('');
   const [favorites, setFavorites] = useState([]);
-  const [topicsFromChapters, setTopicsFromChapters] = useState([]);
+  const [topicsFromQuestions, setTopicsFromQuestions] = useState([]);
   const navigate = useNavigate();
-  const [chapter, setChapter] = useState({});
+  const [question, setQuestion] = useState({});
   const [dealCodes, setDealCodes] = useState([]);
-  // const [chapterChapterStore, setChapterChapterStore] = useState({});
-  // const [chapterChapterStoreScraper, setChapterChapterStoreScraper] = useState(
+  // const [questionQuestionStore, setQuestionQuestionStore] = useState({});
+  // const [questionQuestionStoreScraper, setQuestionQuestionStoreScraper] = useState(
   //   {},
   // );
-  const [similarChapters, setSimilarChapters] = useState([]);
-  const [similarChaptersCountry, setSimilarChaptersCountry] = useState([]);
-  const [similarChaptersArea, setSimilarChaptersArea] = useState([]);
-  const [similarChaptersCity, setSimilarChaptersCity] = useState([]);
+  const [similarQuestions, setSimilarQuestions] = useState([]);
+  const [similarQuestionsCountry, setSimilarQuestionsCountry] = useState([]);
+  const [similarQuestionsArea, setSimilarQuestionsArea] = useState([]);
+  const [similarQuestionsCity, setSimilarQuestionsCity] = useState([]);
 
-  const [similarDealsFromChapter, setSimilarDealsFromChapter] = useState([]);
-  const [comments, setComments] = useState([]);
+  const [similarDealsFromQuestion, setSimilarDealsFromQuestion] = useState([]);
+  const [answers, setAnswers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user } = useUserContext();
   const [validForm, setValidForm] = useState(false);
   const [invalidForm, setInvalidForm] = useState(false);
-  const [comment, setComment] = useState('');
-  const [commentError, setCommentError] = useState(null);
+  const [answer, setAnswer] = useState('');
+  const [answerError, setAnswerError] = useState(null);
   const [allRatings, setAllRatings] = useState([]);
   const [ratings, setRatings] = useState([]);
   const [searches, setSearches] = useState([]);
@@ -98,57 +98,57 @@ export const ChapterView = () => {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
-    async function fetchSingleChapter(chapterId) {
-      const response = await fetch(`${apiURL()}/chapters/${chapterId}`);
-      const chapterResponse = await response.json();
-      setChapter(chapterResponse[0]);
+    async function fetchSingleQuestion(questionId) {
+      const response = await fetch(`${apiURL()}/questions/${questionId}`);
+      const questionResponse = await response.json();
+      setQuestion(questionResponse[0]);
     }
 
-    fetchSingleChapter(id);
+    fetchSingleQuestion(id);
   }, [id]);
 
   useEffect(() => {
-    async function fetchTagsForChapter(chapterId) {
-      const response = await fetch(`${apiURL()}/tags/?chapter=${chapterId}`);
+    async function fetchTagsForQuestion(questionId) {
+      const response = await fetch(`${apiURL()}/tags/?question=${questionId}`);
       const data = await response.json();
       setTags(data);
     }
 
-    async function fetchQuestionsForChapter(chapterId) {
+    async function fetchQuestionsForQuestion(questionId) {
       const response = await fetch(
-        `${apiURL()}/questions/?chapter=${chapterId}`,
+        `${apiURL()}/questions/?question=${questionId}`,
       );
       const data = await response.json();
       setQuestions(data);
     }
 
-    async function fetchOccasionsForChapter(chapterId) {
+    async function fetchOccasionsForQuestion(questionId) {
       const response = await fetch(
-        `${apiURL()}/occasions/?chapter=${chapterId}`,
+        `${apiURL()}/occasions/?question=${questionId}`,
       );
       const data = await response.json();
       setOccasions(data);
     }
 
-    async function fetchHighlightsForChapter(chapterId) {
+    async function fetchHighlightsForQuestion(questionId) {
       const response = await fetch(
-        `${apiURL()}/highlights/?chapter=${chapterId}`,
+        `${apiURL()}/highlights/?question=${questionId}`,
       );
       const data = await response.json();
       setHighlights(data);
     }
 
-    async function fetchUseCasesForChapter(chapterId) {
+    async function fetchUseCasesForQuestion(questionId) {
       const response = await fetch(
-        `${apiURL()}/useCases/?chapter=${chapterId}`,
+        `${apiURL()}/useCases/?question=${questionId}`,
       );
       const data = await response.json();
       setUseCases(data);
     }
 
-    async function fetchUserTypesForChapter(chapterId) {
+    async function fetchUserTypesForQuestion(questionId) {
       const response = await fetch(
-        `${apiURL()}/userTypes/?chapter=${chapterId}`,
+        `${apiURL()}/userTypes/?question=${questionId}`,
       );
       const data = await response.json();
       setUserTypes(data);
@@ -156,23 +156,23 @@ export const ChapterView = () => {
 
     // async function fetchCodesForADeal(dealId) {
     //   const response = await fetch(`${apiURL()}/codes/?deal=${dealId}`);
-    //   const chapterResponse = await response.json();
-    //   setDealCodes(chapterResponse);
+    //   const questionResponse = await response.json();
+    //   setDealCodes(questionResponse);
     // }
 
     // async function fetchSearchesForADeal(dealId) {
     //   const response = await fetch(`${apiURL()}/searches/?deal=${dealId}`);
-    //   const chapterResponse = await response.json();
-    //   setSearches(chapterResponse);
+    //   const questionResponse = await response.json();
+    //   setSearches(questionResponse);
     // }
 
     // async function fetchKeywordsForADeal(dealId) {
     //   const response = await fetch(`${apiURL()}/keywords/?deal=${dealId}`);
-    //   const chapterResponse = await response.json();
-    //   setKeywords(chapterResponse);
+    //   const questionResponse = await response.json();
+    //   setKeywords(questionResponse);
     // }
 
-    // fetchSingleChapter(id);
+    // fetchSingleQuestion(id);
     // fetchCodesForADeal(id);
     // fetchSearchesForADeal(id);
     // fetchKeywordsForADeal(id);
@@ -181,13 +181,13 @@ export const ChapterView = () => {
       setLoading(true);
       setError(null); // Clear previous errors
       try {
-        await fetchQuestionsForChapter(id);
-        // await fetchTagsForChapter(id);
-        // await fetchOccasionsForChapter(id);
-        // await fetchHighlightsForChapter(id);
+        await fetchQuestionsForQuestion(id);
+        // await fetchTagsForQuestion(id);
+        // await fetchOccasionsForQuestion(id);
+        // await fetchHighlightsForQuestion(id);
 
-        // await fetchUseCasesForChapter(id);
-        // await fetchUserTypesForChapter(id);
+        // await fetchUseCasesForQuestion(id);
+        // await fetchUserTypesForQuestion(id);
         // await fetchCodesForADeal(id);
         // await fetchSearchesForADeal(id);
         // await fetchKeywordsForADeal(id);
@@ -202,75 +202,75 @@ export const ChapterView = () => {
   }, [id]);
 
   useEffect(() => {
-    async function fetchSimilarChapters() {
+    async function fetchSimilarQuestions() {
       setLoading(true);
       try {
-        const response = await fetch(`${apiURL()}/chapters`);
+        const response = await fetch(`${apiURL()}/questions`);
         const data = await response.json();
 
-        const filteredData = data.filter((item) => item.id !== chapter.id);
+        const filteredData = data.filter((item) => item.id !== question.id);
 
-        setSimilarChapters(filteredData);
+        setSimilarQuestions(filteredData);
       } catch (e) {
         setError({ message: e.message || 'Failed to fetch data' });
       }
       setLoading(false);
     }
 
-    fetchSimilarChapters();
+    fetchSimilarQuestions();
   }, [
-    chapter.id,
-    chapter.categorySlug,
-    chapter.countrySlug,
-    chapter.citySlug,
-    chapter.areaSlug,
+    question.id,
+    question.categorySlug,
+    question.countrySlug,
+    question.citySlug,
+    question.areaSlug,
   ]);
 
-  const fetchCommentsByChapterId = useCallback(async (chapterId) => {
-    const response = await fetch(`${apiURL()}/comments?chapterId=${chapterId}`);
-    const commentResponse = await response.json();
-    setComments(commentResponse);
+  const fetchAnswersByQuestionId = useCallback(async (questionId) => {
+    const response = await fetch(`${apiURL()}/answers?question=${questionId}`);
+    const answerResponse = await response.json();
+    setAnswers(answerResponse);
   }, []);
 
   useEffect(() => {
-    fetchCommentsByChapterId(id);
-  }, [fetchCommentsByChapterId, id]);
+    fetchAnswersByQuestionId(id);
+  }, [fetchAnswersByQuestionId, id]);
 
   const navigateBack = () => {
     navigate(-1);
   };
 
-  const addComment = async (commentContent) => {
-    const response = await fetch(`${apiURL()}/comments`, {
+  const addAnswer = async (answerContent) => {
+    const response = await fetch(`${apiURL()}/answers`, {
       method: 'POST',
       headers: {
         token: `token ${user?.uid}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        content: commentContent,
-        chapter_id: id,
+        content: answerContent,
+        question_id: id,
       }),
     });
     if (response.ok) {
-      fetchCommentsByChapterId(id);
+      fetchAnswersByQuestionId(id);
     }
   };
 
-  const commentHandler = (event) => {
-    setComment(event.target.value);
+  const answerHandler = (event) => {
+    setAnswer(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (!comment) {
-      setCommentError('Comment is required!');
+    if (!answer) {
+      setAnswerError('Answer is required!');
       setInvalidForm(true);
       setValidForm(false);
       return;
     }
-    if (comment.trim().length < 5) {
-      setCommentError('Comment must be more than five characters!');
+    if (answer.trim().length < 5) {
+      setAnswerError('Answer must be more than five characters!');
       setInvalidForm(true);
       setValidForm(false);
       return;
@@ -278,23 +278,23 @@ export const ChapterView = () => {
 
     setInvalidForm(false);
     setValidForm(true);
-    addComment(comment);
+    addAnswer(answer);
     setOpenConfirmationModal(true);
-    setComment('');
+    setAnswer('');
   };
   const getOnlyYearMonthDay = (dateString) => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   };
 
-  const cardItems = similarChapters.map((item) => {
+  const cardItems = similarQuestions.map((item) => {
     // const relatedTopics = topics
     //   .filter((topic) => topic.categoryId === category.id)
     //   .map((item) => item.id);
     return (
       <Card
         id={item.id}
-        cardUrl={`/chapters/${item.slug}`}
+        cardUrl={`/questions/${item.slug}`}
         title={item.title}
         price={item.price}
         currency={item.currency}
@@ -303,7 +303,7 @@ export const ChapterView = () => {
         url={item.url}
         urlImage={item.url_image}
         topic={item.categoryTitle}
-        chapterTitle={item.chapterTitle}
+        questionTitle={item.questionTitle}
         rating={item.rating}
         reviews={item.reviews}
         isoCode={item.countryIsoCode}
@@ -314,7 +314,7 @@ export const ChapterView = () => {
 
   const searchItems = searches.map((search) => {
     return (
-      <Link to={`../../chapters/searchterm/${search.id}`} target="_blank">
+      <Link to={`../../questions/searchterm/${search.id}`} target="_blank">
         <Button
           size="medium"
           secondary
@@ -345,7 +345,7 @@ export const ChapterView = () => {
     fetchFavorites();
   }, [fetchFavorites]);
 
-  const addFavorite = async (chapterId) => {
+  const addFavorite = async (questionId) => {
     const response = await fetch(`${apiURL()}/favorites`, {
       method: 'POST',
       headers: {
@@ -353,7 +353,7 @@ export const ChapterView = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        chapter_id: chapterId,
+        question_id: questionId,
       }),
     });
     if (response.ok) {
@@ -414,7 +414,7 @@ export const ChapterView = () => {
     fetchRatings();
   }, [fetchRatings]);
 
-  const addRating = async (chapterId) => {
+  const addRating = async (questionId) => {
     const response = await fetch(`${apiURL()}/ratings`, {
       method: 'POST',
       headers: {
@@ -422,7 +422,7 @@ export const ChapterView = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        chapter_id: chapterId,
+        question_id: questionId,
       }),
     });
     if (response.ok) {
@@ -431,8 +431,8 @@ export const ChapterView = () => {
     }
   };
 
-  const deleteRating = async (chapterId) => {
-    const response = await fetch(`${apiURL()}/ratings/${chapterId}`, {
+  const deleteRating = async (questionId) => {
+    const response = await fetch(`${apiURL()}/ratings/${questionId}`, {
       method: 'DELETE',
       headers: {
         token: `token ${user?.uid}`,
@@ -484,16 +484,16 @@ export const ChapterView = () => {
     );
   };
 
-  const discount = chapter.discount_percentage || 0;
+  const discount = question.discount_percentage || 0;
 
   // Calculate original price
   const originalPrice =
-    discount > 0 ? chapter.price / (1 - discount / 100) : chapter.price;
+    discount > 0 ? question.price / (1 - discount / 100) : question.price;
 
   const descriptionText = (
-    chapter.description ||
-    chapter.summary ||
-    chapter.description_ai ||
+    question.description ||
+    question.summary ||
+    question.description_ai ||
     'No description available'
   )
     .replace(/\*+/g, '')
@@ -511,6 +511,35 @@ export const ChapterView = () => {
   // usage
   const priceValidUntil = getPriceValidUntil(30);
 
+  const questionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Question',
+    name: question.title,
+    image: question.url_image,
+    description: descriptionText,
+    sku: question.id,
+    brand: {
+      '@type': 'Brand',
+      name: 'Book Travel Activities',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: `https://www.booktravelactivities.com/questions/${question.slug}`,
+      priceCurrency: question.currency,
+      price: question.price,
+      priceValidUntil,
+      itemCondition: 'https://schema.org/NewCondition',
+      availability: `https://schema.org/InStock`,
+    },
+    ...(question.rating && {
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: question.rating,
+        reviewCount: question.reviews || 0,
+      },
+    }),
+  };
+
   // 2️⃣ Breadcrumb schema
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -525,14 +554,14 @@ export const ChapterView = () => {
       {
         '@type': 'ListItem',
         position: 2,
-        name: 'Chapters',
-        item: 'https://www.booktravelactivities.com/chapters',
+        name: 'Questions',
+        item: 'https://www.booktravelactivities.com/questions',
       },
       {
         '@type': 'ListItem',
         position: 3,
-        name: chapter.title,
-        item: `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
+        name: question.title,
+        item: `https://www.booktravelactivities.com/questions/${question.slug}`,
       },
     ],
   };
@@ -548,7 +577,7 @@ export const ChapterView = () => {
     );
   });
 
-  const isBestseller = Boolean(Number(chapter.bestseller));
+  const isBestseller = Boolean(Number(question.bestseller));
 
   if (error) {
     return (
@@ -567,47 +596,49 @@ export const ChapterView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${chapter?.title} - Book Travel Activities`}</title>
+        <title>{`${question?.title} - Book Travel Activities`}</title>
         <meta
           name="description"
           content={
-            chapter.meta_description ||
-            `${chapter?.title} - reviews, deals, discounts.`
+            question.meta_description ||
+            `${question?.title} - reviews, deals, discounts.`
           }
         />
         {/* Canonical URL */}
         <link
           rel="canonical"
-          href={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+          href={`https://www.booktravelactivities.com/questions/${question.slug}`}
         />
         {/* Robots meta for large image preview (Google Discover) */}
         <meta name="robots" content="max-image-preview:large" />
 
         {/* Open Graph */}
-        <meta property="og:type" content="chapter" />
-        <meta property="og:title" content={chapter.title} />
+        <meta property="og:type" content="question" />
+        <meta property="og:title" content={question.title} />
         <meta
           property="og:description"
-          content={chapter.meta_description || descriptionText}
+          content={question.meta_description || descriptionText}
         />
-        <meta property="og:image" content={chapter.url_image} />
+        <meta property="og:image" content={question.url_image} />
         <meta
           property="og:url"
-          content={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+          content={`https://www.booktravelactivities.com/questions/${question.slug}`}
         />
         <meta property="og:site_name" content="Book Travel Activities" />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={chapter.title} />
+        <meta name="twitter:title" content={question.title} />
         <meta
           name="twitter:description"
-          content={chapter.meta_description || descriptionText}
+          content={question.meta_description || descriptionText}
         />
-        <meta name="twitter:image" content={chapter.url_image} />
+        <meta name="twitter:image" content={question.url_image} />
 
         {/* Rich content */}
-
+        <script type="application/ld+json">
+          {JSON.stringify(questionSchema)}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
         </script>
@@ -615,55 +646,55 @@ export const ChapterView = () => {
       <main>
         <section className="container-appview">
           <div className="header gameplay">
-            <h1 className="hero-header">{chapter?.title} gameplay</h1>
+            <h1 className="hero-header">{question?.title} gameplay</h1>
           </div>
-          {chapter.url_image && (
+          {question.url_image && (
             <div className="activity-img-container">
               <img
                 className="appview-image-activities"
-                alt={chapter.image_alt_text || chapter.title}
-                src={chapter.url_image}
+                alt={question.image_alt_text || question.title}
+                src={question.url_image}
               />
-              {chapter.image_credit && <span>{chapter.image_credit}</span>}
+              {question.image_credit && <span>{question.image_credit}</span>}
             </div>
           )}
-          {!chapter.url_image && chapter.countryIsoCode && (
+          {!question.url_image && question.countryIsoCode && (
             <span className="img-emoji">
-              {getFlagEmoji(chapter.countryIsoCode)}
+              {getFlagEmoji(question.countryIsoCode)}
             </span>
           )}
 
-          {/* {chapter.url_image && (
+          {/* {question.url_image && (
             <div
               style={{
-                backgroundImage: `url(${chapter.url_image})`,
+                backgroundImage: `url(${question.url_image})`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
               }}
             ></div>
           )} */}
-          {/* {chapter.url_image && (
+          {/* {question.url_image && (
             <img
               className="appview-icon default-icon"
-              alt={`${chapter.title}`}
-              src={chapter.url_image || mousePointer}
+              alt={`${question.title}`}
+              src={question.url_image || mousePointer}
             />
           )} */}
           {/* <span className="img-emoji">🌍</span>
           <Globe size="15rem" className="appview-icon default-icon" /> */}
 
           {/* <img
-            className={`appview-icon ${!chapter.url_icon && 'default-icon'}`}
-            alt={`${chapter.title}`}
-            src={chapter.url_icon || mousePointer}
+            className={`appview-icon ${!question.url_icon && 'default-icon'}`}
+            alt={`${question.title}`}
+            src={question.url_icon || mousePointer}
           /> */}
 
           {/* <ImageGallery items={images} /> */}
 
           <div className="container-deal-actions">
             {/* <div className="container-appview-buttons">
-              {chapter.url_affiliate && (
-                <Link to={chapter.url_affiliate} target="_blank">
+              {question.url_affiliate && (
+                <Link to={question.url_affiliate} target="_blank">
                   <Button
                     fourth
                     size="large"
@@ -681,17 +712,17 @@ export const ChapterView = () => {
             <div className="container-rating">
               Rating
               {user &&
-              allRatings.some((rating) => rating.chapter_id === chapter.id) &&
-              ratings.some((rating) => rating.id === chapter.id) ? (
+              allRatings.some((rating) => rating.question_id === question.id) &&
+              ratings.some((rating) => rating.id === question.id) ? (
                 <button
                   type="button"
                   className="button-rating"
-                  onClick={(event) => deleteRating(chapter.id)}
+                  onClick={(event) => deleteRating(question.id)}
                 >
                   <FontAwesomeIcon icon={faCaretUp} />
                   {
                     allRatings.filter(
-                      (rating) => rating.chapter_id === chapter.id,
+                      (rating) => rating.question_id === question.id,
                     ).length
                   }
                 </button>
@@ -699,12 +730,12 @@ export const ChapterView = () => {
                 <button
                   type="button"
                   className="button-rating"
-                  onClick={(event) => addRating(chapter.id)}
+                  onClick={(event) => addRating(question.id)}
                 >
                   <FontAwesomeIcon icon={faCaretUp} />
                   {
                     allRatings.filter(
-                      (rating) => rating.chapter_id === chapter.id,
+                      (rating) => rating.question_id === question.id,
                     ).length
                   }
                 </button>
@@ -720,7 +751,7 @@ export const ChapterView = () => {
                   <FontAwesomeIcon icon={faCaretUp} />
                   {
                     allRatings.filter(
-                      (rating) => rating.chapter_id === chapter.id,
+                      (rating) => rating.question_id === question.id,
                     ).length
                   }
                 </button>
@@ -728,24 +759,24 @@ export const ChapterView = () => {
             </div>
 
             <div>
-              {user && favorites.some((x) => x.id === chapter.id) ? (
+              {user && favorites.some((x) => x.id === question.id) ? (
                 <button
                   type="button"
-                  onClick={() => handleDeleteBookmarks(chapter.id)}
-                  onKeyDown={() => handleDeleteBookmarks(chapter.id)}
+                  onClick={() => handleDeleteBookmarks(question.id)}
+                  onKeyDown={() => handleDeleteBookmarks(question.id)}
                   className="button-bookmark"
                 >
-                  Remove chapter from saved &nbsp;
+                  Remove question from saved &nbsp;
                   <FontAwesomeIcon icon={faHeartSolid} size="lg" />
                 </button>
               ) : user ? (
                 <button
                   type="button"
-                  onClick={() => addFavorite(chapter.id)}
-                  onKeyDown={() => addFavorite(chapter.id)}
+                  onClick={() => addFavorite(question.id)}
+                  onKeyDown={() => addFavorite(question.id)}
                   className="button-bookmark"
                 >
-                  Save this chapter &nbsp;
+                  Save this question &nbsp;
                   <FontAwesomeIcon icon={faHeart} size="lg" />
                 </button>
               ) : (
@@ -755,7 +786,7 @@ export const ChapterView = () => {
                     setOpenModal(true);
                     setModalTitle('Sign up to add bookmarks');
                   }}
-                  onKeyDown={() => addFavorite(chapter.id)}
+                  onKeyDown={() => addFavorite(question.id)}
                   className="button-bookmark"
                 >
                   Save <FontAwesomeIcon icon={faHeart} size="lg" />
@@ -768,28 +799,28 @@ export const ChapterView = () => {
             <div className="container-tags">
               <div className="badges">
                 <div className="badges-keywords">
-                  {!!chapter.pricing_free && (
-                    <Link to="../chapters/pricing/free">
+                  {!!question.pricing_free && (
+                    <Link to="../questions/pricing/free">
                       <Button secondary label="free" size="small" />
                     </Link>
                   )}
-                  {!!chapter.pricing_freemium && (
-                    <Link to="../chapters/pricing/freemium">
+                  {!!question.pricing_freemium && (
+                    <Link to="../questions/pricing/freemium">
                       <Button secondary label="freemium" size="small" />
                     </Link>
                   )}
-                  {!!chapter.pricing_subscription && (
-                    <Link to="../chapters/pricing/subscription">
+                  {!!question.pricing_subscription && (
+                    <Link to="../questions/pricing/subscription">
                       <Button secondary label="subscription" size="small" />
                     </Link>
                   )}
-                  {!!chapter.pricing_one_time && (
-                    <Link to="../chapters/pricing/one-time">
+                  {!!question.pricing_one_time && (
+                    <Link to="../questions/pricing/one-time">
                       <Button secondary label="one-time" size="small" />
                     </Link>
                   )}
-                  {!!chapter.pricing_trial_available && (
-                    <Link to="../chapters/pricing/trial">
+                  {!!question.pricing_trial_available && (
+                    <Link to="../questions/pricing/trial">
                       <Button secondary label="trial" size="small" />
                     </Link>
                   )}
@@ -798,30 +829,30 @@ export const ChapterView = () => {
             </div>
             <div className="container-tags">
               <div className="badges">
-                <p className="p-no-margin">iOS chapter: </p>
+                <p className="p-no-margin">iOS question: </p>
                 <div className="badges-keywords">
-                  {!!chapter.pricing_ios_chapter_free && (
-                    <Link to="../chapters/pricing/ios-free">
+                  {!!question.pricing_ios_question_free && (
+                    <Link to="../questions/pricing/ios-free">
                       <Button secondary label="free" size="small" />
                     </Link>
                   )}
-                  {!!chapter.pricing_ios_chapter_paid && (
-                    <Link to="../chapters/pricing/ios-paid">
+                  {!!question.pricing_ios_question_paid && (
+                    <Link to="../questions/pricing/ios-paid">
                       <Button secondary label="paid" size="small" />
                     </Link>
                   )}
                 </div>
               </div>
             </div>
-            {!!chapter.pricing_ios_chapter_paid &&
-              chapter.price > 0 &&
-              `${chapter.price} ${chapter.currency}`}
-            {chapter.pricing_details && (
-              <p className="p-no-margin">{chapter.pricing_details}</p>
+            {!!question.pricing_ios_question_paid &&
+              question.price > 0 &&
+              `${question.price} ${question.currency}`}
+            {question.pricing_details && (
+              <p className="p-no-margin">{question.pricing_details}</p>
             )}
-            {chapter.pricing_url && (
+            {question.pricing_url && (
               <div>
-                <Link target="_blank" to={chapter.pricing_url}>
+                <Link target="_blank" to={question.pricing_url}>
                   <span className="underline">Pricing page</span>{' '}
                   <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="sm" />
                 </Link>
@@ -830,221 +861,56 @@ export const ChapterView = () => {
           </div> */}
           {/* <div className="container-description">
             <div className="container-title">
-              <h2>{chapter.title}</h2>
+              <h2>{question.title}</h2>
             </div>
-            {chapter.summary && (
+            {question.summary && (
               <>
                 <h3>Summary</h3>
-                <p className="chapter-description main-description">
-                  <Markdown>{chapter.summary}</Markdown>
+                <p className="question-description main-description">
+                  <Markdown>{question.summary}</Markdown>
                 </p>
               </>
             )}
-            {(chapter.description || chapter.description_ai) && (
+            {(question.description || question.description_ai) && (
               <>
                 <h3>Description</h3>
-                {chapter.description && (
-                  <p className="chapter-description main-description">
-                    <Markdown>{chapter.description}</Markdown>
+                {question.description && (
+                  <p className="question-description main-description">
+                    <Markdown>{question.description}</Markdown>
                   </p>
                 )}
-                {chapter.description_ai && (
+                {question.description_ai && (
                   <>
                     <h3>AI summary</h3>
-                    <p className="chapter-description main-description">
-                      <Markdown>{chapter.description_ai}</Markdown>
+                    <p className="question-description main-description">
+                      <Markdown>{question.description_ai}</Markdown>
                     </p>
                   </>
                 )}
               </>
             )}
-            {chapter.whats_included && (
+            {question.whats_included && (
               <>
                 <h3>What is included</h3>
-                <p className="chapter-description main-description">
-                  <Markdown>{chapter.whats_included}</Markdown>
+                <p className="question-description main-description">
+                  <Markdown>{question.whats_included}</Markdown>
                 </p>
               </>
             )}
-            {chapter.whats_excluded && (
+            {question.whats_excluded && (
               <>
                 <h3>What is excluded</h3>
-                <p className="chapter-description main-description">
-                  <Markdown>{chapter.whats_excluded}</Markdown>
+                <p className="question-description main-description">
+                  <Markdown>{question.whats_excluded}</Markdown>
                 </p>
               </>
             )}
           </div> */}
 
-          <div className="container-codes">
-            {questions.length > 0 ? (
-              <>
-                <div className="container-title">
-                  <h2>
-                    {chapter.title} - {questions.length} questions
-                  </h2>
-                </div>
-
-                <div className="container-appview-codes-users">
-                  {questions.map((question) => {
-                    return (
-                      <div className="container-appview-codes">
-                        <Link
-                          className="underline"
-                          to={`../gameplay/questions/${question.id}`}
-                        >
-                          <span>Question {question.question_id}.</span>
-                        </Link>
-                        <div className="answer-group">
-                          {question.answers?.map((answer) => {
-                            return (
-                              <>
-                                {' '}
-                                <Button
-                                  size="medium"
-                                  primary
-                                  icon={<FontAwesomeIcon icon={faCopy} />}
-                                  label={answer.title}
-                                  onClick={() => copyToClipboard(answer.title)}
-                                />
-                                {answer.id && (
-                                  <Link to={answer.id} target="_blank">
-                                    <Button
-                                      size="medium"
-                                      secondary
-                                      icon={
-                                        <FontAwesomeIcon
-                                          icon={faArrowUpRightFromSquare}
-                                          size="sm"
-                                        />
-                                      }
-                                      label="Link"
-                                    />
-                                  </Link>
-                                )}
-                                <Link
-                                  to={`../../questions/${answer.id}`}
-                                  target="_blank"
-                                >
-                                  <Button
-                                    size="medium"
-                                    secondary
-                                    icon={
-                                      <FontAwesomeIcon
-                                        icon={faArrowUpRightFromSquare}
-                                        size="sm"
-                                      />
-                                    }
-                                    label="View"
-                                  />
-                                </Link>
-                                <span className="codes-added-by">
-                                  by {answer.userFullName}
-                                </span>
-                              </>
-                            );
-                          })}
-
-                          {/* <div className="container-rating">
-                            {user &&
-                            positiveLikes.some(
-                              (like) => like.id === question.id,
-                            ) ? (
-                              <div className="thumbs-container up">
-                                <ThumbsUp
-                                  className="thumbs"
-                                  color="green"
-                                  size={20}
-                                  onClick={() =>
-                                    deletePositiveLike(question.id)
-                                  }
-                                />
-                                {positiveLikesCount}
-                              </div>
-                            ) : user ? (
-                              <div className="thumbs-container up">
-                                <ThumbsUp
-                                  color="green"
-                                  className="thumbs"
-                                  size={20}
-                                  onClick={() => addPositiveLike(question.id)}
-                                />
-                                {positiveLikesCount}
-                              </div>
-                            ) : (
-                              <div className="thumbs-container up">
-                                <ThumbsUp
-                                  className="thumbs"
-                                  size={20}
-                                  color="green"
-                                  onClick={() => {
-                                    setOpenModal(true);
-                                    setModalTitle('Sign up to vote');
-                                  }}
-                                />
-                                {positiveLikesCount}
-                              </div>
-                            )}
-                          </div>
-                          <div className="container-rating">
-                            {user &&
-                            negativeLikes.some(
-                              (like) => like.id === question.id,
-                            ) ? (
-                              <div className="thumbs-container down">
-                                <ThumbsDown
-                                  className="thumbs"
-                                  color="red"
-                                  size={20}
-                                  onClick={() =>
-                                    deleteNegativeLike(question.id)
-                                  }
-                                />
-                                {negativeLikesCount}
-                              </div>
-                            ) : user ? (
-                              <div className="thumbs-container down">
-                                <ThumbsDown
-                                  color="red"
-                                  className="thumbs"
-                                  size={20}
-                                  onClick={() => addNegativeLike(question.id)}
-                                />
-                                {negativeLikesCount}
-                              </div>
-                            ) : (
-                              <div className="thumbs-container down">
-                                <ThumbsDown
-                                  className="thumbs"
-                                  size={20}
-                                  color="red"
-                                  onClick={() => {
-                                    setOpenModal(true);
-                                    setModalTitle('Sign up to vote');
-                                  }}
-                                />
-                                {negativeLikesCount}
-                              </div>
-                            )}
-                          </div> */}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </>
-            ) : (
-              <div className="container-title">
-                <span>
-                  <i>No questions yet</i> 😢 <i>Add your question now!</i>
-                </span>
-              </div>
-            )}
-          </div>
           {/* {!user && (
             <div className="container-details cta">
               <div>
-                <h2>🔥 Add your chapter!</h2>
+                <h2>🔥 Add your question!</h2>
                 <p>Create an account to get started for free</p>
               </div>
               <div>
@@ -1055,20 +921,20 @@ export const ChapterView = () => {
             </div>
           )} */}
           <div className="container-comments">
-            <h2 className="h-no-margin h-no-margin-bottom">Comments</h2>
-            {comments.length === 0 && (
+            <h2 className="h-no-margin h-no-margin-bottom">Answers</h2>
+            {answers.length === 0 && (
               <div>
-                <i>No comments yet. </i>
+                <i>No answers yet. </i>
                 {user && <i>Add a first one below.</i>}
               </div>
             )}
-            {comments.length > 0 &&
-              comments.map((item) => (
+            {answers.length > 0 &&
+              answers.map((item) => (
                 <div className="form-container">
                   <div className="comment-box submit-box-new-comment">
-                    <div>{item.content}</div>
+                    <div>{item.title}</div>
                     <div className="comment-author-date">{`by ${
-                      item.full_name
+                      item.fullName.split(' ')[0]
                     } on ${getOnlyYearMonthDay(item.created_at)}`}</div>
                   </div>
                 </div>
@@ -1084,7 +950,7 @@ export const ChapterView = () => {
                   <Link to="/login" className="simple-link">
                     log in
                   </Link>{' '}
-                  to add comments
+                  to add answers
                 </i>
               </div>
             )}
@@ -1094,26 +960,26 @@ export const ChapterView = () => {
                   <form onSubmit={handleSubmit}>
                     <textarea
                       className="form-input textarea-new-comment"
-                      value={comment}
-                      placeholder="Your comment..."
-                      onChange={commentHandler}
+                      value={answer}
+                      placeholder="Your answer..."
+                      onChange={answerHandler}
                     />
 
                     <Button
                       primary
                       className="btn-add-prompt"
                       type="submit"
-                      label="Add comment"
+                      label="Add answer"
                     />
                     {validForm && (
                       <Modal
-                        title="Your comment has been submitted!"
+                        title="Your answer has been submitted!"
                         open={openConfirmationModal}
                         toggle={() => setOpenConfirmationModal(false)}
                       />
                     )}
                     {invalidForm && (
-                      <p className="error-message">{commentError}</p>
+                      <p className="error-message">{answerError}</p>
                     )}
                   </form>
                 </div>
@@ -1130,22 +996,22 @@ export const ChapterView = () => {
               <div className="badges">
                 <p>Game: </p>
                 <div>
-                  <Link to={`../gameplay/games/${chapter.gameSlug}`}>
+                  <Link to={`../gameplay/games/${question.gameSlug}`}>
                     <Button
                       secondary
-                      label={chapter.gameTitle?.toLowerCase()}
+                      label={question.gameTitle?.toLowerCase()}
                       size="small"
                     />
                   </Link>
                 </div>
               </div>
             </div>
-            {/* {topicsFromChapters.length > 0 && (
+            {/* {topicsFromQuestions.length > 0 && (
               <div className="container-tags">
                 <div className="badges">
                   <p className="p-no-margin">Related topics: </p>
                   <div className="badges-keywords">
-                    {topicsFromChapters.map((topic, index) => (
+                    {topicsFromQuestions.map((topic, index) => (
                       <Link to={`../../${topic.url}`}>
                         <Button secondary label={topic.title} size="small" />
                       </Link>
@@ -1160,7 +1026,7 @@ export const ChapterView = () => {
                   <p className="p-no-margin">Tags: </p>
                   <div className="badges-keywords">
                     {tags.map((tag) => (
-                      <Link to={`../chapters/tags/${tag.slug}`}>
+                      <Link to={`../questions/tags/${tag.slug}`}>
                         <Button
                           secondary
                           label={tag.title.toLowerCase()}
@@ -1178,7 +1044,7 @@ export const ChapterView = () => {
             <h3>Related searches</h3>
             <div className="topics-div searches">
               {searches.map((search) => (
-                <Link to={`/chapters/search/${search.id}`} target="_blank">
+                <Link to={`/questions/search/${search.id}`} target="_blank">
                   <Button secondary label={search.title} />
                 </Link>
               ))}
@@ -1191,29 +1057,29 @@ export const ChapterView = () => {
               className="button-copy"
               onClick={() =>
                 copyToClipboard(
-                  `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
+                  `https://www.booktravelactivities.com/questions/${question.slug}`,
                 )
               }
             />
-            <FacebookShareButton url={`/chapters/${chapter.slug}`}>
+            <FacebookShareButton url={`/questions/${question.slug}`}>
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
-              title={`Check out this chapter: '${chapter.title}'`}
-              hashtags={['Chapters']}
+              url={`https://www.booktravelactivities.com/questions/${question.slug}`}
+              title={`Check out this question: '${question.title}'`}
+              hashtags={['Questions']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
             <LinkedinShareButton
-              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+              url={`https://www.booktravelactivities.com/questions/${question.slug}`}
             >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
-              subject="Check out this chapter!"
-              body={`This chapter is great: '${chapter.title}'`}
-              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+              subject="Check out this question!"
+              body={`This question is great: '${question.title}'`}
+              url={`https://www.booktravelactivities.com/questions/${question.slug}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>
@@ -1222,17 +1088,17 @@ export const ChapterView = () => {
             </Toast>
           </div>
           {/* <ContainerCta user={user} /> */}
-          {/* {similarDealsFromChapter.length > 0 && (
+          {/* {similarDealsFromQuestion.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Other deals from {chapter.chapterTitle} chapter</h2>
+              <h2>🔎 Other deals from {question.questionTitle} question</h2>
               <div className="container-cards small-cards">
-                {cardItemsSimilarDealsFromChapter}
+                {cardItemsSimilarDealsFromQuestion}
               </div>
             </div>
           )} */}
-          {similarChapters.length > 0 && (
+          {similarQuestions.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Other chapters in {chapter.categoryTitle}</h2>
+              <h2>🔎 Other questions in {question.categoryTitle}</h2>
               <div className="container-cards small-cards">{cardItems}</div>
             </div>
           )}

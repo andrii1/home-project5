@@ -22,7 +22,8 @@ const getQuestionsByChapter = async (chapter) => {
       .leftJoin('users', 'users.id', 'answers.user_id')
       .where('questions.chapter_id', chapter)
       .select(
-        'questions.id as question_id',
+        'questions.id as id',
+        'questions.question_id as question_id',
         'questions.title as question_title',
         'answers.id as answer_id',
         'answers.title as answer_title',
@@ -34,6 +35,7 @@ const getQuestionsByChapter = async (chapter) => {
 
       if (!question) {
         question = {
+          id: row.id,
           question_id: row.question_id,
           question_title: row.question_title,
           answers: [],

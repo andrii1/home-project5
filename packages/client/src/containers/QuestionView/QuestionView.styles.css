@@ -52,6 +52,9 @@
   display: none !important;
 }
 
+.container-appview-codes {
+  align-items: center;
+}
 .container-deal-actions {
   display: flex;
   justify-content: space-between;
@@ -411,11 +414,6 @@ span.underline:hover {
   display: flex;
   gap: 1rem;
   align-items: center;
-}
-
-.container-appview-codes {
-  flex-direction: column;
-  align-items: flex-start !important;
 }
 
 @media only screen and (max-width: 768px) {

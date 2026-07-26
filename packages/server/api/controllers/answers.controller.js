@@ -7,12 +7,9 @@ const HttpError = require('../lib/utils/http-error');
 /* Get all answers */
 const getAnswers = async () => {
   try {
-    const answers = await knex('answers').select(
-      'answers.id as id',
-      'answers.title as title',
-      'answers.category_id as categoryId',
-      'categories.title as categoryTitle',
-    );
+    const answers = await knex('answers')
+      .select('answers.*', 'users.full_name as fullName')
+      .leftJoin('users', 'users.id', 'answers.user_id');
     return answers;
   } catch (error) {
     return error.message;
@@ -22,7 +19,10 @@ const getAnswers = async () => {
 // Get answers by Category
 const getAnswersByQuestion = async (question) => {
   try {
-    const answers = await knex('answers').where({ question_id: question });
+    const answers = await knex('answers')
+      .select('answers.*', 'users.full_name as fullName')
+      .leftJoin('users', 'users.id', 'answers.user_id')
+      .where({ question_id: question });
     return answers;
   } catch (error) {
     return error.message;
