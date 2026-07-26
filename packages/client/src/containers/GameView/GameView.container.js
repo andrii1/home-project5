@@ -137,8 +137,6 @@ export const GameView = () => {
     fetchChapters(id);
   }, [id]);
 
-  console.log('chapters', chapters);
-
   useEffect(() => {
     async function fetchSimilarGames() {
       setLoading(true);
@@ -550,9 +548,9 @@ export const GameView = () => {
   // usage
   const priceValidUntil = getPriceValidUntil(30);
 
-  const gameSchema = {
+  const productSchema = {
     '@context': 'https://schema.org',
-    '@type': 'Game',
+    '@type': 'Product',
     name: game.title,
     image: game.url_image,
     description: descriptionText,
@@ -675,7 +673,9 @@ export const GameView = () => {
         <meta name="twitter:image" content={game.url_image} />
 
         {/* Rich content */}
-        <script type="application/ld+json">{JSON.stringify(gameSchema)}</script>
+        <script type="application/ld+json">
+          {JSON.stringify(productSchema)}
+        </script>
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
         </script>

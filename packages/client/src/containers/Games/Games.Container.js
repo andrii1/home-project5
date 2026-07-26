@@ -107,7 +107,6 @@ export const Games = () => {
     async function fetchGames() {
       const response = await fetch(url);
       const data = await response.json();
-      console.log('test2');
 
       setGames(data);
 
@@ -151,8 +150,6 @@ export const Games = () => {
     setFilteredSearch(filters.search || []);
     setFiltersReady(true); // <---- ADD THIS
   }, [location.pathname, parseFiltersFromPath]);
-
-  console.log('games', games);
 
   const fetchGames = async () => {
     if (!filtersReady) return; // ⛔ Wait until filters loaded
