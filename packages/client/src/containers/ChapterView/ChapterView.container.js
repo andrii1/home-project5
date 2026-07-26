@@ -205,7 +205,9 @@ export const ChapterView = () => {
     async function fetchSimilarChapters() {
       setLoading(true);
       try {
-        const response = await fetch(`${apiURL()}/chapters`);
+        const response = await fetch(
+          `${apiURL()}/chapters?game=${chapter.gameId}`,
+        );
         const data = await response.json();
 
         const filteredData = data.filter((item) => item.id !== chapter.id);
@@ -224,6 +226,7 @@ export const ChapterView = () => {
     chapter.countrySlug,
     chapter.citySlug,
     chapter.areaSlug,
+    chapter.gameId,
   ]);
 
   const fetchCommentsByChapterId = useCallback(async (chapterId) => {
@@ -294,19 +297,8 @@ export const ChapterView = () => {
     return (
       <Card
         id={item.id}
-        cardUrl={`/chapters/${item.slug}`}
+        cardUrl={`../gameplay/chapters/${item.id}`}
         title={item.title}
-        price={item.price}
-        currency={item.currency}
-        urlAffiliate={item.url_affiliate}
-        description={item.description}
-        url={item.url}
-        urlImage={item.url_image}
-        topic={item.categoryTitle}
-        chapterTitle={item.chapterTitle}
-        rating={item.rating}
-        reviews={item.reviews}
-        isoCode={item.countryIsoCode}
         smallCard
       />
     );
@@ -567,7 +559,7 @@ export const ChapterView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${chapter?.title} - Gameplay`}</title>
+        <title>{`${chapter?.title} - ${chapter.gameTitle} - Gameplay`}</title>
         <meta
           name="description"
           content={
@@ -615,7 +607,9 @@ export const ChapterView = () => {
       <main>
         <section className="container-appview">
           <div className="header gameplay">
-            <h1 className="hero-header">{chapter?.title} gameplay</h1>
+            <h1 className="hero-header">
+              {chapter?.title} - {chapter?.gameTitle} gameplay
+            </h1>
           </div>
           {chapter.url_image && (
             <div className="activity-img-container">
@@ -1074,7 +1068,7 @@ export const ChapterView = () => {
           )} */}
           {similarChapters.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Other chapters in {chapter.categoryTitle}</h2>
+              <h2>🔎 Other chapters in {chapter.gameTitle}</h2>
               <div className="container-cards small-cards">{cardItems}</div>
             </div>
           )}

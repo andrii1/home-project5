@@ -57,14 +57,6 @@ export const Card = ({
             <h2>{title}</h2>
           </Link>
         </div>
-        <div className="topics-bookmark--small">
-          <Badge
-            className="storybook-badge--transparent"
-            label={topic}
-            size="small"
-          />
-          {appTitle && <Badge primary label={appTitle} size="small" />}
-        </div>
       </Link>
     );
   }
