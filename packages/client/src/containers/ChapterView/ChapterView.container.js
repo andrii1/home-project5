@@ -520,19 +520,19 @@ export const ChapterView = () => {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.booktravelactivities.com',
+        item: 'https://www.miniappshub.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Chapters',
-        item: 'https://www.booktravelactivities.com/chapters',
+        item: 'https://www.miniappshub.com/chapters',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: chapter.title,
-        item: `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
+        item: `https://www.miniappshub.com/chapters/${chapter.slug}`,
       },
     ],
   };
@@ -567,7 +567,7 @@ export const ChapterView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${chapter?.title} - Book Travel Activities`}</title>
+        <title>{`${chapter?.title} - Gameplay`}</title>
         <meta
           name="description"
           content={
@@ -578,7 +578,7 @@ export const ChapterView = () => {
         {/* Canonical URL */}
         <link
           rel="canonical"
-          href={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+          href={`https://www.miniappshub.com/chapters/${chapter.slug}`}
         />
         {/* Robots meta for large image preview (Google Discover) */}
         <meta name="robots" content="max-image-preview:large" />
@@ -593,7 +593,7 @@ export const ChapterView = () => {
         <meta property="og:image" content={chapter.url_image} />
         <meta
           property="og:url"
-          content={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+          content={`https://www.miniappshub.com/chapters/${chapter.slug}`}
         />
         <meta property="og:site_name" content="Book Travel Activities" />
 
@@ -632,33 +632,6 @@ export const ChapterView = () => {
               {getFlagEmoji(chapter.countryIsoCode)}
             </span>
           )}
-
-          {/* {chapter.url_image && (
-            <div
-              style={{
-                backgroundImage: `url(${chapter.url_image})`,
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-              }}
-            ></div>
-          )} */}
-          {/* {chapter.url_image && (
-            <img
-              className="appview-icon default-icon"
-              alt={`${chapter.title}`}
-              src={chapter.url_image || mousePointer}
-            />
-          )} */}
-          {/* <span className="img-emoji">🌍</span>
-          <Globe size="15rem" className="appview-icon default-icon" /> */}
-
-          {/* <img
-            className={`appview-icon ${!chapter.url_icon && 'default-icon'}`}
-            alt={`${chapter.title}`}
-            src={chapter.url_icon || mousePointer}
-          /> */}
-
-          {/* <ImageGallery items={images} /> */}
 
           <div className="container-deal-actions">
             {/* <div className="container-appview-buttons">
@@ -763,118 +736,6 @@ export const ChapterView = () => {
               )}
             </div>
           </div>
-          {/* <div className="container-details container-badges">
-            <h2 className="no-margin">Pricing</h2>
-            <div className="container-tags">
-              <div className="badges">
-                <div className="badges-keywords">
-                  {!!chapter.pricing_free && (
-                    <Link to="../chapters/pricing/free">
-                      <Button secondary label="free" size="small" />
-                    </Link>
-                  )}
-                  {!!chapter.pricing_freemium && (
-                    <Link to="../chapters/pricing/freemium">
-                      <Button secondary label="freemium" size="small" />
-                    </Link>
-                  )}
-                  {!!chapter.pricing_subscription && (
-                    <Link to="../chapters/pricing/subscription">
-                      <Button secondary label="subscription" size="small" />
-                    </Link>
-                  )}
-                  {!!chapter.pricing_one_time && (
-                    <Link to="../chapters/pricing/one-time">
-                      <Button secondary label="one-time" size="small" />
-                    </Link>
-                  )}
-                  {!!chapter.pricing_trial_available && (
-                    <Link to="../chapters/pricing/trial">
-                      <Button secondary label="trial" size="small" />
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="container-tags">
-              <div className="badges">
-                <p className="p-no-margin">iOS chapter: </p>
-                <div className="badges-keywords">
-                  {!!chapter.pricing_ios_chapter_free && (
-                    <Link to="../chapters/pricing/ios-free">
-                      <Button secondary label="free" size="small" />
-                    </Link>
-                  )}
-                  {!!chapter.pricing_ios_chapter_paid && (
-                    <Link to="../chapters/pricing/ios-paid">
-                      <Button secondary label="paid" size="small" />
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-            {!!chapter.pricing_ios_chapter_paid &&
-              chapter.price > 0 &&
-              `${chapter.price} ${chapter.currency}`}
-            {chapter.pricing_details && (
-              <p className="p-no-margin">{chapter.pricing_details}</p>
-            )}
-            {chapter.pricing_url && (
-              <div>
-                <Link target="_blank" to={chapter.pricing_url}>
-                  <span className="underline">Pricing page</span>{' '}
-                  <FontAwesomeIcon icon={faArrowUpRightFromSquare} size="sm" />
-                </Link>
-              </div>
-            )}
-          </div> */}
-          {/* <div className="container-description">
-            <div className="container-title">
-              <h2>{chapter.title}</h2>
-            </div>
-            {chapter.summary && (
-              <>
-                <h3>Summary</h3>
-                <p className="chapter-description main-description">
-                  <Markdown>{chapter.summary}</Markdown>
-                </p>
-              </>
-            )}
-            {(chapter.description || chapter.description_ai) && (
-              <>
-                <h3>Description</h3>
-                {chapter.description && (
-                  <p className="chapter-description main-description">
-                    <Markdown>{chapter.description}</Markdown>
-                  </p>
-                )}
-                {chapter.description_ai && (
-                  <>
-                    <h3>AI summary</h3>
-                    <p className="chapter-description main-description">
-                      <Markdown>{chapter.description_ai}</Markdown>
-                    </p>
-                  </>
-                )}
-              </>
-            )}
-            {chapter.whats_included && (
-              <>
-                <h3>What is included</h3>
-                <p className="chapter-description main-description">
-                  <Markdown>{chapter.whats_included}</Markdown>
-                </p>
-              </>
-            )}
-            {chapter.whats_excluded && (
-              <>
-                <h3>What is excluded</h3>
-                <p className="chapter-description main-description">
-                  <Markdown>{chapter.whats_excluded}</Markdown>
-                </p>
-              </>
-            )}
-          </div> */}
 
           <div className="container-codes">
             {questions.length > 0 ? (
@@ -893,54 +754,38 @@ export const ChapterView = () => {
                           <span>Question {question.question_id}.</span>
                         </Link>
                         <div className="answer-group">
-                          {question.answers?.map((answer) => {
-                            return (
-                              <>
-                                {' '}
-                                <Button
-                                  size="medium"
-                                  primary
-                                  icon={<FontAwesomeIcon icon={faCopy} />}
-                                  label={answer.title}
-                                  onClick={() => copyToClipboard(answer.title)}
-                                />
-                                {answer.id && (
-                                  <Link to={answer.id} target="_blank">
-                                    <Button
-                                      size="medium"
-                                      secondary
-                                      icon={
-                                        <FontAwesomeIcon
-                                          icon={faArrowUpRightFromSquare}
-                                          size="sm"
-                                        />
-                                      }
-                                      label="Link"
-                                    />
-                                  </Link>
-                                )}
-                                <Link
-                                  to={`../../questions/${answer.id}`}
-                                  target="_blank"
-                                >
+                          {question.answers.length === 0 && (
+                            <Link
+                              to={`../../questions/${question.id}`}
+                              target="_blank"
+                            >
+                              <Button
+                                size="medium"
+                                secondary
+                                label="Add answer"
+                              />
+                            </Link>
+                          )}
+                          {question.answers.length > 0 &&
+                            question.answers?.map((answer) => {
+                              return (
+                                <>
+                                  {' '}
                                   <Button
                                     size="medium"
-                                    secondary
-                                    icon={
-                                      <FontAwesomeIcon
-                                        icon={faArrowUpRightFromSquare}
-                                        size="sm"
-                                      />
+                                    primary
+                                    icon={<FontAwesomeIcon icon={faCopy} />}
+                                    label={answer.title}
+                                    onClick={() =>
+                                      copyToClipboard(answer.title)
                                     }
-                                    label="View"
                                   />
-                                </Link>
-                                <span className="codes-added-by">
-                                  by {answer.userFullName}
-                                </span>
-                              </>
-                            );
-                          })}
+                                  <span className="codes-added-by">
+                                    by {answer.userFullName}
+                                  </span>
+                                </>
+                              );
+                            })}
 
                           {/* <div className="container-rating">
                             {user &&
@@ -1188,7 +1033,7 @@ export const ChapterView = () => {
               className="button-copy"
               onClick={() =>
                 copyToClipboard(
-                  `https://www.booktravelactivities.com/chapters/${chapter.slug}`,
+                  `https://www.miniappshub.com/chapters/${chapter.slug}`,
                 )
               }
             />
@@ -1196,21 +1041,21 @@ export const ChapterView = () => {
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+              url={`https://www.miniappshub.com/chapters/${chapter.slug}`}
               title={`Check out this chapter: '${chapter.title}'`}
               hashtags={['Chapters']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
             <LinkedinShareButton
-              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+              url={`https://www.miniappshub.com/chapters/${chapter.slug}`}
             >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
               subject="Check out this chapter!"
               body={`This chapter is great: '${chapter.title}'`}
-              url={`https://www.booktravelactivities.com/chapters/${chapter.slug}`}
+              url={`https://www.miniappshub.com/chapters/${chapter.slug}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>

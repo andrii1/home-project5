@@ -557,7 +557,7 @@ export const GameView = () => {
     sku: game.id,
     brand: {
       '@type': 'Brand',
-      name: 'Catch Top Deals',
+      name: 'Gameplay',
     },
     offers: {
       '@type': 'Offer',
@@ -633,7 +633,7 @@ export const GameView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${game?.title} - Catch Top Deals`}</title>
+        <title>{`${game?.title} - Gameplay`}</title>
         <meta
           name="description"
           content={
@@ -661,7 +661,7 @@ export const GameView = () => {
           property="og:url"
           content={`https://www.miniappshub.com/games/${game.slug}`}
         />
-        <meta property="og:site_name" content="Catch Top Deals" />
+        <meta property="og:site_name" content="Gameplay" />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
