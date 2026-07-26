@@ -933,12 +933,6 @@ export const ChapterView = () => {
                                   label={answer.title}
                                   onClick={() => copyToClipboard(answer.title)}
                                 />
-                                <Toast
-                                  open={openToast}
-                                  overlayClass={`toast ${animation}`}
-                                >
-                                  <span>Copied to clipboard!</span>
-                                </Toast>
                                 {answer.id && (
                                   <Link to={answer.id} target="_blank">
                                     <Button
