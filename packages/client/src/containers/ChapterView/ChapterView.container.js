@@ -95,6 +95,7 @@ export const ChapterView = () => {
   const [useCases, setUseCases] = useState([]);
   const [userTypes, setUserTypes] = useState([]);
   const [faqs, setFaqs] = useState([]);
+  const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
     async function fetchSingleChapter(chapterId) {
@@ -111,6 +112,14 @@ export const ChapterView = () => {
       const response = await fetch(`${apiURL()}/tags/?chapter=${chapterId}`);
       const data = await response.json();
       setTags(data);
+    }
+
+    async function fetchQuestionsForChapter(chapterId) {
+      const response = await fetch(
+        `${apiURL()}/questions/?chapter=${chapterId}`,
+      );
+      const data = await response.json();
+      setQuestions(data);
     }
 
     async function fetchOccasionsForChapter(chapterId) {
@@ -172,12 +181,13 @@ export const ChapterView = () => {
       setLoading(true);
       setError(null); // Clear previous errors
       try {
-        await fetchTagsForChapter(id);
-        await fetchOccasionsForChapter(id);
-        await fetchHighlightsForChapter(id);
+        await fetchQuestionsForChapter(id);
+        // await fetchTagsForChapter(id);
+        // await fetchOccasionsForChapter(id);
+        // await fetchHighlightsForChapter(id);
 
-        await fetchUseCasesForChapter(id);
-        await fetchUserTypesForChapter(id);
+        // await fetchUseCasesForChapter(id);
+        // await fetchUserTypesForChapter(id);
         // await fetchCodesForADeal(id);
         // await fetchSearchesForADeal(id);
         // await fetchKeywordsForADeal(id);
@@ -188,7 +198,7 @@ export const ChapterView = () => {
       }
     };
 
-    // fetchData();
+    fetchData();
   }, [id]);
 
   useEffect(() => {
@@ -297,6 +307,7 @@ export const ChapterView = () => {
         rating={item.rating}
         reviews={item.reviews}
         isoCode={item.countryIsoCode}
+        smallCard
       />
     );
   });
@@ -635,7 +646,7 @@ export const ChapterView = () => {
       <main>
         <section className="container-appview">
           <div className="header gameplay">
-            <h1 className="hero-header">{chapter?.title}</h1>
+            <h1 className="hero-header">{chapter?.title} gameplay</h1>
           </div>
           {chapter.url_image && (
             <div className="activity-img-container">
@@ -896,83 +907,87 @@ export const ChapterView = () => {
             )}
           </div>
 
-          {/* <div className="container-codes">
-            {dealCodes.length > 0 ? (
+          <div className="container-codes">
+            {questions.length > 0 ? (
               <>
                 <div className="container-title">
-                  <h2>
-                    {chapter.title} -{' '}
-                    {dealCodes.length > 0
-                      ? `${showNumberOfCodesInTitle(dealCodes)}`
-                      : ''}
-                  </h2>
+                  <h2>{chapter.title} - </h2>
                 </div>
 
                 <div className="container-appview-codes-users">
-                  {dealCodes.map((code) => {
-                    const positiveLikesCount = allPositiveLikes.filter(
-                      (like) => like.code_id === code.id,
-                    ).length;
-
-                    const negativeLikesCount = allNegativeLikes.filter(
-                      (like) => like.code_id === code.id,
-                    ).length;
-
+                  {questions.map((question) => {
                     return (
                       <div className="container-codes-users">
                         <div className="container-appview-codes">
-                          <Button
-                            size="medium"
-                            primary
-                            icon={<FontAwesomeIcon icon={faCopy} />}
-                            label={code.title}
-                            onClick={() => copyToClipboard(code.title)}
-                          />
-                          <Toast
-                            open={openToast}
-                            overlayClass={`toast ${animation}`}
-                          >
-                            <span>Copied to clipboard!</span>
-                          </Toast>
-                          {code.url && (
-                            <Link to={code.url} target="_blank">
-                              <Button
-                                size="medium"
-                                secondary
-                                icon={
-                                  <FontAwesomeIcon
-                                    icon={faArrowUpRightFromSquare}
-                                    size="sm"
+                          <span>Question {question.question_id}.</span>
+                          <div>
+                            {question.answers?.map((answer) => {
+                              return (
+                                <>
+                                  {' '}
+                                  <Button
+                                    size="medium"
+                                    primary
+                                    icon={<FontAwesomeIcon icon={faCopy} />}
+                                    label={answer.title}
+                                    onClick={() =>
+                                      copyToClipboard(answer.title)
+                                    }
                                   />
-                                }
-                                label="Link"
-                              />
-                            </Link>
-                          )}
-                          <Link to={`../../codes/${code.id}`} target="_blank">
-                            <Button
-                              size="medium"
-                              secondary
-                              icon={
-                                <FontAwesomeIcon
-                                  icon={faArrowUpRightFromSquare}
-                                  size="sm"
-                                />
-                              }
-                              label="View"
-                            />
-                          </Link>
-                          <div className="container-rating">
+                                  <Toast
+                                    open={openToast}
+                                    overlayClass={`toast ${animation}`}
+                                  >
+                                    <span>Copied to clipboard!</span>
+                                  </Toast>
+                                  {answer.id && (
+                                    <Link to={answer.id} target="_blank">
+                                      <Button
+                                        size="medium"
+                                        secondary
+                                        icon={
+                                          <FontAwesomeIcon
+                                            icon={faArrowUpRightFromSquare}
+                                            size="sm"
+                                          />
+                                        }
+                                        label="Link"
+                                      />
+                                    </Link>
+                                  )}
+                                  <Link
+                                    to={`../../questions/${answer.id}`}
+                                    target="_blank"
+                                  >
+                                    <Button
+                                      size="medium"
+                                      secondary
+                                      icon={
+                                        <FontAwesomeIcon
+                                          icon={faArrowUpRightFromSquare}
+                                          size="sm"
+                                        />
+                                      }
+                                      label="View"
+                                    />
+                                  </Link>
+                                </>
+                              );
+                            })}
+
+                            {/* <div className="container-rating">
                             {user &&
                             positiveLikes.some(
-                              (like) => like.id === code.id,
+                              (like) => like.id === question.id,
                             ) ? (
                               <div className="thumbs-container up">
                                 <ThumbsUp
                                   className="thumbs"
                                   color="green"
                                   size={20}
-                                  onClick={() => deletePositiveLike(code.id)}
+                                  onClick={() =>
+                                    deletePositiveLike(question.id)
+                                  }
                                 />
                                 {positiveLikesCount}
                               </div>
@@ -982,7 +997,7 @@ export const ChapterView = () => {
                                   color="green"
                                   className="thumbs"
                                   size={20}
-                                  onClick={() => addPositiveLike(code.id)}
+                                  onClick={() => addPositiveLike(question.id)}
                                 />
                                 {positiveLikesCount}
                               </div>
@@ -1004,14 +1019,16 @@ export const ChapterView = () => {
                           <div className="container-rating">
                             {user &&
                             negativeLikes.some(
-                              (like) => like.id === code.id,
+                              (like) => like.id === question.id,
                             ) ? (
                               <div className="thumbs-container down">
                                 <ThumbsDown
                                   className="thumbs"
                                   color="red"
                                   size={20}
-                                  onClick={() => deleteNegativeLike(code.id)}
+                                  onClick={() =>
+                                    deleteNegativeLike(question.id)
+                                  }
                                 />
                                 {negativeLikesCount}
                               </div>
@@ -1021,7 +1038,7 @@ export const ChapterView = () => {
                                   color="red"
                                   className="thumbs"
                                   size={20}
-                                  onClick={() => addNegativeLike(code.id)}
+                                  onClick={() => addNegativeLike(question.id)}
                                 />
                                 {negativeLikesCount}
                               </div>
@@ -1039,11 +1056,12 @@ export const ChapterView = () => {
                                 {negativeLikesCount}
                               </div>
                             )}
+                          </div> */}
                           </div>
                         </div>
 
                         <span className="codes-added-by">
-                          added by {code.userFullName}
+                          added by {question.userFullName}
                         </span>
                       </div>
                     );
@@ -1053,11 +1071,11 @@ export const ChapterView = () => {
             ) : (
               <div className="container-title">
                 <span>
-                  <i>No codes yet</i> 😢 <i>Add your code now!</i>
+                  <i>No questions yet</i> 😢 <i>Add your question now!</i>
                 </span>
               </div>
             )}
-          </div> */}
+          </div>
           {/* {!user && (
             <div className="container-details cta">
               <div>
@@ -1145,12 +1163,12 @@ export const ChapterView = () => {
             <h2 className="no-margin">Taxonomy</h2>
             <div className="container-tags">
               <div className="badges">
-                <p>Category: </p>
+                <p>Game: </p>
                 <div>
-                  <Link to={`/chapters/categories/${chapter.categorySlug}`}>
+                  <Link to={`../gameplay/games/${chapter.gameSlug}`}>
                     <Button
                       secondary
-                      label={chapter.categoryTitle?.toLowerCase()}
+                      label={chapter.gameTitle?.toLowerCase()}
                       size="small"
                     />
                   </Link>
@@ -1249,30 +1267,11 @@ export const ChapterView = () => {
           )} */}
           {similarChapters.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Similar activities in {chapter.categoryTitle}</h2>
+              <h2>🔎 Other chapters in {chapter.categoryTitle}</h2>
               <div className="container-cards small-cards">{cardItems}</div>
             </div>
           )}
-          {similarChaptersCity.length > 0 && (
-            <div className="container-alternatives">
-              <h2>🔎 Activities in {chapter.cityTitle}</h2>
-              <div className="container-cards small-cards">{cardItemsCity}</div>
-            </div>
-          )}
-          {similarChaptersArea.length > 0 && (
-            <div className="container-alternatives">
-              <h2>🔎 Activities in {chapter.areaTitle}</h2>
-              <div className="container-cards small-cards">{cardItemsArea}</div>
-            </div>
-          )}
-          {similarChaptersCountry.length > 0 && (
-            <div className="container-alternatives">
-              <h2>🔎 Activities in {chapter.countryTitle}</h2>
-              <div className="container-cards small-cards">
-                {cardItemsCountry}
-              </div>
-            </div>
-          )}
+
           {/* {searches.length > 0 && (
             <div className="container-alternatives">
               <h2>🔎 Related searches</h2>

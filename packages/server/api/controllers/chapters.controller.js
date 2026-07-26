@@ -24,7 +24,16 @@ const getChapters = async () => {
 // Get Chapters by Chapter
 const getChaptersByGame = async (game) => {
   try {
-    const chapters = await knex('chapters').where({ game_id: game });
+    const chapters = await knex('chapters')
+      .select(
+        'chapters.*',
+        'chapters.title as title',
+        'chapters.game_id as gameId',
+        'games.title as gameTitle',
+        'games.slug as gameSlug',
+      )
+      .join('games', 'chapters.game_id', '=', 'games.id')
+      .where({ game_id: game });
     return chapters;
   } catch (error) {
     return error.message;
@@ -37,7 +46,16 @@ const getChapterById = async (id) => {
   }
 
   try {
-    const chapter = await knex('chapters').where('chapters.id', id);
+    const chapter = await knex('chapters')
+      .select(
+        'chapters.*',
+        'chapters.title as title',
+        'chapters.game_id as gameId',
+        'games.title as gameTitle',
+        'games.slug as gameSlug',
+      )
+      .join('games', 'chapters.game_id', '=', 'games.id')
+      .where('chapters.id', id);
     if (chapter.length === 0) {
       throw new Error(`incorrect entry with the id of ${id}`, 404);
     }

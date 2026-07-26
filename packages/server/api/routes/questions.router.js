@@ -28,9 +28,9 @@ const questionsController = require('../controllers/questions.controller');
  *        description: Unexpected error.
  */
 router.get('/', (req, res, next) => {
-  if (req.query.category) {
+  if (req.query.chapter) {
     questionsController
-      .getQuestionsByCategory(req.query.category)
+      .getQuestionsByChapter(req.query.chapter)
       .then((result) => res.json(result))
       .catch(next);
   } else {

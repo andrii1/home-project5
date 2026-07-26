@@ -7,14 +7,7 @@ const HttpError = require('../lib/utils/http-error');
 /* Get all questions */
 const getQuestions = async () => {
   try {
-    const questions = await knex('questions')
-      .select(
-        'questions.id as id',
-        'questions.title as title',
-        'questions.category_id as categoryId',
-        'categories.title as categoryTitle',
-      )
-      .join('categories', 'questions.category_id', '=', 'categories.id');
+    const questions = await knex('questions');
     return questions;
   } catch (error) {
     return error.message;
@@ -24,14 +17,46 @@ const getQuestions = async () => {
 // Get Questions by Chapter
 const getQuestionsByChapter = async (chapter) => {
   try {
-    const questions = await knex('questions').where({ chapter_id: chapter });
+    const rows = await knex('questions')
+      .leftJoin('answers', 'questions.id', 'answers.question_id')
+      .where('questions.chapter_id', chapter)
+      .select(
+        'questions.id as question_id',
+        'questions.title as question_title',
+        'answers.id as answer_id',
+        'answers.title as answer_title',
+      );
+
+    const questions = rows.reduce((acc, row) => {
+      let question = acc.find((q) => q.question_id === row.question_id);
+
+      if (!question) {
+        question = {
+          question_id: row.question_id,
+          question_title: row.question_title,
+          answers: [],
+        };
+
+        acc.push(question);
+      }
+
+      if (row.answer_id) {
+        question.answers.push({
+          id: row.answer_id,
+          title: row.answer_title,
+        });
+      }
+
+      return acc;
+    }, []);
+
     return questions;
   } catch (error) {
     return error.message;
   }
 };
 
-const getQuestionsById = async (id) => {
+const getQuestionById = async (id) => {
   if (!id) {
     throw new HttpError('Id should be a number', 400);
   }
@@ -50,5 +75,5 @@ const getQuestionsById = async (id) => {
 module.exports = {
   getQuestions,
   getQuestionsByChapter,
-  getQuestionsById,
+  getQuestionById,
 };
