@@ -2,7 +2,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 require('dotenv').config();
-const app = require('app-store-scraper/lib/app');
 const knex = require('../../../../config/db');
 const generateSlug = require('../generateSlug');
 const OpenAI = require('openai');
@@ -14,35 +13,115 @@ const openai = new OpenAI({
 const chapters = [
   {
     title: 'Julia & Thomas',
-    slug: 'julia-thomas',
-    description: null,
     game_id: 1,
-    url_image: null,
-    meta_description: null,
   },
   {
-    title: 'Noor case',
-    slug: 'noor-case',
-    description: null,
-    game_id: 2,
-    url_image: null,
-    meta_description: null,
+    title: 'Cassie & Jeremy',
+    game_id: 1,
   },
   {
-    title: 'Felix case',
-    slug: 'felix-case',
-    description: null,
-    game_id: 2,
-    url_image: null,
-    meta_description: null,
+    title: 'Camille & Eden',
+    game_id: 1,
   },
   {
-    title: 'Rei case',
-    slug: 'rei-case',
-    description: null,
+    title: 'Emma & Maya',
+    game_id: 1,
+  },
+  {
+    title: 'Lucas & Sarah',
+    game_id: 1,
+  },
+  {
+    title: 'Lina & Max',
+    game_id: 1,
+  },
+  {
+    title: 'Frank & Jade',
+    game_id: 1,
+  },
+  {
+    title: 'Claire & Pierre',
+    game_id: 1,
+  },
+  {
+    title: 'Samia & Iris',
+    game_id: 1,
+  },
+  {
+    title: 'Theo & Asha',
+    game_id: 1,
+  },
+  {
+    title: 'Nadine & Gwen',
+    game_id: 1,
+  },
+  {
+    title: 'Anna & Milo',
+    game_id: 1,
+  },
+  {
+    title: 'Noam & Tyreese',
+    game_id: 1,
+  },
+  {
+    title: 'Anna & Markus',
+    game_id: 1,
+  },
+  {
+    title: 'Isabela & Rafael',
+    game_id: 1,
+  },
+  {
+    title: 'Noor & Julian',
+    game_id: 1,
+  },
+  {
+    title: 'Sophia & James',
+    game_id: 1,
+  },
+  {
+    title: 'Emily & Rob',
+    game_id: 1,
+  },
+  {
+    title: 'Chiara & Giulia',
+    game_id: 1,
+  },
+  {
+    title: 'Melania & Lisa',
+    game_id: 1,
+  },
+  {
+    title: 'NOOR',
     game_id: 2,
-    url_image: null,
-    meta_description: null,
+  },
+  {
+    title: 'FELIX',
+    game_id: 2,
+  },
+  {
+    title: 'REI',
+    game_id: 2,
+  },
+  {
+    title: 'DANNY',
+    game_id: 2,
+  },
+  {
+    title: 'ZOE',
+    game_id: 2,
+  },
+  {
+    title: 'AVA',
+    game_id: 2,
+  },
+  {
+    title: 'WREN',
+    game_id: 2,
+  },
+  {
+    title: 'JUNO',
+    game_id: 2,
   },
 ];
 
@@ -72,7 +151,7 @@ async function slugExists(slug) {
 async function insertGames() {
   for (const chapter of chapters) {
     try {
-      const baseSlug = generateSlug(chapter.slug);
+      const baseSlug = generateSlug(chapter.title);
       const uniqueSlug = await ensureUniqueSlug(baseSlug);
       await knex('chapters').insert({
         title: chapter.title,

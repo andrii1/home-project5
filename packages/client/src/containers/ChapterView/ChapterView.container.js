@@ -300,7 +300,7 @@ export const ChapterView = () => {
     return (
       <Card
         id={item.id}
-        cardUrl={`../gameplay/chapters/${item.id}`}
+        cardUrl={`../gameplay/chapters/${item.slug}`}
         title={item.title}
         smallCard
       />
@@ -753,7 +753,7 @@ export const ChapterView = () => {
                         <div className="answer-group">
                           {question.answers.length === 0 && (
                             <Link
-                              to={`../../questions/${question.id}`}
+                              to={`../../gameplay/questions/${question.id}`}
                               target="_blank"
                             >
                               <Button

@@ -23,6 +23,7 @@ const getQuestionsByChapter = async (chapter) => {
       .leftJoin('chapters', 'questions.chapter_id', '=', 'chapters.id')
       .leftJoin('games', 'chapters.game_id', '=', 'games.id')
       .where('questions.chapter_id', chapter)
+      .orderBy('questions.id', 'asc')
       .select(
         'questions.id as id',
         'questions.question_id as question_id',

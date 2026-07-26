@@ -147,4 +147,3 @@ async function insertGames() {
 }
 
 insertGames();
-// fetchAppByAppleId('6745106241');

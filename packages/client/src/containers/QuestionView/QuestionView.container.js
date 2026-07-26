@@ -291,7 +291,7 @@ export const QuestionView = () => {
       <Card
         id={item.id}
         cardUrl={`../gameplay/questions/${item.question_id}`}
-        title={item.question_title}
+        title={`Question ${item.question_id}`}
         smallCard
       />
     );
@@ -496,35 +496,6 @@ export const QuestionView = () => {
   // usage
   const priceValidUntil = getPriceValidUntil(30);
 
-  const questionSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Question',
-    name: question.title,
-    image: question.url_image,
-    description: descriptionText,
-    sku: question.id,
-    brand: {
-      '@type': 'Brand',
-      name: 'Gameplay',
-    },
-    offers: {
-      '@type': 'Offer',
-      url: `https://www.miniappshub.com/questions/${question.slug}`,
-      priceCurrency: question.currency,
-      price: question.price,
-      priceValidUntil,
-      itemCondition: 'https://schema.org/NewCondition',
-      availability: `https://schema.org/InStock`,
-    },
-    ...(question.rating && {
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: question.rating,
-        reviewCount: question.reviews || 0,
-      },
-    }),
-  };
-
   // 2️⃣ Breadcrumb schema
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -581,7 +552,7 @@ export const QuestionView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${question?.title}, ${question?.chapterTitle}, ${question?.gameTitle} - Gameplay`}</title>
+        <title>{`Question ${question?.question_id}, ${question?.chapterTitle}, ${question?.gameTitle} - Gameplay`}</title>
         <meta
           name="description"
           content={
@@ -621,9 +592,7 @@ export const QuestionView = () => {
         <meta name="twitter:image" content={question.url_image} />
 
         {/* Rich content */}
-        <script type="application/ld+json">
-          {JSON.stringify(questionSchema)}
-        </script>
+
         <script type="application/ld+json">
           {JSON.stringify(breadcrumbSchema)}
         </script>
@@ -632,8 +601,8 @@ export const QuestionView = () => {
         <section className="container-appview">
           <div className="header gameplay">
             <h1 className="hero-header">
-              {question?.title}, {question?.chapterTitle}, {question?.gameTitle}{' '}
-              gameplay
+              Question {question?.question_id}, {question?.chapterTitle},{' '}
+              {question?.gameTitle} gameplay
             </h1>
           </div>
           {question.url_image && (

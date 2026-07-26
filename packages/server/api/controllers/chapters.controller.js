@@ -33,6 +33,7 @@ const getChaptersByGame = async (game) => {
         'games.slug as gameSlug',
       )
       .join('games', 'chapters.game_id', '=', 'games.id')
+      .orderBy('chapters.id', 'asc')
       .where({ game_id: game });
     return chapters;
   } catch (error) {
