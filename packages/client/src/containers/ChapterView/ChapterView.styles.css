@@ -410,6 +410,13 @@ span.underline:hover {
 .answer-group {
   display: flex;
   gap: 1rem;
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.answer-group > div {
+  display: flex;
+  gap: 1rem;
   align-items: center;
 }
 

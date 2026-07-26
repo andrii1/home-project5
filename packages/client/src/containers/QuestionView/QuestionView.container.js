@@ -520,11 +520,11 @@ export const QuestionView = () => {
     sku: question.id,
     brand: {
       '@type': 'Brand',
-      name: 'Book Travel Activities',
+      name: 'Gameplay',
     },
     offers: {
       '@type': 'Offer',
-      url: `https://www.booktravelactivities.com/questions/${question.slug}`,
+      url: `https://www.miniappshub.com/questions/${question.slug}`,
       priceCurrency: question.currency,
       price: question.price,
       priceValidUntil,
@@ -549,19 +549,19 @@ export const QuestionView = () => {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://www.booktravelactivities.com',
+        item: 'https://www.miniappshub.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Questions',
-        item: 'https://www.booktravelactivities.com/questions',
+        item: 'https://www.miniappshub.com/questions',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: question.title,
-        item: `https://www.booktravelactivities.com/questions/${question.slug}`,
+        item: `https://www.miniappshub.com/questions/${question.slug}`,
       },
     ],
   };
@@ -596,7 +596,7 @@ export const QuestionView = () => {
   return (
     <>
       <Helmet>
-        <title>{`${question?.title} - Book Travel Activities`}</title>
+        <title>{`${question?.title} - Gameplay`}</title>
         <meta
           name="description"
           content={
@@ -607,7 +607,7 @@ export const QuestionView = () => {
         {/* Canonical URL */}
         <link
           rel="canonical"
-          href={`https://www.booktravelactivities.com/questions/${question.slug}`}
+          href={`https://www.miniappshub.com/questions/${question.slug}`}
         />
         {/* Robots meta for large image preview (Google Discover) */}
         <meta name="robots" content="max-image-preview:large" />
@@ -622,9 +622,9 @@ export const QuestionView = () => {
         <meta property="og:image" content={question.url_image} />
         <meta
           property="og:url"
-          content={`https://www.booktravelactivities.com/questions/${question.slug}`}
+          content={`https://www.miniappshub.com/questions/${question.slug}`}
         />
-        <meta property="og:site_name" content="Book Travel Activities" />
+        <meta property="og:site_name" content="Gameplay" />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -801,7 +801,7 @@ export const QuestionView = () => {
               className="button-copy"
               onClick={() =>
                 copyToClipboard(
-                  `https://www.booktravelactivities.com/questions/${question.slug}`,
+                  `https://www.miniappshub.com/questions/${question.slug}`,
                 )
               }
             />
@@ -809,21 +809,21 @@ export const QuestionView = () => {
               <FontAwesomeIcon className="share-icon" icon={faFacebookF} />
             </FacebookShareButton>
             <TwitterShareButton
-              url={`https://www.booktravelactivities.com/questions/${question.slug}`}
+              url={`https://www.miniappshub.com/questions/${question.slug}`}
               title={`Check out this question: '${question.title}'`}
               hashtags={['Questions']}
             >
               <FontAwesomeIcon className="share-icon" icon={faTwitter} />
             </TwitterShareButton>
             <LinkedinShareButton
-              url={`https://www.booktravelactivities.com/questions/${question.slug}`}
+              url={`https://www.miniappshub.com/questions/${question.slug}`}
             >
               <FontAwesomeIcon className="share-icon" icon={faLinkedinIn} />
             </LinkedinShareButton>
             <EmailShareButton
               subject="Check out this question!"
               body={`This question is great: '${question.title}'`}
-              url={`https://www.booktravelactivities.com/questions/${question.slug}`}
+              url={`https://www.miniappshub.com/questions/${question.slug}`}
             >
               <FontAwesomeIcon icon={faEnvelope} />
             </EmailShareButton>

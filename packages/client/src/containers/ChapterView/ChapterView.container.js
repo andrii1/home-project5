@@ -769,7 +769,7 @@ export const ChapterView = () => {
                           {question.answers.length > 0 &&
                             question.answers?.map((answer) => {
                               return (
-                                <>
+                                <div>
                                   {' '}
                                   <Button
                                     size="medium"
@@ -783,7 +783,7 @@ export const ChapterView = () => {
                                   <span className="codes-added-by">
                                     by {answer.userFullName}
                                   </span>
-                                </>
+                                </div>
                               );
                             })}
 
