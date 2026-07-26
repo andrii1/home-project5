@@ -24,7 +24,7 @@ export const Badge = ({
   } else if (tertiary) {
     mode = 'storybook-badge--tertiary';
   } else {
-    mode = 'storybook-badge--tertiary';
+    mode = 'storybook-badge--transparent';
   }
   return (
     <div

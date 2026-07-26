@@ -785,7 +785,16 @@ export const ChapterView = () => {
                                     }
                                   />
                                   <span className="codes-added-by">
-                                    by {answer.userFullName}
+                                    {/* by {answer.userFullName} */}
+                                    <Link
+                                      to={`../gameplay/games/${chapter.gameSlug}`}
+                                    >
+                                      <Badge
+                                        secondary
+                                        label={answer.userFullName}
+                                        size="small"
+                                      />
+                                    </Link>
                                   </span>
                                 </div>
                               );
