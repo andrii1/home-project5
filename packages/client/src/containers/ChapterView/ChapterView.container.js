@@ -919,48 +919,28 @@ export const ChapterView = () => {
                 <div className="container-appview-codes-users">
                   {questions.map((question) => {
                     return (
-                      <div className="container-codes-users">
-                        <div className="container-appview-codes">
-                          <span>Question {question.question_id}.</span>
-                          <div>
-                            {question.answers?.map((answer) => {
-                              return (
-                                <>
-                                  {' '}
-                                  <Button
-                                    size="medium"
-                                    primary
-                                    icon={<FontAwesomeIcon icon={faCopy} />}
-                                    label={answer.title}
-                                    onClick={() =>
-                                      copyToClipboard(answer.title)
-                                    }
-                                  />
-                                  <Toast
-                                    open={openToast}
-                                    overlayClass={`toast ${animation}`}
-                                  >
-                                    <span>Copied to clipboard!</span>
-                                  </Toast>
-                                  {answer.id && (
-                                    <Link to={answer.id} target="_blank">
-                                      <Button
-                                        size="medium"
-                                        secondary
-                                        icon={
-                                          <FontAwesomeIcon
-                                            icon={faArrowUpRightFromSquare}
-                                            size="sm"
-                                          />
-                                        }
-                                        label="Link"
-                                      />
-                                    </Link>
-                                  )}
-                                  <Link
-                                    to={`../../questions/${answer.id}`}
-                                    target="_blank"
-                                  >
+                      <div className="container-appview-codes">
+                        <span>Question {question.question_id}.</span>
+                        <div className="answer-group">
+                          {question.answers?.map((answer) => {
+                            return (
+                              <>
+                                {' '}
+                                <Button
+                                  size="medium"
+                                  primary
+                                  icon={<FontAwesomeIcon icon={faCopy} />}
+                                  label={answer.title}
+                                  onClick={() => copyToClipboard(answer.title)}
+                                />
+                                <Toast
+                                  open={openToast}
+                                  overlayClass={`toast ${animation}`}
+                                >
+                                  <span>Copied to clipboard!</span>
+                                </Toast>
+                                {answer.id && (
+                                  <Link to={answer.id} target="_blank">
                                     <Button
                                       size="medium"
                                       secondary
@@ -970,17 +950,34 @@ export const ChapterView = () => {
                                           size="sm"
                                         />
                                       }
-                                      label="View"
+                                      label="Link"
                                     />
                                   </Link>
-                                  <span className="codes-added-by">
-                                    by {answer.userFullName}
-                                  </span>
-                                </>
-                              );
-                            })}
+                                )}
+                                <Link
+                                  to={`../../questions/${answer.id}`}
+                                  target="_blank"
+                                >
+                                  <Button
+                                    size="medium"
+                                    secondary
+                                    icon={
+                                      <FontAwesomeIcon
+                                        icon={faArrowUpRightFromSquare}
+                                        size="sm"
+                                      />
+                                    }
+                                    label="View"
+                                  />
+                                </Link>
+                                <span className="codes-added-by">
+                                  by {answer.userFullName}
+                                </span>
+                              </>
+                            );
+                          })}
 
-                            {/* <div className="container-rating">
+                          {/* <div className="container-rating">
                             {user &&
                             positiveLikes.some(
                               (like) => like.id === question.id,
@@ -1062,7 +1059,6 @@ export const ChapterView = () => {
                               </div>
                             )}
                           </div> */}
-                          </div>
                         </div>
                       </div>
                     );

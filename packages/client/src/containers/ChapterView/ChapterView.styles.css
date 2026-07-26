@@ -410,6 +410,12 @@ span.underline:hover {
   list-style-type: disc;
 }
 
+.answer-group {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 @media only screen and (max-width: 768px) {
   .badges {
     align-items: self-start;
@@ -444,8 +450,8 @@ span.underline:hover {
   }
   .container-appview-buttons,
   .container-appview-codes {
-    /* flex-direction: column; */
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .appview-image,
