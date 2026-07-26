@@ -49,6 +49,14 @@ router.get('/:id', (req, res, next) => {
     .catch(next);
 });
 
+router.post('/', (req, res, next) => {
+  const { token } = req.headers;
+  answersController
+    .createAnswers(token, req.body)
+    .then((result) => res.json(result))
+    .catch(next);
+});
+
 /**
  * @swagger
  * /exampleResources/{ID}:

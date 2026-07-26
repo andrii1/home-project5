@@ -889,10 +889,7 @@ export const ChapterView = () => {
                   {questions.map((question) => {
                     return (
                       <div className="container-appview-codes">
-                        <Link
-                          className="underline"
-                          to={`../gameplay/questions/${question.id}`}
-                        >
+                        <Link to={`../gameplay/questions/${question.id}`}>
                           <span>Question {question.question_id}.</span>
                         </Link>
                         <div className="answer-group">

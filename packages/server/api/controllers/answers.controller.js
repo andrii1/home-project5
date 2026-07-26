@@ -45,8 +45,31 @@ const getAnswersById = async (id) => {
   }
 };
 
+// post
+const createAnswers = async (token, body) => {
+  try {
+    const userUid = token.split(' ')[1];
+    const user = (await knex('users').where({ uid: userUid }))[0];
+    if (!user) {
+      throw new HttpError('User not found', 401);
+    }
+    await knex('answers').insert({
+      user_id: user.id,
+      question_id: body.question_id,
+      title: body.title,
+      description: body.description,
+    });
+    return {
+      successful: true,
+    };
+  } catch (error) {
+    return error.message;
+  }
+};
+
 module.exports = {
   getAnswers,
   getAnswersByQuestion,
   getAnswersById,
+  createAnswers,
 };
