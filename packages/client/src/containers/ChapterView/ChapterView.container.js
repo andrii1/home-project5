@@ -859,7 +859,7 @@ export const ChapterView = () => {
               </div>
             )}
           </div> */}
-          <div className="container-description">
+          {/* <div className="container-description">
             <div className="container-title">
               <h2>{chapter.title}</h2>
             </div>
@@ -905,13 +905,15 @@ export const ChapterView = () => {
                 </p>
               </>
             )}
-          </div>
+          </div> */}
 
           <div className="container-codes">
             {questions.length > 0 ? (
               <>
                 <div className="container-title">
-                  <h2>{chapter.title} - </h2>
+                  <h2>
+                    {chapter.title} - {questions.length} questions
+                  </h2>
                 </div>
 
                 <div className="container-appview-codes-users">
@@ -971,6 +973,9 @@ export const ChapterView = () => {
                                       label="View"
                                     />
                                   </Link>
+                                  <span className="codes-added-by">
+                                    by {answer.userFullName}
+                                  </span>
                                 </>
                               );
                             })}
@@ -1059,10 +1064,6 @@ export const ChapterView = () => {
                           </div> */}
                           </div>
                         </div>
-
-                        <span className="codes-added-by">
-                          added by {question.userFullName}
-                        </span>
                       </div>
                     );
                   })}

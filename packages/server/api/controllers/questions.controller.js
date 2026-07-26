@@ -19,12 +19,14 @@ const getQuestionsByChapter = async (chapter) => {
   try {
     const rows = await knex('questions')
       .leftJoin('answers', 'questions.id', 'answers.question_id')
+      .leftJoin('users', 'users.id', 'answers.user_id')
       .where('questions.chapter_id', chapter)
       .select(
         'questions.id as question_id',
         'questions.title as question_title',
         'answers.id as answer_id',
         'answers.title as answer_title',
+        'users.full_name as user_full_name',
       );
 
     const questions = rows.reduce((acc, row) => {
@@ -44,6 +46,7 @@ const getQuestionsByChapter = async (chapter) => {
         question.answers.push({
           id: row.answer_id,
           title: row.answer_title,
+          userFullName: row.user_full_name.split(' ')[0],
         });
       }
 
