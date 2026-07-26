@@ -410,6 +410,10 @@ span.underline:hover {
   list-style-type: disc;
 }
 
+.btn-go-back {
+  margin-top: 2rem;
+}
+
 @media only screen and (max-width: 768px) {
   .badges {
     align-items: self-start;

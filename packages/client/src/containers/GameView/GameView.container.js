@@ -1356,6 +1356,12 @@ export const GameView = () => {
             </div>
           )} */}
         </section>
+        <Button
+          className="btn-go-back"
+          secondary
+          label="← Go back"
+          onClick={navigateBack}
+        />
         <Modal title={modalTitle} open={openModal} toggle={toggleModal}>
           <Link to="/signup">
             <Button primary label="Create an account" />

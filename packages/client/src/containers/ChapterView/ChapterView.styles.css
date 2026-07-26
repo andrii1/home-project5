@@ -425,6 +425,17 @@ span.underline:hover {
   align-items: flex-start !important;
 }
 
+.btn-no-style {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: auto;
+  color: black;
+}
+
 @media only screen and (max-width: 768px) {
   .badges {
     align-items: self-start;

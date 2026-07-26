@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -765,8 +766,17 @@ export const ChapterView = () => {
                               return (
                                 <div>
                                   {' '}
+                                  {/* <div
+                                    onClick={() =>
+                                      copyToClipboard(answer.title)
+                                    }
+                                  >
+                                    <FontAwesomeIcon icon={faCopy} />
+                                    {answer.title}
+                                  </div> */}
                                   <Button
                                     size="medium"
+                                    className="btn-no-style"
                                     primary
                                     icon={<FontAwesomeIcon icon={faCopy} />}
                                     label={answer.title}
@@ -872,7 +882,7 @@ export const ChapterView = () => {
             ) : (
               <div className="container-title">
                 <span>
-                  <i>No questions yet</i> 😢 <i>Add your question now!</i>
+                  <i>No questions yet</i>
                 </span>
               </div>
             )}
@@ -1080,6 +1090,12 @@ export const ChapterView = () => {
             </div>
           )} */}
         </section>
+        <Button
+          className="btn-go-back"
+          secondary
+          label="← Go back"
+          onClick={navigateBack}
+        />
         <Modal title={modalTitle} open={openModal} toggle={toggleModal}>
           <Link to="/signup">
             <Button primary label="Create an account" />
