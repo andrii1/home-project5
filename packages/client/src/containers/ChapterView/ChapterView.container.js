@@ -54,6 +54,7 @@ import './ChapterView.styles.css';
 import { useUserContext } from '../../userContext';
 import { getMostUsedWords } from '../../utils/getMostUsedWords';
 import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
+import { Breadcrumb } from '../../components/Breadcrumb/Breadcrumb.component';
 
 export const ChapterView = () => {
   const { slugParam } = useParams();
@@ -614,6 +615,18 @@ export const ChapterView = () => {
               {chapter?.title} - {chapter?.gameTitle} gameplay
             </h1>
           </div>
+          <Breadcrumb
+            items={[
+              { label: 'Home', to: '../gameplay' },
+              {
+                label: chapter.gameTitle,
+                to: `../gameplay/games/${chapter.gameSlug}`,
+              },
+              {
+                label: chapter.title,
+              },
+            ]}
+          />
           {chapter.url_image && (
             <div className="activity-img-container">
               <img

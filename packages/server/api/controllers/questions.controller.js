@@ -33,6 +33,7 @@ const getQuestionsByChapter = async (chapter) => {
         'games.title as gameTitle',
         'games.slug as gameSlug',
         'chapters.title as chapterTitle',
+        'chapters.slug as chapterSlug',
         'users.full_name as user_full_name',
       );
 
@@ -79,6 +80,7 @@ const getQuestionById = async (id) => {
         'games.title as gameTitle',
         'games.slug as gameSlug',
         'chapters.title as chapterTitle',
+        'chapters.slug as chapterSlug',
         'chapters.id as chapterId',
       )
       .leftJoin('chapters', 'questions.chapter_id', '=', 'chapters.id')

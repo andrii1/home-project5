@@ -24,6 +24,7 @@ import Rating from '../../components/Rating/Rating.component';
 import globe from '../../assets/images/globe.svg';
 import { formatDuration } from '../../utils/formatDuration';
 import { getFlagEmoji } from '../../utils/getFlagEmoji';
+import { Breadcrumb } from '../../components/Breadcrumb/Breadcrumb.component';
 
 import {
   faEnvelope,
@@ -605,6 +606,22 @@ export const QuestionView = () => {
               {question?.gameTitle} gameplay
             </h1>
           </div>
+          <Breadcrumb
+            items={[
+              { label: 'Home', to: '../gameplay' },
+              {
+                label: question.gameTitle,
+                to: `../gameplay/games/${question.gameSlug}`,
+              },
+              {
+                label: question.chapterTitle,
+                to: `../gameplay/chapters/${question.chapterSlug}`,
+              },
+              {
+                label: `Question ${question.question_id}`,
+              },
+            ]}
+          />
           {question.url_image && (
             <div className="activity-img-container">
               <img
