@@ -454,58 +454,13 @@ export const ChapterView = () => {
     }, 2500);
   };
 
-  const dealCodesInTitle = dealCodes.map((i) => {
-    return `(${i.title})`;
-  });
-
-  const showNumberOfCodesInTitle = (codes) => {
-    let title;
-    if (codes.length === 1) {
-      title = 'code';
-    } else {
-      title = 'codes';
-    }
-
-    return `${codes.length} ${title}`;
-  };
-
-  const handleFaqs = (faqId) => {
-    setFaqs(
-      faqs.map((item) => {
-        if (item.id === faqId) {
-          return { ...item, open: !item.open };
-        }
-        return item;
-      }),
-    );
-  };
-
-  const discount = chapter.discount_percentage || 0;
-
-  // Calculate original price
-  const originalPrice =
-    discount > 0 ? chapter.price / (1 - discount / 100) : chapter.price;
-
-  const descriptionText = (
-    chapter.description ||
-    chapter.summary ||
-    chapter.description_ai ||
-    'No description available'
-  )
-    .replace(/\*+/g, '')
-    .trim();
-
-  function getPriceValidUntil(days = 30) {
-    const d = new Date();
-    d.setDate(d.getDate() + days);
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, '0'); // months are 0-indexed
-    const dd = String(d.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  }
-
-  // usage
-  const priceValidUntil = getPriceValidUntil(30);
+  const answersToCopy = questions
+    .map((question) => {
+      return `Question ${question.question_id}. ${
+        question.answers[0]?.title || ''
+      }`;
+    })
+    .join('\n');
 
   // 2️⃣ Breadcrumb schema
   const breadcrumbSchema = {
@@ -532,19 +487,6 @@ export const ChapterView = () => {
       },
     ],
   };
-
-  const faqsItems = faqs.map((faq) => {
-    return (
-      <div key={faq.id}>
-        <h3 className="h3-faq" onClick={() => handleFaqs(faq.id)}>
-          {faq.title} {faq.open ? '▲' : '▼'}
-        </h3>
-        <p className={!faq.open && 'faq-closed'}>{faq.text}</p>
-      </div>
-    );
-  });
-
-  const isBestseller = Boolean(Number(chapter.bestseller));
 
   if (error) {
     return (
@@ -582,10 +524,7 @@ export const ChapterView = () => {
         {/* Open Graph */}
         <meta property="og:type" content="chapter" />
         <meta property="og:title" content={chapter.title} />
-        <meta
-          property="og:description"
-          content={chapter.meta_description || descriptionText}
-        />
+        <meta property="og:description" content={chapter.meta_description} />
         <meta property="og:image" content={chapter.url_image} />
         <meta
           property="og:url"
@@ -596,10 +535,7 @@ export const ChapterView = () => {
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={chapter.title} />
-        <meta
-          name="twitter:description"
-          content={chapter.meta_description || descriptionText}
-        />
+        <meta name="twitter:description" content={chapter.meta_description} />
         <meta name="twitter:image" content={chapter.url_image} />
 
         {/* Rich content */}
@@ -747,7 +683,7 @@ export const ChapterView = () => {
             </div>
           </div>
 
-          <div className="container-codes">
+          <div className="container-codes gameplay">
             {questions.length > 0 ? (
               <>
                 <div className="container-title">
@@ -755,7 +691,15 @@ export const ChapterView = () => {
                     {chapter.title} case - {questions.length} questions
                   </h2>
                 </div>
-
+                <div>
+                  <Button
+                    size="medium"
+                    primary
+                    icon={<FontAwesomeIcon icon={faCopy} />}
+                    label="Copy all answers"
+                    onClick={() => copyToClipboard(answersToCopy)}
+                  />
+                </div>
                 <div className="container-appview-codes-users">
                   {questions.map((question) => {
                     return (

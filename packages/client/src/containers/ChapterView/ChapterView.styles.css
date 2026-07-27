@@ -308,6 +308,15 @@ p.faq-closed {
   display: none;
 }
 
+.container-codes.gameplay h2 {
+  margin-bottom: 0rem !important;
+}
+.container-codes.gameplay {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 @media only screen and (min-width: 769px) {
   .container-description h2 {
     margin-bottom: 0rem;
