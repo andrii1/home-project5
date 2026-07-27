@@ -4,35 +4,35 @@
 require('dotenv').config();
 const knex = require('../../../../config/db');
 
-const chapterId = 21;
+const chapterId = 22;
 
 const answerTitles = [
-  'Sara',
-  'medical clinic',
-  'Dr Bouchard’s office',
-  '1007',
-  'Open calendar',
-  '1018',
-  'Reiss Capital Fraud Review',
-  'Investigative journalist',
-  'Meridian files',
-  'messages',
-  'Files download',
-  'Files',
-  'Notes',
-  'Black jacket',
-  'Followed on foot',
-  'Referral',
-  'I documented it',
-  'Security alert',
-  'Email',
-  'Send an email',
+  'Vincent',
+  'Errands',
+  'Not planning to drink',
+  '0814',
+  'Walk',
+  'Prescription',
+  'You can talk',
+  'Photos',
+  'Draft',
+  'Dr. Marcus Adler',
+  'Lawyer',
+  'iMessage',
+  'Tucker',
+  'Water',
+  'Tim Piazza',
+  '1:32 am',
+  'BAC only',
+  'Walk in for me',
+  'Tucker',
+  'Tucker & Marcus',
 ];
 
 async function insertChapterAnswers() {
   const questions = await knex('questions')
     .where({ chapter_id: chapterId })
-    .orderBy('question_id');
+    .orderBy('id');
 
   const answers = questions.map((q, index) => ({
     title: answerTitles[index],
