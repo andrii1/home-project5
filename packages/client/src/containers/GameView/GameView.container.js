@@ -53,6 +53,7 @@ import './GameView.styles.css';
 import { useUserContext } from '../../userContext';
 import { getMostUsedWords } from '../../utils/getMostUsedWords';
 import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
+import { Breadcrumb } from '../../components/Breadcrumb/Breadcrumb.component';
 
 export const GameView = () => {
   const { slugParam } = useParams();
@@ -452,6 +453,12 @@ export const GameView = () => {
           <div className="header gameplay">
             <h1 className="hero-header">{game?.title}</h1>
           </div>
+          <Breadcrumb
+            items={[
+              { label: 'Home', to: '../gameplay' },
+              { label: game.title },
+            ]}
+          />
           {game.url_image && (
             <div className="activity-img-container">
               <img
@@ -467,6 +474,7 @@ export const GameView = () => {
               {getFlagEmoji(game.countryIsoCode)}
             </span>
           )}
+
           <div className="container-cards container-cards-blog">
             {chapters?.map((chapter) => {
               return (

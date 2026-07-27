@@ -1,0 +1,13 @@
+ul.breadcrumb {
+  display: flex;
+  padding: 0rem;
+  margin: 0rem;
+}
+
+ul.breadcrumb li {
+  margin-right: 0rem !important;
+}
+
+.breadcrumb-divider {
+  margin: 0 0.5rem;
+}
