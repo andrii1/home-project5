@@ -743,8 +743,7 @@ export const ChapterView = () => {
                                       copyToClipboard(answer.title)
                                     }
                                   />
-                                  <span className="codes-added-by">
-                                    {/* by {answer.userFullName} */}
+                                  {/* <span className="codes-added-by">
                                     <Link
                                       to={`../gameplay/games/${chapter.gameSlug}`}
                                     >
@@ -754,7 +753,7 @@ export const ChapterView = () => {
                                         size="small"
                                       />
                                     </Link>
-                                  </span>
+                                  </span> */}
                                 </div>
                               );
                             })}
