@@ -681,6 +681,13 @@ export const ChapterView = () => {
                 </button>
               )}
             </div>
+            <a
+              href="https://paypal.me/museuly"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              💙 Support with PayPal
+            </a>
           </div>
 
           <div className="container-codes gameplay">
