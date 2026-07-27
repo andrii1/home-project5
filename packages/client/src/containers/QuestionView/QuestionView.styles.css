@@ -55,12 +55,7 @@
 .container-appview-codes {
   align-items: center;
 }
-.container-deal-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
+
 .prompt-title-view {
   font-size: 1.4rem;
 }
@@ -478,11 +473,6 @@ span.underline:hover {
   }
 
   .container-store-logos {
-    gap: 2rem;
-  }
-
-  .container-deal-actions {
-    flex-wrap: wrap;
     gap: 2rem;
   }
 
