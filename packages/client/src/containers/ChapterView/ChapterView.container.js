@@ -739,7 +739,7 @@ export const ChapterView = () => {
               <>
                 <div className="container-title">
                   <h2>
-                    {chapter.title} - {questions.length} questions
+                    {chapter.title} case - {questions.length} questions
                   </h2>
                 </div>
 
@@ -977,9 +977,6 @@ export const ChapterView = () => {
               </div>
             )}
           </div>
-          {/* <div className="container-details container-badges">
-            <h2 className="no-margin">Reviews</h2>
-          </div> */}
 
           <div className="container-details container-badges">
             <h2 className="no-margin">Taxonomy</h2>
@@ -997,20 +994,7 @@ export const ChapterView = () => {
                 </div>
               </div>
             </div>
-            {/* {topicsFromChapters.length > 0 && (
-              <div className="container-tags">
-                <div className="badges">
-                  <p className="p-no-margin">Related topics: </p>
-                  <div className="badges-keywords">
-                    {topicsFromChapters.map((topic, index) => (
-                      <Link to={`../../${topic.url}`}>
-                        <Button secondary label={topic.title} size="small" />
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )} */}
+
             {tags.length > 0 && (
               <div className="container-tags">
                 <div className="badges">
@@ -1031,16 +1015,6 @@ export const ChapterView = () => {
             )}
           </div>
 
-          {/* <div className="container-related-searches">
-            <h3>Related searches</h3>
-            <div className="topics-div searches">
-              {searches.map((search) => (
-                <Link to={`/chapters/search/${search.id}`} target="_blank">
-                  <Button secondary label={search.title} />
-                </Link>
-              ))}
-            </div>
-          </div> */}
           <div className="icons-apps-page">
             <span>Share it: </span>
             <FontAwesomeIcon
@@ -1089,7 +1063,7 @@ export const ChapterView = () => {
           )} */}
           {similarChapters.length > 0 && (
             <div className="container-alternatives">
-              <h2>🔎 Other chapters in {chapter.gameTitle}</h2>
+              <h2>🔎 Other cases in {chapter.gameTitle}</h2>
               <div className="container-cards small-cards">{cardItems}</div>
             </div>
           )}
