@@ -57,6 +57,7 @@
   box-shadow: rgb(0 0 0 / 15%) 0 0 0 1px inset;
   min-width: 10rem;
   min-height: 5rem;
+  background-color: white;
   /* background-color: rgb(255, 229, 217); */
 }
 

@@ -1,0 +1,24 @@
+.site-footer {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-container {
+  display: flex;
+}
+
+@media only screen and (max-width: 992px) {
+  .footer-container {
+    width: 90%;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-container .menu ul {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

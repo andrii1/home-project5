@@ -1,5 +1,6 @@
 ul.breadcrumb {
   display: flex;
+  flex-wrap: wrap;
   padding: 0rem;
   margin: 0rem;
 }
