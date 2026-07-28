@@ -739,7 +739,7 @@ export const QuestionView = () => {
               <div className="badges">
                 <p>Chapter: </p>
                 <div>
-                  <Link to={`../gameplay/chapters/${question.chapterId}`}>
+                  <Link to={`../gameplay/chapters/${question.chapterSlug}`}>
                     <Button
                       secondary
                       label={question.chapterTitle?.toLowerCase()}
