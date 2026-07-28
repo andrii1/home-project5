@@ -719,29 +719,34 @@ export const ChapterView = () => {
                     {chapter.title} case - {questions.length} questions
                   </h2>
                 </div>
-                <div className="reveal-copy-btn-group">
-                  <div>
-                    <Button
-                      primary
-                      label={
-                        revealedAnswers.size ===
-                        questions.flatMap((q) => q.answers).length
-                          ? 'Hide all answers'
-                          : 'Reveal all answers'
-                      }
-                      onClick={toggleAllAnswers}
-                    />
+                {questions.flatMap(
+                  (question) =>
+                    question.answers?.map((answer) => answer.id) || [],
+                ).length > 0 && (
+                  <div className="reveal-copy-btn-group">
+                    <div>
+                      <Button
+                        primary
+                        label={
+                          revealedAnswers.size ===
+                          questions.flatMap((q) => q.answers).length
+                            ? 'Hide all answers'
+                            : 'Reveal all answers'
+                        }
+                        onClick={toggleAllAnswers}
+                      />
+                    </div>
+                    <div>
+                      <Button
+                        size="medium"
+                        primary
+                        icon={<FontAwesomeIcon icon={faCopy} />}
+                        label="Copy all answers"
+                        onClick={() => copyToClipboard(answersToCopy)}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <Button
-                      size="medium"
-                      primary
-                      icon={<FontAwesomeIcon icon={faCopy} />}
-                      label="Copy all answers"
-                      onClick={() => copyToClipboard(answersToCopy)}
-                    />
-                  </div>
-                </div>
+                )}
                 <div className="container-appview-codes-users">
                   {questions.map((question) => {
                     return (
