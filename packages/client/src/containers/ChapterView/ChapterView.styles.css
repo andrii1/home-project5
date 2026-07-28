@@ -317,6 +317,11 @@ p.faq-closed {
   gap: 1rem;
 }
 
+.reveal-copy-btn-group {
+  display: flex;
+  gap: 1rem;
+}
+
 @media only screen and (min-width: 769px) {
   .container-description h2 {
     margin-bottom: 0rem;
@@ -446,6 +451,9 @@ span.underline:hover {
 }
 
 @media only screen and (max-width: 768px) {
+  .reveal-copy-btn-group {
+    flex-direction: column;
+  }
   .badges {
     align-items: self-start;
   }

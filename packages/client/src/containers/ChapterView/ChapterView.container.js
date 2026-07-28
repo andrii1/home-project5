@@ -99,6 +99,7 @@ export const ChapterView = () => {
   const [faqs, setFaqs] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [id, setId] = useState(null);
+  const [revealedAnswers, setRevealedAnswers] = useState(new Set());
 
   useEffect(() => {
     async function fetchSingleChapter(chapterId) {
@@ -462,6 +463,26 @@ export const ChapterView = () => {
     })
     .join('\n');
 
+  const revealAnswer = (answerId) => {
+    setRevealedAnswers((prev) => new Set(prev).add(answerId));
+  };
+
+  const toggleAllAnswers = () => {
+    const allAnswerIds = questions.flatMap((question) =>
+      question.answers.map((answer) => answer.id),
+    );
+
+    setRevealedAnswers((prev) => {
+      // If all are already revealed, hide all
+      if (prev.size === allAnswerIds.length) {
+        return new Set();
+      }
+
+      // Otherwise reveal all
+      return new Set(allAnswerIds);
+    });
+  };
+
   // 2️⃣ Breadcrumb schema
   const breadcrumbSchema = {
     '@context': 'https://schema.org',
@@ -698,14 +719,28 @@ export const ChapterView = () => {
                     {chapter.title} case - {questions.length} questions
                   </h2>
                 </div>
-                <div>
-                  <Button
-                    size="medium"
-                    primary
-                    icon={<FontAwesomeIcon icon={faCopy} />}
-                    label="Copy all answers"
-                    onClick={() => copyToClipboard(answersToCopy)}
-                  />
+                <div className="reveal-copy-btn-group">
+                  <div>
+                    <Button
+                      primary
+                      label={
+                        revealedAnswers.size ===
+                        questions.flatMap((q) => q.answers).length
+                          ? 'Hide all answers'
+                          : 'Reveal all answers'
+                      }
+                      onClick={toggleAllAnswers}
+                    />
+                  </div>
+                  <div>
+                    <Button
+                      size="medium"
+                      primary
+                      icon={<FontAwesomeIcon icon={faCopy} />}
+                      label="Copy all answers"
+                      onClick={() => copyToClipboard(answersToCopy)}
+                    />
+                  </div>
                 </div>
                 <div className="container-appview-codes-users">
                   {questions.map((question) => {
@@ -730,37 +765,26 @@ export const ChapterView = () => {
                           {question.answers.length > 0 &&
                             question.answers?.map((answer) => {
                               return (
-                                <div>
-                                  {' '}
-                                  {/* <div
-                                    onClick={() =>
-                                      copyToClipboard(answer.title)
-                                    }
-                                  >
-                                    <FontAwesomeIcon icon={faCopy} />
-                                    {answer.title}
-                                  </div> */}
-                                  <Button
-                                    size="medium"
-                                    className="btn-no-style"
-                                    primary
-                                    icon={<FontAwesomeIcon icon={faCopy} />}
-                                    label={answer.title}
-                                    onClick={() =>
-                                      copyToClipboard(answer.title)
-                                    }
-                                  />
-                                  {/* <span className="codes-added-by">
-                                    <Link
-                                      to={`../gameplay/games/${chapter.gameSlug}`}
-                                    >
-                                      <Badge
-                                        secondary
-                                        label={answer.userFullName}
-                                        size="small"
-                                      />
-                                    </Link>
-                                  </span> */}
+                                <div key={answer.id}>
+                                  {revealedAnswers.has(answer.id) ? (
+                                    <Button
+                                      size="medium"
+                                      className="btn-no-style"
+                                      primary
+                                      icon={<FontAwesomeIcon icon={faCopy} />}
+                                      label={answer.title}
+                                      onClick={() =>
+                                        copyToClipboard(answer.title)
+                                      }
+                                    />
+                                  ) : (
+                                    <Button
+                                      size="medium"
+                                      secondary
+                                      label="Reveal answer"
+                                      onClick={() => revealAnswer(answer.id)}
+                                    />
+                                  )}
                                 </div>
                               );
                             })}
