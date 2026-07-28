@@ -97,6 +97,7 @@ export const QuestionView = () => {
   const [userTypes, setUserTypes] = useState([]);
   const [faqs, setFaqs] = useState([]);
   const [questions, setQuestions] = useState([]);
+  const [revealedAnswers, setRevealedAnswers] = useState(new Set());
 
   useEffect(() => {
     async function fetchSingleQuestion(questionId) {
@@ -523,18 +524,9 @@ export const QuestionView = () => {
     ],
   };
 
-  const faqsItems = faqs.map((faq) => {
-    return (
-      <div key={faq.id}>
-        <h3 className="h3-faq" onClick={() => handleFaqs(faq.id)}>
-          {faq.title} {faq.open ? '▲' : '▼'}
-        </h3>
-        <p className={!faq.open && 'faq-closed'}>{faq.text}</p>
-      </div>
-    );
-  });
-
-  const isBestseller = Boolean(Number(question.bestseller));
+  const revealAnswer = (answerId) => {
+    setRevealedAnswers((prev) => new Set(prev).add(answerId));
+  };
 
   if (error) {
     return (
@@ -648,14 +640,33 @@ export const QuestionView = () => {
             )}
             {answers.length > 0 &&
               answers.map((item) => (
-                <div className="form-container">
-                  <div className="comment-box submit-box-new-comment">
-                    <div>{item.title}</div>
-                    <div className="comment-author-date">{`by ${
-                      item.fullName.split(' ')[0]
-                    } on ${getOnlyYearMonthDay(item.created_at)}`}</div>
-                  </div>
+                <div key={item.id}>
+                  {revealedAnswers.has(item.id) ? (
+                    <Button
+                      size="medium"
+                      className="btn-no-style"
+                      primary
+                      icon={<FontAwesomeIcon icon={faCopy} />}
+                      label={item.title}
+                      onClick={() => copyToClipboard(item.title)}
+                    />
+                  ) : (
+                    <Button
+                      size="medium"
+                      secondary
+                      label="Reveal answer"
+                      onClick={() => revealAnswer(item.id)}
+                    />
+                  )}
                 </div>
+                // <div className="form-container">
+                //   <div className="comment-box submit-box-new-comment">
+                //     <div>{item.title}</div>
+                //     <div className="comment-author-date">{`by ${
+                //       item.fullName.split(' ')[0]
+                //     } on ${getOnlyYearMonthDay(item.created_at)}`}</div>
+                //   </div>
+                // </div>
               ))}
             {!user && (
               <div>
