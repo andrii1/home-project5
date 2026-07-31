@@ -4,55 +4,57 @@
 require('dotenv').config();
 const knex = require('../../../../config/db');
 
-const chapterIdRei = 23;
+const chapterId = 25;
 
-const answerTitlesRei = [
-  'May 17',
-  'spark',
-  'Check the studio',
-  'none',
-  'Injections',
-  'mother signed',
-  'Switch',
-  'Han Jiwon',
-  'AETHER_practice_backup',
-  'Voice memos',
-  'Cafe Vert',
-  'Kang',
-  'Confidential',
-  'Sign',
-  'Choi',
-  'Madame park',
-  'Hi',
-  'school',
-  'File',
-  'Director Park & Madame Park',
+const answerTitles = [
+  'Zoe',
+  'suicide',
+  '11.04',
+  'Stop',
+  'Keeper',
+  'Spyware',
+  '8 months',
+  'Location, camera, microphone',
+  'Apartment',
+  'Oct 18',
+  'Marcus Webb',
+  'Voice memo',
+  'Zoe recording',
+  'Hannah',
+  'Pounds',
+  'Not the first one',
+  'Pills',
+  'Check keeper app',
+  'Airdrop',
+  'Is it done',
+  'October 14',
+  'Marcus, Hanna',
 ];
 
-const chapterIdDanny = 24;
+// const chapterIdDanny = 24;
 
-const answerTitlesDanny = [
-  'Daniel',
-  'Sebastian',
-  'liar',
-  '6',
-  'Romford',
-  'Eyes',
-  'Alessandro Conti',
-  'Frozen',
-  'nadia',
-  'Vale',
-  '74000',
-  'Gift',
-  'Definitely',
-  'G. Cole',
-  'Vault',
-  'Yacht photo',
-  'Police',
-  'Deal',
-  'Wathamstow',
-  'Gemma Cole, Daniel Cole',
-];
+// const answerTitlesDanny = [
+//   'Daniel',
+//   'Sebastian',
+//   'liar',
+//   '6',
+//   'Romford',
+//   'Eyes',
+//   'Alessandro Conti',
+//   'Frozen',
+//   'nadia',
+//   'Vale',
+//   '74000',
+//   'Gift',
+//   'Definitely',
+//   'G. Cole',
+//   'Vault',
+//   'Yacht photo',
+//   'Police',
+//   'Deal',
+//   'Wathamstow',
+//   'Gemma Cole, Daniel Cole',
+// ];
 
 // async function insertChapterAnswers() {
 //   const questions = await knex('questions')
@@ -86,5 +88,4 @@ async function insertChapterAnswers(chapterParam, answersParam) {
   console.log(`Inserted ${answers.length} answers for chapter ${chapterParam}`);
 }
 
-insertChapterAnswers(chapterIdRei, answerTitlesRei);
-insertChapterAnswers(chapterIdDanny, answerTitlesDanny);
+insertChapterAnswers(chapterId, answerTitles);
