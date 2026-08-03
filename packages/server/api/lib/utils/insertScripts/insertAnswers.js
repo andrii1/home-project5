@@ -4,57 +4,45 @@
 require('dotenv').config();
 const knex = require('../../../../config/db');
 
-const chapterId = 25;
+const chapterId = 1;
 
 const answerTitles = [
-  'Zoe',
-  'suicide',
-  '11.04',
-  'Stop',
-  'Keeper',
-  'Spyware',
-  '8 months',
-  'Location, camera, microphone',
-  'Apartment',
-  'Oct 18',
-  'Marcus Webb',
-  'Voice memo',
-  'Zoe recording',
-  'Hannah',
-  'Pounds',
-  'Not the first one',
-  'Pills',
-  'Check keeper app',
-  'Airdrop',
-  'Is it done',
-  'October 14',
-  'Marcus, Hanna',
+  'Thomas Smith',
+  'Do not answer',
+  'So',
+  'Tinder',
+  'Restaurant',
+  'Le Croquant',
+  'Versailles',
+  '400',
+  'Battery',
+  '334521',
+  'Sophie Mercer',
+  '26',
+  'Versailles',
+  'Chanel',
+  'Tired',
 ];
 
-// const chapterIdDanny = 24;
+const chapterId2 = 2;
 
-// const answerTitlesDanny = [
-//   'Daniel',
-//   'Sebastian',
-//   'liar',
-//   '6',
-//   'Romford',
-//   'Eyes',
-//   'Alessandro Conti',
-//   'Frozen',
-//   'nadia',
-//   'Vale',
-//   '74000',
-//   'Gift',
-//   'Definitely',
-//   'G. Cole',
-//   'Vault',
-//   'Yacht photo',
-//   'Police',
-//   'Deal',
-//   'Wathamstow',
-//   'Gemma Cole, Daniel Cole',
-// ];
+const answerTitles2 = [
+  'Léa',
+  'WhatsApp',
+  'Photos',
+  '030103',
+  'Jeweler',
+  'Engagement',
+  'Cartier',
+  'Yellow',
+  'Por la',
+  'Hugo',
+  'Florist',
+  'Nice',
+  'Restaurant',
+  'Phone',
+  'July',
+];
 
 // async function insertChapterAnswers() {
 //   const questions = await knex('questions')
@@ -89,3 +77,4 @@ async function insertChapterAnswers(chapterParam, answersParam) {
 }
 
 insertChapterAnswers(chapterId, answerTitles);
+insertChapterAnswers(chapterId2, answerTitles2);
