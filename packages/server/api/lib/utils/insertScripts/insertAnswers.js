@@ -65,11 +65,13 @@ async function insertChapterAnswers(chapterParam, answersParam) {
     .where({ chapter_id: chapterParam })
     .orderBy('id');
 
-  const answers = questions.map((q, index) => ({
-    title: answersParam[index],
-    question_id: q.id, // or q.question_id depending on schema
-    user_id: 1,
-  }));
+  const answers = questions
+    .map((q, index) => ({
+      title: answersParam[index],
+      question_id: q.id, // or q.question_id depending on schema
+      user_id: 1,
+    }))
+    .filter((answer) => answer.title !== undefined && answer.title !== null);
 
   await knex('answers').insert(answers);
 
