@@ -26,7 +26,13 @@ if (!allowedDays.includes(todayDay)) {
   process.exit(0);
 }
 
-const seedList = ['error', 'is down', 'not working'];
+const seedList = [
+  'error',
+  'is down',
+  'not working',
+  'stopped working',
+  `doesn't work`,
+];
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;

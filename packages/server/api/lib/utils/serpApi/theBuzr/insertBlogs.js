@@ -145,6 +145,22 @@ const seedList = [
   'book tickets',
   'tour',
   'sales',
+  'claude',
+  'why',
+  'bet',
+  'commercial',
+  'beauty',
+  'cosmetics',
+  'token',
+  'coin',
+  'maxxing',
+  'crypto',
+  'gameplay',
+  'walkthrough',
+  'game answers',
+  'mod apk',
+  'vpn',
+  'hosting',
 ];
 
 const seedListUa = [

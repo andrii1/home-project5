@@ -21,9 +21,7 @@ const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
 const allowedDays = [0, 1, 3, 5];
-// const allowedDaysWeek = [0, 3, 5];
 const allowedDaysWeek = [0, 5];
-const allowedDaysWeekUs = [3];
 const allowedDaysDay = [1];
 
 if (!allowedDays.includes(todayDay)) {
@@ -32,12 +30,12 @@ if (!allowedDays.includes(todayDay)) {
 }
 
 // Credentials (from .env)
-const USER_UID_DEALS = process.env.USER_UID_DEALS_PROD;
-const API_PATH_DEALS = process.env.API_PATH_DEALS_PROD;
+const USER_UID_DEALS = process.env.USER_UID_ACTIVITIES_LOCAL;
+const API_PATH_DEALS = process.env.API_PATH_ACTIVITIES_LOCAL;
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
 
-const seedList = ['invite code', 'referral code', 'promo code', 'redeem code'];
+const seedList = ['tours', 'referral code', 'promo code'];
 
 // const queries = [
 //   { title: 'emochi ai promo code' },
@@ -108,16 +106,12 @@ const createPostMain = async () => {
 
   let queries;
   if (allowedDaysWeek.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList, false, 3, 'en', '');
+    queries = await fetchSerpApi('7', seedList, false, 5, 'en', '');
   }
 
-  if (allowedDaysWeekUs.includes(todayDay)) {
-    queries = await fetchSerpApi('7', seedList, false, 3);
-  }
-
-  if (allowedDaysDay.includes(todayDay)) {
-    queries = await fetchSerpApi('1', seedList, false, 3, 'en', '');
-  }
+  // if (allowedDaysDay.includes(todayDay)) {
+  //   queries = await fetchSerpApi('1', seedList, false, 3, 'en', '');
+  // }
 
   console.log('queries', queries);
   const dedupedQueries = [];
@@ -150,8 +144,8 @@ const createPostMain = async () => {
     }
   }
 
-  const apps = await searchApps(dedupedQueries);
-  await insertDeals(apps);
+  // const apps = await searchApps(dedupedQueries);
+  // await insertDeals(apps);
 };
 
 createPostMain().catch(console.error);
