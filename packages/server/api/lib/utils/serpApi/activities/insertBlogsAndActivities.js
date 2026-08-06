@@ -21,9 +21,9 @@ const openai = new OpenAI({
 const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
-const allowedDays = [0, 1, 3, 5];
+const allowedDays = [0, 1, 3, 4, 5];
 const allowedDaysWeekWorld = [0];
-const allowedDaysWeekUs = [1, 3];
+const allowedDaysWeekUs = [1, 3, 4, 5];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
