@@ -1,6 +1,4 @@
-const seedList = ['activities'];
-
-const seedListOld = [
+const seedList = [
   'tours',
   'activities',
   'things to do',
