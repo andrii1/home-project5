@@ -161,6 +161,7 @@ const seedList = [
   'mod apk',
   'vpn',
   'hosting',
+  'book',
 ];
 
 const seedListUa = [
@@ -173,6 +174,7 @@ const seedListUa = [
   'купити',
   'купити україна',
   'дешево',
+  'скачати',
 ];
 
 // fetch helpers

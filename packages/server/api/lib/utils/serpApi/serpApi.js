@@ -35,6 +35,9 @@ const excludeList = [
   'cheap',
   'auto',
   'state',
+  'casino',
+  'winnita',
+  'www.',
 ];
 
 const serpCategories = [

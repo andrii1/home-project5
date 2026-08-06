@@ -10,8 +10,9 @@ require('dotenv').config();
 
 const fetchSerpApi = require('../serpApi');
 const searchApps = require('../searchApps');
-const insertDeals = require('../insertDeals');
+const insertApps = require('../insertApps');
 const OpenAI = require('openai');
+const { seedList } = require('../data/activities');
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY, // make sure this is set in your .env
@@ -21,8 +22,8 @@ const today = new Date();
 const todayDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
 
 const allowedDays = [0, 1, 3, 5];
-const allowedDaysWeek = [0, 5];
-const allowedDaysDay = [1];
+const allowedDaysWeekWorld = [0];
+const allowedDaysWeekUs = [1, 3];
 
 if (!allowedDays.includes(todayDay)) {
   console.log('Not an allowed day, skipping job.');
@@ -30,17 +31,10 @@ if (!allowedDays.includes(todayDay)) {
 }
 
 // Credentials (from .env)
-const USER_UID_DEALS = process.env.USER_UID_ACTIVITIES_LOCAL;
-const API_PATH_DEALS = process.env.API_PATH_ACTIVITIES_LOCAL;
+const USER_UID_ACTIVITIES = process.env.USER_UID_ACTIVITIES_PROD;
+const API_PATH_ACTIVITIES = process.env.API_PATH_ACTIVITIES_PROD;
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
-
-const seedList = ['tours', 'referral code', 'promo code'];
-
-// const queries = [
-//   { title: 'emochi ai promo code' },
-//   { title: 'meta viewpoints referral codes' },
-// ];
 
 // fetch helpers
 
@@ -63,7 +57,32 @@ async function insertQuery(queryObj) {
 async function createBlogContent(queryParam) {
   // Generate a short description using OpenAI
 
-  const prompt = `Create a blog, based on query ${queryParam}. Treat ${queryParam} as main keyword - it should be spread in the blog. Also, you should mention and link to topappdeals.com - as a source of promo codes, referral codes. At least 1300 words. Do not include published by [Your Name] or Published on [Date]. Do not include title, headline, h1, h2 of the blog, just content of the article. Output with markdown.`;
+  const prompt = `
+You are an expert travel writer and SEO content strategist.
+
+Write a comprehensive, original blog article targeting the keyword: "${queryParam}".
+
+Requirements:
+- The primary keyword is "${queryParam}".
+- Use the keyword naturally throughout the article. Do not keyword stuff.
+- Write at least 1,500 words.
+- Use Markdown formatting.
+- Start directly with the introduction. Do NOT include a title or H1.
+- Use descriptive H2 and H3 headings.
+- Write in an informative, engaging, and trustworthy style.
+- Include practical advice, examples, and tips.
+- Avoid fluff and generic filler.
+- Keep paragraphs relatively short (2–4 sentences).
+- Use bullet lists and numbered lists where appropriate.
+- Answer common questions readers may have.
+- Include relevant semantic keywords and synonyms naturally.
+- Do not mention AI, ChatGPT, or that the article was generated.
+- Do not include "Published by", author names, dates, or placeholders.
+- Do not invent statistics or facts. If mentioning numbers, they should be well-known or approximate.
+- End with a concise conclusion.
+
+The article should satisfy someone searching for "${queryParam}" and provide enough value that they do not need to search elsewhere.
+`;
   // console.log(prompt);
 
   const completion = await openai.chat.completions.create({
@@ -79,10 +98,10 @@ async function createBlogContent(queryParam) {
 
 const createPost = async (postDataParam) => {
   try {
-    const response = await fetch(`${API_PATH_DEALS}/blogs`, {
+    const response = await fetch(`${API_PATH_ACTIVITIES}/blogs`, {
       method: 'POST',
       headers: {
-        token: `token ${USER_UID_DEALS}`,
+        token: `token ${USER_UID_ACTIVITIES}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(postDataParam),
@@ -105,8 +124,12 @@ const createPostMain = async () => {
   // const queries = await fetchSerpApi('7');
 
   let queries;
-  if (allowedDaysWeek.includes(todayDay)) {
+  if (allowedDaysWeekWorld.includes(todayDay)) {
     queries = await fetchSerpApi('7', seedList, false, 5, 'en', '');
+  }
+
+  if (allowedDaysWeekUs.includes(todayDay)) {
+    queries = await fetchSerpApi('7', seedList, false, 5);
   }
 
   // if (allowedDaysDay.includes(todayDay)) {
@@ -145,7 +168,7 @@ const createPostMain = async () => {
   }
 
   // const apps = await searchApps(dedupedQueries);
-  // await insertDeals(apps);
+  // await insertApps(apps);
 };
 
 createPostMain().catch(console.error);
