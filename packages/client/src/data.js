@@ -196,6 +196,10 @@ export const tabsNameGenerator = [
 ];
 
 export const TOOLS = [
+  {
+    title: 'Gameplay (ColdTrace & Stalkie answers)',
+    url: 'gameplay',
+  },
   { title: 'Number Generator', url: 'numbergenerator' },
   {
     title: 'Random digit number generator',
@@ -228,9 +232,5 @@ export const TOOLS = [
   {
     title: 'Brat generator',
     url: 'brat-generator',
-  },
-  {
-    title: 'Gameplay',
-    url: 'gameplay',
   },
 ];

@@ -1,7 +1,7 @@
 module.exports = {
   host: 'https://www.booktravelactivities.com',
   folder: 'activities',
-  staticRoutes: ['/', '/products'],
+  staticRoutes: ['/', '/products', '/blog'],
   apiPaths: [
     { path: 'products', prefix: 'products' },
     { path: 'categories', prefix: 'products/categories' },
@@ -13,6 +13,7 @@ module.exports = {
     { path: 'useCases', prefix: 'products/useCases' },
     { path: 'userTypes', prefix: 'products/userTypes' },
     { path: 'occasions', prefix: 'products/occasions' },
+    { path: 'blogs', prefix: 'blog' },
   ],
   maxUrls: 10000,
 };
