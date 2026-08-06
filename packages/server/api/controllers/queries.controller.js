@@ -12,6 +12,7 @@ const getQueries = async ({
   token,
   days = null,
   sources,
+  geo,
   sites,
   dataSources,
   column,
@@ -43,14 +44,25 @@ const getQueries = async ({
       );
     }
 
-    if (sources === 'apps') {
-      // Filter queries from the last X days
-      queryBuilder = queryBuilder.where('source', 'like', '%app%');
+    if (sources) {
+      if (sources === 'apps') {
+        queryBuilder = queryBuilder.where('source', 'like', '%app%');
+      } else if (sources === 'not-apps') {
+        queryBuilder = queryBuilder.where('source', 'not like', '%app%');
+      } else {
+        // custom keyword
+        queryBuilder = queryBuilder.where('source', 'like', `%${sources}%`);
+      }
     }
 
-    if (sources === 'not-apps') {
+    if (geo === 'us') {
       // Filter queries from the last X days
-      queryBuilder = queryBuilder.where('source', 'not like', '%app%');
+      queryBuilder = queryBuilder.where('source', 'like', '%US%');
+    }
+
+    if (geo === 'world') {
+      // Filter queries from the last X days
+      queryBuilder = queryBuilder.where('source', 'like', '%World%');
     }
 
     if (sites) {

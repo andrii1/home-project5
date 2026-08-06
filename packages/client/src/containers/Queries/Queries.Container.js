@@ -36,6 +36,18 @@ const sourcesOptions = [
   { label: 'Not apps', value: 'not-apps' },
 ];
 
+const sourcesBuzrOptions = [
+  { label: 'All', value: '' },
+  { label: 'Apps', value: 'apps' },
+  { label: 'Not apps', value: 'not-apps' },
+];
+
+const geoOptions = [
+  { label: 'All', value: '' },
+  { label: 'US only', value: 'us' },
+  { label: 'World only', value: 'world' },
+];
+
 const dataSourcesOptions = [
   { label: 'All', value: '' },
   { label: 'GT', value: 'googleTrends' },
@@ -61,6 +73,8 @@ export const Queries = () => {
   const navigate = useNavigate();
 
   const [sources, setSources] = useState('apps');
+  const [sourcesBuzr, setSourcesBuzr] = useState('');
+  const [geo, setGeo] = useState('us');
   const [dataSources, setDataSources] = useState('googleTrends');
 
   useEffect(() => {
@@ -103,6 +117,16 @@ export const Queries = () => {
       params.append('sources', sources);
     }
 
+    // Sources
+    if (sourcesBuzr && sites === 3) {
+      params.append('sources', sourcesBuzr);
+    }
+
+    // Sources
+    if (geo && sites === 1 && dataSources === 'googleTrends') {
+      params.append('geo', geo);
+    }
+
     // Data sources
     if (dataSources) {
       params.append('dataSources', dataSources);
@@ -140,6 +164,8 @@ export const Queries = () => {
     sources,
     sites,
     dataSources,
+    geo,
+    sourcesBuzr,
     user?.uid,
   ]);
 
@@ -356,6 +382,24 @@ export const Queries = () => {
               className="no-line-height"
               options={sourcesOptions}
               onSelect={(option) => setSources(option.value)}
+              showFilterIcon={false}
+            />
+          )}
+          {sites === 3 && (
+            <DropDownView
+              selectedOptionValue={sourcesBuzr}
+              className="no-line-height"
+              options={sourcesBuzrOptions}
+              onSelect={(option) => setSourcesBuzr(option.value)}
+              showFilterIcon={false}
+            />
+          )}
+          {sites === 1 && dataSources === 'googleTrends' && (
+            <DropDownView
+              selectedOptionValue={geo}
+              className="no-line-height"
+              options={geoOptions}
+              onSelect={(option) => setGeo(option.value)}
               showFilterIcon={false}
             />
           )}

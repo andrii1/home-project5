@@ -19,6 +19,7 @@ router.get('/', (req, res, next) => {
       token,
       days: req.query.days,
       sources: req.query.sources,
+      geo: req.query.geo,
       sites: req.query.sites,
       dataSources: req.query.dataSources,
       column: req.query.column,
