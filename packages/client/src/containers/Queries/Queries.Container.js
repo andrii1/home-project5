@@ -14,9 +14,11 @@ import TextFormInput from '../../components/Input/TextFormInput.component';
 import { capitalize } from '../../utils/capitalize';
 import { apiURL } from '../../apiURL';
 import { useUserContext } from '../../userContext';
-import { getDateFromTimestamp } from '../../utils/getDateFromTimestamp';
+import { getDateFromTimestampShort } from '../../utils/getDateFromTimestamp';
 import DropDownView from '../../components/CategoriesListDropDown/CategoriesListDropDown.component';
 import { Info } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 
 const keywords = [];
 
@@ -303,7 +305,7 @@ export const Queries = () => {
           {query.title}
         </div>
         <div className="c-2">{displayValue(query.value)}</div>
-        <div className="c-3">{getDateFromTimestamp(query.created_at)}</div>
+        <div className="c-3">{getDateFromTimestampShort(query.created_at)}</div>
         <div className="c-4">
           <span
             className="icon-highlighted"
@@ -320,8 +322,24 @@ export const Queries = () => {
               handleUpdateQueryStatus(query);
             }}
           />
+          <a
+            href={`https://www.google.com/search?q=${encodeURIComponent(
+              query.title,
+            )}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FontAwesomeIcon
+              color="#777777"
+              icon={faArrowUpRightFromSquare}
+              size="sm"
+            />
+          </a>
         </div>
         <div className="c-5">
+          <div className="source-box-desktop">
+            {query.source || 'no source'}
+          </div>
           <div className={`source-box ${query.open && 'open-source-box'}`}>
             {query.source || 'no source'}
           </div>
@@ -501,7 +519,7 @@ export const Queries = () => {
                       }))
                     }
                   >
-                    {' '}
+                    <span className="header-text">Actions</span>
                     <span className="multi-dropdown-arrow">
                       {orderBy.column === 'status' &&
                         orderBy.direction === 'desc' &&
@@ -511,7 +529,9 @@ export const Queries = () => {
                         '▲'}
                     </span>
                   </div>
-                  <div className="c-5"> </div>
+                  <div className="c-5">
+                    <span className="header-text">Source</span>
+                  </div>
                 </div>
                 {queriesList}
               </div>
