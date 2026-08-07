@@ -158,6 +158,10 @@
   display: none;
 }
 
+.queries-container .search-container .form-input {
+  width: 15rem !important;
+}
+
 @media only screen and (max-width: 992px) {
   .queries-container .queries-table {
     width: 100%;

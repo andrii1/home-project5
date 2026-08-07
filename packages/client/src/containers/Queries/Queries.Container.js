@@ -40,8 +40,8 @@ const sourcesOptions = [
 
 const sourcesBuzrOptions = [
   { label: 'All', value: '' },
-  { label: 'Apps', value: 'apps' },
-  { label: 'Not apps', value: 'not-apps' },
+  { label: 'Review', value: 'review' },
+  { label: 'Gen Z', value: 'gen z' },
 ];
 
 const geoOptions = [
@@ -78,6 +78,7 @@ export const Queries = () => {
   const [sourcesBuzr, setSourcesBuzr] = useState('');
   const [geo, setGeo] = useState('us');
   const [dataSources, setDataSources] = useState('googleTrends');
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     async function fetchSites() {
@@ -374,12 +375,14 @@ export const Queries = () => {
         <h1 className="hero-header">Queries</h1>
       </header>
       <section className="app-input-container">
+        <div className="search-container">
+          <TextFormInput
+            value={search}
+            placeholder="Enter keyword"
+            onChange={setSearch}
+          />
+        </div>
         <div className="queries-input-container">
-          {/* <TextFormInput
-            value={input}
-            placeholder="Find recipes"
-            onChange={setInput}
-          /> */}
           <DropDownView
             selectedOptionValue={sites}
             className="no-line-height"
