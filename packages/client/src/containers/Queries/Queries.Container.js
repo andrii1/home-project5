@@ -78,7 +78,8 @@ export const Queries = () => {
   const [sourcesBuzr, setSourcesBuzr] = useState('');
   const [geo, setGeo] = useState('us');
   const [dataSources, setDataSources] = useState('googleTrends');
-  const [search, setSearch] = useState('');
+  const [searchQueries, setSearchQueries] = useState('');
+  const [searchSources, setSearchSources] = useState('');
 
   useEffect(() => {
     async function fetchSites() {
@@ -135,6 +136,16 @@ export const Queries = () => {
       params.append('dataSources', dataSources);
     }
 
+    // Search queries
+    if (searchQueries) {
+      params.append('searchQueries', searchQueries);
+    }
+
+    // Search sources
+    if (searchSources) {
+      params.append('searchSources', searchSources);
+    }
+
     const url = `${apiURL()}/queries?${params.toString()}`;
 
     setLoading(true);
@@ -163,12 +174,14 @@ export const Queries = () => {
   }, [
     orderBy.column,
     orderBy.direction,
+    sites,
     days,
     sources,
-    sites,
-    dataSources,
-    geo,
     sourcesBuzr,
+    geo,
+    dataSources,
+    searchQueries,
+    searchSources,
     user?.uid,
   ]);
 
@@ -375,12 +388,21 @@ export const Queries = () => {
         <h1 className="hero-header">Queries</h1>
       </header>
       <section className="app-input-container">
-        <div className="search-container">
-          <TextFormInput
-            value={search}
-            placeholder="Enter keyword"
-            onChange={setSearch}
-          />
+        <div className="search-container-queries-app">
+          <div>
+            <TextFormInput
+              value={searchQueries}
+              placeholder="Query..."
+              onChange={setSearchQueries}
+            />
+          </div>
+          <div>
+            <TextFormInput
+              value={searchSources}
+              placeholder="Source..."
+              onChange={setSearchSources}
+            />
+          </div>
         </div>
         <div className="queries-input-container">
           <DropDownView

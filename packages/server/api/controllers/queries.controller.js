@@ -15,7 +15,8 @@ const getQueries = async ({
   geo,
   sites,
   dataSources,
-  search,
+  searchQueries,
+  searchSources,
   column,
   direction,
 }) => {
@@ -74,9 +75,14 @@ const getQueries = async ({
       queryBuilder = queryBuilder.where('data_source', dataSources);
     }
 
-    if (search) {
+    if (searchQueries) {
       // Filter queries from the last X days
-      queryBuilder = queryBuilder.where('source', 'like', `%${search}%`);
+      queryBuilder = queryBuilder.where('title', 'like', `%${searchQueries}%`);
+    }
+
+    if (searchSources) {
+      // Filter queries from the last X days
+      queryBuilder = queryBuilder.where('source', 'like', `%${searchSources}%`);
     }
 
     const queries = await queryBuilder.orderBy(

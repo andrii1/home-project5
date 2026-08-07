@@ -22,7 +22,8 @@ router.get('/', (req, res, next) => {
       geo: req.query.geo,
       sites: req.query.sites,
       dataSources: req.query.dataSources,
-      search: req.query.search,
+      searchQueries: req.query.searchQueries,
+      searchSources: req.query.searchSources,
       column: req.query.column,
       direction: req.query.direction,
     })

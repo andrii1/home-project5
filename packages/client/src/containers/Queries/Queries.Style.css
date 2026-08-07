@@ -158,7 +158,12 @@
   display: none;
 }
 
-.queries-container .search-container .form-input {
+.queries-container .search-container-queries-app {
+  display: flex;
+  gap: 1rem;
+}
+
+.queries-container .search-container-queries-app .form-input {
   width: 15rem !important;
 }
 
@@ -228,6 +233,9 @@
 
   .queries-container span.header-text {
     display: none;
+  }
+  .queries-container .search-container-queries-app {
+    flex-direction: column;
   }
 }
 
