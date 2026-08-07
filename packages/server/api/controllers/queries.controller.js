@@ -77,7 +77,11 @@ const getQueries = async ({
 
     if (searchQueries) {
       // Filter queries from the last X days
-      queryBuilder = queryBuilder.where('title', 'like', `%${searchQueries}%`);
+      queryBuilder = queryBuilder.where(
+        'queries.title',
+        'like',
+        `%${searchQueries}%`,
+      );
     }
 
     if (searchSources) {
