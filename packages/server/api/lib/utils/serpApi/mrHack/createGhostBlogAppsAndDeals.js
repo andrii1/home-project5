@@ -42,7 +42,13 @@ if (!allowedDays.includes(todayDay)) {
 }
 
 const seedListAppKeyword = ['app'];
-const seedListOtherKeywords = ['website', 'app iphone', 'widget'];
+const seedListOtherKeywords = [
+  'website',
+  'ai app',
+  'ai agent',
+  'app iphone',
+  'widget',
+];
 
 // Credentials (from .env)
 const USER_UID = process.env.USER_UID_MAH_PROD;

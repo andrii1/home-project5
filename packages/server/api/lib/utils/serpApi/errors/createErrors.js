@@ -32,6 +32,8 @@ const seedList = [
   'not working',
   'stopped working',
   `doesn't work`,
+  'unable',
+  `can't`,
 ];
 
 // Credentials (from .env)

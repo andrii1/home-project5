@@ -39,10 +39,7 @@ const sourceOptionsBySite = {
     { label: 'Not apps', value: 'not-apps' },
   ],
 
-  2: [
-    { label: 'All', value: '' },
-    { label: 'Widget', value: 'widget' },
-  ],
+  2: [{ label: 'All', value: '' }],
 
   3: [
     { label: 'All', value: '' },
@@ -50,8 +47,8 @@ const sourceOptionsBySite = {
   ],
   4: [
     { label: 'All', value: '' },
-    { label: 'Review', value: 'review' },
-    { label: 'Gen Z', value: 'gen z' },
+    { label: 'ai', value: 'ai,' },
+    { label: 'Best tool for', value: 'best tool for' },
   ],
   5: [{ label: 'All', value: '' }],
 };
