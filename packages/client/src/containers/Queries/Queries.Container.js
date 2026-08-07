@@ -32,17 +32,29 @@ const daysOptions = [
   { label: '1 year', value: 365 },
 ];
 
-const sourcesOptions = [
-  { label: 'All', value: '' },
-  { label: 'Apps', value: 'apps' },
-  { label: 'Not apps', value: 'not-apps' },
-];
+const sourceOptionsBySite = {
+  1: [
+    { label: 'All', value: '' },
+    { label: 'Apps', value: 'apps' },
+    { label: 'Not apps', value: 'not-apps' },
+  ],
 
-const sourcesBuzrOptions = [
-  { label: 'All', value: '' },
-  { label: 'Review', value: 'review' },
-  { label: 'Gen Z', value: 'gen z' },
-];
+  2: [
+    { label: 'All', value: '' },
+    { label: 'Widget', value: 'widget' },
+  ],
+
+  3: [
+    { label: 'All', value: '' },
+    { label: 'Referral code', value: 'referral code' },
+  ],
+  4: [
+    { label: 'All', value: '' },
+    { label: 'Review', value: 'review' },
+    { label: 'Gen Z', value: 'gen z' },
+  ],
+  5: [{ label: 'All', value: '' }],
+};
 
 const geoOptions = [
   { label: 'All', value: '' },
@@ -74,8 +86,7 @@ export const Queries = () => {
   const [sitesOptions, setSitesOptions] = useState([]);
   const navigate = useNavigate();
 
-  const [sources, setSources] = useState('apps');
-  const [sourcesBuzr, setSourcesBuzr] = useState('');
+  const [sources, setSources] = useState('');
   const [geo, setGeo] = useState('us');
   const [dataSources, setDataSources] = useState('googleTrends');
   const [searchQueries, setSearchQueries] = useState('');
@@ -100,6 +111,14 @@ export const Queries = () => {
     fetchSites();
   }, []);
 
+  useEffect(() => {
+    if (sites === 1) {
+      setSources(sourceOptionsBySite[sites]?.[1]?.value || '');
+    } else {
+      setSources('');
+    }
+  }, [sites]);
+
   const fetchQueries = useCallback(async () => {
     const params = new URLSearchParams({
       column: orderBy.column,
@@ -117,13 +136,8 @@ export const Queries = () => {
     }
 
     // Sources
-    if (sources && sites === 1) {
+    if (sources) {
       params.append('sources', sources);
-    }
-
-    // Sources
-    if (sourcesBuzr && sites === 3) {
-      params.append('sources', sourcesBuzr);
     }
 
     // Sources
@@ -177,7 +191,6 @@ export const Queries = () => {
     sites,
     days,
     sources,
-    sourcesBuzr,
     geo,
     dataSources,
     searchQueries,
@@ -188,6 +201,10 @@ export const Queries = () => {
   useEffect(() => {
     fetchQueries();
   }, [fetchQueries]);
+
+  console.log('sources', sources);
+  console.log('sites', sites, sites === 1);
+  console.log('geo', geo);
 
   // console.log('sitesOptions', sitesOptions);
   // console.log('queries', queries);
@@ -419,24 +436,13 @@ export const Queries = () => {
             onSelect={(option) => setDays(option.value)}
             showFilterIcon={false}
           />
-          {sites === 1 && (
-            <DropDownView
-              selectedOptionValue={sources}
-              className="no-line-height"
-              options={sourcesOptions}
-              onSelect={(option) => setSources(option.value)}
-              showFilterIcon={false}
-            />
-          )}
-          {sites === 3 && (
-            <DropDownView
-              selectedOptionValue={sourcesBuzr}
-              className="no-line-height"
-              options={sourcesBuzrOptions}
-              onSelect={(option) => setSourcesBuzr(option.value)}
-              showFilterIcon={false}
-            />
-          )}
+          <DropDownView
+            selectedOptionValue={sources}
+            className="no-line-height"
+            options={sourceOptionsBySite[sites] || []}
+            onSelect={(option) => setSources(option.value)}
+            showFilterIcon={false}
+          />
           {sites === 1 && dataSources === 'googleTrends' && (
             <DropDownView
               selectedOptionValue={geo}
