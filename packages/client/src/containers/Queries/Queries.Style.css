@@ -30,7 +30,7 @@
 } */
 
 .queries-container .queries-table {
-  width: 90%;
+  width: 70%;
 }
 
 .queries-container .queries-table .row {
@@ -44,7 +44,7 @@
 }
 
 .queries-container .queries-table .c-1 {
-  flex: 1 0 45%;
+  flex: 1 0 40%;
 }
 
 .queries-container .queries-table .c-2 {
@@ -60,7 +60,7 @@
 }
 
 .queries-container .queries-table .c-5 {
-  flex: 0 0 20%;
+  flex: 0 0 25%;
 }
 
 .queries-container .queries-table .c-1,

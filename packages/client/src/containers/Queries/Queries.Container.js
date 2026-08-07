@@ -202,9 +202,9 @@ export const Queries = () => {
     fetchQueries();
   }, [fetchQueries]);
 
-  console.log('sources', sources);
-  console.log('sites', sites, sites === 1);
-  console.log('geo', geo);
+  // console.log('sources', sources);
+  // console.log('sites', sites, sites === 1);
+  // console.log('geo', geo);
 
   // console.log('sitesOptions', sitesOptions);
   // console.log('queries', queries);
