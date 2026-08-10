@@ -44,6 +44,7 @@ if (!allowedDays.includes(todayDay)) {
 const seedListAppKeyword = ['app'];
 const seedListOtherKeywords = [
   'website',
+  'ai',
   'ai app',
   'ai agent',
   'app iphone',

@@ -52,7 +52,6 @@ const seedList = [
   'stock',
   'price',
   'challenge',
-  'ai',
   'courses',
   'best course for',
   'learn',
@@ -193,7 +192,7 @@ const seedList = [
   'small business ideas',
   'freelance',
   'best under',
-  'ai agents',
+  'filter',
 ];
 
 const seedListUa = [
