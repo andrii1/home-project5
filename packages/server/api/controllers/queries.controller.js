@@ -22,7 +22,6 @@ const getQueries = async ({
 }) => {
   const userUid = token.split(' ')[1];
   const correctUser = userUid === USER_UID;
-  // const user = (await knex('users').where({ uid: userUid }))[0];
 
   if (!token) {
     throw new HttpError('There are not users', 401);
@@ -52,8 +51,10 @@ const getQueries = async ({
       } else if (sources === 'not-apps') {
         queryBuilder = queryBuilder.where(function () {
           this.where('source', 'like', '%website%')
-            .orWhere('source', 'like', '%ai%')
-            .orWhere('source', 'like', '%iphone%')
+            .orWhere('source', 'like', '%ai,%')
+            .orWhere('source', 'like', '%ai app%')
+            .orWhere('source', 'like', '%ai agent%')
+            .orWhere('source', 'like', '%app iphone%')
             .orWhere('source', 'like', '%widget%')
             .orWhere('source', 'like', '%cash out%')
             .orWhere('source', 'like', '%withdrawal%');
