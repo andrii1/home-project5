@@ -53,7 +53,7 @@ const getQueries = async ({
         queryBuilder = queryBuilder.where(function () {
           this.where('source', 'like', '%website%')
             .orWhere('source', 'like', '%ai%')
-            .orWhere('source', 'like', '%app iphone%')
+            .orWhere('source', 'like', '%iphone%')
             .orWhere('source', 'like', '%widget%')
             .orWhere('source', 'like', '%cash out%')
             .orWhere('source', 'like', '%withdrawal%');
