@@ -50,7 +50,14 @@ const getQueries = async ({
       if (sources === 'apps') {
         queryBuilder = queryBuilder.where('source', 'like', '%app%');
       } else if (sources === 'not-apps') {
-        queryBuilder = queryBuilder.where('source', 'not like', '%app%');
+        queryBuilder = queryBuilder.where(function () {
+          this.where('source', 'like', '%website%')
+            .orWhere('source', 'like', '%ai%')
+            .orWhere('source', 'like', '%app iphone%')
+            .orWhere('source', 'like', '%widget%')
+            .orWhere('source', 'like', '%cash out%')
+            .orWhere('source', 'like', '%withdrawal%');
+        });
       } else {
         // custom keyword
         queryBuilder = queryBuilder.where('source', 'like', `%${sources}%`);

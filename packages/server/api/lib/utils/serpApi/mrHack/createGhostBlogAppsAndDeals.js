@@ -49,6 +49,8 @@ const seedListOtherKeywords = [
   'ai agent',
   'app iphone',
   'widget',
+  'cash out',
+  'withdrawal',
 ];
 
 // Credentials (from .env)

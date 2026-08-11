@@ -193,6 +193,7 @@ const seedList = [
   'freelance',
   'best under',
   'filter',
+  'filter tiktok',
 ];
 
 const seedListUa = [
