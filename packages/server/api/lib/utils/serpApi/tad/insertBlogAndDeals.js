@@ -134,17 +134,17 @@ const createPostMain = async () => {
 
       // CREATE BLOG
 
-      const blogTitle = capitalizeFirstWord(query.title);
-      const blogContent = await createBlogContent(query.title);
+      // const blogTitle = capitalizeFirstWord(query.title);
+      // const blogContent = await createBlogContent(query.title);
 
-      const postData = {
-        title: blogTitle,
-        content: blogContent,
-        status: 'published',
-        user_id: '1',
-      };
+      // const postData = {
+      //   title: blogTitle,
+      //   content: blogContent,
+      //   status: 'published',
+      //   user_id: '1',
+      // };
 
-      await createPost(postData);
+      // await createPost(postData);
     } catch (err) {
       console.error(`Error processing query "${query.title}":`, err);
     }

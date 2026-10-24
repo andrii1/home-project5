@@ -194,6 +194,8 @@ const seedList = [
   'best under',
   'filter',
   'filter tiktok',
+  'unlimited',
+  'api',
 ];
 
 const seedListUa = [
