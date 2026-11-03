@@ -204,6 +204,7 @@ const seedList = [
   'dev',
   'how to get rid off',
   'reddit',
+  'digital side hustles',
 ];
 
 const seedListUa = [
