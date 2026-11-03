@@ -37,7 +37,13 @@ const API_PATH_DEALS = process.env.API_PATH_DEALS_PROD;
 const USER_UID = process.env.USER_UID_MAH_PROD;
 const API_PATH = process.env.API_PATH_MAH_PROD;
 
-const seedList = ['invite code', 'referral code', 'promo code', 'redeem code'];
+const seedList = [
+  'invite code',
+  'referral code',
+  'promo code',
+  'redeem code',
+  'codes',
+];
 
 // const queries = [
 //   { title: 'emochi ai promo code' },
