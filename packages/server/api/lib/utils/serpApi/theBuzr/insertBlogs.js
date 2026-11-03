@@ -188,6 +188,7 @@ const seedList = [
   'earn money',
   'small business ideas',
   'how to earn money online',
+  'earn money online',
   'free cash',
   'freelance',
   'best under',
