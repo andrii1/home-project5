@@ -65,7 +65,14 @@ const getQueries = async ({
             .orWhere('source', 'like', '%stopped working%')
             .orWhere('source', 'like', "%doesn't work%")
             .orWhere('source', 'like', '%unable%')
-            .orWhere('source', 'like', "%can't%");
+            .orWhere('source', 'like', "%can't%")
+            .orWhere('source', 'like', '%ai trend video%')
+            .orWhere('source', 'like', '%trend video%')
+            .orWhere('source', 'like', '%meme%')
+            .orWhere('source', 'like', '%meme explanation%')
+            .orWhere('source', 'like', '%gameplay%')
+            .orWhere('source', 'like', '%walkthrough%')
+            .orWhere('source', 'like', '%game answers%');
         });
       } else {
         // custom keyword

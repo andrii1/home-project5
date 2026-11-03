@@ -52,6 +52,13 @@ const seedListOtherKeywords = [
   'cash out',
   'withdraw money',
   'deposit',
+  'ai trend video',
+  'trend video',
+  'meme',
+  'meme explanation',
+  'gameplay',
+  'walkthrough',
+  'game answers',
 ];
 
 // Credentials (from .env)
