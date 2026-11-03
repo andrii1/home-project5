@@ -57,7 +57,15 @@ const getQueries = async ({
             .orWhere('source', 'like', '%app iphone%')
             .orWhere('source', 'like', '%widget%')
             .orWhere('source', 'like', '%cash out%')
-            .orWhere('source', 'like', '%withdrawal%');
+            .orWhere('source', 'like', '%withdraw money%')
+            .orWhere('source', 'like', '%deposit%')
+            .orWhere('source', 'like', '%error%')
+            .orWhere('source', 'like', '%is down%')
+            .orWhere('source', 'like', '%not working%')
+            .orWhere('source', 'like', '%stopped working%')
+            .orWhere('source', 'like', "%doesn't work%")
+            .orWhere('source', 'like', '%unable%')
+            .orWhere('source', 'like', "%can't%");
         });
       } else {
         // custom keyword

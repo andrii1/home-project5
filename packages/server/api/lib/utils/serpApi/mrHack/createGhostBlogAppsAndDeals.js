@@ -50,7 +50,8 @@ const seedListOtherKeywords = [
   'app iphone',
   'widget',
   'cash out',
-  'withdrawal',
+  'withdraw money',
+  'deposit',
 ];
 
 // Credentials (from .env)

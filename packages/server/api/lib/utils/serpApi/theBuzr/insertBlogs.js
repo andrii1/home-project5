@@ -207,8 +207,6 @@ const seedList = [
   'commercial',
   'meme explanation',
   'dev',
-  'deposit',
-  'withdraw money',
   'how to get rid off',
   'reddit',
 ];
